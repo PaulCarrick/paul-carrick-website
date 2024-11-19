@@ -1,0 +1,65 @@
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<% @missing_image ||= image_path("missing-image.jpg") %>
+
+<section class="bg-light pt-5 text-secondary">
+  <div class="container">
+    <% @contents.each do |content| %>
+      <% if content.image.present? %>
+        <% if content.image =~ /\[(.*?)\]/m %>
+          <%
+            new_formatting = content.formatting
+            images = Regexp.last_match(1).split(",").map do |image|
+              begin
+                image_path(image.strip)
+              rescue
+                byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                @missing_image
+              end
+            end
+
+            if new_formatting && new_formatting.length > 0
+              formatting_json = JSON.parse(new_formatting)
+              formatting_json["slide_show_images"] = images
+              new_formatting = formatting_json.to_json
+            else
+              new_formatting = { slide_show_images: images }.to_json
+            end
+          %>
+          <%= react_component("DisplayContent", {
+            content: content.description,
+            image: nil,
+            link: content.link,
+            format: new_formatting
+          }) %>
+        <% else %>
+          <%
+            image = nil
+
+            if content.image
+              begin
+                image = image_path(content.image)
+              rescue
+                byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                image = @missing_image
+              end
+            end
+          %>
+          <%= react_component("DisplayContent", {
+            content: content.description,
+            image: image,
+            link: content.link,
+            format: content.formatting
+          }) %>
+        <% end %>
+      <% else %>
+        <%= react_component("DisplayContent", { content: content.description, image: nil, link: content.link,
+                                                format: content.formatting }) %>
+      <% end %>
+    <% end %>
+  </div>
+</section>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

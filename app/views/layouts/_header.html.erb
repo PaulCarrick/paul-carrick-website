@@ -1,0 +1,77 @@
+<header>
+  <div class="bg-light py-1 mb-4">
+    <nav class="bg-primary navbar navbar-dark navbar-expand-lg py-4">
+      <div class="container">
+        <!-- Brand Name -->
+        <%= link_to "Paul-Carrick.com", root_path, class: "fw-bold navbar-brand text-uppercase" %>
+
+        <!-- Toggler Button for Hamburger Menu -->
+        <%= button_tag type: "button",
+                       class: "navbar-toggler",
+                       data: { bs_toggle: "collapse", bs_target: "#navbarNav" },
+                       aria: { controls: "navbarNav", expanded: "false", label: "Toggle navigation" } do %>
+          <span class="navbar-toggler-icon"></span>
+        <% end %>
+
+        <!-- Collapsible Menu -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="ms-auto navbar-nav">
+            <% @main_menu_items.each_with_index do |menu_item, index| %>
+              <li class="nav-item">
+                <% if menu_item.sub_items.any? %>
+                  <!-- Dropdown Menu -->
+                  <div class="dropdown">
+                    <%= link_to "#",
+                                class: "nav-link dropdown-toggle px-lg-3 py-lg-4 text-uppercase",
+                                id: "navbarDropdown-#{index}",
+                                role: "button",
+                                data: { bs_toggle: "dropdown" },
+                                aria: { expanded: "false" } do %>
+                      <%= menu_item.label %>
+                    <% end %>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown-#{index}">
+                      <% menu_item.sub_items.each do |sub_item| %>
+                        <li>
+                          <%= link_to sub_item[:label], sub_item[:link], class: "dropdown-item" %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% else %>
+                  <!-- Regular Menu Item -->
+                  <% if menu_item.options == "image-file" %>
+                    <a href="<%= menu_item[:link] %>">
+                      <%= image_tag menu_item.icon,
+                                    alt: menu_item.label,
+                                    class: "nav-link px-lg-3 py-lg-4 text-uppercase"
+                      %>
+                    </a>
+                  <% else %>
+                    <%= link_to menu_item[:label], menu_item[:link], class: "nav-link px-lg-3 py-lg-4 text-uppercase" %>
+                  <% end %>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </div>
+  <script>
+    /* TO DO:
+       I have no idea why the link_to is not working.
+       Everything looks good but something is happening under the covers.
+       When this is figured out this code should be removed.
+     */
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', (event) => {
+        window.location.href = event.target.href;
+      });
+    });
+    document.querySelectorAll('.nav-link').forEach(item => {
+      item.addEventListener('click', (event) => {
+        window.location.href = event.target.href;
+      });
+    });
+  </script>
+</header>

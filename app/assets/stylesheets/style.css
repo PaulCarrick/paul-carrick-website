@@ -1,0 +1,34 @@
+.slideshow-container {
+  max-width: 100%;
+  position: relative;
+  margin: auto;
+}
+
+.slide {
+  display: none;
+}
+
+.fade-3 {
+  animation: fadeEffect 3s;
+}
+
+.fade-5 {
+  animation: fadeEffect 3s;
+}
+
+.fade-10 {
+  animation: fadeEffect 10s;
+}
+
+.fade-20 {
+  animation: fadeEffect 20s;
+}
+
+.fade-30 {
+  animation: fadeEffect 30s;
+}
+
+@keyframes fadeEffect {
+  from {opacity: 0.4}
+  to {opacity: 1}
+}
