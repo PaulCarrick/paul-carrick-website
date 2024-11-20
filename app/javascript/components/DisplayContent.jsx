@@ -177,7 +177,6 @@ const DisplayContent = ({ content, image, link, format }) => {
       )}
     </div>
   );
-
   if (options.row_style === "text-single") {
     // Single column layout
     return (
@@ -193,6 +192,52 @@ const DisplayContent = ({ content, image, link, format }) => {
           )}
         </div>
       </div>
+    );
+  }
+
+  if (options.row_style === "text-top") {
+    // Single column layout with the text on top
+    return (
+      <>
+        <div className={rowClasses}>
+          <div className="col-12">
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+            {options.expanding_rows && (
+              <button id={toggleId} className={toggleClass}>
+                Show More
+              </button>
+            )}
+          </div>
+        </div>
+        <div className={rowClasses}>
+          <div className="col-12">
+            {options.slide_show_images ? renderSlideShow() : renderImage()}
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  if (options.row_style === "text-bottom") {
+    // Single column layout with the text on bottom
+    return (
+      <>
+        <div className={rowClasses}>
+          <div className="col-12">
+            {options.slide_show_images ? renderSlideShow() : renderImage()}
+          </div>
+        </div>
+        <div className={rowClasses}>
+          <div className="col-12">
+            <div dangerouslySetInnerHTML={{ __html: content }} />
+            {options.expanding_rows && (
+              <button id={toggleId} className={toggleClass}>
+                Show More
+              </button>
+            )}
+          </div>
+        </div>
+      </>
     );
   }
 
