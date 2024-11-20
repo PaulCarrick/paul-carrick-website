@@ -111,7 +111,7 @@ const DisplayContent = ({ content, image, link, format }) => {
     else options.text_styles = parseStyle(options.text_styles);
 
     if (!options.image_style) options.image_style = { width: "100%", height: "auto" };
-    else options.image_style = { ...parseStyle(options.image_style), width: "100%", height: "auto" };
+    else options.image_style = { ...parseStyle(options.image_style) };
 
     if (!options.image_styles) options.image_styles = {};
     else options.image_styles = parseStyle(options.image_styles);
@@ -151,7 +151,7 @@ const DisplayContent = ({ content, image, link, format }) => {
   );
 
   const renderImage = () => (
-    <div className="image-container d-flex flex-column align-items-center">
+    <div className="image-container d-flex flex-column" width='100%'>
       {options.image_caption && options.caption_position === "top" && (
         <div className={captionClasses}>{options.image_caption}</div>
       )}
