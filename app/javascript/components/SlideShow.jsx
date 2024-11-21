@@ -30,21 +30,34 @@ const SlideShow = ({ images, captions, slideType }) => {
     }
   };
 
-  // Extract text content of <p> tags
-  const extractTextFromParagraphs = (html) => {
-    const matches = html.match(/<p>(.*?)<\/p>/gs);
-    return matches ? matches.map((p) => p.replace(/<\/?p>/g, "")) : [];
+  // Extract text content of <section> tags
+  const extractTextFromSections = (html) => {
+    const matches = html.match(/<section>(.*?)<\/section>/gs);
+    return matches ? matches.map((section) => section.replace(/<\/?section>/g, "")) : [];
   };
 
   // Extract text content of <title> tags
-  const extractTitlesFromParagraphs = (html) => {
+  const extractTitlesFromSections = (html) => {
     const matches = html.match(/<title>(.*?)<\/title>/gs);
     return matches ? matches.map((title) => title.replace(/<\/?title>/g, "")) : [];
   };
 
+  const addTextAlignLeftClass = (htmlString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+
+    // Select all <p> elements and modify their class attribute
+    doc.querySelectorAll('p').forEach((p) => {
+      p.classList.add('text-start');
+    });
+
+    // Return the transformed HTML as a string
+    return doc.body.innerHTML;
+  };
+
   if (captions) {
-    captionsText = extractTextFromParagraphs(captions);
-    captionsTitles = extractTitlesFromParagraphs(captions);
+    captionsText = extractTextFromSections(captions);
+    captionsTitles = extractTitlesFromSections(captions);
   }
 
   // Get unique captionsTitles
@@ -80,16 +93,9 @@ const SlideShow = ({ images, captions, slideType }) => {
             style={{ maxWidth: '100%', maxHeight: '640px', height: 'auto' }}
           />
         </a>
+
         {captionsText && captionsText[currentIndex] && (
-          <p
-            style={{
-              maxWidth: '100%',
-              textAlign: 'left',
-              padding: '0.5em 0',
-            }}
-          >
-            {captionsText[currentIndex]}
-          </p>
+          <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
         )}
       </div>
       <div>
