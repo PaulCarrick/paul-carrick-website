@@ -2,224 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/scopes/Assets.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/webResources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/automation/automation.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/christian/crosses.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/cioppino.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/cooking.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/crabs.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/orchidgarden-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/orchidgarden-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/orchidgarden-3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/orchidgarden-4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/pallea.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/rackoflamb.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/sandwich.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/steak.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/cooking/sushi.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/family/bonnie-nita-and-family.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/family/dad-paul-jon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/family/mom.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/family/paulandvirginia.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/family/river-adventure.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/fire/emt-training-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/fire/emt.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/fire/fire-header.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/fire/fire.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/fire/firefighter.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/gardening.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/hydroponics-paul.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/indoor-plants.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/orchids.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/rodi.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/gardening/roses.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/WideBackyardPhoto.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/cascade-falls.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/cascade-lake.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/deer.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/eagle.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/grace.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/heron.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/home.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/mtbaker.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orca-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orca.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orcas-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orcas-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orcas-island.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orcas-island.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/orcas-large.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/otters.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-3.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-4.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-6.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-night.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond-winter.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/pond.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/rainbow.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/seals.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/snow-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/snow-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/snow.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/sunrise-backdeck.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/home/trawler.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/missing-image.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/beauty-and-the-beast-2.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/beauty-and-the-beast.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/jcs-poster.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/music-theater.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/orcas-acapella.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/music/rockyhorrorcast.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/paul-transparent.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/photography/lori.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/photography/photography.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/cfs-logo.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/entrision.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/explorer-login.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/explorer.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/introduction-to-pact-projects.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/introduction-to-pact.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/knowledgeware.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/orcasnet-logo.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/pact-high-level-requirements-screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/pact-landing-screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/pact-login-screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/pact-projects-screen.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/pact.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/patmos.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/tmx.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/vettafi-indexing.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/vettafi-logo.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/vettafi-logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/professional/vettafi.gif" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/angel-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/clown-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/crab.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/eel.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/fish-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/fish-school-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/fish-school-2.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/great-barrier-reef-wall.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/octopus.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/parrot-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/paul-virginia-diving.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/pipe-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/puffer-fish.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/ray.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/sea-urchin.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/shark.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/shipwreck.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/scuba/slug.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/bath.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/big-ben.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/blarney-stone.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/carrick-on-suir.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/castle.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/colosseum.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/crocodile.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/didgeridoo-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/didgeridoo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/eclipse.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/fjords.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/flamingos.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/france.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/guard.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/guatemala.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/haiti.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/japan-2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/japan-3.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/japan-4.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/japan.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/joy-pidgeons.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/kangaroo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/kings-canyon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/mexico.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/nortedame.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/palace.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/panama.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/paul-virginia-japan.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/paul-virginia-mexico.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/plane-boat.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/pompeii.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/rome.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/sagrada-familia.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/sidney.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/sting-ray.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/stonehenge.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/tattoo.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/thailand.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/trevi.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/uluru.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/vatican.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/venice-canal.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/village.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/travel/virginia-kings-canyon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/popper.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/blocks.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/api/V1/sections_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/bio_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/blog_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/concerns/html_sanitizer.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/contact_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/employment_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/family_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/hobby_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/live_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/overview_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/portfolio_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/search_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/bio_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/blog_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/contact_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/employment_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/empolyment_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/family_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/hobby_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/live_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/overview_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/portfolio_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/search_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/App.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/NavMenu.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/controllers/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/controllers/menu_controller.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/routes/index.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/bio/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/blog/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/contact/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/employment/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/family/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/hobby/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/live/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/overview/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/portfolio/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/search/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/initializers/react_server_rendering.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/creed.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/introduction-to-pact-projects.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/introduction-to-pact.mp4" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/menu_items.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sql/sections.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/assets/javascripts/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/assets/javascripts/popper.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/sections.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/sections.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -275,7 +58,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/images/employment" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -291,11 +74,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/images/employment" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/app/assets/images/christian" />
       <recent name="$PROJECT_DIR$/app/assets/images" />
       <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
-      <recent name="$PROJECT_DIR$/app/assets/fonts" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public" />
@@ -437,6 +220,7 @@
       <workItem from="1732020334463" duration="25220000" />
       <workItem from="1732052747684" duration="990000" />
       <workItem from="1732054111968" duration="14000" />
+      <workItem from="1732136631221" duration="10146000" />
     </task>
     <servers />
   </component>
