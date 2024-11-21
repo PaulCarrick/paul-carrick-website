@@ -7,12 +7,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :menu_items, only: %i[index show]
       resources :sections, only: %i[index show]
+      resources :blog_posts
+      resources :post_comments
     end
   end
 
   resources :bio, only: [ :index ]
   resources :blog, only: [ :index ]
-  resources :contact, only: [ :index ]
+  resources :contact, only: [ :new, :create ]
   resources :employment, only: [ :index ]
   resources :family, only: [ :index ]
   resources :hobby, only: [ :index ]

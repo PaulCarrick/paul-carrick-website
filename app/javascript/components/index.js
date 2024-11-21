@@ -7,12 +7,18 @@ const ReactRailsUJS = require("react_ujs");
 import NavMenu from "./NavMenu";
 import DisplayContent from "./DisplayContent";
 import SlideShow from "./SlideShow";
+import PostList from "./PostList";
+import PostEditor from "./PostEditor";
+import PostDetail from "./PostDetail";
 
 try {
     ReactRailsUJS.register({
         NavMenu,
         DisplayContent,
         SlideShow,
+        PostList,
+        PostEditor,
+        PostDetail
     });
 } catch (error) {
     if (error instanceof TypeError) {
