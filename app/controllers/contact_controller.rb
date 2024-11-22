@@ -6,7 +6,8 @@ class ContactController < ApplicationController
   end
 
   def create
-    if verify_recaptcha(model: @contact) && @contact.save
+    #    if verify_recaptcha(model: @contact) && @contact.save
+    if @contact.save
       begin
         mailer = ContactMailer.new
 

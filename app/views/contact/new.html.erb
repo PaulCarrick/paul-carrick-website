@@ -9,7 +9,7 @@
     <%= form_with(url: contact_index_path, method: :post, local: true) do |form| %>
       <%= recaptcha_tags(site_key: ENV['RECAPTCHA_SITE_KEY'], script: :v3) %>
 
-      <% if flash[:recaptcha_error] %>
+      <% if false && flash[:recaptcha_error] %>
         <div class="alert alert-danger">
           <%= flash[:recaptcha_error] %>
         </div>
