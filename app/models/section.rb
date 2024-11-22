@@ -4,6 +4,8 @@ class Section < ApplicationRecord
   validate :at_least_one_field_present
   scope :by_content_type, ->(type) { where(content_type: type).order(:section_order) }
 
+  searchkick
+
   private
 
   def at_least_one_field_present
