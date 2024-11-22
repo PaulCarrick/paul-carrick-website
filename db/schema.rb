@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_22_123141) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -63,6 +63,18 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_123141) do
     t.index ["title"], name: "index_blog_posts_on_title"
   end
 
+  create_table "footer_items", force: :cascade do |t|
+    t.string "label"
+    t.text "icon"
+    t.string "options"
+    t.string "link"
+    t.string "access"
+    t.integer "footer_order"
+    t.integer "parent_id"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+  end
+
   create_table "menu_items", force: :cascade do |t|
     t.string "label"
     t.text "icon"
@@ -70,6 +82,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_123141) do
     t.string "link"
     t.integer "menu_order"
     t.integer "parent_id"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "access"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "section", null: false
+    t.string "title"
+    t.string "access"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end

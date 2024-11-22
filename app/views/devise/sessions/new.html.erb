@@ -5,7 +5,7 @@
 
 <section class="bg-light text-secondary">
   <div class="container">
-    <div style="max-width: 25%;">
+    <div style="max-width: 50%;">
       <% unless user_signed_in? %>
         <h2>Admin Login</h2>
         <%= form_with(url: new_user_session_path, scope: :user, local: true) do |form| %>

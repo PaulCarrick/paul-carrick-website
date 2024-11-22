@@ -1,36 +1,27 @@
 # frozen_string_literal: true
+
 # app/controllers/pages_controller.rb
 
 class PagesController < ApplicationController
-  before_action :validate_page_name
-
-  PAGES = {
-    bio: "Bio",
-    blog: "Blog",
-    employment: "Employment",
-    family: "Family",
-    hobby: "Hobby",
-    home: "Home",
-    live: "Live",
-    overview: "Overview",
-    portfolio: "Portfolio"
-  }.freeze
-
   def show
-    @contents = Section.by_content_type(@page_name).map do |section|
-      section.tap do |content|
-        content.description = sanitize_html(content.description)
-      end
-    end
+    load_page
   end
 
   private
 
-  def validate_page_name
-    @page_name = PAGES[params[:id].to_sym]
+  def load_page
+    page = Page.find_by(name: params[:id])
 
-    unless @page_name.present?
-      redirect_to root_path, alert: 'Invalid page type'
+    if page.present?
+      @contents = Section.by_content_type(page.section)
+
+      @contents.each do |section|
+        section.tap do |content|
+          content.description = sanitize_html(content.description)
+        end
+      end
+    else
+      redirect_to root_path, alert: "Can't find page for : #params[:id]}."
     end
   end
 end

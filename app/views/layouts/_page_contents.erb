@@ -1,3 +1,9 @@
+<% if @page.present? %>
+  <title><%= "paul-carrick.com - #{@page.title}" %></title>
+<% else %>
+  <title><%= "paul-carrick.com" %></title>
+<% end %>
+
 <%= render layout: "layouts/header" do %>
 <% end %>
 

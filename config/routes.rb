@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :menu_items, only: %i[index show]
+      resources :footer_items, only: %i[index show]
+      resources :pages, only: %i[index show]
       resources :sections, only: %i[index show]
       resources :blog_posts
       resources :post_comments
