@@ -24,7 +24,7 @@ class ContactController < ApplicationController
   end
 
   def show
-    if params[:id] == success
+    if params[:id] == "success"
       @results = "The contact information was successfully sent."
     else
       @results = "The contact information could not be sent: #{params[:error]}."
