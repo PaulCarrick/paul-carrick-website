@@ -12,19 +12,23 @@ class ContactController < ApplicationController
 
       mailer.contact_email(params[:name], params[:email_address], params[:phone], params[:message])
 
-      @notice = "Contact form was successfully sent."
+      @notice = "The contact information was successfully sent."
       flash[:info] = notice
 
       respond_to do |format|
-        format.html { redirect_to contact_path("The contact information was sent successfully.") }
+        format.html { redirect_to contact_url("success") }
       end
     rescue => e
-      format.html { redirect_to contact_path("The contact information could not be sent. #{e.message}") }
+      format.html { redirect_to contact_url("failure", error: e.message) }
     end
   end
 
   def show
-    @results =  params[:id]
+    if params[:id] == success
+      @results = "The contact information was successfully sent."
+    else
+      @results = "The contact information could not be sent: #{params[:error]}."
+    end
   end
 
   private
