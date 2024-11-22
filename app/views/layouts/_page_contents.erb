@@ -5,6 +5,7 @@
 
 <section class="bg-light pt-5 text-secondary">
   <div class="container">
+    <p class="alert"><%= alert %></p>
     <% @contents.each do |content| %>
       <% if content.image.present? %>
         <% if content.image =~ /\[(.*?)\]/m %>

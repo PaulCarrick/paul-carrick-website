@@ -6,19 +6,29 @@
         <h2 class="fw-bold h5 mb-4 text-uppercase">Personal</h2>
         <ul class="list-unstyled">
           <li class="mb-3">
-            <a href="/family" class="link-light text-decoration-none">Paul's Family</a>
+            <%= link_to "Paul's Family",
+                        "#{root_url}/family",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/live" class="link-light text-decoration-none">Where Paul Lives</a>
+            <%= link_to "Where Paul Lives",
+                        "#{root_url}/live",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/hobby" class="link-light text-decoration-none">Paul'S Hobbies and Activities</a>
+            <%= link_to "Hobbies and Activities",
+                        "#{root_url}/hobby",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/bio" class="link-light text-decoration-none">Bio</a>
+            <%= link_to "Biography",
+                        "#{root_url}/bio",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/blog" class="link-light text-decoration-none">Blog</a>
+            <%= link_to "Blog",
+                        "#{root_url}/blog",
+                        class: "link-light text-decoration-none" %>
           </li>
         </ul>
       </div>
@@ -26,13 +36,19 @@
         <h2 class="fw-bold h5 mb-4 text-uppercase">Professional</h2>
         <ul class="list-unstyled">
           <li class="mb-3">
-            <a href="/overview" class="link-light text-decoration-none">Overview</a>
+            <%= link_to "Professional Overview",
+                        "#{root_url}/overview",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/employment" class="link-light text-decoration-none">Employment</a>
+            <%= link_to "Employment History",
+                        "#{root_url}/employment",
+                        class: "link-light text-decoration-none" %>
           </li>
           <li class="mb-3">
-            <a href="/portfolio" class="link-light text-decoration-none">Employment</a>
+            <%= link_to "Portfolio",
+                        "#{root_url}/portfolio",
+                        class: "link-light text-decoration-none" %>
           </li>
         </ul>
       </div>
@@ -40,8 +56,18 @@
         <h2 class="fw-bold h5 mb-4 text-uppercase">Other</h2>
         <ul class="list-unstyled">
           <li class="mb-3">
-            <a href="/contact" class="link-light text-decoration-none" target="_blank">Contact Paul</a>
+            <%= link_to "Contact Paul",
+                        new_contact_path,
+                        class: "link-light text-decoration-none",
+                        target: "_blank" %>
           </li>
+
+          <% if user_signed_in? && current_user.admin? %>
+            <li class="mb-3">
+              <%= link_to "Admin Dashboard", admin_root_path %>
+            </li>
+          <% end %>
+
         </ul>
       </div>
     </div>

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/sql/sections.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/sections.sql" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -16,10 +14,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Ruby File" />
         <option value="Ruby Class" />
-        <option value="ERB File" />
+        <option value="Ruby File" />
         <option value="JavaScript File" />
+        <option value="ERB File" />
       </list>
     </option>
   </component>
@@ -57,8 +55,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/images/employment" />
+    <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sql" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -74,18 +72,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/sql" />
+      <recent name="$PROJECT_DIR$/app/utilities" />
       <recent name="$PROJECT_DIR$/app/assets/images/employment" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/app/assets/images/christian" />
-      <recent name="$PROJECT_DIR$/app/assets/images" />
-      <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/images/employment" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/app/assets/images/home" />
       <recent name="$PROJECT_DIR$/app/assets/images/travel" />
       <recent name="$PROJECT_DIR$/app/assets/images/professional" />
-      <recent name="$PROJECT_DIR$/app/assets/images/cooking" />
     </key>
   </component>
   <component name="RunManager" selected="Rails.Development: rails-website">
@@ -221,6 +219,7 @@
       <workItem from="1732052747684" duration="990000" />
       <workItem from="1732054111968" duration="14000" />
       <workItem from="1732136631221" duration="10146000" />
+      <workItem from="1732193582655" duration="31809000" />
     </task>
     <servers />
   </component>
