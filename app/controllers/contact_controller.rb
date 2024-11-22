@@ -16,13 +16,15 @@ class ContactController < ApplicationController
       flash[:info] = notice
 
       respond_to do |format|
-        #        format.html { redirect_to controller: "home", action: "index", notice: @notice }
-        format.html { redirect_to "#{root_url}home" }
+        format.html { redirect_to contact_path("The contact information was sent successfully.") }
       end
     rescue => e
-      @notice = "Could not send email. Error: #{e.message}."
-      flash[:error] = notice
+      format.html { redirect_to contact_path("The contact information could not be sent. #{e.message}") }
     end
+  end
+
+  def show
+    @results =  params[:id]
   end
 
   private

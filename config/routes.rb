@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :blog, only: [ :index ]
-  resources :contact, only: [ :new, :create ]
+  resources :contact, only: [ :new, :create, :show ]
   resources :search, only: [ :index ]
 
   get "up" => "rails/health#show", as: :rails_health_check
