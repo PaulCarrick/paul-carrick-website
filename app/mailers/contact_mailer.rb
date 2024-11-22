@@ -8,8 +8,8 @@ class ContactMailer < ApplicationMailer
     @sender_name = name
     @sender_phone = phone
     @sender_message = message
-    message = mail
-
-    message.deliver!
+    mail(to: 'carrick.paul.jeffrey@gmail.com',
+         from: 'info@paul-carrick.com',
+         subject: "Contact Request")
   end
 end
