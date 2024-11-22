@@ -16,7 +16,7 @@ class ContactController < ApplicationController
       flash[:info] = notice
 
       respond_to do |format|
-        format.html { redirect_to root_url(target: "_self"), notice: @notice }
+        format.html { redirect_to controller: "home", action: "index", notice: @notice }
       end
     rescue => e
       @notice = "Could not send email. Error: #{e.message}."
