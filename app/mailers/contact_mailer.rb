@@ -8,7 +8,9 @@ class ContactMailer < ApplicationMailer
     @sender_name = name
     @sender_phone = phone
     @sender_message = message
-    mail(to: "carrick.paul.jeffrey@gmail.com",
+    mail(template_path: "contact_mailer",
+         template_name: "contact_email",
+         to: "carrick.paul.jeffrey@gmail.com",
          from: "info@paul-carrick.com",
          subject: "Contact Request") do |format|
       format.html # Ensure it looks for `contact_email.html.erb`
