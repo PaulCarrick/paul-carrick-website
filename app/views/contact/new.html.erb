@@ -7,7 +7,7 @@
   <div class="container">
     <h1>Contact Request Form</h1>
     <%= form_with(url: contact_index_path, method: :post, local: true) do |form| %>
-      <%= recaptcha_tags(script: :v3) %>
+      <%= recaptcha_tags(site_key: ENV['RECAPTCHA_SITE_KEY'], script: :v3) %>
 
       <% if flash[:recaptcha_error] %>
         <div class="alert alert-danger">
