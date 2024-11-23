@@ -2,6 +2,8 @@
 
 # app/controllers/pages_controller.rb
 
+include HtmlSanitizer
+
 class PagesController < ApplicationController
   def show
     load_page

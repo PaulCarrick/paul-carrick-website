@@ -43,6 +43,7 @@
     <orderEntry type="library" scope="PROVIDED" name="babel-source (v5.8.35, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="babel-transpiler (v0.7.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="base64 (v0.2.0, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="bcrypt (v3.1.20, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bcrypt_pbkdf (v1.1.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="benchmark (v0.4.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="bigdecimal (v3.1.8, ruby-3.2.0-p0) [gem]" level="application" />
@@ -58,15 +59,19 @@
     <orderEntry type="library" scope="PROVIDED" name="cssbundling-rails (v1.4.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="date (v3.4.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="debug (v1.9.2, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="devise (v4.9.4, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="dotenv (v3.1.4, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="drb (v2.2.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ed25519 (v1.3.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="erubi (v1.13.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="et-orbi (v1.2.11, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.10.0, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday (v2.12.1, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faraday-net_http (v3.4.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.17.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fugit (v1.11.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v1.2.1, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="hashie (v5.0.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="i18n (v1.14.6, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="image_processing (v1.13.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="io-console (v0.7.2, ruby-3.2.0-p0) [gem]" level="application" />
@@ -84,6 +89,8 @@
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.25.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.7.5, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="multi_json (v1.15.0, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="net-http (v0.5.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="net-imap (v0.5.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="net-pop (v0.1.2, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="net-protocol (v0.2.2, ruby-3.2.0-p0) [gem]" level="application" />
@@ -93,6 +100,8 @@
     <orderEntry type="library" scope="PROVIDED" name="net-ssh (v7.3.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nio4r (v2.7.4, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="nokogiri (v1.16.7, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="opensearch-ruby (v3.4.0, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="orm_adapter (v0.5.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ostruct (v0.6.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parallel (v1.26.3, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="parser (v3.3.6.0, ruby-3.2.0-p0) [gem]" level="application" />
@@ -114,8 +123,10 @@
     <orderEntry type="library" scope="PROVIDED" name="rake (v13.2.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rdoc (v6.7.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="react-rails (v3.2.1, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="recaptcha (v5.17.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="regexp_parser (v2.9.2, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="reline (v0.5.11, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="responders (v3.1.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop (v1.68.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop-ast (v1.36.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rubocop-minitest (v0.36.0, ruby-3.2.0-p0) [gem]" level="application" />
@@ -124,6 +135,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rubocop-rails-omakase (v1.0.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-progressbar (v1.13.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ruby-vips (v2.2.2, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="searchkick (v5.4.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="securerandom (v0.3.2, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="solid_cable (v3.0.2, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="solid_cache (v1.0.6, ruby-3.2.0-p0) [gem]" level="application" />
@@ -140,6 +152,7 @@
     <orderEntry type="library" scope="PROVIDED" name="unicode-display_width (v2.6.0, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="uri (v1.0.2, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="useragent (v0.16.10, ruby-3.2.0-p0) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="warden (v1.2.9, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="web-console (v4.2.1, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-driver (v0.7.6, ruby-3.2.0-p0) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, ruby-3.2.0-p0) [gem]" level="application" />
