@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/assets/images/portfolio/code.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/portfolio/pact.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/images/portfolio/paul-carrick-com.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_footer.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_footer.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -233,7 +222,7 @@
       <workItem from="1732193582655" duration="31809000" />
       <workItem from="1732316154823" duration="1774000" />
       <workItem from="1732373213901" duration="16693000" />
-      <workItem from="1732392943322" duration="613000" />
+      <workItem from="1732392943322" duration="1374000" />
     </task>
     <servers />
   </component>
