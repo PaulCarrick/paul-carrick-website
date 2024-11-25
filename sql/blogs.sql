@@ -18,6 +18,7 @@ TRUNCATE TABLE public.blog_posts CASCADE;
 
 COPY public.blog_posts (id, title, author, posted, content, created_at, updated_at) FROM stdin;
 1	Paul's First Entry	Paul Carrick	2024-11-21 09:38:59.159193	This is my first post. I've been developing this website and the blog functionality is now ready. If you are seeing this post it's working.	2024-11-21 09:38:59.159193	2024-11-21 09:38:59.159193
+2	Adding Search	Paul Carrick	2024-11-25 08:10:56.752795	I'm adding search capability to my website via Ransack.	2024-11-25 08:10:56.752795	2024-11-25 08:10:56.752795
 \.
 
 --

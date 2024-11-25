@@ -27,8 +27,9 @@ COPY public.footer_items (id, label, icon, options, link, access, footer_order, 
 9	Employment History	\N	\N	/employment	\N	9	7	2024-11-22 07:54:29.216616	2024-11-22 07:54:29.216616
 10	Portfolio	\N	\N	/portfolio	\N	10	7	2024-11-22 07:55:45.068296	2024-11-22 07:55:45.068296
 11	OTHER	\N	\N	\N	\N	11	\N	2024-11-22 07:56:24.787828	2024-11-22 07:56:24.787828
-14	Admin Dashboard	\N	\N	/admin/dashboard	admin	13	11	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
-13	Contact Paul	\N	\N	/contact/new	\N	12	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
+12	Contact Paul	\N	\N	/contact/new	\N	12	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
+13	Search Website	\N	\N	/search/new	\N	13	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
+14	Admin Dashboard	\N	\N	/admin/dashboard	admin	14	11	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
 \.
 
 --

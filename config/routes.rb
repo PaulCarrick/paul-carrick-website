@@ -21,9 +21,10 @@ Rails.application.routes.draw do
 
   resources :blog, only: [ :index ]
   resources :contact, only: [ :new, :create, :show ]
-  resources :search, only: [ :index ]
+  resources :section, only: [ :index ]
+  resources :search, only: [ :new ]
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "professional", to: "pages#show", defaults: { id: "overview" }, as: :professional_page
 
   # Dynamic route for pages
   get "/:id", to: "pages#show", as: :page

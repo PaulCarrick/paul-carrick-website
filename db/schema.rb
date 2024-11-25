@@ -111,6 +111,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
 
   create_table "sections", force: :cascade do |t|
     t.string "content_type", null: false
+    t.string "section_name"
     t.integer "section_order"
     t.string "image"
     t.string "link"
@@ -118,6 +119,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
     t.text "description"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["content_type", "section_name", "section_order"], name: "index_sections_on_content_type_and_name_and_order", unique: true, where: "((section_name IS NOT NULL) AND (section_order IS NOT NULL))"
   end
 
   create_table "users", force: :cascade do |t|

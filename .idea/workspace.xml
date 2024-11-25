@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/controllers/blog_posts_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/controllers/section_controller.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/helpers/blog_posts_helper.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/helpers/section_helper.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/blog_posts/index.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/search/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/search_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/search_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/blog_post.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/blog_post.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/page.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/page.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/post_comment.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/post_comment.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/blog/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/blog/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/search/index.html.erb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,7 +77,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/images/portfolio" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/search" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -72,18 +93,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/search" />
       <recent name="$PROJECT_DIR$/app/assets/images/portfolio" />
       <recent name="$PROJECT_DIR$/app/views/contact" />
       <recent name="$PROJECT_DIR$/sql" />
       <recent name="$PROJECT_DIR$/app/utilities" />
-      <recent name="$PROJECT_DIR$/app/assets/images/employment" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/views/section" />
       <recent name="$PROJECT_DIR$/app/assets/images/employment" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/app/assets/images/home" />
       <recent name="$PROJECT_DIR$/app/assets/images/travel" />
-      <recent name="$PROJECT_DIR$/app/assets/images/professional" />
     </key>
   </component>
   <component name="RunManager" selected="Rails.Development: rails-website">
@@ -223,6 +244,8 @@
       <workItem from="1732316154823" duration="1774000" />
       <workItem from="1732373213901" duration="16693000" />
       <workItem from="1732392943322" duration="1374000" />
+      <workItem from="1732395362891" duration="453000" />
+      <workItem from="1732405549184" duration="15047000" />
     </task>
     <servers />
   </component>

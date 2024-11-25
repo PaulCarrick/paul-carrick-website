@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import PostEditor from './PostEditor'; // Import your PostEditor component
+import PostEditor from './PostEditor';
 
 const PostList = ({ permit_editing = false }) => {
   const [posts, setPosts] = useState([]);
+  const [filteredPosts, setFilteredPosts] = useState([]);
   const [expandedPosts, setExpandedPosts] = useState({});
-  const [showEditor, setShowEditor] = useState(false); // State to toggle PostEditor
+  const [searchTerm, setSearchTerm] = useState('');
+  const [showEditor, setShowEditor] = useState(false);
 
   useEffect(() => {
     fetch('/api/v1/blog_posts?include_comments=true')
       .then((response) => response.json())
-      .then((data) => setPosts(data));
+      .then((data) => {
+        setPosts(data);
+        setFilteredPosts(data); // Initialize filteredPosts with all posts
+      });
   }, []);
 
   const DateTimeDisplay = ({ dateTime }) => {
@@ -33,10 +38,22 @@ const PostList = ({ permit_editing = false }) => {
     setShowEditor(false);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchTerm.trim() === '') {
+      setFilteredPosts(posts);
+    } else {
+      const filtered = posts.filter((post) =>
+        post.content.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredPosts(filtered);
+    }
+  };
+
   return (
     <div>
-      <h1 className={"text-dark"}>Blog Entries</h1>
-      {posts.map((post) => (
+      <h1 className="text-dark">Blog Entries</h1>
+      {filteredPosts.map((post) => (
         <div key={post.id} className="ps-3 mb-3">
           <div className="row ps-3">
             <div className="col-lg-12">
@@ -59,7 +76,7 @@ const PostList = ({ permit_editing = false }) => {
               ) : (
                 <>
                   {post.content.length > 100
-                    ? post.content.substring(0, 100) + "... "
+                    ? post.content.substring(0, 100) + '... '
                     : post.content}
                   {post.content.length > 100 && (
                     <button
@@ -86,9 +103,29 @@ const PostList = ({ permit_editing = false }) => {
       )}
 
       {/* Render PostEditor */}
-      {showEditor && (
-        <PostEditor closeEditor={closeEditor} />
-      )}
+      {showEditor && <PostEditor closeEditor={closeEditor} />}
+
+      {/* Search Form */}
+      <div className="mt-3">
+        <form onSubmit={handleSearch}>
+          <div className="mb-3">
+            <label htmlFor="search" className="form-label">
+              Search For:
+            </label>
+            <input
+              type="text"
+              id="search"
+              className="form-control"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Enter search term"
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">
+            Search
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

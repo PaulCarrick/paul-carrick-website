@@ -33,15 +33,12 @@ const setupToggle = (elementId, className) => {
       const rows = document.querySelectorAll(className);
 
       if (toggleButton && rows.length > 0) {
-        // Initially hide rows
         rows.forEach((element) => {
-          element.classList.add("collapse"); // Add the Bootstrap `collapse` class
+          element.classList.add("collapse");
         });
 
-        // Set initial button text
         toggleButton.textContent = "Show More";
 
-        // Add event listeners for show/hide
         rows.forEach((element) => {
           element.addEventListener("show.bs.collapse", () => {
             toggleButton.textContent = "Show Less";
@@ -52,10 +49,9 @@ const setupToggle = (elementId, className) => {
           });
         });
 
-        // Toggle visibility on button click
         toggleButton.addEventListener("click", () => {
           rows.forEach((element) => {
-            element.classList.toggle("show"); // Manually toggle the `show` class
+            element.classList.toggle("show");
             const isShown = element.classList.contains("show");
             toggleButton.textContent = isShown ? "Show Less" : "Show More";
           });
@@ -63,9 +59,8 @@ const setupToggle = (elementId, className) => {
       }
     };
 
-    // Ensure logic runs after the entire page is fully rendered
     const handleLoad = () => {
-      setTimeout(setupLogic, 0); // Delay execution slightly to ensure DOM is complete
+      setTimeout(setupLogic, 0);
     };
 
     if (document.readyState === "complete") {
@@ -74,14 +69,13 @@ const setupToggle = (elementId, className) => {
       window.addEventListener("load", handleLoad);
     }
 
-    // Cleanup listeners on unmount
     return () => {
       window.removeEventListener("load", handleLoad);
     };
   }, [elementId, className]);
 };
 
-const DisplayContent = ({ content, image, link, format }) => {
+const DisplayContent = ({ content, image, link, format, section_id }) => {
   let options = null;
 
   if (format) options = parseOptions(format);
@@ -129,11 +123,9 @@ const DisplayContent = ({ content, image, link, format }) => {
   const imageClasses = `${options.image_classes}`;
   const captionClasses = options.caption_classes;
 
-  // Dynamically generate a unique ID for the toggle button
   const toggleId = options.expanding_rows ? `toggle-${Math.random().toString(36).substr(2, 9)}` : null;
 
-  // Extract `expanding_rows` parameters
-  let toggleClass = "btn btn-primary my-2"; // Default button class
+  let toggleClass = "btn btn-primary my-2";
   if (options.expanding_rows) {
     const [_, className, customClass] = options.expanding_rows.split(",").map((s) => s.trim());
     if (customClass) toggleClass = customClass;
@@ -151,7 +143,7 @@ const DisplayContent = ({ content, image, link, format }) => {
   );
 
   const renderImage = () => (
-    <div className="image-container d-flex flex-column" width='100%'>
+    <div className="image-container d-flex flex-column">
       {options.image_caption && options.caption_position === "top" && (
         <div className={captionClasses}>{options.image_caption}</div>
       )}
@@ -177,10 +169,10 @@ const DisplayContent = ({ content, image, link, format }) => {
       )}
     </div>
   );
+
   if (options.row_style === "text-single") {
-    // Single column layout
     return (
-      <div className={rowClasses}>
+      <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
         <div className="col-12">
           {!options.slide_show_images && (
             <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -196,10 +188,9 @@ const DisplayContent = ({ content, image, link, format }) => {
   }
 
   if (options.row_style === "text-top") {
-    // Single column layout with the text on top
     return (
       <>
-        <div className={rowClasses}>
+        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
           <div className="col-12">
             <div dangerouslySetInnerHTML={{ __html: content }} />
             {options.expanding_rows && (
@@ -219,10 +210,9 @@ const DisplayContent = ({ content, image, link, format }) => {
   }
 
   if (options.row_style === "text-bottom") {
-    // Single column layout with the text on bottom
     return (
       <>
-        <div className={rowClasses}>
+        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
           <div className="col-12">
             {options.slide_show_images ? renderSlideShow() : renderImage()}
           </div>
@@ -242,10 +232,12 @@ const DisplayContent = ({ content, image, link, format }) => {
   }
 
   return (
-    <div className={rowClasses}>
+    <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
       {options.row_style === "text-left" && (
-        <div className={`${options.text_classes} align-self-center`} style={options.text_styles}>
-          {/* Render HTML directly */}
+        <div
+          className={`${options.text_classes} align-self-center`}
+          style={options.text_styles}
+        >
           {!options.slide_show_images && (
             <div dangerouslySetInnerHTML={{ __html: content }} />
           )}
@@ -260,8 +252,10 @@ const DisplayContent = ({ content, image, link, format }) => {
         {options.slide_show_images ? renderSlideShow() : renderImage()}
       </div>
       {!(options.row_style === "text-left") && (
-        <div className={`${options.text_classes} align-self-center`} style={options.text_styles}>
-          {/* Render HTML directly */}
+        <div
+          className={`${options.text_classes} align-self-center`}
+          style={options.text_styles}
+        >
           {!options.slide_show_images && (
             <div dangerouslySetInnerHTML={{ __html: content }} />
           )}

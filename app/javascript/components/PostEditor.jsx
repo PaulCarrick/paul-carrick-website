@@ -12,7 +12,7 @@ const PostEditor = () => {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        blog_post: {title, author, content}, // Nest under blog_post
+        blog_post: {title, author, content}, // Nest under blog_posts
       }),
     })
       .then((response) => {

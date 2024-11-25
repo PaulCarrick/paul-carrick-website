@@ -3,5 +3,7 @@ class BlogPost < ApplicationRecord
 
   validates :title, :author, :posted, :content, presence: true
 
-  searchkick
+  def self.ransackable_attributes(auth_object = nil)
+    %w[content]
+  end
 end

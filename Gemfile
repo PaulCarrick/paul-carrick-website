@@ -29,8 +29,7 @@ gem "recaptcha", require: "recaptcha/rails"
 
 gem "devise"
 
-gem "opensearch-ruby"
-gem "searchkick"
+gem "ransack"
 
 # Use Active Model has_secure_password [https://guides.rubyonrails.org/active_model_basics.html#securepassword]
 # gem "bcrypt", "~> 3.1.7"
@@ -56,6 +55,8 @@ gem "thruster", require: false
 gem "image_processing", "~> 1.2"
 
 gem "react-rails"
+
+gem 'pagy'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
