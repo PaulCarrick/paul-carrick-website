@@ -6,34 +6,48 @@ class ContactController < ApplicationController
   end
 
   def create
-    #    if verify_recaptcha(model: @contact)
+    @contact_params = post_comment_params
+
+    # Uncomment this block if using Recaptcha
+    # unless verify_recaptcha(model: @contact_params)
+    #   flash[:alert] = "Recaptcha verification failed. Please try again."
+    #   return redirect_to contact_url("failure", error: "Recaptcha verification failed")
+    # end
+
     begin
-      mailer = ContactMailer.new
+      # Send the email using ContactMailer
+      ContactMailer.contact_email(
+        @contact_params[:name],
+        @contact_params[:email_address],
+        @contact_params[:phone],
+        @contact_params[:message]
+      ).deliver_now
 
-      mailer.contact_email(params[:name], params[:email_address], params[:phone], params[:message]).deliver_now
-
-      @notice = "The contact information was successfully sent."
-      flash[:info] = notice
+      flash[:info] = "The contact information was successfully sent."
 
       respond_to do |format|
         format.html { redirect_to contact_url("success") }
       end
     rescue => e
-      format.html { redirect_to contact_url("failure", error: e.message) }
+      flash[:alert] = "An error occurred: #{e.message}"
+
+      respond_to do |format|
+        format.html { redirect_to contact_url("failure", error: e.message) }
+      end
     end
   end
 
   def show
-    if params[:id] == "success"
-      @results = "The contact information was successfully sent."
-    else
-      @results = "The contact information could not be sent: #{params[:error]}."
-    end
+    @results = if params[:id] == "success"
+                 "The contact information was successfully sent."
+               else
+                 "The contact information could not be sent: #{params[:error]}."
+               end
   end
 
   private
 
   def post_comment_params
-    params.require(:comment).permit(:name, :email_address, :phone, :message)
+    params.permit(:name, :email_address, :phone, :message)
   end
 end
