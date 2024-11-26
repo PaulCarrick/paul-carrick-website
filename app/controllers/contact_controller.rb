@@ -34,6 +34,7 @@ class ContactController < ApplicationController
   end
 
   def show
+byebug
     @results = if params[:id] == "success"
                  "The contact information was successfully sent."
     else
