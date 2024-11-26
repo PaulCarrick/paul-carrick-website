@@ -6,7 +6,7 @@
 <section class="bg-light pt-5 text-secondary">
   <div class="container">
     <h1>Contact Request Form</h1>
-    <%= form_with(url: contact_index_path, method: :post, local: true) do |form| %>
+    <%= form_with(url: new_contact_path, method: :post, local: true) do |form| %>
       <%# recaptcha_tags(site_key: ENV['RECAPTCHA_SITE_KEY'], script: :v3) %>
 
       <% if false && flash[:recaptcha_error] %>
