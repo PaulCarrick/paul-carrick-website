@@ -4,7 +4,13 @@
 <% end %>
 
 <section class="bg-light text-secondary">
-<center><h1><%= @results %></h1></center>
+  <div class="container align-content-lg-center">
+    <h1>Contact Form Submission</h1>
+    <p>
+      <%= @results %>
+    </p>
+    <a href="<%= root_path %>">Back to Home</a>
+  </div>
 </section>
 
 <%= render layout: "layouts/footer" do %>
