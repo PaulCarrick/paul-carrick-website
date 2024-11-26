@@ -3,10 +3,10 @@
 
 class ContactController < ApplicationController
   def new
+    byebug
   end
 
   def create
-byebug
     @contact_params = post_comment_params
 
     # Uncomment this block if using Recaptcha
@@ -26,11 +26,11 @@ byebug
 
       flash[:info] = "The contact information was successfully sent."
 
-      render :create
+      render :new
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      render :create
+      render :new
     end
   end
 
