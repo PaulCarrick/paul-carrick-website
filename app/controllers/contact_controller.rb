@@ -25,11 +25,11 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      render :show, locals: { custom_message: "The contact information was successfully sent." }
+      render :new
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      render :show, locals: { custom_message: "An error occurred: #{e.message}" }
+      render :new
     end
   end
 
