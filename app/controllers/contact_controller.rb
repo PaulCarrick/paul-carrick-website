@@ -25,19 +25,19 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      render js: "window.open('/family', '_self');"
+      redirect_to contact_url("success")
     rescue => e
-      flash[:alert] = "An error occurred: #{e.message}"
+      flash[:alert] = "An error occurred sending the information: #{e.message}"
 
-      render js: "window.open('/family', '_self');"
+      redirect_to contact_url("failure", error: e.message)
     end
   end
 
   def show
     @results = if params[:id] == "success"
-                 "The contact information was successfully sent."
+      "The contact information was successfully sent."
     else
-                 "The contact information could not be sent: #{params[:error]}."
+      "The contact information could not be sent: #{params[:error]}."
     end
   end
 
