@@ -30,7 +30,7 @@ class ContactController < ApplicationController
         format.json { render json: { message: "Success" }, status: :ok } # For AJAX
       end
     rescue => e
-      flash[:alert] = "An error occurred: #{e.message}"
+      flash[:alert] = "An error occurred sending the information: #{e.message}"
 
       respond_to do |format|
         format.html { redirect_to contact_url("failure", error: e.message) }
