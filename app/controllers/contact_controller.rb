@@ -49,6 +49,6 @@ class ContactController < ApplicationController
   private
 
   def post_comment_params
-    params.permit(:name, :email_address, :phone, :message)
+    params.permit(:authenticity_token, :commit, :name, :email_address, :phone, :message)
   end
 end
