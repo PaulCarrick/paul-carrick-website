@@ -25,11 +25,19 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      redirect_to contact_url("success")
+      redirect_path = contact_url("success")
+
+      redirect_path.gsub!("http:", "https:")
+
+      redirect_to redirect_path
     rescue => e
       flash[:alert] = "An error occurred sending the information: #{e.message}"
 
-      redirect_to contact_url("failure", error: e.message)
+      redirect_path = contact_url("failure", error: e.message)
+
+      redirect_path.gsub!("http:", "https:")
+
+      redirect_to redirect_path
     end
   end
 
