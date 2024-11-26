@@ -10,7 +10,7 @@ class ContactController < ApplicationController
     begin
       mailer = ContactMailer.new
 
-      mailer.contact_email(params[:name], params[:email_address], params[:phone], params[:message])
+      mailer.contact_email(params[:name], params[:email_address], params[:phone], params[:message]).deliver_now
 
       @notice = "The contact information was successfully sent."
       flash[:info] = notice
