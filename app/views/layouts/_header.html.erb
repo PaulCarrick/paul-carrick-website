@@ -34,7 +34,13 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown-#{index}">
                       <% menu_item.sub_items.each do |sub_item| %>
                         <li>
-                          <%= link_to sub_item[:label], sub_item[:link], class: "dropdown-item" %>
+                          <% link, method = sub_item[:link]&.split("|") %>
+
+                          <% if method %>
+                            <%= link_to sub_item[:label], link, method: method.to_sym, class: "dropdown-item" %>
+                          <% else %>
+                            <%= link_to sub_item[:label], sub_item[:link], class: "dropdown-item" %>
+                          <% end %>
                         </li>
                       <% end %>
                     </ul>
@@ -49,7 +55,12 @@
                       %>
                     </a>
                   <% else %>
-                    <%= link_to menu_item[:label], menu_item[:link], class: "nav-link px-lg-3 py-lg-4 text-uppercase" %>
+                    <% link, method = menu_item[:link]&.split("|") %>
+                    <% if method %>
+                      <%= link_to menu_item[:label], link, method: method.to_sym, class: "nav-link px-lg-3 py-lg-4 text-uppercase" %>
+                    <% else %>
+                      <%= link_to menu_item[:label], menu_item[:link], class: "nav-link px-lg-3 py-lg-4 text-uppercase" %>
+                    <% end %>
                   <% end %>
                 <% end %>
               </li>

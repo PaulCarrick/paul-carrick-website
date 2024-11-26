@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
   before_action :setup_footer_items
   before_action :setup_user
 
+  def after_sign_in_path_for(resource)
+    page_url("home")
+  end
+
   private
 
   def setup_main_menu_items
@@ -19,6 +23,17 @@ class ApplicationController < ActionController::Base
                                  .includes(:sub_items)
                                  .references(:sub_items)
                                  .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
+
+    if user_signed_in?
+      @main_menu_items.each do |menu_item|
+        next unless menu_item.link == "/users/sign_in"
+
+        menu_item.label = "logout"
+        menu_item.link = "/users/sign_out|delete"
+
+        break
+      end
+    end
   end
 
   def setup_footer_items
