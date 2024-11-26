@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/controllers/blog_posts_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/section_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/blog_posts_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/helpers/section_helper.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/blog_posts/index.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/views/search/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/search_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/search_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/blog_post.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/blog_post.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/page.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/page.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/post_comment.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/post_comment.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/blog/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/blog/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/search/index.html.erb" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,8 +16,8 @@
       <list>
         <option value="Ruby Class" />
         <option value="Ruby File" />
-        <option value="JavaScript File" />
         <option value="ERB File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -246,6 +225,7 @@
       <workItem from="1732392943322" duration="1374000" />
       <workItem from="1732395362891" duration="453000" />
       <workItem from="1732405549184" duration="15047000" />
+      <workItem from="1732555752981" duration="17588000" />
     </task>
     <servers />
   </component>

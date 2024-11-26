@@ -74,7 +74,7 @@ Rails.application.configure do
 
   # SMTP settings
   config.action_mailer.smtp_settings = {
-    address:              'email-smtp.us-east-1.amazonaws.com',
+    address:              'email-smtp.us-west-2.amazonaws.com',
     port:                 465,                # SSL port
     domain:               'paul-carrick.com',
     user_name:            ENV['SMTP_USERNAME'], # SMTP username (from ENV)
