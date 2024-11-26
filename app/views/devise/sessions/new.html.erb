@@ -7,11 +7,11 @@
   <div class="container">
     <div style="max-width: 50%;">
       <% unless user_signed_in? %>
-        <h2>Admin Login</h2>
+        <h2>Login</h2>
         <%= form_with(url: new_user_session_path, scope: :user, local: true) do |form| %>
           <div class="mb-3">
-            <%= form.label :email_address, "Email Address", class: "form-label" %>
-            <%= form.email_field :email_address,
+            <%= form.label :email, "Email Address", class: "form-label" %>
+            <%= form.email_field :email,
                                  class: "form-control",
                                  required: true,
                                  placeholder: "Enter your email address" %>
@@ -41,7 +41,7 @@
         <% end %>
       <% else %>
         <h2>Welcome, <%= current_user.email %>!</h2>
-        <p>You are logged in as an admin.</p>
+        <p>You are logged in.</p>
         <%= link_to "Log out", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
       <% end %>
       </div>
