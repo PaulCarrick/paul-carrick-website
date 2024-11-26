@@ -26,11 +26,10 @@ class ContactController < ApplicationController
       flash[:info] = "The contact information was successfully sent."
 
       respond_to do |format|
-        format.html { redirect_to contact_url("success"), protocol: "https" }
-        format.json { render json: { message: "Success" }, status: :ok } # For AJAX
+        format.html { redirect_to contact_url("success") }
       end
     rescue => e
-      flash[:alert] = "An error occurred sending the information: #{e.message}"
+      flash[:alert] = "An error occurred: #{e.message}"
 
       respond_to do |format|
         format.html { redirect_to contact_url("failure", error: e.message) }
@@ -40,10 +39,10 @@ class ContactController < ApplicationController
 
   def show
     @results = if params[:id] == "success"
-      "The contact information was successfully sent."
-    else
-      "The contact information could not be sent: #{params[:error]}."
-    end
+                 "The contact information was successfully sent."
+               else
+                 "The contact information could not be sent: #{params[:error]}."
+               end
   end
 
   private
