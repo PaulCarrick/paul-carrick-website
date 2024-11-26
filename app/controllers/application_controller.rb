@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
 
-  protect_from_forgery with: :exception, unless: -> { request.origin == request.base_url }
+  protect_from_forgery with: :exception, unless: -> { request.base_url == "http://paul-carrick.com" }
 
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
