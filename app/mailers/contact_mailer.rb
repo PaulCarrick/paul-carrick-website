@@ -10,8 +10,7 @@ class ContactMailer < ApplicationMailer
     @sender_message = message
 
     mail do |format|
-      format.html { redirect_to contact_url("success") } # For non-AJAX
-      format.json { render json: { message: "Success" }, status: :ok } # For AJAX
+      format.html # This looks for a `contact_email.html.erb` template
     end
   end
 end
