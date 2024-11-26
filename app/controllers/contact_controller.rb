@@ -3,7 +3,6 @@
 
 class ContactController < ApplicationController
   def new
-    byebug
   end
 
   def create
@@ -26,11 +25,11 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      render :new
+      redirect_to '/family'
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      render :new
+      redirect_to '/family'
     end
   end
 
