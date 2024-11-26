@@ -24,16 +24,14 @@ class ContactController < ApplicationController
       ).deliver_now
 
       flash[:info] = "The contact information was successfully sent."
-
-      redirect_path = "#{root_url}contact/success"
+      redirect_path = contact_url("success")
 
       redirect_path.gsub!("http:", "https:")
 
       redirect_to redirect_path
     rescue => e
       flash[:alert] = "An error occurred sending the information: #{e.message}"
-
-      redirect_path = "#{root_url}contact/failure?error=#{e.message}"
+      redirect_path = contact_url("failure", error: e.message)
 
       redirect_path.gsub!("http:", "https:")
 
@@ -43,9 +41,9 @@ class ContactController < ApplicationController
 
   def show
     @results = if params[:id] == "success"
-      "The contact information was successfully sent."
+                 "The contact information was successfully sent."
     else
-      "The contact information could not be sent: #{params[:error]}."
+                 "The contact information could not be sent: #{params[:error]}."
     end
   end
 
