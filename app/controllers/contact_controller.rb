@@ -39,10 +39,10 @@ class ContactController < ApplicationController
 
   def show
     @results = if params[:id] == "success"
-                 "The contact information was successfully sent."
-               else
-                 "The contact information could not be sent: #{params[:error]}."
-               end
+      "The contact information was successfully sent."
+    else
+      "The contact information could not be sent: #{params[:error]}."
+    end
   end
 
   private
