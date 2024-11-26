@@ -26,13 +26,13 @@ class ContactController < ApplicationController
       flash[:info] = "The contact information was successfully sent."
 
       respond_to do |format|
-        format.html { redirect_to contact_url("success") }
+        format.html { redirect_to controller: "contact", action: "show", id: "success" }
       end
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
       respond_to do |format|
-        format.html { redirect_to contact_url("failure", error: e.message) }
+        format.html { redirect_to controller: "contact", action: "show", id: "failure" }
       end
     end
   end
@@ -40,9 +40,9 @@ class ContactController < ApplicationController
   def show
     @results = if params[:id] == "success"
                  "The contact information was successfully sent."
-               else
+    else
                  "The contact information could not be sent: #{params[:error]}."
-               end
+    end
   end
 
   private
