@@ -26,8 +26,7 @@ class ContactController < ApplicationController
       flash[:info] = "The contact information was successfully sent."
 
       respond_to do |format|
-        format.html { redirect_to contact_url("success"), protocol: "https" }
-        format.json { render json: { message: "Success" }, status: :ok } # For AJAX
+        format.html { redirect_to root_path }
       end
     rescue => e
       flash[:alert] = "An error occurred sending the information: #{e.message}"
@@ -49,6 +48,6 @@ class ContactController < ApplicationController
   private
 
   def post_comment_params
-    params.permit(:authenticity_token, :commit, :name, :email_address, :phone, :message)
+    params.permit(:name, :email_address, :phone, :message)
   end
 end
