@@ -11,7 +11,7 @@ class ContactMailer < ApplicationMailer
     mail(template_path: "contact_mailer",
          template_name: "contact_email",
          to: "carrick.paul.jeffrey@gmail.com",
-         from: "info@paul-carrick.com",
+         from: "paul@paul-carrick.com",
          subject: "Contact Request") do |format|
       format.html # Ensure it looks for `contact_email.html.erb`
     end
