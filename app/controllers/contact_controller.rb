@@ -26,7 +26,7 @@ class ContactController < ApplicationController
       flash[:info] = "The contact information was successfully sent."
 
       respond_to do |format|
-        format.html { redirect_to contact_url("success") }
+        format.html { redirect_to contact_path("success") }
         format.json { render json: { message: "Success" }, status: :ok } # For AJAX
       end
     rescue => e
