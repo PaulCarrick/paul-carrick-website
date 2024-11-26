@@ -6,6 +6,7 @@ class ContactController < ApplicationController
   end
 
   def create
+byebug
     @contact_params = post_comment_params
 
     # Uncomment this block if using Recaptcha
