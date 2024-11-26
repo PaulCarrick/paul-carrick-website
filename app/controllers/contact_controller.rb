@@ -25,15 +25,11 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      respond_to do |format|
-        format.html { redirect_to controller: "contact", action: "show", id: "success" }
-      end
+      render :show, locals: { custom_message: "The contact information was successfully sent." }
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      respond_to do |format|
-        format.html { redirect_to controller: "contact", action: "show", id: "failure" }
-      end
+      render :show, locals: { custom_message: "An error occurred: #{e.message}" }
     end
   end
 
