@@ -26,11 +26,11 @@ byebug
 
       flash[:info] = "The contact information was successfully sent."
 
-      render :new
+      render :create
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      render :new
+      render :create
     end
   end
 
