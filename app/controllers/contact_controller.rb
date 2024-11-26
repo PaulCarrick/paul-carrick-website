@@ -25,11 +25,11 @@ class ContactController < ApplicationController
 
       flash[:info] = "The contact information was successfully sent."
 
-      redirect_to 'https://paul-carrick.com/family'
+      render js: "window.open('/family', '_self');"
     rescue => e
       flash[:alert] = "An error occurred: #{e.message}"
 
-      redirect_to 'https://paul-carrick.com/family'
+      render js: "window.open('/family', '_self');"
     end
   end
 
