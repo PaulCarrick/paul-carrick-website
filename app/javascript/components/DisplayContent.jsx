@@ -172,16 +172,18 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
 
   if (options.row_style === "text-single") {
     return (
-      <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
-        <div className="col-12">
-          {!options.slide_show_images && (
-            <div dangerouslySetInnerHTML={{ __html: content }} />
-          )}
-          {options.expanding_rows && (
-            <button id={toggleId} className={toggleClass}>
-              Show More
-            </button>
-          )}
+      <div id="contents">
+        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+          <div className="col-12">
+            {!options.slide_show_images && (
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            )}
+            {options.expanding_rows && (
+              <button id={toggleId} className={toggleClass}>
+                Show More
+              </button>
+            )}
+          </div>
         </div>
       </div>
     );
@@ -189,7 +191,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
 
   if (options.row_style === "text-top") {
     return (
-      <>
+      <div id="contents">
         <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
           <div className="col-12">
             <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -205,13 +207,13 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
             {options.slide_show_images ? renderSlideShow() : renderImage()}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   if (options.row_style === "text-bottom") {
     return (
-      <>
+      <div id="contents">
         <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
           <div className="col-12">
             {options.slide_show_images ? renderSlideShow() : renderImage()}
@@ -227,45 +229,47 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
             )}
           </div>
         </div>
-      </>
+      </div>
     );
   }
 
   return (
-    <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
-      {options.row_style === "text-left" && (
-        <div
-          className={`${options.text_classes} align-self-center`}
-          style={options.text_styles}
-        >
-          {!options.slide_show_images && (
-            <div dangerouslySetInnerHTML={{ __html: content }} />
-          )}
-          {options.expanding_rows && (
-            <button id={toggleId} className={toggleClass}>
-              Show More
-            </button>
-          )}
+    <div id="contents">
+      <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+        {options.row_style === "text-left" && (
+          <div
+            className={`${options.text_classes} align-self-center`}
+            style={options.text_styles}
+          >
+            {!options.slide_show_images && (
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            )}
+            {options.expanding_rows && (
+              <button id={toggleId} className={toggleClass}>
+                Show More
+              </button>
+            )}
+          </div>
+        )}
+        <div className={`${imageClasses}`}>
+          {options.slide_show_images ? renderSlideShow() : renderImage()}
         </div>
-      )}
-      <div className={`${imageClasses}`}>
-        {options.slide_show_images ? renderSlideShow() : renderImage()}
+        {!(options.row_style === "text-left") && (
+          <div
+            className={`${options.text_classes} align-self-center`}
+            style={options.text_styles}
+          >
+            {!options.slide_show_images && (
+              <div dangerouslySetInnerHTML={{ __html: content }} />
+            )}
+            {options.expanding_rows && (
+              <button id={toggleId} className={toggleClass}>
+                Show More
+              </button>
+            )}
+          </div>
+        )}
       </div>
-      {!(options.row_style === "text-left") && (
-        <div
-          className={`${options.text_classes} align-self-center`}
-          style={options.text_styles}
-        >
-          {!options.slide_show_images && (
-            <div dangerouslySetInnerHTML={{ __html: content }} />
-          )}
-          {options.expanding_rows && (
-            <button id={toggleId} className={toggleClass}>
-              Show More
-            </button>
-          )}
-        </div>
-      )}
     </div>
   );
 };

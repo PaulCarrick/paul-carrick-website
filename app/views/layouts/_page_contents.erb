@@ -13,70 +13,68 @@
   <div class="container">
     <p class="alert"><%= alert %></p>
 
-    <div id="contents">
-      <% @contents.each do |content| %>
-        <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
-        <div class="<%= section_classes %>">
-          <% if content.image.present? %>
-            <% if content.image =~ /\[(.*?)\]/m %>
-              <%
-                new_formatting = content.formatting
-                images = Regexp.last_match(1).split(",").map do |image|
-                  begin
-                    image_path(image.strip)
-                  rescue
-                    byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-                    @missing_image
-                  end
+    <% @contents.each do |content| %>
+      <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
+      <div class="<%= section_classes %>">
+        <% if content.image.present? %>
+          <% if content.image =~ /\[(.*?)\]/m %>
+            <%
+              new_formatting = content.formatting
+              images = Regexp.last_match(1).split(",").map do |image|
+                begin
+                  image_path(image.strip)
+                rescue
+                  byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                  @missing_image
                 end
+              end
 
-                if new_formatting && new_formatting.length > 0
-                  formatting_json = JSON.parse(new_formatting)
-                  formatting_json["slide_show_images"] = images
-                  new_formatting = formatting_json.to_json
-                else
-                  new_formatting = { slide_show_images: images }.to_json
-                end
-              %>
-              <%= react_component("DisplayContent", {
-                content: content.description,
-                image: nil,
-                link: content.link,
-                format: new_formatting,
-                section_id: content.section_name
-              }) %>
-            <% else %>
-              <%
-                image = nil
-
-                if content.image
-                  begin
-                    image = image_path(content.image)
-                  rescue
-                    byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-                    image = @missing_image
-                  end
-                end
-              %>
-              <%= react_component("DisplayContent", {
-                content: content.description,
-                image: image,
-                link: content.link,
-                format: content.formatting,
-                section_id: content.section_name
-              }) %>
-            <% end %>
+              if new_formatting && new_formatting.length > 0
+                formatting_json = JSON.parse(new_formatting)
+                formatting_json["slide_show_images"] = images
+                new_formatting = formatting_json.to_json
+              else
+                new_formatting = { slide_show_images: images }.to_json
+              end
+            %>
+            <%= react_component("DisplayContent", {
+              content: content.description,
+              image: nil,
+              link: content.link,
+              format: new_formatting,
+              section_id: content.section_name
+            }) %>
           <% else %>
-            <%= react_component("DisplayContent", { content: content.description,
-                                                    image: nil,
-                                                    link: content.link,
-                                                    format: content.formatting,
-                                                    section_id: content.section_name
+            <%
+              image = nil
+
+              if content.image
+                begin
+                  image = image_path(content.image)
+                rescue
+                  byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                  image = @missing_image
+                end
+              end
+            %>
+            <%= react_component("DisplayContent", {
+              content: content.description,
+              image: image,
+              link: content.link,
+              format: content.formatting,
+              section_id: content.section_name
             }) %>
           <% end %>
-        </div>
-      <% end %>
-    </div>
+        <% else %>
+          <%= react_component("DisplayContent", { content: content.description,
+                                                  image: nil,
+                                                  link: content.link,
+                                                  format: content.formatting,
+                                                  section_id: content.section_name
+          }) %>
+        <% end %>
+      </div>
+    <% end %>
 
     <input type="hidden" id="content-rendered-signal" value="true"/>
   </div>
@@ -86,7 +84,19 @@
 <% end %>
 
 <script>
-  function waitForRender() {
+  function handleEmptyContents() {
+    const myDiv = document.getElementById("contents");
+
+    if (myDiv === null) {
+      // Get the current URL
+      const currentUrl = window.location.href;
+
+      // Open the URL in a new tab
+      window.open(currentUrl, '_self');
+    }
+  }
+
+  function scrollToSection() {
     const signalElement = document.getElementById("content-rendered-signal");
 
     if (signalElement) {
@@ -97,16 +107,18 @@
       if (sectionName) {
         const sectionElement = document.getElementById(sectionName);
 
-        if (sectionElement) {
+        if (sectionElement)
           sectionElement.scrollIntoView({behavior: "smooth", block: "start"});
-        }
       }
+    }
+  }
 
-      const myDiv = document.getElementById("contents");
+  function waitForRender(callback) {
+    const signalElement = document.getElementById("content-rendered-signal");
 
-      if (myDiv.innerHTML.trim() === "") {
-        alert('No contents');
-      }
+    if (signalElement) {
+      if (typeof callback === "function")
+        callback();
     } else {
       // Retry after a short delay if the signal element is not yet rendered
       setTimeout(waitForRender, 50);
@@ -118,6 +130,8 @@
     const sectionName = params.get("section_name");
 
     if (sectionName)
-      setTimeout(waitForRender, 1000);
+      setTimeout(() => waitForRender(handleSectionScroll), 500);
+    else
+      setTimeout(() => waitForRender(handleEmptyContents), 100);
   });
 </script>
