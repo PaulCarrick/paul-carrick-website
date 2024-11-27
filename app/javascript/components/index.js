@@ -21,7 +21,7 @@ try {
         PostDetail
     });
 } catch (error) {
-    if (!error instanceof TypeError)
+    if (!(error instanceof TypeError))
         throw error;
 }
 
