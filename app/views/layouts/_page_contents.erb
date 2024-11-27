@@ -86,13 +86,6 @@
 <% end %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const myDiv = document.getElementById("contents");
-    if (myDiv.innerHTML.trim() === "") {
-      debugger;
-    }
-  });
-
   function waitForRender() {
     const signalElement = document.getElementById("content-rendered-signal");
 
@@ -107,6 +100,12 @@
         if (sectionElement) {
           sectionElement.scrollIntoView({behavior: "smooth", block: "start"});
         }
+      }
+
+      const myDiv = document.getElementById("contents");
+
+      if (myDiv.innerHTML.trim() === "") {
+        alert('No contents');
       }
     } else {
       // Retry after a short delay if the signal element is not yet rendered
