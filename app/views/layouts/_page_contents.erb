@@ -88,7 +88,6 @@
   // This is due to some interaction between hotwired or turbo frames and React.
   // This was one solution chatgpt suggested. I'd love to find another.
   function handleEmptyContents() {
-debugger;
     const contentsDiv = document.getElementById("contents");
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -138,8 +137,8 @@ debugger;
     else {
       const currentUrl = window.location.href;
 
-      if (currentUrl.indexOf("home"))
-        setTimeout(() => waitForRender(handleEmptyContents), 100);
+//      if (currentUrl.indexOf("home"))
+//        setTimeout(() => waitForRender(handleEmptyContents), 100);
     }
   });
 </script>

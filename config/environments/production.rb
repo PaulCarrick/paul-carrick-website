@@ -6,19 +6,19 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.enable_reloading = false
+  config.enable_reloading = true
 
   # Eager load code on boot for better performance and memory savings (ignored by Rake tasks).
-  config.eager_load = true
+  config.eager_load = false
 
   # Full error reports are disabled.
   config.consider_all_requests_local = false
 
   # Turn on fragment caching in view templates.
-  config.action_controller.perform_caching = true
+  config.action_controller.perform_caching = false
 
   # Cache assets for far-future expiry since they are all digest stamped.
-  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.year.to_i}" }
+  config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.minute.to_i}" }
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
@@ -89,4 +89,25 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # Email delivery method
+  config.action_mailer.delivery_method = :smtp
+
+  # SMTP settings
+  config.action_mailer.smtp_settings = {
+    address:              'email-smtp.us-west-2.amazonaws.com',
+    port:                 465,                # SSL port
+    domain:               'paul-carrick.com',
+    user_name:            ENV['SMTP_USERNAME'], # SMTP username (from ENV)
+    password:             ENV['SMTP_PASSWORD'], # SMTP password (from ENV)
+    authentication:       :login,             # Authentication type (:plain, :login, :cram_md5)
+    ssl:                  true,               # Enable SSL
+    enable_starttls_auto: false               # Disable STARTTLS since SSL is used
+  }
+
+  # Raise delivery errors in development
+  config.action_mailer.raise_delivery_errors = true
+
+  config.assets.js_compressor = :uglifier # Or another compressor
+  config.assets.compile = false
 end
