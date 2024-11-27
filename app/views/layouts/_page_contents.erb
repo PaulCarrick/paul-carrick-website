@@ -93,9 +93,9 @@
     if (!contentsDiv && ((typeof params === "undefined") || !params.get?.("reloaded"))) {
       const currentUrl = window.location.href.replace(/^http:/, "https:");
 
-      if (currentUrl.indexOf('?'))
-        window.open(currentUrl + "&reloaded=true", '_self');
-      else
+//      if (currentUrl.indexOf('?'))
+//        window.open(currentUrl + "&reloaded=true", '_self');
+//      else
         window.open(currentUrl + "?reloaded=true", '_self');
     }
   }
