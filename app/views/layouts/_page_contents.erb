@@ -88,6 +88,7 @@
   // This is due to some interaction between hotwired or turbo frames and React.
   // This was one solution chatgpt suggested. I'd love to find another.
   function handleEmptyContents() {
+debugger;
     const contentsDiv = document.getElementById("contents");
 
     if ((contentsDiv === null) && (!params.get("reloaded"))) {
