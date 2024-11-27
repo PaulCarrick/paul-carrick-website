@@ -88,6 +88,7 @@
   // This is due to some interaction between hotwired or turbo frames and React.
   // This was one solution chatgpt suggested. I'd love to find another.
   function handleEmptyContents() {
+debugger;
     const contentsDiv = document.getElementById("contents");
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
@@ -96,9 +97,9 @@
       const currentUrl = window.location.href.replace(/^http:/, "https:");
 
       if (typeof params === "undefined")
-        window.open(currentUrl + "&reloaded=true", '_self');
+        window.location.href = currentUrl + "?reloaded=true";
       else
-        window.open(currentUrl + "?reloaded=true", '_self');
+        window.location.href = currentUrl + "&reloaded=true";
     }
   }
 
