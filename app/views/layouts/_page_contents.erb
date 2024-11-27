@@ -93,10 +93,10 @@ debugger;
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
 
-    if (!contentsDiv && ((typeof params === "undefined") || !params.get?.("reloaded"))) {
+    if (!contentsDiv && !params.get?.("reloaded")) {
       const currentUrl = window.location.href.replace(/^http:/, "https:");
 
-      if (typeof params === "undefined")
+      if (!params.get?.("reloaded"))
         window.location.href = currentUrl + "?reloaded=true";
       else
         window.location.href = currentUrl + "&reloaded=true";
