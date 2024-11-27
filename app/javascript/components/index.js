@@ -21,12 +21,8 @@ try {
         PostDetail
     });
 } catch (error) {
-    if (error instanceof TypeError) {
-        console.error("Caught a TypeError:", error.message);
-    } else {
-        // Re-throw other errors to handle them elsewhere
+    if (!error instanceof TypeError)
         throw error;
-    }
 }
 
 document.addEventListener("turbo:load", () => {
