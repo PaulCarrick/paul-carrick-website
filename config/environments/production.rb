@@ -110,4 +110,5 @@ Rails.application.configure do
 
   config.assets.js_compressor = :uglifier # Or another compressor
   config.assets.compile = false
+  config.force_ssl = true
 end
