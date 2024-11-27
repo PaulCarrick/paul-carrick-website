@@ -11,10 +11,6 @@ class ApplicationController < ActionController::Base
   before_action :setup_footer_items
   before_action :setup_user
 
-  def after_sign_in_path_for(resource)
-    page_url("home")
-  end
-
   private
 
   def setup_main_menu_items
