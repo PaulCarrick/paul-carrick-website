@@ -93,13 +93,10 @@ debugger;
     const queryString = window.location.search;
     const params = new URLSearchParams(queryString);
 
-    if (!contentsDiv && !params.get?.("reloaded")) {
+    if (!contentsDiv && ((typeof params === "undefined") || !params.get?.("reloaded"))) {
       const currentUrl = window.location.href.replace(/^http:/, "https:");
 
-      if (!params.get?.("reloaded"))
-        window.location.href = currentUrl + "?reloaded=true";
-      else
-        window.location.href = currentUrl + "&reloaded=true";
+      window.open(currentUrl + "?reloaded=true", '_self');
     }
   }
 
@@ -135,9 +132,14 @@ debugger;
     const params = new URLSearchParams(window.location.search);
     const sectionName = params.get("section_name");
 
-    if (sectionName)
+    if (sectionName) {
       setTimeout(() => waitForRender(handleSectionScroll), 500);
-    else
-      setTimeout(() => waitForRender(handleEmptyContents), 100);
+    }
+    else {
+      const currentUrl = window.location.href;
+
+      if (currentUrl.indexOf("home"))
+        setTimeout(() => waitForRender(handleEmptyContents), 100);
+    }
   });
 </script>
