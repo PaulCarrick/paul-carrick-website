@@ -84,15 +84,19 @@
 <% end %>
 
 <script>
+  // TO DO?
+  // This is due to some interaction between hotwired or turbo frames and React.
+  // This was one solution chatgpt suggested. I'd love to find another.
   function handleEmptyContents() {
-    const myDiv = document.getElementById("contents");
+    const contentsDiv = document.getElementById("contents");
 
-    if (myDiv === null) {
-      // Get the current URL
+    if ((contentsDiv === null) && (!params.get("reloaded"))) {
       const currentUrl = window.location.href;
 
-      // Open the URL in a new tab
-      window.open(currentUrl, '_self');
+      if (currentUrl.indexOf('?'))
+        window.open(currentUrl + "&reloaded=true", '_self');
+      else
+        window.open(currentUrl + "?reloaded=true", '_self');
     }
   }
 
@@ -120,7 +124,6 @@
       if (typeof callback === "function")
         callback();
     } else {
-      // Retry after a short delay if the signal element is not yet rendered
       setTimeout(waitForRender, 50);
     }
   }
