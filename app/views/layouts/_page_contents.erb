@@ -13,68 +13,70 @@
   <div class="container">
     <p class="alert"><%= alert %></p>
 
-    <% @contents.each do |content| %>
-      <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
-      <div class="<%= section_classes %>">
-        <% if content.image.present? %>
-          <% if content.image =~ /\[(.*?)\]/m %>
-            <%
-              new_formatting = content.formatting
-              images = Regexp.last_match(1).split(",").map do |image|
-                begin
-                  image_path(image.strip)
-                rescue
-                  byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-                  @missing_image
+    <div id="contents">
+      <% @contents.each do |content| %>
+        <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
+        <div class="<%= section_classes %>">
+          <% if content.image.present? %>
+            <% if content.image =~ /\[(.*?)\]/m %>
+              <%
+                new_formatting = content.formatting
+                images = Regexp.last_match(1).split(",").map do |image|
+                  begin
+                    image_path(image.strip)
+                  rescue
+                    byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                    @missing_image
+                  end
                 end
-              end
 
-              if new_formatting && new_formatting.length > 0
-                formatting_json = JSON.parse(new_formatting)
-                formatting_json["slide_show_images"] = images
-                new_formatting = formatting_json.to_json
-              else
-                new_formatting = { slide_show_images: images }.to_json
-              end
-            %>
-            <%= react_component("DisplayContent", {
-              content: content.description,
-              image: nil,
-              link: content.link,
-              format: new_formatting,
-              section_id: content.section_name
-            }) %>
+                if new_formatting && new_formatting.length > 0
+                  formatting_json = JSON.parse(new_formatting)
+                  formatting_json["slide_show_images"] = images
+                  new_formatting = formatting_json.to_json
+                else
+                  new_formatting = { slide_show_images: images }.to_json
+                end
+              %>
+              <%= react_component("DisplayContent", {
+                content: content.description,
+                image: nil,
+                link: content.link,
+                format: new_formatting,
+                section_id: content.section_name
+              }) %>
+            <% else %>
+              <%
+                image = nil
+
+                if content.image
+                  begin
+                    image = image_path(content.image)
+                  rescue
+                    byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+                    image = @missing_image
+                  end
+                end
+              %>
+              <%= react_component("DisplayContent", {
+                content: content.description,
+                image: image,
+                link: content.link,
+                format: content.formatting,
+                section_id: content.section_name
+              }) %>
+            <% end %>
           <% else %>
-            <%
-              image = nil
-
-              if content.image
-                begin
-                  image = image_path(content.image)
-                rescue
-                  byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-                  image = @missing_image
-                end
-              end
-            %>
-            <%= react_component("DisplayContent", {
-              content: content.description,
-              image: image,
-              link: content.link,
-              format: content.formatting,
-              section_id: content.section_name
+            <%= react_component("DisplayContent", { content: content.description,
+                                                    image: nil,
+                                                    link: content.link,
+                                                    format: content.formatting,
+                                                    section_id: content.section_name
             }) %>
           <% end %>
-        <% else %>
-          <%= react_component("DisplayContent", { content: content.description,
-                                                  image: nil,
-                                                  link: content.link,
-                                                  format: content.formatting,
-                                                  section_id: content.section_name
-          }) %>
-        <% end %>
-      </div>
-    <% end %>
+        </div>
+      <% end %>
+    </div>
 
     <input type="hidden" id="content-rendered-signal" value="true"/>
   </div>
@@ -84,22 +86,7 @@
 <% end %>
 
 <script>
-  // TO DO?
-  // This is due to some interaction between hotwired or turbo frames and React.
-  // This was one solution chatgpt suggested. I'd love to find another.
-  function handleEmptyContents() {
-    const contentsDiv = document.getElementById("contents");
-    const queryString = window.location.search;
-    const params = new URLSearchParams(queryString);
-
-    if (!contentsDiv && ((typeof params === "undefined") || !params.get?.("reloaded"))) {
-      const currentUrl = window.location.href.replace(/^http:/, "https:");
-
-      window.open(currentUrl + "?reloaded=true", '_self');
-    }
-  }
-
-  function scrollToSection() {
+  function waitForRender() {
     const signalElement = document.getElementById("content-rendered-signal");
 
     if (signalElement) {
@@ -110,19 +97,12 @@
       if (sectionName) {
         const sectionElement = document.getElementById(sectionName);
 
-        if (sectionElement)
+        if (sectionElement) {
           sectionElement.scrollIntoView({behavior: "smooth", block: "start"});
+        }
       }
-    }
-  }
-
-  function waitForRender(callback) {
-    const signalElement = document.getElementById("content-rendered-signal");
-
-    if (signalElement) {
-      if (typeof callback === "function")
-        callback();
     } else {
+      // Retry after a short delay if the signal element is not yet rendered
       setTimeout(waitForRender, 50);
     }
   }
@@ -131,14 +111,7 @@
     const params = new URLSearchParams(window.location.search);
     const sectionName = params.get("section_name");
 
-    if (sectionName) {
-      setTimeout(() => waitForRender(handleSectionScroll), 500);
-    }
-    else {
-      const currentUrl = window.location.href;
-
-//      if (currentUrl.indexOf("home"))
-//        setTimeout(() => waitForRender(handleEmptyContents), 100);
-    }
+    if (sectionName)
+      setTimeout(waitForRender, 1000);
   });
 </script>
