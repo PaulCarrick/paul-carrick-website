@@ -90,7 +90,7 @@
   function handleEmptyContents() {
     const contentsDiv = document.getElementById("contents");
 
-    if ((contentsDiv === null) && (!params.get("reloaded"))) {
+    if (!contentsDiv && ((typeof params === "undefined") || !params.get?.("reloaded"))) {
       const currentUrl = window.location.href.replace(/^http:/, "https:");
 
       if (currentUrl.indexOf('?'))
