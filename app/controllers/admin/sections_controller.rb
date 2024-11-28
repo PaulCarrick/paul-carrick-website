@@ -28,7 +28,10 @@ class Admin::SectionsController < ApplicationController
   end
 
   def edit
-    @section.formatting = JSON.pretty_generate(JSON.parse(@section.formatting)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+    if @section.formatting/present?
+      @section.formatting = JSON.pretty_generate(JSON.parse(@section.formatting)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+    end
+
     @content_types = Section.distinct.pluck(:content_type)
   end
 
