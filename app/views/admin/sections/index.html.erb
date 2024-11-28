@@ -1,0 +1,107 @@
+<!-- app/views/admin/sections/index.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - Sections" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <div class="scrollable-container">
+    <div class="row border-bottom border-dark mb-2">
+      <div class="col-2">
+        <%= sortable_column('Content Type', 'content_type') %>
+      </div>
+      <div class="col-2">
+        <%= sortable_column('Section Name', 'section_name') %>
+      </div>
+      <div class="col-2">
+        <%= sortable_column('Section Order', 'section_order') %>
+      </div>
+      <div class="col-2">
+        <%= sortable_column('Image(s)', 'image') %>
+      </div>
+      <div class="col-2">
+        <%= sortable_column('Url', 'link') %>
+      </div>
+      <div class="col-2">
+      </div>
+    </div>
+    <% @sections.each do |section| %>
+      <div class="row">
+        <div class="col-2">
+          <%= section.content_type %>
+        </div>
+        <div class="col-2">
+          <%= section.section_name %>
+        </div>
+        <div class="col-2">
+          <%= section.section_order %>
+        </div>
+        <div class="col-2">
+          <%= section.image %>
+        </div>
+        <div class="col-2">
+          <%= section.link %>
+        </div>
+        <div class="col-2" style="min-height: 2em;">
+          <% delete_path = admin_section_path(section).to_s + "/delete" %>
+          <%= action_links(section, edit_admin_section_path(section), delete_path) %>
+        </div>
+        <div class="row">
+          <div class="col-1">
+          </div>
+          <div class="col-1">
+            Description:
+          </div>
+          <div class="col-8">
+            <%= raw(truncate_html(section.description, 768)) %>
+          </div>
+          <div class="col-2">
+          </div>
+        </div>
+        <div class="row pb-5">
+          <div class="col-1">
+          </div>
+          <div class="col-1">
+            Formatting:
+          </div>
+          <div class="col-8">
+            <%= section.formatting %>
+          </div>
+          <div class="col-2">
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div class="row">
+      <div class="col-10">
+      </div>
+      <div class="col-2 justify-content-end">
+        <nav aria-label="Pagination">
+          <ul class="pagination justify-content-center">
+            <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
+              <%= link_to 'First', url_for(page: 1), class: 'page-link' %>
+            </li>
+            <li class="page-item <%= 'disabled' unless @pagy.prev %>">
+              <%= link_to 'Previous', url_for(page: @pagy.prev), class: 'page-link' %>
+            </li>
+            <li class="page-item <%= 'disabled' unless @pagy.next %>">
+              <%= link_to 'Next', url_for(page: @pagy.next), class: 'page-link' %>
+            </li>
+            <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
+              <%= link_to 'Last', url_for(page: @pagy.last), class: 'page-link' %>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-2">
+          <%= link_to("New Section", new_admin_section_path, class: "btn btn-primary") %>
+        </div>
+        <div class="col-10">
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

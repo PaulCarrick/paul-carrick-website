@@ -29,7 +29,7 @@ COPY public.footer_items (id, label, icon, options, link, access, footer_order, 
 11	OTHER	\N	\N	\N	\N	11	\N	2024-11-22 07:56:24.787828	2024-11-22 07:56:24.787828
 12	Contact Paul	\N	\N	/contact/new	\N	12	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
 13	Search Website	\N	\N	/search/new	\N	13	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
-14	Admin Dashboard	\N	\N	/admin/dashboard	admin	14	11	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
+14	Admin Dashboard	\N	\N	/admin	admin	14	11	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
 \.
 
 --

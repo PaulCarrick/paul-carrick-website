@@ -1,0 +1,32 @@
+<!-- app/views/admin/blogs/new.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - New Blog" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <%= form_with(model: @blog, url: admin_blogs_path, method: :post, local: true) do |form| %>
+    <%= form.hidden_field :author, value: current_user.name %>
+    <%= form.hidden_field :posted, value: DateTime.new.to_s %>
+
+    <div class="mb-3">
+      <%= form.label :title, "Title*", class: "form-label" %>
+      <%= form.text_field :title, class: "form-control", required: true, placeholder: "Enter the title" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :content, "content*", class: "form-label" %>
+      <%= form.rich_text_area :content, class: "form-control", required: true %>
+    </div>
+
+    <div class="pb-3">
+      * - Required Fields
+    </div>
+    <div class="mb-3">
+      <%= form.submit "Save Blog", class: "btn btn-primary me-3" %>
+      <%= link_to("Cancel", admin_blogs_url, class: "btn btn-primary") %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

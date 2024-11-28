@@ -3,6 +3,7 @@
 class CreateMenuItems < ActiveRecord::Migration[8.0]
   def change
     create_table :menu_items do |t|
+      t.string :menu_type
       t.string :label
       t.text :icon
       t.string :options

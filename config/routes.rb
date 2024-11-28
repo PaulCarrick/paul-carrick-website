@@ -12,7 +12,9 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: "users/sessions"
+  }
 
   devise_scope :user do
     get "/users/sign_out", to: "devise/sessions#destroy"
@@ -20,7 +22,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index" # Admin dashboard
-    # Add other admin routes here
+    resources :blogs, except: [ :destroy ]
+    delete "/blogs/:id", to: "blogs#destroy", as: "delete_blog"
+    get "/blogs/:id/delete", to: "blogs#destroy", as: "destroy_blog"
+    resources :sections, except: [ :destroy ]
+    delete "/sections/:id", to: "sections#destroy", as: "delete_section"
+    get "/sections/:id/delete", to: "sections#destroy", as: "destroy_section"
   end
 
   resources :blog, only: [ :index ]

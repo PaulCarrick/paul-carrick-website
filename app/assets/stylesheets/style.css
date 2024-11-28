@@ -1,3 +1,9 @@
+.scrollable-container {
+  max-height: 70vh; /* Set the max height (adjust as needed) */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Disable horizontal scrolling */
+}
+
 .slideshow-container {
   max-width: 100%;
   position: relative;

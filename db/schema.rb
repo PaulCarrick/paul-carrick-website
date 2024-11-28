@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_27_192628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,15 +76,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
   end
 
   create_table "menu_items", force: :cascade do |t|
+    t.string "menu_type"
     t.string "label"
     t.text "icon"
     t.string "options"
     t.string "link"
+    t.string "access"
     t.integer "menu_order"
     t.integer "parent_id"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string "access"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_22_182613) do
     t.datetime "updated_at", null: false
     t.string "name"
     t.boolean "admin", default: false
+    t.boolean "super"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

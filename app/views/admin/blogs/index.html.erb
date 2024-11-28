@@ -1,0 +1,75 @@
+<!-- app/views/admin/blogs/index.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - Blogs" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <div class="row border-bottom border-dark mb-2">
+    <div class="col-1">
+      <%= sortable_column('Author', 'author') %>
+    </div>
+    <div class="col-2">
+      <%= sortable_column('Title', 'title') %>
+    </div>
+    <div class="col-2">
+      <%= sortable_column('Posted', 'posted') %>
+    </div>
+    <div class="col-6">
+      Contents
+    </div>
+    <div class="col-1">
+    </div>
+  </div>
+  <% @blogs.each do |blog| %>
+    <div class="row">
+      <div class="col-1">
+        <%= blog.author %>
+      </div>
+      <div class="col-2">
+        <%= blog.title %>
+      </div>
+      <div class="col-2">
+        <%= blog.posted %>
+      </div>
+      <div class="col-6">
+        <%= raw(truncate_html(blog.content, 768)) %>
+      </div>
+      <div class="col-1" style="min-height: 2em;">
+        <% delete_path = admin_blog_path(blog).to_s + "/delete" %>
+        <%= action_links(blog, edit_admin_blog_path(blog), delete_path) %>
+      </div>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-10">
+    </div>
+    <div class="col-2 justify-content-end">
+      <nav aria-label="Pagination">
+        <ul class="pagination justify-content-center">
+          <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
+            <%= link_to 'First', url_for(page: 1), class: 'page-link' %>
+          </li>
+          <li class="page-item <%= 'disabled' unless @pagy.prev %>">
+            <%= link_to 'Previous', url_for(page: @pagy.prev), class: 'page-link' %>
+          </li>
+          <li class="page-item <%= 'disabled' unless @pagy.next %>">
+            <%= link_to 'Next', url_for(page: @pagy.next), class: 'page-link' %>
+          </li>
+          <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
+            <%= link_to 'Last', url_for(page: @pagy.last), class: 'page-link' %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-1">
+        <%= link_to("New Blog", new_admin_blog_path, class: "btn btn-primary") %>
+      </div>
+      <div class="col-11">
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>
