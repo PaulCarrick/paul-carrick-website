@@ -28,7 +28,7 @@ class Admin::SectionsController < ApplicationController
   end
 
   def edit
-    if @section.formatting/present?
+    if @section.formatting.present?
       @section.formatting = JSON.pretty_generate(JSON.parse(@section.formatting)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
     end
 
