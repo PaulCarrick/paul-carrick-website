@@ -7,7 +7,7 @@
   <div class="container">
     <div style="max-width: 50%;">
       <% unless user_signed_in? %>
-        <h2>Login</h2>
+        <h2 class="mt-5">Login</h2>
         <%= form_with(url: new_user_session_path, scope: :user, local: true) do |form| %>
           <div class="mb-3">
             <%= form.label :email, "Email Address", class: "form-label" %>
@@ -36,7 +36,7 @@
           </div>
 
           <div class="d-grid">
-            <%= form.submit "Log in", class: "btn btn-primary" %>
+            <%= form.submit "Log in", class: "btn btn-primary mb-5", style: "max-width: 6em"%>
           </div>
         <% end %>
       <% else %>

@@ -2,8 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/config/environments/production.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/environments/production.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/puma.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/puma.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/concerns/checksum.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/models/concerns/validation.rb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/migrate/20241128141425_add_checksum_to_sections_and_blogs.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blogs/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blogs/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/edit.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/schema.rb" beforeDir="false" afterPath="$PROJECT_DIR$/db/schema.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sql/sections.sql" beforeDir="false" afterPath="$PROJECT_DIR$/sql/sections.sql" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,9 +36,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Ruby Class" />
-        <option value="Ruby File" />
         <option value="ERB File" />
         <option value="JavaScript File" />
+        <option value="Ruby File" />
       </list>
     </option>
   </component>
@@ -59,7 +77,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/search" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/admin/sections" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -75,11 +93,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/views/search" />
-      <recent name="$PROJECT_DIR$/app/assets/images/portfolio" />
-      <recent name="$PROJECT_DIR$/app/views/contact" />
-      <recent name="$PROJECT_DIR$/sql" />
-      <recent name="$PROJECT_DIR$/app/utilities" />
+      <recent name="$PROJECT_DIR$/app/views/admin/sections" />
+      <recent name="$PROJECT_DIR$/app/models/concerns" />
+      <recent name="$PROJECT_DIR$/app/views/admin" />
+      <recent name="$PROJECT_DIR$/app/views/admin/blogs" />
+      <recent name="$PROJECT_DIR$/app/views/admin/dashboard" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/views/section" />
@@ -230,7 +248,8 @@
       <workItem from="1732405549184" duration="15047000" />
       <workItem from="1732555752981" duration="17588000" />
       <workItem from="1732627937548" duration="26409000" />
-      <workItem from="1732713421420" duration="7944000" />
+      <workItem from="1732713421420" duration="38517000" />
+      <workItem from="1732802606225" duration="14992000" />
     </task>
     <servers />
   </component>

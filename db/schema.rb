@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_27_192628) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_141425) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -59,6 +59,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_192628) do
     t.text "content", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "checksum", limit: 512
     t.index ["author"], name: "index_blog_posts_on_author"
     t.index ["title"], name: "index_blog_posts_on_title"
   end
@@ -105,6 +106,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_192628) do
     t.text "content", null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "checksum", limit: 512
     t.index ["author"], name: "index_post_comments_on_author"
     t.index ["blog_post_id"], name: "index_post_comments_on_blog_post_id"
     t.index ["title"], name: "index_post_comments_on_title"
@@ -120,6 +122,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_27_192628) do
     t.text "description"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.string "checksum", limit: 512
     t.index ["content_type", "section_name", "section_order"], name: "index_sections_on_content_type_and_name_and_order", unique: true, where: "((section_name IS NOT NULL) AND (section_order IS NOT NULL))"
   end
 

@@ -6,7 +6,7 @@
 <%= render layout: "layouts/admin_menu" do %>
   <%= form_with(model: @blog, url: admin_blogs_path, method: :post, local: true) do |form| %>
     <%= form.hidden_field :author, value: current_user.name %>
-    <%= form.hidden_field :posted, value: DateTime.new.to_s %>
+    <%= form.hidden_field :posted, value: DateTime.now %>
 
     <div class="mb-3">
       <%= form.label :title, "Title*", class: "form-label" %>

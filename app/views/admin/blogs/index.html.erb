@@ -6,13 +6,13 @@
 <%= render layout: "layouts/admin_menu" do %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-1">
-      <%= sortable_column('Author', 'author') %>
+      <%= sortable_column('Author', 'author', "blogs") %>
     </div>
     <div class="col-2">
-      <%= sortable_column('Title', 'title') %>
+      <%= sortable_column('Title', 'title', "blogs") %>
     </div>
     <div class="col-2">
-      <%= sortable_column('Posted', 'posted') %>
+      <%= sortable_column('Posted', 'posted', "blogs") %>
     </div>
     <div class="col-6">
       Contents
@@ -31,10 +31,10 @@
       <div class="col-2">
         <%= blog.posted %>
       </div>
-      <div class="col-6">
+      <div class="col-5">
         <%= raw(truncate_html(blog.content, 768)) %>
       </div>
-      <div class="col-1" style="min-height: 2em;">
+      <div class="col-2" style="min-height: 2em;">
         <% delete_path = admin_blog_path(blog).to_s + "/delete" %>
         <%= action_links(blog, edit_admin_blog_path(blog), delete_path) %>
       </div>

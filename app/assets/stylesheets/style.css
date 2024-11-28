@@ -1,7 +1,14 @@
+.rtf-text-area {
+  max-height: 14em;
+  overflow: auto;
+  resize: none;
+  box-sizing: border-box;
+}
+
 .scrollable-container {
-  max-height: 70vh; /* Set the max height (adjust as needed) */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Disable horizontal scrolling */
+  max-height: 70vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .slideshow-container {

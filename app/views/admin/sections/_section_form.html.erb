@@ -1,0 +1,120 @@
+<!-- app/views/admin/sections/_section_form.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - Edit Section" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <% @error_displayed = false %>
+  <% flash.each do |key, message| %>
+    <% if key == "error" %>
+      <div class="alert alert-danger">
+        <%= message %>
+      </div>
+      <% @error_displayed = true %>
+    <% end %>
+  <% end %>
+  <% if !@error_displayed && @error_message.present? %>
+    <div class="alert alert-danger">
+      <%= @error_message %>
+    </div>
+  <% end %>
+  <%= form_with(model: @section, url: admin_section_path(@section), method: :patch, local: true) do |form| %>
+    <div class="row">
+      <div class="col-2">
+        <%= form.label :content_type, "Content Type*", class: "form-label" %>
+      </div>
+      <div class="col-10">
+        <%= form.text_field :content_type, list: "content_types", class: "form-control", required: true %>
+        <datalist id="content-types">
+          <% @content_types.each do |content_type| %>
+            <option value="<%= content_type %>"></option>
+          <% end if @content_types %>
+        </datalist>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <%= form.label :section_name, "Section Name", class: "form-label" %>
+      </div>
+      <div class="col-10">
+        <%= form.text_field :section_name, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <%= form.label :section_order, "Section Order", class: "form-label" %>
+      </div>
+      <div class="col-2">
+        <%= form.number_field :section_order, class: "form-control", step: 1, min: 1, max: 999, value: @section.section_order || 1 %>
+      </div>
+      <div class="col-8">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <%= form.label :image, "Image file path", class: "form-label" %>
+      </div>
+      <div class="col-10">
+        <%= form.text_field :image, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <%= form.label :link, "URL", class: "form-label" %>
+      </div>
+      <div class="col-10">
+        <%= form.text_field :link, class: "form-control" %>
+      </div>
+    </div>
+    <div>
+      <%= form.label :formatting, "Formatting (JSON)", class: "form-label" %>
+      <%= form.text_area :formatting, class: "form-control", rows: 7 %>
+    </div>
+    <div>
+      <%= form.label :description, "Description", class: "form-label" %>
+
+      <!-- RTF Editor -->
+      <div id="rtf-editor">
+        <%= form.rich_text_area :description, class: "form-control rtf-text-area" %>
+      </div>
+
+      <!-- Raw Text Editor -->
+      <div id="raw-editor" style="display: none;">
+        <%= form.text_area :description, class: "form-control", rows: 9 %>
+      </div>
+
+      <!-- Toggle Button -->
+      <button type="button" id="toggle-editor" class="btn btn-primary mt-2" style="max-width: 8em">Raw HTML</button>
+    </div>
+    <div class="mt-2 mb-2">
+      * - Required Fields
+    </div>
+    <div class="mb-1">
+      <%= form.submit "Save Section", class: "btn btn-primary me-3" %>
+      <%= link_to("Cancel", admin_sections_url, class: "btn btn-primary") %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleButton = document.getElementById("toggle-editor");
+    const rtfEditor = document.getElementById("rtf-editor");
+    const rawEditor = document.getElementById("raw-editor");
+
+    toggleButton.addEventListener("click", () => {
+      if (rtfEditor.style.display === "none") {
+        rtfEditor.style.display = "block";
+        rawEditor.style.display = "none";
+        toggleButton.textContent = "Raw HTML";
+      } else {
+        rtfEditor.style.display = "none";
+        rawEditor.style.display = "block";
+        toggleButton.textContent = "HTML";
+      }
+    });
+  });
+</script>

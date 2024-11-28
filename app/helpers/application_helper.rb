@@ -1,5 +1,5 @@
 module ApplicationHelper
-  require 'nokogiri'
+  require "nokogiri"
   include Pagy::Frontend
 
   def truncate_html(html, max_length)
@@ -7,7 +7,7 @@ module ApplicationHelper
     doc = Nokogiri::HTML::DocumentFragment.parse(html)
 
     # Initialize a counter and a truncated HTML string
-    truncated_html = ''
+    truncated_html = ""
     char_count = 0
 
     # Traverse nodes recursively
@@ -31,21 +31,23 @@ module ApplicationHelper
     truncated_doc.to_html
   end
 
-  def sortable_column(display_name, column)
+  def sortable_column(display_name, column, model_path_name, custom_class: "text-dark text-decoration-none")
     # Determine the current sort direction for the column
     current_direction = (params[:sort] == column && params[:direction] == "asc") ? "desc" : "asc"
 
     # Choose the arrow based on the current direction
     arrow = if params[:sort] == column
-      params[:direction] == "asc" ? "↓" : "↑"
-    else
-      "" # No arrow if the column is not sorted
-    end
+              params[:direction] == "asc" ? "↓" : "↑"
+            else
+              "↓↑"
+            end
+
+    # Generate the dynamic path helper (e.g., admin_blogs_path)
+    path_helper = "admin_#{model_path_name}_path"
+    path = send(path_helper, sort: column, direction: current_direction)
 
     # Generate the sortable link with the arrow
-    link_to "#{display_name} #{arrow}".html_safe,
-            admin_blogs_path(sort: column, direction: current_direction),
-            class: "text-dark text-decoration-none"
+    link_to "#{display_name} #{arrow}".html_safe, path, class: custom_class
   end
 
   def action_links(resource, edit_path, delete_path = nil)
@@ -55,13 +57,13 @@ module ApplicationHelper
         link_to("Edit",
                 edit_path,
                 class: "btn btn-sm btn-primary me-2",
-                style: "max-height: 2em;"),
+                style: "min-width: 6em; max-height: 2em;"),
         link_to("Delete",
                 delete_path,
                 method: :delete,
                 data: { confirm: "Are you sure?" },
                 class: "btn btn-sm btn-danger",
-                style: "max-height: 2em;")
+                style: "min-width: 6em; max-height: 2em;")
       ].join.html_safe
     end
   end
