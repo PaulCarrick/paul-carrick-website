@@ -32,7 +32,7 @@
         <%= blog.posted %>
       </div>
       <div class="col-5">
-        <%= raw(truncate_html(blog.content, 768)) %>
+        <%= raw(utilities.truncate_html(blog.content, 768)) %>
       </div>
       <div class="col-2" style="min-height: 2em;">
         <% delete_path = admin_blog_path(blog).to_s + "/delete" %>
