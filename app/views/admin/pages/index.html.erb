@@ -1,0 +1,58 @@
+<!-- app/views/admin/pages/index.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - Pages" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <div class="row border-bottom border-dark mb-2">
+    <div class="col-1">
+      <%= sortable_column('Name', 'name', "pages") %>
+    </div>
+    <div class="col-1">
+      <%= sortable_column('Section', 'section', "pages") %>
+    </div>
+    <div class="col-7">
+      <%= sortable_column('Title', 'title', "pages") %>
+    </div>
+    <div class="col-1">
+      <%= sortable_column('Access', 'access', "pages") %>
+    </div>
+    <div class="col-2">
+    </div>
+  </div>
+  <div class="scrollable-container p-2">
+    <% @pages.each do |page| %>
+      <div class="row">
+        <div class="col-1">
+          <%= page.name %>
+        </div>
+        <div class="col-1">
+          <%= page.section %>
+        </div>
+        <div class="col-7">
+          <%= page.title %>
+        </div>
+        <div class="col-1">
+          <%= page.access %>
+        </div>
+        <div class="col-2" style="min-height: 2em;">
+          <% delete_path = admin_page_path(page).to_s + "/delete" %>
+          <%= action_links(page, edit_admin_page_path(page), delete_path) %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row mt-3 mb-3">
+      <div class="col-2">
+        <%= link_to("New page", new_admin_page_path, class: "btn btn-primary") %>
+      </div>
+      <div class="col-7">
+      </div>
+      <div class="col-3 justify-content-end">
+        <%= render 'shared/page_navigation' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

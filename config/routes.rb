@@ -30,6 +30,9 @@ Rails.application.routes.draw do
     resources :sections, except: [ :destroy ]
     delete "/sections/:id", to: "sections#destroy", as: "delete_section"
     get "/sections/:id/delete", to: "sections#destroy", as: "destroy_section"
+    resources :pages, except: [ :destroy ]
+    delete "/pages/:id", to: "pages#destroy", as: "delete_page"
+    get "/pages/:id/delete", to: "pages#destroy", as: "destroy_page"
   end
 
   resources :blog, only: [ :index ]

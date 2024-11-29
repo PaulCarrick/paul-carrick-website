@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+.action-links {
+  float: right;
+}
+
 .rounded-box {
   border: 1px solid #000;
   border-radius: 5px;
@@ -19,8 +23,6 @@ div.reset-styles {
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
-  border: 1px solid #000;
-  border-radius: 5px;
 }
 
 .slideshow-container {

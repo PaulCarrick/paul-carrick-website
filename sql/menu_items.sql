@@ -31,9 +31,8 @@ COPY public.menu_items (id, menu_type, label, icon, options, link, menu_order, p
 13	Main	Employment	\N	\N	/employment	2	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
 14	Main	Portfolio	\N	\N	/portfolio	3	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
 15	Admin	Blogs	\N	\N	/admin/blogs	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-16	Admin	Page	\N	super_only	/admin/pages	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
+16	Admin	Pages	\N	super_only	/admin/pages	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
 17	Admin	Sections	\N	super_only	/admin/sections	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-18	Admin	Images	\N	super_only	/admin/images	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
 \.
 
 --
