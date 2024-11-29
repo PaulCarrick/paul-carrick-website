@@ -97,9 +97,6 @@ GEM
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
     date (3.4.0)
-    debug (1.9.2)
-      irb (~> 1.10)
-      reline (>= 0.3.8)
     devise (4.9.4)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -368,7 +365,6 @@ DEPENDENCIES
   brakeman
   byebug
   cssbundling-rails
-  debug
   devise
   htmlbeautifier
   image_processing (~> 1.2)

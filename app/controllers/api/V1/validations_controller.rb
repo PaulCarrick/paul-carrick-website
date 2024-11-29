@@ -3,6 +3,7 @@
 # app/controllers/api/validations_controller.rb
 module Api
   module V1
+    class ValidationsController < ApplicationController
     def validate_html
       @results = false
       html = params[:html]
