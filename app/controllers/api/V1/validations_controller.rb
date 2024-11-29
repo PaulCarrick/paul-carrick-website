@@ -3,8 +3,6 @@
 # app/controllers/api/validations_controller.rb
 module Api
   module V1
-    skip_before_action :verify_authenticity_token # Allow API requests without CSRF tokens
-
     def validate_html
       @results = false
       html = params[:html]
