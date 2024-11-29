@@ -1,5 +1,5 @@
 module Checksum
-  require 'openssl'
+  require "openssl"
 
   extend ActiveSupport::Concern
 
@@ -11,8 +11,14 @@ module Checksum
   private
 
   def populate_checksum
-    if @section&.description.present?
-      @section.checksum = generate_checksum(@section.description)
+    if self.kind_of?(Section)
+      if description.present?
+        self.checksum = generate_checksum(description)
+      end
+    else
+      if content.present?
+        self.checksum = generate_checksum(content)
+      end
     end
   end
 

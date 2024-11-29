@@ -13,7 +13,7 @@ class Section < ApplicationRecord
   scope :by_content_type, ->(type) { where(content_type: type).order(:section_order) }
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[description]
+    %w[content_type section_name image link description]
   end
 
   private
@@ -29,7 +29,7 @@ class Section < ApplicationRecord
 
     begin
       JSON.parse(formatting)
-    rescue e
+    rescue
       errors.add(:base, "Invalid JSON in formatting.")
     end
   end
@@ -37,7 +37,9 @@ class Section < ApplicationRecord
   def description_is_valid
     return unless description.present?
 
-    unless validate_html(description)
+    skip_check = description =~ /^\s*<title>/
+
+    unless skip_check || validate_html(description, :description)
       errors.add(:base, "Invalid HTML in Description.")
     end
   end

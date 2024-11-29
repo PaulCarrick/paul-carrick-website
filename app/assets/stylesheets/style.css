@@ -5,10 +5,22 @@
   box-sizing: border-box;
 }
 
+.rounded-box {
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+div.reset-styles {
+  all: unset; /* Resets all inherited and applied styles */
+  display: block; /* Reapply block display since 'unset' removes it */
+}
+
 .scrollable-container {
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+  border: 1px solid #000;
+  border-radius: 5px;
 }
 
 .slideshow-container {

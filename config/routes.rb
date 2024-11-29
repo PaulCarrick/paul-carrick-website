@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       resources :sections, only: %i[index show]
       resources :blog_posts
       resources :post_comments
+
+      post 'validate_html', to: 'validations#validate_html'
     end
   end
 

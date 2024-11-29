@@ -1,36 +1,4 @@
 module ApplicationHelper
-  require "nokogiri"
-  include Pagy::Frontend
-
-  def truncate_html(html, max_length)
-    # Parse the HTML
-    doc = Nokogiri::HTML::DocumentFragment.parse(html)
-
-    # Initialize a counter and a truncated HTML string
-    truncated_html = ""
-    char_count = 0
-
-    # Traverse nodes recursively
-    doc.traverse do |node|
-      break if char_count >= max_length
-
-      if node.text?
-        # If the node is a text node, truncate its content if needed
-        remaining_length = max_length - char_count
-        truncated_content = node.content[0, remaining_length]
-        truncated_html << Nokogiri::HTML::DocumentFragment.parse(truncated_content).to_html
-        char_count += truncated_content.length
-      elsif node.element?
-        # If the node is an element, add the opening tag and recurse
-        truncated_html << "<#{node.name}#{node.attributes.map { |k, v| " #{k}='#{v}'" }.join}>"
-      end
-    end
-
-    # Close any open tags to ensure valid HTML
-    truncated_doc = Nokogiri::HTML::DocumentFragment.parse(truncated_html)
-    truncated_doc.to_html
-  end
-
   def sortable_column(display_name, column, model_path_name, custom_class: "text-dark text-decoration-none")
     # Determine the current sort direction for the column
     current_direction = (params[:sort] == column && params[:direction] == "asc") ? "desc" : "asc"

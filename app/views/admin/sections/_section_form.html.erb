@@ -1,24 +1,32 @@
 <!-- app/views/admin/sections/_section_form.html.erb -->
-<% content_for :title, "paul-carrick.com - Amin Dashboard - Edit Section" %>
+<% content_for :title, @section.persisted? ? "Edit Section" : "New Section" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <% @error_displayed = false %>
-  <% flash.each do |key, message| %>
-    <% if key == "error" %>
-      <div class="alert alert-danger">
-        <%= message %>
-      </div>
-      <% @error_displayed = true %>
+  <div id="error_area">
+    <% @error_displayed = false %>
+    <% flash.each do |key, message| %>
+      <% if key == "error" %>
+        <div class="alert alert-danger">
+          <%= message %>
+        </div>
+        <% @error_displayed = true %>
+      <% end %>
     <% end %>
-  <% end %>
-  <% if !@error_displayed && @error_message.present? %>
-    <div class="alert alert-danger">
-      <%= @error_message %>
-    </div>
-  <% end %>
-  <%= form_with(model: @section, url: admin_section_path(@section), method: :patch, local: true) do |form| %>
+
+    <% if !@error_displayed && @error_message.present? %>
+      <div class="alert alert-danger">
+        <%= @error_message %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form_with(model: @section,
+                url: @section.persisted? ? admin_section_path(@section) : admin_sections_path,
+                method: @section.persisted? ? :patch : :post,
+                local: true,
+                html: { onsubmit: 'return validate(this)' }) do |form| %>
     <div class="row">
       <div class="col-2">
         <%= form.label :content_type, "Content Type*", class: "form-label" %>
@@ -68,29 +76,29 @@
     </div>
     <div>
       <%= form.label :formatting, "Formatting (JSON)", class: "form-label" %>
-      <%= form.text_area :formatting, class: "form-control", rows: 7 %>
+      <%= form.text_area :formatting, class: "form-control", rows: 7, onblur: "checkJSON(this)" %>
     </div>
     <div>
       <%= form.label :description, "Description", class: "form-label" %>
 
       <!-- RTF Editor -->
       <div id="rtf-editor">
-        <%= form.rich_text_area :description, class: "form-control rtf-text-area" %>
+        <%= form.rich_text_area :description, class: "form-control rtf-text-area", onblur: "checkHTML();" %>
       </div>
 
       <!-- Raw Text Editor -->
       <div id="raw-editor" style="display: none;">
-        <%= form.text_area :description, class: "form-control", rows: 9 %>
+        <%= form.text_area :description, class: "form-control", rows: 9, onblur: "checkHTML();" %>
       </div>
 
       <!-- Toggle Button -->
-      <button type="button" id="toggle-editor" class="btn btn-primary mt-2" style="max-width: 8em">Raw HTML</button>
+      <button type="button" id="toggle-editor" class="btn btn-primary mt-2" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw HTML</button>
     </div>
     <div class="mt-2 mb-2">
       * - Required Fields
     </div>
     <div class="mb-1">
-      <%= form.submit "Save Section", class: "btn btn-primary me-3" %>
+      <%= form.submit @section.persisted? ? "Update Section" : "Create Section", class: "btn btn-primary me-3" %>
       <%= link_to("Cancel", admin_sections_url, class: "btn btn-primary") %>
     </div>
   <% end %>
@@ -100,21 +108,102 @@
 <% end %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const toggleButton = document.getElementById("toggle-editor");
-    const rtfEditor = document.getElementById("rtf-editor");
-    const rawEditor = document.getElementById("raw-editor");
+  async function validateHtml(field, fieldName) {
+    const htmlContent = field.value;
 
-    toggleButton.addEventListener("click", () => {
-      if (rtfEditor.style.display === "none") {
-        rtfEditor.style.display = "block";
-        rawEditor.style.display = "none";
-        toggleButton.textContent = "Raw HTML";
-      } else {
-        rtfEditor.style.display = "none";
-        rawEditor.style.display = "block";
-        toggleButton.textContent = "HTML";
-      }
+    // Call the API to validate HTML
+    const response = await fetch('/api/validate_html', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // CSRF token for Rails
+      },
+      body: JSON.stringify({ html: htmlContent, field: fieldName })
     });
-  });
+
+    // Handle the response
+    if (response.ok) {
+      field.classList.remove('invalid');
+      return true;
+    } else {
+      const result = await response.json();
+      alert(`HTML Validation Errors:\n${result.errors.join('\n')}`);
+      field.classList.add('invalid'); // Add error styling
+      return false;
+    }
+  }
+
+  function checkJSON(field) {
+    const errorArea = document.getElementById('error_area');
+
+    try {
+      JSON.parse(field.value);
+
+      if (errorArea)
+        errorArea.innerHTML = ``;
+
+      return true;
+    } catch (error) {
+      if (error instanceof SyntaxError) {
+
+        if (errorArea)
+          errorArea.innerHTML = `<p style="color: red;">The JSON content is invalid: ${error.message}</p>`;
+      } else {
+        console.error("Unexpected Error in parsing JSON:", error.message);
+      }
+
+      return false;
+    }
+  }
+
+  async function checkHTML(field) {
+    const fieldName = field.getAttribute("name"); // Get the field name dynamically
+
+    // Call validateHtml to check the HTML content
+    const isValid = await validateHtml(field, fieldName);
+    const errorArea = document.getElementById('error_area');
+
+    if (!isValid) {
+      if (errorArea)
+        errorArea.innerHTML = `<p style="color: red;">The HTML content is invalid. Please correct it.</p>`;
+    }
+    else {
+      if (errorArea)
+        errorArea.innerHTML = ``;
+    }
+  }
+
+  async function validate(form) {
+    const formattingField = form.querySelector('[name="section[formatting]"]');
+    const descriptionField = form.querySelector('[name="section[description]"]');
+
+    // Validate the description field
+    let isValid = await validateHtml(descriptionField, 'description');
+
+    if (isvalid)
+      isValid = checkJSON(formattingField)
+    // Prevent submission if validation fails
+    if (!isValid) {
+      alert('Form contains errors. Please fix them before submitting.');
+      return false;
+    }
+
+    return true; // Allow form submission if valid
+  }
+
+  function toggleEditor(button, rtfEditorId, rawEditorId) {
+    const rtfEditor = document.getElementById(rtfEditorId);
+    const rawEditor = document.getElementById(rawEditorId);
+
+    if (rtfEditor.style.display === "none") {
+      rtfEditor.style.display = "block";
+      rawEditor.style.display = "none";
+      button.textContent = "Raw HTML";
+    } else {
+      rtfEditor.style.display = "none";
+      rawEditor.style.display = "block";
+      button.textContent = "HTML";
+    }
+  }
 </script>

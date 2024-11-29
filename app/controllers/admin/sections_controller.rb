@@ -1,14 +1,24 @@
 class Admin::SectionsController < ApplicationController
-  require "htmlbeautifier"
-
   include Pagy::Backend
 
   before_action :set_section, only: %i[show edit update destroy]
 
   def index
-    sort_column = params[:sort] || "content_type" # Default sorting column
-    sort_direction = params[:direction] || "asc" # Default sorting direction
-    @pagy, @sections = pagy(Section.order("#{sort_column} #{sort_direction}"), limit: 3)
+    @q = Section.ransack(params[:q]) # Initialize Ransack search object
+
+    # Set default sort column and direction
+    sort_column = params[:sort].presence || "content_type"
+    sort_direction = params[:direction].presence || "asc"
+
+    # Safeguard against invalid columns and directions
+    sort_column = Section.column_names.include?(sort_column) ? sort_column : "content_type"
+    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
+
+    # Combine sorting and Ransack results
+    sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
+
+    # Paginate the sorted results
+    @pagy, @sections = pagy(sorted_results, limit: 5)
   end
 
   def show
@@ -22,12 +32,12 @@ class Admin::SectionsController < ApplicationController
   def create
     @section = Section.new(section_params)
 
-    if @section&.formatting.present?
-      @section.formatting = JSON.pretty_generate(JSON.parse(@section.formatting)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+    if @section&.description.present?
+      @section&.description = Utilities.pretty_print_html(@section.description)
     end
 
-    if @section&.description.present?
-      @section.description = HtmlBeautifier.beautify(@section.description)
+    if @section&.formatting.present?
+      @section&.formatting = Utilities.pretty_print_json(@section.formatting, false)
     end
 
     if @section.save
@@ -38,12 +48,12 @@ class Admin::SectionsController < ApplicationController
   end
 
   def edit
-    if @section.description.present?
-      @section.description = HtmlBeautifier.beautify(@section.description)
+    if @section&.description.present?
+      @section&.description = Utilities.pretty_print_html(@section.description)
     end
 
-    if @section.formatting.present?
-      @section.formatting = JSON.pretty_generate(JSON.parse(@section.formatting)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+    if @section&.formatting.present?
+      @section&.formatting = Utilities.pretty_print_json(@section.formatting, false)
     end
 
     @content_types = Section.distinct.pluck(:content_type)
@@ -53,12 +63,12 @@ class Admin::SectionsController < ApplicationController
     @error_message = nil
     data = section_params
 
-    if data[:formatting].present?
-      data[:formatting] = JSON.pretty_generate(JSON.parse(data[:formatting])).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+    if data[:description].present?
+      data[:description] = Utilities.pretty_print_html(data[:description])
     end
 
-    if data[:description].present?
-      data[:description] = HtmlBeautifier.beautify(data[:description])
+    if data[:formatting].present?
+      data[:formatting] = Utilities.pretty_print_json(data[:formatting], false)
     end
 
     begin

@@ -5,7 +5,7 @@ module Validation
 
   private
 
-  def validate_html(html_string)
+  def validate_html(html_string, field)
     begin
       # Parse the HTML
       Nokogiri::HTML::Document.parse(html_string) do |config|
@@ -13,7 +13,7 @@ module Validation
       end
       true # HTML is valid
     rescue Nokogiri::XML::SyntaxError => e
-      errors.add(:description, e.message)
+      errors.add(field, e.message)
       Rails.logger.error("*** HTML Validation Error: #{e.message} ***")
       false # HTML is invalid
     end
