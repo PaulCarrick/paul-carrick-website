@@ -5,7 +5,7 @@
 
 <section class="bg-light pt-5 text-secondary">
   <div class="container mb-5">
-    <%= react_component('PostList', { permit_editing: false }) %>
+    <%= react_component('PostList', { user: @user }) %>
   </div>
 </section>
 

@@ -9,6 +9,7 @@ import DisplayContent from "./DisplayContent";
 import SlideShow from "./SlideShow";
 import PostList from "./PostList";
 import PostEditor from "./PostEditor";
+import CommentEditor from "./CommentEditor";
 import PostDetail from "./PostDetail";
 
 try {
@@ -18,6 +19,7 @@ try {
         SlideShow,
         PostList,
         PostEditor,
+        CommentEditor,
         PostDetail
     });
 } catch (error) {

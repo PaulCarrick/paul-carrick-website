@@ -8,7 +8,11 @@ class BlogPost < ApplicationRecord
   validate :content_is_valid
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[content]
+    %w[ author title content ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[ post_comments ]
   end
 
   private

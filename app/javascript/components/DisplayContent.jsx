@@ -1,8 +1,11 @@
 import React, { useEffect } from "react";
 import SlideShow from "./SlideShow";
 
-const parseStyle = (styleString) =>
-  styleString.split(";").reduce((styleObj, style) => {
+// Helper to parse inline styles
+const parseStyle = (styleString) => {
+  if (!styleString) return {};
+  if (!styleString["split"] !== "function") return {};
+  return styleString.split(";").reduce((styleObj, style) => {
     if (!style.trim()) return styleObj;
     const [key, value] = style.split(":");
     const camelCaseKey = key
@@ -11,21 +14,9 @@ const parseStyle = (styleString) =>
     styleObj[camelCaseKey] = value.trim();
     return styleObj;
   }, {});
-
-const parseOptions = (optionsString) => {
-  if (!optionsString || typeof optionsString !== "string") {
-    console.error("Input must be a valid JSON string.");
-    return null;
-  }
-
-  try {
-    return JSON.parse(optionsString);
-  } catch (error) {
-    console.error("Invalid JSON string:", error);
-    return null;
-  }
 };
 
+// Helper to set up toggle functionality
 const setupToggle = (elementId, className) => {
   useEffect(() => {
     const setupLogic = () => {
@@ -75,10 +66,25 @@ const setupToggle = (elementId, className) => {
   }, [elementId, className]);
 };
 
-const DisplayContent = ({ content, image, link, format, section_id }) => {
+// Main component
+const DisplayContent = ({
+                          content,
+                          image,
+                          link,
+                          format,
+                          sectionId,
+                          user,
+                        }) => {
+  // Parse format or fallback to hard-coded defaults
   let options = null;
 
-  if (format) options = parseOptions(format);
+  if (format) {
+    try {
+      options = JSON.parse(format);
+    } catch (error) {
+      console.error("Invalid JSON string for format:", error);
+    }
+  }
 
   if (!options) {
     options = {
@@ -95,39 +101,37 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
       slide_show_images: null,
       slide_show_type: null,
     };
-  } else {
-    if (!options.row_style) options.row_style = "text-right";
-    if (!options.row_classes) options.row_classes = "align-items-center";
-    if (!options.text_classes) options.text_classes = "col-lg-6";
-    if (!options.image_classes) options.image_classes = "col-lg-6 d-flex flex-column";
-
-    if (!options.text_styles) options.text_styles = {};
-    else options.text_styles = parseStyle(options.text_styles);
-
-    if (!options.image_style) options.image_style = { width: "100%", height: "auto" };
-    else options.image_style = { ...parseStyle(options.image_style) };
-
-    if (!options.image_styles) options.image_styles = {};
-    else options.image_styles = parseStyle(options.image_styles);
-
-    if (!options.caption_classes) options.caption_classes = "text-center";
-
-    if (!options.expanding_rows) options.expanding_rows = null;
-
-    if (!options.slide_show_images) options.slide_show_images = null;
-
-    if (!options.slide_show_type) options.slide_show_type = null;
   }
 
+  // Ensure all required options have default values
+  options.row_style = options.row_style || "text-single";
+  options.row_classes = options.row_classes || "align-items-center";
+  options.text_classes = options.text_classes || "col-lg-6";
+  options.text_styles = options.text_styles
+    ? parseStyle(options.text_styles)
+    : {};
+  options.image_classes = options.image_classes || "col-lg-6 d-flex flex-column";
+  options.image_styles = options.image_styles
+    ? { ...parseStyle(options.image_styles) }
+    : { width: "100%", height: "auto" };
+  options.caption_classes = options.caption_classes || "text-center";
+  options.expanding_rows = options.expanding_rows || null;
+  options.slide_show_images = options.slide_show_images || null;
+  options.slide_show_type = options.slide_show_type || null;
+
   const rowClasses = `row ${options.row_classes}`;
-  const imageClasses = `${options.image_classes}`;
+  const imageClasses = options.image_classes;
   const captionClasses = options.caption_classes;
 
-  const toggleId = options.expanding_rows ? `toggle-${Math.random().toString(36).substr(2, 9)}` : null;
-
+  const toggleId = options.expanding_rows
+    ? `toggle-${Math.random().toString(36).substr(2, 9)}`
+    : null;
   let toggleClass = "btn btn-primary my-2";
+
   if (options.expanding_rows) {
-    const [_, className, customClass] = options.expanding_rows.split(",").map((s) => s.trim());
+    const [_, className, customClass] = options.expanding_rows
+      .split(",")
+      .map((s) => s.trim());
     if (customClass) toggleClass = customClass;
     setupToggle(toggleId, className);
   }
@@ -147,13 +151,13 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
       {options.image_caption && options.caption_position === "top" && (
         <div className={captionClasses}>{options.image_caption}</div>
       )}
-      {(link != null && (
+      {(link && (
         <a href={image} target="_blank" rel="noopener noreferrer">
           <img
             src={image}
             alt={image}
             className="img-fluid"
-            style={options.image_style}
+            style={options.image_styles}
           />
         </a>
       )) || (
@@ -161,7 +165,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
           src={image}
           alt={image}
           className="img-fluid"
-          style={options.image_style}
+          style={options.image_styles}
         />
       )}
       {options.image_caption && options.caption_position !== "top" && (
@@ -173,7 +177,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
   if (options.row_style === "text-single") {
     return (
       <div id="contents">
-        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+        <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
           <div className="col-12">
             {!options.slide_show_images && (
               <div dangerouslySetInnerHTML={{ __html: content }} />
@@ -192,7 +196,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
   if (options.row_style === "text-top") {
     return (
       <div id="contents">
-        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+        <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
           <div className="col-12">
             <div dangerouslySetInnerHTML={{ __html: content }} />
             {options.expanding_rows && (
@@ -214,7 +218,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
   if (options.row_style === "text-bottom") {
     return (
       <div id="contents">
-        <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+        <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
           <div className="col-12">
             {options.slide_show_images ? renderSlideShow() : renderImage()}
           </div>
@@ -235,7 +239,7 @@ const DisplayContent = ({ content, image, link, format, section_id }) => {
 
   return (
     <div id="contents">
-      <div className={rowClasses} {...(section_id ? { id: section_id } : {})}>
+      <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
         {options.row_style === "text-left" && (
           <div
             className={`${options.text_classes} align-self-center`}

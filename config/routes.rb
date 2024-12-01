@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     get "/pages/:id/delete", to: "pages#destroy", as: "destroy_page"
   end
 
-  resources :blog, only: [ :index ]
+  resources :blog
   resources :contact, only: [ :new, :create, :show ]
   resources :section, only: [ :index ]
   resources :search, only: [ :new ]

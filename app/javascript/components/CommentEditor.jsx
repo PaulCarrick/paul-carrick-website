@@ -2,40 +2,42 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const PostEditor = ({ user, post, closeEditor }) => {
-  const [title, setTitle] = useState(post?.title || ''); // Use existing title if editing
+const CommentEditor = ({ user, post, comment, closeEditor }) => {
+  const [blogPostId, setBlogPostId] = useState(post?.id || null);
+  const [title, setTitle] = useState(comment?.title || ''); // Use existing title if editing
   const [author, setAuthor] = useState(user.name); // Always set to the current user
-  const [content, setContent] = useState(post?.content || ''); // Use existing content if editing
-  const [posted, setPosted] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
+  const [content, setContent] = useState(comment?.content || ''); // Use existing content if editing
+  const [posted, setPosted] = useState(comment?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
 
   const handleSubmit = () => {
     const getCsrfToken = () => {
       return document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
     };
 
-    const url = post
-      ? `/api/v1/blog_posts/${post.id}` // Include the ID for updates
-      : '/api/v1/blog_posts'; // Create new post
+    const url = comment
+      ? `/api/v1/post_comments/${comment.id}` // Include the ID for updates
+      : '/api/v1/post_comments'; // Create new comment
 
-    const method = post ? 'PUT' : 'POST'; // Use PUT for updates, POST for new
+    const method = comment ? 'PUT' : 'POST'; // Use PUT for updates, POST for new
 
     fetch(url, {
-      method: method,
+      method,
       headers: {
         'Content-Type': 'application/json',
         'X-CSRF-Token': getCsrfToken(), // Include the CSRF token here
       },
       body: JSON.stringify({
-        blog_post: { title, author, content, posted }, // Include all fields
+        post_comment: { blog_post_id: blogPostId, title, author, content, posted }, // Include all fields
       }),
     })
       .then((response) => {
         if (response.ok) {
-          console.log('Post saved successfully!');
+          console.log('Comment saved successfully!');
           closeEditor(); // Close the editor on success
-          window.location.href = '/blog'; // Redirect to the blog page
+          // Redirect to the parent blog post or refresh comments
+          window.location.href = `/blog`;
         } else {
-          console.error('Failed to save post');
+          console.error('Failed to save comment');
         }
       })
       .catch((error) => console.error('Error:', error));
@@ -43,7 +45,7 @@ const PostEditor = ({ user, post, closeEditor }) => {
 
   return (
     <div>
-      <h1>{post ? 'Edit Post' : 'Create a New Post'}</h1>
+      <h1>{comment ? 'Edit Comment' : 'Create a New Comment'}</h1>
       <input
         type="text"
         placeholder="Title"
@@ -58,15 +60,10 @@ const PostEditor = ({ user, post, closeEditor }) => {
         className="form-control mb-2"
         readOnly
       />
-      <input
-        type="hidden"
-        value={posted} // Hidden input to hold the DateTime value
-        readOnly
-      />
       <ReactQuill value={content} onChange={setContent} />
       <div className="mt-3">
         <button onClick={handleSubmit} className="btn btn-primary me-2">
-          {post ? 'Update' : 'Submit'}
+          {comment ? 'Update' : 'Submit'}
         </button>
         <button onClick={closeEditor} className="btn btn-secondary">
           Cancel
@@ -76,4 +73,4 @@ const PostEditor = ({ user, post, closeEditor }) => {
   );
 };
 
-export default PostEditor;
+export default CommentEditor;

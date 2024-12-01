@@ -43,7 +43,8 @@
                 image: nil,
                 link: content.link,
                 format: new_formatting,
-                section_id: content.section_name
+                section_id: content.section_name,
+                user: @user
               }) %>
             <% else %>
               <%
@@ -63,7 +64,8 @@
                 image: image,
                 link: content.link,
                 format: content.formatting,
-                section_id: content.section_name
+                section_id: content.section_name,
+                user: @user
               }) %>
             <% end %>
           <% else %>
@@ -71,7 +73,8 @@
                                                     image: nil,
                                                     link: content.link,
                                                     format: content.formatting,
-                                                    section_id: content.section_name
+                                                    section_id: content.section_name,
+                                                    user: @user
             }) %>
           <% end %>
         </div>

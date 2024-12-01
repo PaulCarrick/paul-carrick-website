@@ -1,131 +1,349 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import moment from 'moment';
 import PostEditor from './PostEditor';
+import CommentEditor from './CommentEditor';
 
-const PostList = ({ permit_editing = false }) => {
+const PostList = ({user}) => {
   const [posts, setPosts] = useState([]);
-  const [filteredPosts, setFilteredPosts] = useState([]);
-  const [expandedPosts, setExpandedPosts] = useState({});
-  const [searchTerm, setSearchTerm] = useState('');
-  const [showEditor, setShowEditor] = useState(false);
+  const [meta, setMeta] = useState({totalPages: 1, currentPage: 1, totalCount: 0});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [searchFields, setSearchFields] = useState({
+    title: '',
+    author: '',
+    content: '',
+  });
+  const [showPostEditor, setShowPostEditor] = useState(false);
+  const [showCommentEditor, setShowCommentEditor] = useState(false);
+  const [editingPost, setEditingPost] = useState(null);
+  const [commentPost, setCommentPost] = useState(null);
+  const [editingComment, setEditingComment] = useState(null);
+
+  const fetchPosts = (page = 1) => {
+    // Construct the Ransack-compatible query parameters
+    const queryParams = Object.entries(searchFields)
+      .filter(([_, value]) => value.trim() !== '')
+      .map(
+        ([field, value]) => `q[${field}_cont]=${encodeURIComponent(value)}`
+      )
+      .join('&');
+    const url = `/api/v1/blog_posts?include_comments=true&page=${page}&limit=3${queryParams ? `&${queryParams}` : ''}`;
+
+    fetch(url)
+      .then((response) => {
+        const totalPages = parseInt(response.headers.get('total-Pages'), 10) || 1;
+        const currentPage = parseInt(response.headers.get('current-page'), 10) || 1;
+        const totalCount = parseInt(response.headers.get('total-Count'), 10) || 0;
+
+        setMeta({
+          totalPages,
+          currentPage,
+          totalCount,
+        });
+        return response.json();
+      })
+      .then((data) => {
+        if (data.blog_posts) {
+          setPosts(data.blog_posts);
+        } else {
+          setPosts([]);
+        }
+      })
+      .catch((error) => console.error('Error fetching posts:', error));
+  };
 
   useEffect(() => {
-    fetch('/api/v1/blog_posts?include_comments=true')
-      .then((response) => response.json())
-      .then((data) => {
-        setPosts(data);
-        setFilteredPosts(data); // Initialize filteredPosts with all posts
-      });
-  }, []);
+    fetchPosts(currentPage);
+  }, [currentPage]);
 
-  const DateTimeDisplay = ({ dateTime }) => {
+  const DateTimeDisplay = ({dateTime}) => {
     const formattedDate = moment(dateTime).local().format('MMM Do YYYY HH:mm');
     return formattedDate;
   };
 
-  const toggleExpand = (postId) => {
-    setExpandedPosts((prevState) => ({
-      ...prevState,
-      [postId]: !prevState[postId],
-    }));
+  const openPostEditor = (post = null) => {
+    setEditingPost(post);
+    setShowPostEditor(true);
   };
 
-  const openEditor = () => {
-    setShowEditor(true);
+  const closePostEditor = () => {
+    setEditingPost(null);
+    setShowPostEditor(false);
   };
 
-  const closeEditor = () => {
-    setShowEditor(false);
+  const openCommentEditor = (post, comment = null) => {
+    setCommentPost(post);
+    setEditingComment(comment);
+    setShowCommentEditor(true);
+  };
+
+  const closeCommentEditor = () => {
+    setCommentPost(null);
+    setEditingComment(null);
+    setShowCommentEditor(false);
   };
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (searchTerm.trim() === '') {
-      setFilteredPosts(posts);
-    } else {
-      const filtered = posts.filter((post) =>
-        post.content.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredPosts(filtered);
+    setCurrentPage(1); // Reset to the first page
+    fetchPosts(1); // Fetch posts with search filters
+  };
+
+  const handlePostDelete = (postId) => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    fetch(`/api/v1/blog_posts/${postId}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': csrfToken,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Post deleted successfully!');
+          fetchPosts(currentPage);
+        } else {
+          console.error('Failed to delete post');
+        }
+      })
+      .catch((error) => console.error('Error:', error));
+  };
+
+  const handleCommentDelete = (commentId) => {
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+
+    fetch(`/api/v1/post_comments/${commentId}`, {
+      method: 'DELETE',
+      headers: {
+        'X-CSRF-Token': csrfToken,
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('comment deleted successfully!');
+          fetchcomments(currentPage);
+        } else {
+          console.error('Failed to delete comment');
+        }
+      })
+      .catch((error) => console.error('Error:', error));
+  };
+
+  const changePage = (newPage) => {
+    if (newPage > 0 && newPage <= meta.totalPages) {
+      setCurrentPage(newPage);
     }
+  };
+
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setSearchFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
     <div>
       <h1 className="text-dark">Blog Entries</h1>
-      {filteredPosts.map((post) => (
-        <div key={post.id} className="ps-3 mb-3">
-          <div className="row ps-3">
-            <div className="col-lg-12">
-              <h2>{post.title}</h2>
-              {DateTimeDisplay({ dateTime: post.posted })} - {post.author}
-            </div>
-          </div>
-          <div className="row ps-5 pt-3">
-            <div className="col-lg-12">
-              {expandedPosts[post.id] ? (
-                <>
-                  {post.content}
+
+      <div className="rounded-box p-3 mb-3">
+        {posts.map((post) => (
+          <div key={post.id} className="ps-3 mb-3">
+            <div className="row align-items-center">
+              <div className="col-9">
+                <h2>{post.title}</h2>
+                {DateTimeDisplay({dateTime: post.posted})} - {post.author}
+              </div>
+              <div className="col-3 text-end">
+                {user.logged_in && (
                   <button
-                    onClick={() => toggleExpand(post.id)}
-                    className="btn btn-link"
+                    onClick={() => openCommentEditor(post)}
+                    className="btn btn-primary btn-sm me-2"
+                    style={{minWidth: "6em"}}
                   >
-                    Show Less
+                    Comment
                   </button>
-                </>
-              ) : (
-                <>
-                  {post.content.length > 100
-                    ? post.content.substring(0, 100) + '... '
-                    : post.content}
-                  {post.content.length > 100 && (
+                )}
+                {post.author === user.name && (
+                  <>
                     <button
-                      onClick={() => toggleExpand(post.id)}
-                      className="btn btn-link"
+                      onClick={() => openPostEditor(post)}
+                      className="btn btn-primary btn-sm me-2"
+                      style={{minWidth: "6em"}}
                     >
-                      Read More
+                      Edit
                     </button>
-                  )}
-                </>
+                    <button
+                      onClick={() => handlePostDelete(post.id)}
+                      className="btn btn-danger btn-sm"
+                      style={{minWidth: "6em"}}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="row ps-5 pt-3">
+              <div className="col-lg-12">
+                <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+              </div>
+            </div>
+            {post.post_comments && post.post_comments.length > 0 && (
+              <div className="row ps-5 pt-3">
+                <div className="col-lg-12">
+                  <h5>Comments</h5>
+                  {post.post_comments.map((comment) => (
+                    <div key={comment.id} className="ps-3 mb-3" style={{ marginLeft: "1em", borderLeft: "2px solid #ddd", paddingLeft: "1em" }}>
+                      <div className="row align-items-center">
+                        <div className="col-9">
+                          <h6>{comment.title}</h6>
+                          {DateTimeDisplay({ dateTime: comment.posted })} - {comment.author}
+                        </div>
+                        <div className="col-3 text-end">
+                          {user.logged_in && (comment.author === user.name) && (
+                            <button
+                              onClick={() => openCommentEditor(post, comment)}
+                              className="btn btn-primary btn-sm me-2"
+                              style={{ minWidth: "6em" }}
+                            >
+                              Edit
+                            </button>
+                          )}
+                          {comment.author === user.name && (
+                            <button
+                              onClick={() => handleCommentDelete(comment.id)}
+                              className="btn btn-danger btn-sm"
+                              style={{ minWidth: "6em" }}
+                            >
+                              Delete
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                      <div className="row ps-3 pt-2">
+                        <div className="col-lg-12">
+                          <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      {(!showPostEditor && !showCommentEditor) ? (
+        <>
+          <div className="row">
+            <div className="col-2">
+              {user.admin && (
+                <button onClick={() => openPostEditor()} className="btn btn-primary">
+                  Add Post
+                </button>
               )}
             </div>
+            <div className="col-10">
+              <div className="mb-3 d-flex justify-content-end align-items-center">
+                <button
+                  onClick={() => changePage(currentPage - 1)}
+                  className="btn btn-outline-primary me-2"
+                  disabled={currentPage === 1}
+                >
+                  Previous
+                </button>
+                <span>
+            Page {meta.currentPage} of {meta.totalPages}
+          </span>
+                <button
+                  onClick={() => changePage(currentPage + 1)}
+                  className="btn btn-outline-primary ms-2"
+                  disabled={currentPage >= meta.totalPages}
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      ))}
-
-      {/* Add Post Button */}
-      {permit_editing && !showEditor && (
-        <div className="mt-3">
-          <button onClick={openEditor} className="btn btn-primary">
-            Add Post
-          </button>
-        </div>
+          <div className="mt-3 rounded-box">
+            <form onSubmit={handleSearch}>
+              <div className="row p-3">
+                <div className="col-3">
+                  <label htmlFor="title" className="form-label">
+                    Title
+                  </label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    className="form-control"
+                    value={searchFields.title}
+                    onChange={handleInputChange}
+                    placeholder="Search by title"
+                  />
+                </div>
+                <div className="col-1"></div>
+                <div className="col-3">
+                  <label htmlFor="author" className="form-label">
+                    Author
+                  </label>
+                  <input
+                    type="text"
+                    id="author"
+                    name="author"
+                    className="form-control"
+                    value={searchFields.author}
+                    onChange={handleInputChange}
+                    placeholder="Search by author"
+                  />
+                </div>
+                <div className="col-1"></div>
+                <div className="col-3">
+                  <label htmlFor="content" className="form-label">
+                    Content
+                  </label>
+                  <input
+                    type="text"
+                    id="content"
+                    name="content"
+                    className="form-control"
+                    value={searchFields.content}
+                    onChange={handleInputChange}
+                    placeholder="Search by content"
+                  />
+                </div>
+                <div className="row mt-3">
+                  <div className="col-1">
+                    <button type="submit" className="btn btn-primary">
+                      Search
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </>
+      ) : (
+        showPostEditor ? (
+          <div className="rounded-box p-3">
+            <PostEditor closeEditor={closePostEditor} user={user} post={editingPost}/>
+          </div>
+        ) : (
+          showCommentEditor && (
+            <div className="rounded-box p-3">
+              <CommentEditor
+                closeEditor={closeCommentEditor}
+                user={user}
+                post={commentPost}
+                comment={editingComment}
+              />
+            </div>
+          )
+        )
       )}
-
-      {/* Render PostEditor */}
-      {showEditor && <PostEditor closeEditor={closeEditor} />}
-
-      {/* Search Form */}
-      <div className="mt-3">
-        <form onSubmit={handleSearch}>
-          <div className="mb-3">
-            <label htmlFor="search" className="form-label">
-              Search For:
-            </label>
-            <input
-              type="text"
-              id="search"
-              className="form-control"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Enter search term"
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">
-            Search
-          </button>
-        </form>
-      </div>
     </div>
   );
 };

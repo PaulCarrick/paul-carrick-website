@@ -44,10 +44,14 @@ class ApplicationController < ActionController::Base
   end
 
   def setup_user
-    if user_signed_in?
-      @user = User.find_by(email: current_user.email)
-    else
-      @user = User.find_by(email: 'guest@paul-carrick.com')
-    end
+    @user = if user_signed_in?
+             user = User.find_by(email: current_user.email)
+
+             user.as_json.merge(logged_in: true) if user.present?
+           else
+             user = User.find_by(email: 'guest@paul-carrick.com')
+
+             user.as_json if user.present?
+           end
   end
 end
