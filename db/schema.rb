@@ -57,9 +57,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_141425) do
     t.string "author", null: false
     t.datetime "posted", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.text "content", null: false
+    t.string "visibility"
+    t.string "checksum", limit: 512
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.string "checksum", limit: 512
     t.index ["author"], name: "index_blog_posts_on_author"
     t.index ["title"], name: "index_blog_posts_on_title"
   end
