@@ -24,14 +24,13 @@ module ApplicationHelper
       [
         link_to("Edit",
                 edit_path,
-                class: "btn btn-sm btn-primary me-2",
-                style: "min-width: 6em; max-height: 2em;"),
+                class: "btn-link me-2"),
         link_to("Delete",
                 delete_path,
                 method: :delete,
                 data: { confirm: "Are you sure?" },
-                class: "btn btn-sm btn-danger",
-                style: "min-width: 6em; max-height: 2em;")
+                class: "btn-link",
+                style: "color: red")
       ].join.html_safe
     end
   end

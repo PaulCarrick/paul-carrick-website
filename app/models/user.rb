@@ -4,4 +4,8 @@ class User < ApplicationRecord
   def admin?
     admin
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[ email name ]
+  end
 end

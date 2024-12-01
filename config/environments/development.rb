@@ -91,4 +91,6 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
   config.hosts << "paul-carrick.com"
   config.hosts << "paul-carrick.com:3000"
+
+  config.action_controller.raise_on_missing_callback_actions = false
 end

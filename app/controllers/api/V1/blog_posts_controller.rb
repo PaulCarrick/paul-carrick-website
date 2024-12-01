@@ -6,8 +6,36 @@ module Api
       before_action :set_blog, only: %i[show update destroy]
 
       def index
-        @q = BlogPost.ransack(params[:q])
+        # Filter blog posts based on `visibility`
+        blog_posts = if params[:visibility].present?
+                       if params[:visibility] == "Private"
+                         if params[:blog_type].present?
+                           BlogPost.where(blog_type: params[:blog_type]) # Include all blog posts (Public, Private, and nil)
+                         else
+                           BlogPost.all # Include all blog posts (Public, Private, and nil)
+                         end
+                       else
+                         if params[:blog_type].present?
+                           BlogPost.where(blog_type: params[:blog_type]).not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                         else
+                           BlogPost.where.not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                         end
+
+                         BlogPost.where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
+                       end
+                     else
+                       if params[:blog_type].present?
+                         BlogPost.where(blog_type: params[:blog_type]).not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                       else
+                         BlogPost.where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
+                       end
+                     end
+
+        # Apply Ransack search on the filtered results
+        @q = blog_posts.ransack(params[:q])
         @results = @q.result(distinct: true).includes(:post_comments).order(posted: :desc)
+
+        # Apply Pagy pagination
         @pagy, @blog_posts = pagy(@results, limit: params[:limit] || 3)
 
         # Add pagination details to headers before rendering

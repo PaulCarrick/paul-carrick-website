@@ -152,16 +152,15 @@ const PostList = ({user}) => {
         {posts.map((post) => (
           <div key={post.id} className="ps-3 mb-3">
             <div className="row align-items-center">
-              <div className="col-9">
+              <div className="col-8">
                 <h2>{post.title}</h2>
                 {DateTimeDisplay({dateTime: post.posted})} - {post.author}
               </div>
-              <div className="col-3 text-end">
+              <div className="col-4 text-end">
                 {user.logged_in && (
                   <button
                     onClick={() => openCommentEditor(post)}
-                    className="btn btn-primary btn-sm me-2"
-                    style={{minWidth: "6em"}}
+                    className="btn-link me-2"
                   >
                     Comment
                   </button>
@@ -170,15 +169,14 @@ const PostList = ({user}) => {
                   <>
                     <button
                       onClick={() => openPostEditor(post)}
-                      className="btn btn-primary btn-sm me-2"
-                      style={{minWidth: "6em"}}
+                      className="btn-link me-2"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handlePostDelete(post.id)}
-                      className="btn btn-danger btn-sm"
-                      style={{minWidth: "6em"}}
+                      className="btn-link me-2"
+                      style={{color: 'red'}}
                     >
                       Delete
                     </button>
@@ -188,7 +186,7 @@ const PostList = ({user}) => {
             </div>
             <div className="row ps-5 pt-3">
               <div className="col-lg-12">
-                <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                <div dangerouslySetInnerHTML={{__html: post.content}}></div>
               </div>
             </div>
             {post.post_comments && post.post_comments.length > 0 && (
@@ -196,18 +194,18 @@ const PostList = ({user}) => {
                 <div className="col-lg-12">
                   <h5>Comments</h5>
                   {post.post_comments.map((comment) => (
-                    <div key={comment.id} className="ps-3 mb-3" style={{ marginLeft: "1em", borderLeft: "2px solid #ddd", paddingLeft: "1em" }}>
+                    <div key={comment.id} className="ps-3 mb-3"
+                         style={{marginLeft: "1em", borderLeft: "2px solid #ddd", paddingLeft: "1em"}}>
                       <div className="row align-items-center">
                         <div className="col-9">
                           <h6>{comment.title}</h6>
-                          {DateTimeDisplay({ dateTime: comment.posted })} - {comment.author}
+                          {DateTimeDisplay({dateTime: comment.posted})} - {comment.author}
                         </div>
                         <div className="col-3 text-end">
                           {user.logged_in && (comment.author === user.name) && (
                             <button
                               onClick={() => openCommentEditor(post, comment)}
-                              className="btn btn-primary btn-sm me-2"
-                              style={{ minWidth: "6em" }}
+                              className="btn-link me-2"
                             >
                               Edit
                             </button>
@@ -215,8 +213,8 @@ const PostList = ({user}) => {
                           {comment.author === user.name && (
                             <button
                               onClick={() => handleCommentDelete(comment.id)}
-                              className="btn btn-danger btn-sm"
-                              style={{ minWidth: "6em" }}
+                              className="btn-link me-2"
+                              style={{color: 'red'}}
                             >
                               Delete
                             </button>
@@ -225,7 +223,7 @@ const PostList = ({user}) => {
                       </div>
                       <div className="row ps-3 pt-2">
                         <div className="col-lg-12">
-                          <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+                          <div dangerouslySetInnerHTML={{__html: comment.content}}></div>
                         </div>
                       </div>
                     </div>
@@ -250,17 +248,17 @@ const PostList = ({user}) => {
               <div className="mb-3 d-flex justify-content-end align-items-center">
                 <button
                   onClick={() => changePage(currentPage - 1)}
-                  className="btn btn-outline-primary me-2"
+                  className="btn-link me-2"
                   disabled={currentPage === 1}
                 >
                   Previous
                 </button>
-                <span>
-            Page {meta.currentPage} of {meta.totalPages}
-          </span>
+                <span className="me-2">
+                  Page {meta.currentPage} of {meta.totalPages}
+                </span>
                 <button
                   onClick={() => changePage(currentPage + 1)}
-                  className="btn btn-outline-primary ms-2"
+                  className="btn-link me-2"
                   disabled={currentPage >= meta.totalPages}
                 >
                   Next

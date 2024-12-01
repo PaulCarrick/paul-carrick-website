@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_28_141425) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_29_192628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_141425) do
     t.datetime "posted", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.text "content", null: false
     t.string "visibility"
+    t.string "blog_type"
     t.string "checksum", limit: 512
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
@@ -138,6 +139,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_141425) do
     t.string "name"
     t.boolean "admin", default: false
     t.boolean "super"
+    t.string "roles"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

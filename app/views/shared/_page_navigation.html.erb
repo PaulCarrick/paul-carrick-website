@@ -1,24 +1,26 @@
 <!-- app/views/shared/_page_navigation.html.erb -->
 <nav aria-label="Pagination">
   <ul class="pagination justify-content-end">
-    <!-- First Page Link -->
-    <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
-      <%= link_to 'First', url_for(params.permit!.to_h.merge(page: 1, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
-    </li>
+    <% if @pagy.present? %>
+      <!-- First Page Link -->
+      <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
+        <%= link_to 'First', url_for(params.permit!.to_h.merge(page: 1, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
+      </li>
 
-    <!-- Previous Page Link -->
-    <li class="page-item <%= 'disabled' unless @pagy.prev %>">
-      <%= link_to 'Previous', url_for(params.permit!.to_h.merge(page: @pagy.prev, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
-    </li>
+      <!-- Previous Page Link -->
+      <li class="page-item <%= 'disabled' unless @pagy.prev %>">
+        <%= link_to 'Previous', url_for(params.permit!.to_h.merge(page: @pagy.prev, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
+      </li>
 
-    <!-- Next Page Link -->
-    <li class="page-item <%= 'disabled' unless @pagy.next %>">
-      <%= link_to 'Next', url_for(params.permit!.to_h.merge(page: @pagy.next, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
-    </li>
+      <!-- Next Page Link -->
+      <li class="page-item <%= 'disabled' unless @pagy.next %>">
+        <%= link_to 'Next', url_for(params.permit!.to_h.merge(page: @pagy.next, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
+      </li>
 
-    <!-- Last Page Link -->
-    <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
-      <%= link_to 'Last', url_for(params.permit!.to_h.merge(page: @pagy.last, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
-    </li>
+      <!-- Last Page Link -->
+      <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
+        <%= link_to 'Last', url_for(params.permit!.to_h.merge(page: @pagy.last, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
+      </li>
+    <% end %>
   </ul>
 </nav>

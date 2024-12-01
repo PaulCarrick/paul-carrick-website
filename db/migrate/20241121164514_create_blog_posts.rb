@@ -6,6 +6,7 @@ class CreateBlogPosts < ActiveRecord::Migration[8.0]
       t.datetime :posted, default: -> { 'CURRENT_TIMESTAMP' }, null: false
       t.text :content, null: false
       t.string :visibility
+      t.string :blog_type
       t.string :checksum, limit: 512
 
       t.timestamps default: -> { 'CURRENT_TIMESTAMP' }, null: false

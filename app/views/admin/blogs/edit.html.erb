@@ -16,6 +16,15 @@
     </div>
 
     <div class="mb-3">
+      <%= form.label :visibility, "Visibility", class: "form-label" %>
+      <%= form.select_tag :visibility,
+                          options_for_select([['', ''],
+                                              ['Public', 'public'],
+                                              ['Private', 'private']]),
+                          class: 'form-control' %>
+    </div>
+
+    <div class="mb-3">
       <%= form.label :content, "content*", class: "form-label" %>
       <%= form.rich_text_area :content, class: "form-control", required: true %>
     </div>

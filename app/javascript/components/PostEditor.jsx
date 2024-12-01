@@ -7,6 +7,7 @@ const PostEditor = ({ user, post, closeEditor }) => {
   const [author, setAuthor] = useState(user.name); // Always set to the current user
   const [content, setContent] = useState(post?.content || ''); // Use existing content if editing
   const [posted, setPosted] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
+  const [visibility, setVisibility] = useState(post?.visibility || ''); // Default visibility
 
   const handleSubmit = () => {
     const getCsrfToken = () => {
@@ -26,7 +27,7 @@ const PostEditor = ({ user, post, closeEditor }) => {
         'X-CSRF-Token': getCsrfToken(), // Include the CSRF token here
       },
       body: JSON.stringify({
-        blog_post: { title, author, content, posted }, // Include all fields
+        blog_post: { title, author, content, posted, visibility }, // Include all fields
       }),
     })
       .then((response) => {
@@ -63,6 +64,19 @@ const PostEditor = ({ user, post, closeEditor }) => {
         value={posted} // Hidden input to hold the DateTime value
         readOnly
       />
+      <div className="mb-2">
+        <label htmlFor="visibility" className="form-label">Visibility</label>
+        <select
+          id="visibility"
+          value={visibility}
+          onChange={(e) => setVisibility(e.target.value)}
+          className="form-control"
+        >
+          <option value="">Select visibility</option>
+          <option value="public">Public</option>
+          <option value="private">Private</option>
+        </select>
+      </div>
       <ReactQuill value={content} onChange={setContent} />
       <div className="mt-3">
         <button onClick={handleSubmit} className="btn btn-primary me-2">
