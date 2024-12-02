@@ -34,7 +34,8 @@ COPY public.menu_items (id, menu_type, label, icon, options, link, access, menu_
 16	Admin	Blogs	\N	\N	/admin/blogs	\N	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
 17	Admin	Pages	\N	super_only	/admin/pages	\N	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
 18	Admin	Sections	\N	super_only	/admin/sections	\N	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
-19	Admin	Users	\N	super_only	/admin/users	\N	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+19	Admin	Image Files	\N	super_only	/admin/image_files	\N	5	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+20	Main	Blog	\N	\N	/blog?blog_type=Professional	\N	4	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
 \.
 
 --
