@@ -61,13 +61,12 @@ class Admin::UsersController < ApplicationController
   private
 
   def set_user
-byebug
     @user = User.find(params[:id])
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :admin, :super, :roles) # Add :role if you have roles
+    params.require(:user).permit(:email, :password, :password_confirmation, :name, :admin, :super, :roles) # Add :role if you have roles
   end
 end

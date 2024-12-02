@@ -30,7 +30,8 @@ module ApplicationHelper
                 method: :delete,
                 data: { confirm: "Are you sure?" },
                 class: "btn-link",
-                style: "color: red")
+                style: "color: red",
+                onclick: "if (!confirm('Are you sure you want to delete this?')) { return false; }")
       ].join.html_safe
     end
   end

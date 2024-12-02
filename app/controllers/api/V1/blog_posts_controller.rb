@@ -16,16 +16,14 @@ module Api
                          end
                        else
                          if params[:blog_type].present?
-                           BlogPost.where(blog_type: params[:blog_type]).not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                           BlogPost.where(blog_type: params[:blog_type]).where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
                          else
-                           BlogPost.where.not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                           BlogPost.where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
                          end
-
-                         BlogPost.where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
                        end
                      else
                        if params[:blog_type].present?
-                         BlogPost.where(blog_type: params[:blog_type]).not(visibility: "Private") # Include all blog posts (Public, Private, and nil)
+                         BlogPost.where(blog_type: params[:blog_type]).where.not(visibility: "Private")
                        else
                          BlogPost.where.not(visibility: "Private") # Exclude "Private", include "Public" and nil
                        end
@@ -116,7 +114,7 @@ module Api
       end
 
       def blog_params
-        params.require(:blog_post).permit(:title, :author, :posted, :content)
+        params.require(:blog_post).permit(:visibility, :blog_type, :title, :author, :posted, :content)
       end
     end
   end

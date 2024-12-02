@@ -2,16 +2,16 @@
 
 <%= render "layouts/header" %>
 <%= render "layouts/admin_menu" do %>
-  <div class="row border-bottom border-dark mb-2">
+  <div class="row mb-2">
     <h1>Manage Users</h1>
     <div class="row border-bottom border-dark mb-2">
       <div class="col-3">
         <%= sortable_column('Email', 'email', "users") %>
       </div>
-      <div class="col-3">
+      <div class="col-2">
         <%= sortable_column('Name', 'name', "users") %>
       </div>
-      <div class="col-1">
+      <div class="col-2">
         <%= sortable_column('Admin', 'admin', "users") %>
       </div>
       <div class="col-1">
@@ -30,20 +30,20 @@
             <div class="col-3">
               <%= user.email %>
             </div>
-            <div class="col-3">
+            <div class="col-2">
               <%= user.name || "N/A" %>
             </div>
-            <div class="col-1">
+            <div class="col-2">
               <%= user.admin ? "Yes" : "No" %>
             </div>
             <div class="col-1">
               <%= user.super ? "Yes" : "No" %>
             </div>
             <div class="col-2">
-              <%= user.roles || "None" %>
+              <%= user.roles.present? ? user.roles : "None" %>
             </div>
             <div class="col-2" style="min-height: 2em;">
-              <%= action_links(user, edit_admin_user_path(user), admin_delete_user_path(user)) %>
+              <%= action_links(user, edit_admin_user_path(user), admin_destroy_user_path(user)) %>
             </div>
           </div>
         <% end %>

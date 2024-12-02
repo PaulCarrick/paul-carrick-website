@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const PostEditor = ({ user, post, closeEditor }) => {
+const PostEditor = ({ user, post, blog_type, closeEditor }) => {
   const [title, setTitle] = useState(post?.title || ''); // Use existing title if editing
   const [author, setAuthor] = useState(user.name); // Always set to the current user
   const [content, setContent] = useState(post?.content || ''); // Use existing content if editing
   const [posted, setPosted] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
-  const [visibility, setVisibility] = useState(post?.visibility || ''); // Default visibility
+  const [visibility, setVisibility] = useState(post?.visibility || 'public'); // Default visibility to "public"
 
   const handleSubmit = () => {
     const getCsrfToken = () => {
@@ -27,7 +27,7 @@ const PostEditor = ({ user, post, closeEditor }) => {
         'X-CSRF-Token': getCsrfToken(), // Include the CSRF token here
       },
       body: JSON.stringify({
-        blog_post: { title, author, content, posted, visibility }, // Include all fields
+        blog_post: { title, author, blog_type, content, posted, visibility }, // Include all fields
       }),
     })
       .then((response) => {
@@ -53,6 +53,10 @@ const PostEditor = ({ user, post, closeEditor }) => {
         className="form-control mb-2"
       />
       <input
+        type="hidden"
+        value={blog_type}
+      />
+      <input
         type="text"
         placeholder="Author"
         value={author}
@@ -71,10 +75,11 @@ const PostEditor = ({ user, post, closeEditor }) => {
           value={visibility}
           onChange={(e) => setVisibility(e.target.value)}
           className="form-control"
+          style={{ maxWidth: '6em' }}
         >
           <option value="">Select visibility</option>
-          <option value="public">Public</option>
-          <option value="private">Private</option>
+          <option value="Public">Public</option>
+          <option value="Private">Private</option>
         </select>
       </div>
       <ReactQuill value={content} onChange={setContent} />

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import PostEditor from './PostEditor';
 import CommentEditor from './CommentEditor';
 
-const PostList = ({user}) => {
+const PostList = ({ user, blog_type }) => {
   const [posts, setPosts] = useState([]);
-  const [meta, setMeta] = useState({totalPages: 1, currentPage: 1, totalCount: 0});
+  const [meta, setMeta] = useState({ totalPages: 1, currentPage: 1, totalCount: 0 });
   const [currentPage, setCurrentPage] = useState(1);
   const [searchFields, setSearchFields] = useState({
     title: '',
@@ -19,14 +19,13 @@ const PostList = ({user}) => {
   const [editingComment, setEditingComment] = useState(null);
 
   const fetchPosts = (page = 1) => {
-    // Construct the Ransack-compatible query parameters
     const queryParams = Object.entries(searchFields)
       .filter(([_, value]) => value.trim() !== '')
       .map(
         ([field, value]) => `q[${field}_cont]=${encodeURIComponent(value)}`
       )
       .join('&');
-    const url = `/api/v1/blog_posts?include_comments=true&page=${page}&limit=3${queryParams ? `&${queryParams}` : ''}`;
+    const url = `/api/v1/blog_posts?include_comments=true&blog_type=${blog_type}&visibility=${user.logged_in ? "Private" : "Public"}&page=${page}&limit=3${queryParams ? `&${queryParams}` : ''}`;
 
     fetch(url)
       .then((response) => {
@@ -55,7 +54,7 @@ const PostList = ({user}) => {
     fetchPosts(currentPage);
   }, [currentPage]);
 
-  const DateTimeDisplay = ({dateTime}) => {
+  const DateTimeDisplay = ({ dateTime }) => {
     const formattedDate = moment(dateTime).local().format('MMM Do YYYY HH:mm');
     return formattedDate;
   };
@@ -84,11 +83,16 @@ const PostList = ({user}) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setCurrentPage(1); // Reset to the first page
-    fetchPosts(1); // Fetch posts with search filters
+    setCurrentPage(1);
+    fetchPosts(1);
   };
 
   const handlePostDelete = (postId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
+    if (!confirmDelete) {
+      return;
+    }
+
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     fetch(`/api/v1/blog_posts/${postId}`, {
@@ -110,6 +114,11 @@ const PostList = ({user}) => {
   };
 
   const handleCommentDelete = (commentId) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
+    if (!confirmDelete) {
+      return;
+    }
+
     const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
 
     fetch(`/api/v1/post_comments/${commentId}`, {
@@ -121,8 +130,8 @@ const PostList = ({user}) => {
     })
       .then((response) => {
         if (response.ok) {
-          console.log('comment deleted successfully!');
-          fetchcomments(currentPage);
+          console.log('Comment deleted successfully!');
+          fetchPosts(currentPage);
         } else {
           console.error('Failed to delete comment');
         }
@@ -137,7 +146,7 @@ const PostList = ({user}) => {
   };
 
   const handleInputChange = (e) => {
-    const {name, value} = e.target;
+    const { name, value } = e.target;
     setSearchFields((prev) => ({
       ...prev,
       [name]: value,
@@ -147,14 +156,13 @@ const PostList = ({user}) => {
   return (
     <div>
       <h1 className="text-dark">Blog Entries</h1>
-
       <div className="rounded-box p-3 mb-3">
         {posts.map((post) => (
           <div key={post.id} className="ps-3 mb-3">
             <div className="row align-items-center">
               <div className="col-8">
                 <h2>{post.title}</h2>
-                {DateTimeDisplay({dateTime: post.posted})} - {post.author}
+                {DateTimeDisplay({ dateTime: post.posted })} - {post.author}
               </div>
               <div className="col-4 text-end">
                 {user.logged_in && (
@@ -176,7 +184,7 @@ const PostList = ({user}) => {
                     <button
                       onClick={() => handlePostDelete(post.id)}
                       className="btn-link me-2"
-                      style={{color: 'red'}}
+                      style={{ color: 'red' }}
                     >
                       Delete
                     </button>
@@ -186,7 +194,7 @@ const PostList = ({user}) => {
             </div>
             <div className="row ps-5 pt-3">
               <div className="col-lg-12">
-                <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+                <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
               </div>
             </div>
             {post.post_comments && post.post_comments.length > 0 && (
@@ -194,15 +202,22 @@ const PostList = ({user}) => {
                 <div className="col-lg-12">
                   <h5>Comments</h5>
                   {post.post_comments.map((comment) => (
-                    <div key={comment.id} className="ps-3 mb-3"
-                         style={{marginLeft: "1em", borderLeft: "2px solid #ddd", paddingLeft: "1em"}}>
+                    <div
+                      key={comment.id}
+                      className="ps-3 mb-3"
+                      style={{
+                        marginLeft: "1em",
+                        borderLeft: "2px solid #ddd",
+                        paddingLeft: "1em",
+                      }}
+                    >
                       <div className="row align-items-center">
                         <div className="col-9">
                           <h6>{comment.title}</h6>
-                          {DateTimeDisplay({dateTime: comment.posted})} - {comment.author}
+                          {DateTimeDisplay({ dateTime: comment.posted })} - {comment.author}
                         </div>
                         <div className="col-3 text-end">
-                          {user.logged_in && (comment.author === user.name) && (
+                          {user.logged_in && comment.author === user.name && (
                             <button
                               onClick={() => openCommentEditor(post, comment)}
                               className="btn-link me-2"
@@ -214,7 +229,7 @@ const PostList = ({user}) => {
                             <button
                               onClick={() => handleCommentDelete(comment.id)}
                               className="btn-link me-2"
-                              style={{color: 'red'}}
+                              style={{ color: 'red' }}
                             >
                               Delete
                             </button>
@@ -223,7 +238,7 @@ const PostList = ({user}) => {
                       </div>
                       <div className="row ps-3 pt-2">
                         <div className="col-lg-12">
-                          <div dangerouslySetInnerHTML={{__html: comment.content}}></div>
+                          <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
                         </div>
                       </div>
                     </div>
@@ -324,22 +339,20 @@ const PostList = ({user}) => {
             </form>
           </div>
         </>
+      ) : showPostEditor ? (
+        <div className="rounded-box p-3">
+          <PostEditor closeEditor={closePostEditor} blog_type={blog_type} user={user} post={editingPost} />
+        </div>
       ) : (
-        showPostEditor ? (
+        showCommentEditor && (
           <div className="rounded-box p-3">
-            <PostEditor closeEditor={closePostEditor} user={user} post={editingPost}/>
+            <CommentEditor
+              closeEditor={closeCommentEditor}
+              user={user}
+              post={commentPost}
+              comment={editingComment}
+            />
           </div>
-        ) : (
-          showCommentEditor && (
-            <div className="rounded-box p-3">
-              <CommentEditor
-                closeEditor={closeCommentEditor}
-                user={user}
-                post={commentPost}
-                comment={editingComment}
-              />
-            </div>
-          )
         )
       )}
     </div>
