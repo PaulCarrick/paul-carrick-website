@@ -3,6 +3,8 @@
 # app/models/section.rb
 
 class Section < ApplicationRecord
+  after_find :verify_checksum
+
   include Checksum
   include Validation
 
@@ -17,6 +19,14 @@ class Section < ApplicationRecord
   end
 
   private
+
+  def verify_checksum
+    expected_checksum = generate_checksum(description)
+    unless checksum == expected_checksum
+      Rails.logger.error "Checksum mismatch for record ##{id}"
+      raise ActiveRecord::RecordInvalid, "Checksum verification failed for Section record ##{id}"
+    end
+  end
 
   def at_least_one_field_present
     return unless image.blank? && link.blank? && description.blank?

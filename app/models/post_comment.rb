@@ -1,4 +1,6 @@
 class PostComment < ApplicationRecord
+  after_find :verify_checksum
+
   include Checksum
   include Validation
 
@@ -11,6 +13,14 @@ class PostComment < ApplicationRecord
   end
 
   private
+
+  def verify_checksum
+    expected_checksum = generate_checksum(content)
+    unless checksum == expected_checksum
+      Rails.logger.error "Checksum mismatch for record ##{id}"
+      raise ActiveRecord::RecordInvalid, "Checksum verification failed for PostComment record ##{id}"
+    end
+  end
 
   def content_is_valid
     return unless content.present?
