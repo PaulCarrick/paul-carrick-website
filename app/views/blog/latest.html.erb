@@ -1,0 +1,13 @@
+<!-- app/views/blog/latest.html.erb -->
+<% if @blog.present? %>
+  <h1>Latest Blog</h1>
+  <div class="ms-3 ps-3">
+    <h2><%= @blog.title %></h2>
+  </div>
+  <div class="ms-4 ps-4">
+    <%= @blog.posted %> - <%= @blog.author %>
+  </div>
+  <div class="ms-5 ps-5">
+    <%= raw(@blog.content) %>
+  </div>
+<% end %>

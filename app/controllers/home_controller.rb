@@ -5,7 +5,7 @@ include HtmlSanitizer
 
 class HomeController < ApplicationController
   def index
-    @contents = Section.where(content_type: "Home").map do |section|
+    @contents = Section.where(content_type: "Home").order(:section_order).map do |section|
       section.tap do |content|
         content.description = sanitize_html(content.description)
       end
