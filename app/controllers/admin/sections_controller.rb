@@ -99,7 +99,7 @@ class Admin::SectionsController < ApplicationController
     params.require(:section).permit(:content_type,
                                     :section_name,
                                     :section_order,
-                                    :image,
+                                    :image_file,
                                     :link,
                                     :formatting,
                                     :description)

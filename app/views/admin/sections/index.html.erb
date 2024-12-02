@@ -15,7 +15,7 @@
       <%= sortable_column('Section Order', 'section_order', "sections") %>
     </div>
     <div class="col-2">
-      <%= sortable_column('Image(s)', 'image', "sections") %>
+      <%= sortable_column('ImageFile(s)', 'image_file', "sections") %>
     </div>
     <div class="col-2">
       <%= sortable_column('Url', 'link', "sections") %>
@@ -106,7 +106,7 @@
     </div>
     <div class="row mb-2">
       <div class="col-1">
-        <%= form.label :image_cont, "Image", class: "form-label" %>
+        <%= form.label :image_cont, "ImageFile", class: "form-label" %>
       </div>
       <div class="col-4">
         <%= form.search_field :image_cont, style: "min-width: 100%;" %>

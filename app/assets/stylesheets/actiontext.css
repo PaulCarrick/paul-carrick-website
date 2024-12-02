@@ -416,9 +416,9 @@ trix-editor .attachment__metadata {
       max-width: 50%; }
 
 /*
- * We need to override trix.css’s image gallery styles to accommodate the
+ * We need to override trix.css’s image_file gallery styles to accommodate the
  * <action-text-attachment> element we wrap around attachments. Otherwise,
- * images in galleries will be squished by the max-width: 33%; rule.
+ * image_files in galleries will be squished by the max-width: 33%; rule.
 */
 .trix-content .attachment-gallery > action-text-attachment,
 .trix-content .attachment-gallery > .attachment {

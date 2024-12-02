@@ -15,7 +15,7 @@ class Section < ApplicationRecord
   scope :by_content_type, ->(type) { where(content_type: type).order(:section_order) }
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[content_type section_name image link description]
+    %w[content_type section_name image_file link description]
   end
 
   private
@@ -29,9 +29,9 @@ class Section < ApplicationRecord
   end
 
   def at_least_one_field_present
-    return unless image.blank? && link.blank? && description.blank?
+    return unless image_file.blank? && link.blank? && description.blank?
 
-    errors.add(:base, "At least one of image, link, or description must be present.")
+    errors.add(:base, "At least one of image_file, link, or description must be present.")
   end
 
   def formatting_is_valid

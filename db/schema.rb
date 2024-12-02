@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_29_192628) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_02_195507) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,6 +78,23 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_29_192628) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
+  create_table "image_collections", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_image_collections_on_name", unique: true
+  end
+
+  create_table "image_files", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "caption"
+    t.string "description"
+    t.string "mime_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_image_files_on_name", unique: true
+  end
+
   create_table "menu_items", force: :cascade do |t|
     t.string "menu_type"
     t.string "label"
@@ -140,6 +157,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_29_192628) do
     t.boolean "admin", default: false
     t.boolean "super"
     t.string "roles"
+    t.boolean "approved", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

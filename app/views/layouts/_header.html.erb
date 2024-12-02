@@ -47,7 +47,7 @@
                   </div>
                 <% else %>
                   <!-- Regular Menu Item -->
-                  <% if menu_item.options == "image-file" %>
+                  <% if menu_item.options == "image_file-file" %>
                     <a href="<%= menu_item[:link]%>" target="_self" >
                       <%= image_tag menu_item.icon,
                                     alt: menu_item.label,

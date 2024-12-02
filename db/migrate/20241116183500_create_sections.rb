@@ -6,7 +6,7 @@ class CreateSections < ActiveRecord::Migration[8.0]
       t.string :content_type, null: false
       t.string :section_name
       t.integer :section_order
-      t.string :image
+      t.string :image_file
       t.string :link
       t.string :formatting
       t.text :description

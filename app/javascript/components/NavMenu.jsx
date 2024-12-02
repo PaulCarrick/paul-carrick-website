@@ -44,7 +44,7 @@ const NavMenu = ({menuItems}) => {
                 </div>
               ) : (
                 // Render regular item with a conditional for SVG icon button
-                (item.options == "image-file") ? (
+                (item.options == "image_file-file") ? (
                   <img src={item.icon} alt={item.icon} style={{ paddingTop: '20px' }} />
                 ) : (
                   <a className="nav-link px-lg-3 py-lg-4 text-uppercase" href={item.link}>

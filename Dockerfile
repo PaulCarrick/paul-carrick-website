@@ -25,7 +25,7 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development"
 
-# Throw-away build stage to reduce size of final image
+# Throw-away build stage to reduce size of final image_file
 FROM base AS build
 
 # Install packages needed to build gems and node modules
@@ -65,7 +65,7 @@ RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
 RUN rm -rf node_modules
 
 
-# Final stage for app image
+# Final stage for app image_file
 FROM base
 
 # Copy built artifacts: gems, application

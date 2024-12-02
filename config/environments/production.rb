@@ -21,7 +21,7 @@ Rails.application.configure do
   config.public_file_server.headers = { "cache-control" => "public, max-age=#{1.minute.to_i}" }
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present? || ENV['RAILS_ENV'] == 'production'
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
+  # Enable serving of image_files, stylesheets, and JavaScripts from an asset server.
   # config.asset_host = "http://assets.example.com"
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
@@ -111,4 +111,9 @@ Rails.application.configure do
 
   config.assets.js_compressor = :uglifier # Or another compressor
   config.assets.compile = false
+
+  Rails.application.routes.default_url_options = {
+    host: "paul-carrick.com",
+    protocol: "https"
+  }
 end

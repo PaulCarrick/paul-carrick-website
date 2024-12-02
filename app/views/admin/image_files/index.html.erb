@@ -1,0 +1,58 @@
+<!-- app/views/admin/image_files/index.html.erb -->
+<% content_for :title, "paul-carrick.com - Amin Dashboard - Image Files" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <div class="row border-bottom border-dark mb-2">
+    <div class="col-2">
+      <%= sortable_column('Name', 'name', "image_files") %>
+    </div>
+    <div class="col-2">
+      <%= sortable_column('Mime Type', 'mime_type', "image_files") %>
+    </div>
+    <div class="col-2">
+      <%= sortable_column('Caption', 'caption', "image_files") %>
+    </div>
+    <div class="col-4">
+      <%= sortable_column('Description', 'description', "image_files") %>
+    </div>
+    <div class="col-2">
+    </div>
+  </div>
+  <div class="scrollable-container p-2">
+    <% @image_files.each do |image_file| %>
+      <div class="row">
+        <div class="col-2">
+          <%= image_file.name %>
+        </div>
+        <div class="col-2">
+          <%= image_file.mime_type %>
+        </div>
+        <div class="col-2">
+          <%= image_file.caption %>
+        </div>
+        <div class="col-4">
+          <%= image_file.description %>
+        </div>
+        <div class="col-2" style="min-height: 2em;">
+          <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
+          <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
+        </div>
+      </div>
+    <% end %>
+    <div class="row mt-3 mb-3">
+      <div class="col-2">
+        <%= link_to("New image_file", new_admin_image_file_path, class: "btn btn-primary") %>
+      </div>
+      <div class="col-7">
+      </div>
+      <div class="col-3 justify-content-end">
+        <%= render 'shared/page_navigation' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>
