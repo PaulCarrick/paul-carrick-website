@@ -1,4 +1,4 @@
-class ImageFileSerializer < ActiveModel::Serializer
+class ImageFileSerializer < ActiveModel::Serializers
   include Rails.application.routes.url_helpers
 
   attributes :id, :name, :mime_type, :caption, :description, :image_url
