@@ -60,6 +60,8 @@ gem 'pagy'
 
 gem 'htmlbeautifier'
 
+gem 'active_model_serializers'
+
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "byebug"
