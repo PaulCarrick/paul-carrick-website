@@ -16,7 +16,7 @@ class PagesController < ApplicationController
 
     if page.present?
       @contents = Section.by_content_type(page.section)
-byebug
+
       if params[:section_name].present?
         # Focus on the specific section if `section_name` is provided
         @focused_section = @contents.find { |section| section.section_name == params[:section_name] }

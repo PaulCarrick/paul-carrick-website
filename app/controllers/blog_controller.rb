@@ -18,16 +18,11 @@ class BlogController < ApplicationController
 
     if params[:id] == "latest"
       @blog = BlogPost.where(blog_type:@blog_type).order(posted: 'desc').first
+      @blog.content = sanitize_html(@blog.content) if @blog.present?
 
-      if @blog.present?
-        @blog.content = sanitize_html(@blog.content)
+      render "latest"
 
-        render "latest"
-
-        return
-      else
-        render nothing: true
-      end
+      return
     else
       @blog = BlogPost.find(params[:id])
     end

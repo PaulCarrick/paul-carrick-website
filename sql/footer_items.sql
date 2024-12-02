@@ -26,10 +26,11 @@ COPY public.footer_items (id, label, icon, options, link, access, footer_order, 
 8	Professional Overview	\N	\N	/overview	\N	8	7	2024-11-22 07:53:44.437065	2024-11-22 07:53:44.437065
 9	Employment History	\N	\N	/employment	\N	9	7	2024-11-22 07:54:29.216616	2024-11-22 07:54:29.216616
 10	Portfolio	\N	\N	/portfolio	\N	10	7	2024-11-22 07:55:45.068296	2024-11-22 07:55:45.068296
-11	OTHER	\N	\N	\N	\N	11	\N	2024-11-22 07:56:24.787828	2024-11-22 07:56:24.787828
-12	Contact Paul	\N	\N	/contact/new	\N	12	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
-13	Search Website	\N	\N	/search/new	\N	13	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
-14	Admin Dashboard	\N	\N	/admin	admin	14	11	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
+11	Blog	\N	\N	/blog?blog_type=Professional	\N	11	7	2024-11-22 07:52:02.038068	2024-11-22 07:52:02.038068
+12	OTHER	\N	\N	\N	\N	12	\N	2024-11-22 07:56:24.787828	2024-11-22 07:56:24.787828
+13	Contact Paul	\N	\N	/contact/new	\N	13	11	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
+14	Search Website	\N	\N	/search/new	\N	13	14	2024-11-22 07:58:10.084441	2024-11-22 07:58:10.084441
+15	Admin Dashboard	\N	\N	/admin	admin	14	15	2024-11-22 07:59:12.283882	2024-11-22 07:59:12.283882
 \.
 
 --

@@ -15,25 +15,26 @@ TRUNCATE TABLE public.menu_items CASCADE;
 -- Data for Name: menu_items; Type: TABLE DATA; Schema: public; Owner: paul
 --
 
-COPY public.menu_items (id, menu_type, label, icon, options, link, menu_order, parent_id, created_at, updated_at, access) FROM stdin;
-1	Main	Home	\N	\N	/	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-2	Main	Personal	\N	\N	\N	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-3	Main	Professional	\N	\N	\N	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-4	Main	Contact	\N	\N	/contact/new	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-5	Main	Search	/images/search.svg	image-file	/search/new	5	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-6	Main	Login	\N	\N	/users/sign_in	6	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-7	Main	Family	\N	\N	/family	1	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-8	Main	Where Paul Lives	\N	\N	/live	2	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-9	Main	Hobbies and Activities	\N	\N	/hobby	3	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-10	Main	Bio	\N	\N	/bio	4	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-11	Main	Blog	\N	\N	/blog	5	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-12	Main	Overview	\N	\N	/overview	1	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-13	Main	Employment	\N	\N	/employment	2	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-14	Main	Portfolio	\N	\N	/portfolio	3	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-15	Admin	Blogs	\N	\N	/admin/blogs	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-16	Admin	Pages	\N	super_only	/admin/pages	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-17	Admin	Sections	\N	super_only	/admin/sections	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
-18	Admin	Users	\N	super_only	/admin/users	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096	\N
+COPY public.menu_items (id, menu_type, label, icon, options, link, access, menu_order, parent_id, created_at, updated_at) FROM stdin;
+1	Main	Home	\N	\N	/	\N	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+2	Main	Personal	\N	\N	\N	\N	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+3	Main	Professional	\N	\N	\N	\N	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+4	Main	Contact	\N	\N	/contact/new	\N	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+5	Main	Search	/images/search.svg	image-file	/search/new	\N	5	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+6	Main	Login	\N	\N	/users/sign_in	\N	6	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+7	Main	Family	\N	\N	/family	\N	1	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+8	Main	Where Paul Lives	\N	\N	/live	\N	2	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+9	Main	Hobbies and Activities	\N	\N	/hobby	\N	3	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+10	Main	Bio	\N	\N	/bio	\N	4	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+11	Main	Blog	\N	\N	/blog	\N	5	2	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+12	Main	Overview	\N	\N	/overview	\N	1	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+13	Main	Employment	\N	\N	/employment	\N	2	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+14	Main	Portfolio	\N	\N	/portfolio	\N	3	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+15	Main	Blog	\N	\N	/blog?blog_type=Professional	\N	4	3	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+16	Admin	Blogs	\N	\N	/admin/blogs	\N	1	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+17	Admin	Pages	\N	super_only	/admin/pages	\N	2	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+18	Admin	Sections	\N	super_only	/admin/sections	\N	3	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
+19	Admin	Users	\N	super_only	/admin/users	\N	4	\N	2024-11-14 11:17:04.434096	2024-11-14 11:17:04.434096
 \.
 
 --
