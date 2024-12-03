@@ -45,7 +45,5 @@ module RailsWebsite
 
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
-
-    config.active_job.queue_adapter = :solid_queue
   end
 end

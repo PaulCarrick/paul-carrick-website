@@ -6,7 +6,7 @@ class CreateImageFiles < ActiveRecord::Migration[8.0]
       t.string :description
       t.string :mime_type
 
-      t.timestamps
+      t.timestamps default: -> { 'CURRENT_TIMESTAMP' }, null: false
     end
 
     add_index :image_files, :name, unique: true
