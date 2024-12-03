@@ -7,9 +7,21 @@ class Admin::ImageFilesController < ApplicationController
   before_action :set_image, only: %i[show edit update destroy]
 
   def index
-    images = ImageFile.all
+    @q = ImageFile.ransack(params[:q]) # Initialize Ransack search object
 
-    @pagy, @image_files = pagy(images, limit: params[:limit] || 10)
+    # Set default sort column and direction
+    sort_column = params[:sort].presence || "name"
+    sort_direction = params[:direction].presence || "asc"
+
+    # Safeguard against invalid columns and directions
+    sort_column = ImageFile.column_names.include?(sort_column) ? sort_column : "name"
+    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
+
+    # Combine sorting and Ransack results
+    sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
+
+    # Paginate the sorted results
+    @pagy, @image_files = pagy(sorted_results, limit: params[:limit] || 4)
   end
 
   def show
@@ -36,7 +48,7 @@ class Admin::ImageFilesController < ApplicationController
   end
 
   def update
-    if @image_file.update(blog_params)
+    if @image_file.update(image_params)
       redirect_to admin_image_files_path, notice: "Image updated successfully."
     else
       render :edit

@@ -9,7 +9,8 @@ module Api
       before_action :set_image, only: %i[show update destroy]
 
       def index
-        image_files = ImageFile.all
+        @q = ImageFile.ransack(params[:q]) # Initialize Ransack search object
+        image_files = @q.result(distinct: true)
 
         @pagy, @image_files = pagy(image_files, limit: params[:limit] || 10)
 

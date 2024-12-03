@@ -4,60 +4,69 @@
 class Admin::ImageCollectionsController < ApplicationController
   include Pagy::Backend # Include Pagy for pagination
 
-  before_action :set_collection, only: %i[show update destroy]
+  before_action :set_collection, only: %i[show edit update destroy]
 
   def index
-    image_collections = ImageCollection.all.includes(:image_files)
+    @q = ImageCollection.ransack(params[:q]) # Initialize Ransack search object
 
-    @pagy, @image_collections = pagy(image_collections, limit: params[:limit] || 10)
+    # Set default sort column and direction
+    sort_column = params[:sort].presence || "name"
+    sort_direction = params[:direction].presence || "asc"
 
-    # Add pagination details to headers before rendering
-    pagy_headers_merge(@pagy)
+    # Safeguard against invalid columns and directions
+    sort_column = ImageCollection.column_names.include?(sort_column) ? sort_column : "name"
+    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
+
+    # Combine sorting and Ransack results
+    sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
+
+    # Paginate the sorted results
+    @pagy, @image_collections = pagy(sorted_results, limit: params[:limit] || 4)
   end
 
   def show
     @image_collection = ImageCollection.where(id: params[:id])
   end
 
+  def new
+    @image_collection = ImageCollection.new
+  end
+
   def create
-    image_collection = ImageCollection.new(image_collection_params)
+    begin
+      @image_collection = ImageCollection.new(collection_params)
 
-    image_collection.save!
+      @image_collection.save!
+      redirect_to admin_image_collections_path, notice: "Image Collection created successfully."
+    rescue => e
+      byebug
+      render :new
+    end
   end
-end
 
-def update
-  return unless @image_collection.present?
-
-  @image_collection.update!(image_collection_params)
-end
-
-def destroy
-  return unless @image_collection.present?
-
-  begin
-    @image_collection.destroy!
-
-    render json: { error: "" }, status: :ok
-  rescue => e
-    render json: { error: e.message }, status: :unprocessable_entity
+  def edit
   end
-end
 
-private
+  def update
+    if @image_collection.update(collection_params)
+      redirect_to admin_image_collections_path, notice: "Image Collection updated successfully."
+    else
+      render :edit
+    end
+  end
 
-def set_collection
-  @image_collection = nil
+  def destroy
+    @image_collection.destroy
+    redirect_to admin_image_collections_path, notice: "Image Collection deleted successfully."
+  end
 
-  return unless params[:id].present?
+  private
 
-  begin
+  def set_collection
     @image_collection = ImageCollection.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "ImageFile Collection: #{params[:id]} not found" }, status: :not_found
   end
-end
 
-def image_collection_params
-  params.require(:image_collection).permit(:name)
+  def collection_params
+    params.require(:image_collection).permit(:name, :content_type, :section_name, :section_order, :image_file_ids)
+  end
 end
