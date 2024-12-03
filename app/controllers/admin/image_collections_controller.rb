@@ -67,6 +67,6 @@ class Admin::ImageCollectionsController < ApplicationController
   end
 
   def collection_params
-    params.require(:image_collection).permit(:name, :content_type, :section_name, :section_order, :image_file_ids)
+    params.require(:image_collection).permit(:name, :content_type, :section_name, :section_order)
   end
 end
