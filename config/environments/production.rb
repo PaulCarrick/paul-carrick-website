@@ -111,6 +111,8 @@ Rails.application.configure do
 
   config.assets.js_compressor = :uglifier # Or another compressor
   config.assets.compile = false
+  config.active_storage.queues.analyze = :default # or the correct queue
+  config.active_storage.queues.purge = :default
 
   Rails.application.routes.default_url_options = {
     host: "paul-carrick.com",
