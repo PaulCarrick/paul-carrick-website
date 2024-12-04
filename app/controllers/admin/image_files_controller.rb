@@ -9,7 +9,7 @@ class Admin::ImageFilesController < ApplicationController
   def index
     @q = ImageFile.ransack(params[:q]) # Initialize Ransack search object
 
-    if params[:q].include?("group_cont") && !params[:sort].presence
+    if params[:q]&.include?("group_cont") && !params[:sort].presence
       sort_column = "slide_order"
       sort_direction = "asc"
     else
