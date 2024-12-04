@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/images/scuba/fish-1.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/images/scuba/fish-1.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/images/scuba/sea-urchin.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/images/scuba/sea-urchin.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/images/scuba/shark.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/images/scuba/shark.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -234,6 +240,8 @@
       <workItem from="1732884240099" duration="33295000" />
       <workItem from="1732972250485" duration="77233000" />
       <workItem from="1733235916303" duration="17090000" />
+      <workItem from="1733319030941" duration="16588000" />
+      <workItem from="1733349983036" duration="86000" />
     </task>
     <servers />
   </component>
