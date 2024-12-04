@@ -21,7 +21,7 @@ class Admin::ImageFilesController < ApplicationController
     sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
 
     # Paginate the sorted results
-    @pagy, @image_files = pagy(sorted_results, limit: params[:limit] || 4)
+    @pagy, @image_files = pagy(sorted_results, limit: params[:limit] || 3)
   end
 
   def show
