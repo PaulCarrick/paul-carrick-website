@@ -33,10 +33,13 @@
           <div class="col-1"><%= image_file.group %></div>
           <div class="col-1"><%= image_file.slide_order %></div>
           <div class="col-2"><%= image_file.caption %></div>
-          <div class="col-2"><%= image_file.description.truncate(25) %></div>
+          <div class="col-2"><%= image_file.description.truncate(23) %></div>
           <div class="col-2" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
-            <%= link_to("Add Group", "#", class: "btn btn-link", data: { image_file_id: image_file.id, action: "add-to-group#open" }) %>
+            <%= link_to("Add Group",
+                        "#",
+                        class: "btn btn-link",
+                        onclick: "addToGroup(event, #{image_file.id})") %>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
           </div>
         </div>
@@ -86,47 +89,45 @@
 <script>
   const apiUrl = "/api/v1/image_files/groups";
 
-  document.querySelectorAll("[data-action='add-to-group#open']").forEach(link => {
-    link.addEventListener("click", async function (event) {
-      event.preventDefault();
-      const imageFileId = link.dataset.imageFileId;
+  function addToGroup(event, imageFileId)
+  {
+    event.preventDefault();
 
-      try {
-        // Fetch groups from the API
-        const response = await fetch(apiUrl);
-        if (!response.ok) throw new Error("Failed to fetch groups");
-        const groups = await response.json();
+    try {
+      // Fetch groups from the API
+      const response = await fetch(apiUrl);
+      if (!response.ok) throw new Error("Failed to fetch groups");
+      const groups = await response.json();
 
-        // Show popup and populate select
-        const group = prompt(
-          `Select a group:\n${Object.entries(groups)
-            .map(([group, max]) => `${group} (max: ${max})`)
-            .join("\n")}`
-        );
-        if (group && groups[group] !== undefined) {
-          const maxSlideOrder = groups[group];
+      // Show popup and populate select
+      const group = prompt(
+        `Select a group:\n${Object.entries(groups)
+          .map(([group, max]) => `${group} (max: ${max})`)
+          .join("\n")}`
+      );
+      if (group && groups[group] !== undefined) {
+        const maxSlideOrder = groups[group];
 
-          // Update record via Rails
-          await fetch(`/admin/image_files/${imageFileId}`, {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+        // Update record via Rails
+        await fetch(`/admin/image_files/${imageFileId}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+          },
+          body: JSON.stringify({
+            image_file: {
+              group: group,
+              slide_order: maxSlideOrder + 1,
             },
-            body: JSON.stringify({
-              image_file: {
-                group: group,
-                slide_order: maxSlideOrder + 1,
-              },
-            }),
-          });
+          }),
+        });
 
-          // Reload page to reflect changes
-          location.reload();
-        }
-      } catch (error) {
-        alert("An error occurred: " + error.message);
+        // Reload page to reflect changes
+        location.reload();
       }
-    });
-  });
+    } catch (error) {
+      alert("An error occurred: " + error.message);
+    }
+  }
 </script>
