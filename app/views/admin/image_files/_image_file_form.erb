@@ -60,7 +60,7 @@
       <button type="button"
               id="add-to-group-btn"
               class="btn btn-secondary"
-              onclick="fetchGroups(); groupSelectContainer.style.display = 'block';">
+              onclick="fetchGroups();">
         Add to Group
       </button>
     </div>
@@ -68,7 +68,10 @@
     <!-- Select Group Dropdown -->
     <div id="group-select-container" style="display: none;">
       <label for="group-select">Select a Group:</label>
-      <select id="group-select" class="form-control"></select>
+      <select id="group-select"
+              class="form-control"
+              onchange="groupChanged();">
+      </select>
     </div>
 
     <div class="pb-3">
@@ -86,20 +89,20 @@
 <% end %>
 
 <script>
-  const groupSelectContainer = document.getElementById("group-select-container");
-  const groupSelect = document.getElementById("group-select");
-  const groupField = document.getElementById("group-field");
-  const slideOrderField = document.getElementById("slide-order-field");
-
   // Fetch groups from the API
   async function fetchGroups() {
+    const groupSelectContainer = document.getElementById("group-select-container");
+
     try {
-      const response = await fetch("https://paul-carrick.com/api/v1/image_files/groups");
+      const response = await fetch("/api/v1/image_files/groups");
+
       if (!response.ok) {
         throw new Error("Failed to fetch groups");
       }
       const data = await response.json();
       populateGroupSelect(data);
+
+      groupSelectContainer.style.display = 'block';
     } catch (error) {
       console.error("Error fetching groups:", error);
     }
@@ -107,7 +110,16 @@
 
   // Populate the select dropdown with group options
   function populateGroupSelect(groups) {
+    const groupSelect = document.getElementById("group-select");
+
     groupSelect.innerHTML = ""; // Clear existing options
+
+    const blankOption = document.createElement("option");
+    blankOption.value = "";
+    blankOption.dataset.maxSlideOrder = null;
+    blankOption.textContent = "";
+    groupSelect.appendChild(blankOption);
+
     for (const [group, maxSlideOrder] of Object.entries(groups)) {
       const option = document.createElement("option");
       option.value = group;
@@ -117,14 +129,16 @@
     }
   }
 
-  // Handle group selection
-  groupSelect.addEventListener("change", function () {
+  function groupChanged() {
+    const groupSelect = document.getElementById("group-select");
     const selectedOption = groupSelect.options[groupSelect.selectedIndex];
     const selectedGroup = selectedOption.value;
     const maxSlideOrder = parseInt(selectedOption.dataset.maxSlideOrder, 10);
+    const groupField = document.getElementById("group-field");
+    const slideOrderField = document.getElementById("slide-order-field");
 
     // Set the group field and slide order field
     groupField.value = selectedGroup;
     slideOrderField.value = maxSlideOrder + 1;
-  });
+  }
 </script>
