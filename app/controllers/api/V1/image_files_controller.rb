@@ -6,7 +6,7 @@ module Api
     class ImageFilesController < ApplicationController
       include Pagy::Backend # Include Pagy for pagination
 
-      before_action :set_image, only: %i[show update destroy]
+      before_action :set_image, only: %i[ update destroy ]
 
       def index
         @q = ImageFile.ransack(params[:q]) # Initialize Ransack search object
@@ -24,7 +24,6 @@ module Api
       end
 
       def show
-byebug
         if params[:id] == 'groups'
           get_groups
         else
