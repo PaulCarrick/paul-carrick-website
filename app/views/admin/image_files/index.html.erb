@@ -1,30 +1,18 @@
 <!-- app/views/admin/image_files/index.html.erb -->
-<% content_for :title, "paul-carrick.com - Amin Dashboard - Image Files" %>
+<% content_for :title, "paul-carrick.com - Admin Dashboard - Image Files" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
   <div class="auto-size">
     <div class="row border-bottom border-dark mb-2">
-      <div class="col-2">
-      </div>
-      <div class="col-2">
-        <%= sortable_column('Name', 'name', "image_files") %>
-      </div>
-      <div class="col-1">
-        <%= sortable_column('Group', 'group', "image_files") %>
-      </div>
-      <div class="col-1">
-        <%= sortable_column('Order', 'slide_order', "image_files") %>
-      </div>
-      <div class="col-2">
-        <%= sortable_column('Caption', 'caption', "image_files") %>
-      </div>
-      <div class="col-3">
-        <%= sortable_column('Description', 'description', "image_files") %>
-      </div>
-      <div class="col-1">
-      </div>
+      <div class="col-2"></div>
+      <div class="col-2"><%= sortable_column('Name', 'name', "image_files") %></div>
+      <div class="col-1"><%= sortable_column('Group', 'group', "image_files") %></div>
+      <div class="col-1"><%= sortable_column('Order', 'slide_order', "image_files") %></div>
+      <div class="col-2"><%= sortable_column('Caption', 'caption', "image_files") %></div>
+      <div class="col-3"><%= sortable_column('Description', 'description', "image_files") %></div>
+      <div class="col-1"></div>
     </div>
     <div class="scrollable-container p-2" style="min-height: 75%">
       <% @image_files.each do |image_file| %>
@@ -41,23 +29,14 @@
               <p>No image available</p>
             <% end %>
           </div>
-          <div class="col-2">
-            <%= image_file.name %>
-          </div>
-          <div class="col-1">
-            <%= image_file.group %>
-          </div>
-          <div class="col-1">
-            <%= image_file.slide_order %>
-          </div>
-          <div class="col-2">
-            <%= image_file.caption %>
-          </div>
-          <div class="col-3">
-            <%= image_file.description.truncate(35) %>
-          </div>
+          <div class="col-2"><%= image_file.name %></div>
+          <div class="col-1"><%= image_file.group %></div>
+          <div class="col-1"><%= image_file.slide_order %></div>
+          <div class="col-2"><%= image_file.caption %></div>
+          <div class="col-3"><%= image_file.description.truncate(35) %></div>
           <div class="col-1" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
+            <%= link_to("Add to Group", "#", class: "btn btn-link", data: { image_file_id: image_file.id, action: "add-to-group#open" }) %>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
           </div>
         </div>
@@ -66,8 +45,7 @@
         <div class="col-2">
           <%= link_to("New Image", new_admin_image_file_path, class: "btn btn-primary") %>
         </div>
-        <div class="col-6">
-        </div>
+        <div class="col-6"></div>
         <div class="col-4 justify-content-end">
           <%= render 'shared/page_navigation' %>
         </div>
@@ -79,40 +57,20 @@
                         method: :get,
                         local: true do |form| %>
       <div class="row mt-2 mb-2">
-        <div class="col-1">
-          <%= form.label :name_cont, "Name", class: "form-label" %>
-        </div>
-        <div class="col-4">
-          <%= form.search_field :name_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
-        </div>
-        <div class="col-1">
-          <%= form.label :group_cont, "Group", class: "form-label" %>
-        </div>
-        <div class="col-4">
-          <%= form.search_field :group_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
-        </div>
+        <div class="col-1"><%= form.label :name_cont, "Name", class: "form-label" %></div>
+        <div class="col-4"><%= form.search_field :name_cont, style: "min-width: 100%;" %></div>
+        <div class="col-1"></div>
+        <div class="col-1"><%= form.label :group_cont, "Group", class: "form-label" %></div>
+        <div class="col-4"><%= form.search_field :group_cont, style: "min-width: 100%;" %></div>
+        <div class="col-1"></div>
       </div>
       <div class="row mt-2 mb-2">
-        <div class="col-1">
-          <%= form.label :caption_cont, "Caption", class: "form-label" %>
-        </div>
-        <div class="col-4">
-          <%= form.search_field :caption_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
-        </div>
-        <div class="col-1">
-          <%= form.label :description_cont, "Description", class: "form-label" %>
-        </div>
-        <div class="col-4">
-          <%= form.search_field :description_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
-        </div>
+        <div class="col-1"><%= form.label :caption_cont, "Caption", class: "form-label" %></div>
+        <div class="col-4"><%= form.search_field :caption_cont, style: "min-width: 100%;" %></div>
+        <div class="col-1"></div>
+        <div class="col-1"><%= form.label :description_cont, "Description", class: "form-label" %></div>
+        <div class="col-4"><%= form.search_field :description_cont, style: "min-width: 100%;" %></div>
+        <div class="col-1"></div>
       </div>
       <div>
         <%= form.submit "Search Images", class: "btn btn-primary" %>
@@ -123,3 +81,52 @@
 
 <%= render layout: "layouts/footer" do %>
 <% end %>
+
+<!-- JavaScript -->
+<script>
+  const apiUrl = "/api/v1/image_files/groups";
+
+  document.querySelectorAll("[data-action='add-to-group#open']").forEach(link => {
+    link.addEventListener("click", async function (event) {
+      event.preventDefault();
+      const imageFileId = link.dataset.imageFileId;
+
+      try {
+        // Fetch groups from the API
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error("Failed to fetch groups");
+        const groups = await response.json();
+
+        // Show popup and populate select
+        const group = prompt(
+          `Select a group:\n${Object.entries(groups)
+            .map(([group, max]) => `${group} (max: ${max})`)
+            .join("\n")}`
+        );
+        if (group && groups[group] !== undefined) {
+          const maxSlideOrder = groups[group];
+
+          // Update record via Rails
+          await fetch(`/admin/image_files/${imageFileId}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+            },
+            body: JSON.stringify({
+              image_file: {
+                group: group,
+                slide_order: maxSlideOrder + 1,
+              },
+            }),
+          });
+
+          // Reload page to reflect changes
+          location.reload();
+        }
+      } catch (error) {
+        alert("An error occurred: " + error.message);
+      }
+    });
+  });
+</script>
