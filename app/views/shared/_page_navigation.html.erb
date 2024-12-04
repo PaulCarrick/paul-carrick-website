@@ -2,6 +2,13 @@
 <nav aria-label="Pagination">
   <ul class="pagination justify-content-end">
     <% if @pagy.present? %>
+      <!-- Page Indicator -->
+      <li class="page-item disabled">
+        <span class="page-link">
+          Page <%= @pagy.page %> of <%= @pagy.last %>
+        </span>
+      </li>
+
       <!-- First Page Link -->
       <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
         <%= link_to 'First', url_for(params.permit!.to_h.merge(page: 1, sort: params[:sort], direction: params[:direction]).merge(q: params[:q]&.to_unsafe_h)), class: 'page-link' %>
