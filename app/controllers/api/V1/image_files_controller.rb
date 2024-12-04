@@ -24,6 +24,7 @@ module Api
       end
 
       def show
+byebug
         if params[:id] == 'groups'
           get_groups
         else
