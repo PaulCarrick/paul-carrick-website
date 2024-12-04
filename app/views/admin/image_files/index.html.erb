@@ -36,8 +36,7 @@
           <div class="col-2"><%= image_file.description.truncate(23) %></div>
           <div class="col-2" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
-            <%= link_to("Add Group",
-                        "#",
+            <%= button("Add Group",
                         class: "btn btn-link",
                         onclick: "addToGroup(event, #{image_file.id})") %>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
@@ -91,8 +90,6 @@
 
   function addToGroup(event, imageFileId)
   {
-    event.preventDefault();
-
     try {
       // Fetch groups from the API
       const response = await fetch(apiUrl);
