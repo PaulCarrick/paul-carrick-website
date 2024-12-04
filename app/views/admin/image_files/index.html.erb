@@ -10,8 +10,11 @@
     <div class="col-2">
       <%= sortable_column('Name', 'name', "image_files") %>
     </div>
-    <div class="col-2">
-      <%= sortable_column('Mime Type', 'mime_type', "image_files") %>
+    <div class="col-1">
+      <%= sortable_column('Group', 'group', "image_files") %>
+    </div>
+    <div class="col-1">
+      <%= sortable_column('Order', 'slide_order', "image_files") %>
     </div>
     <div class="col-2">
       <%= sortable_column('Caption', 'caption', "image_files") %>
@@ -40,14 +43,17 @@
         <div class="col-2">
           <%= image_file.name %>
         </div>
-        <div class="col-2">
-          <%= image_file.mime_type %>
+        <div class="col-1">
+          <%= image_file.group %>
+        </div>
+        <div class="col-1">
+          <%= image_file.slide_order %>
         </div>
         <div class="col-2">
           <%= image_file.caption %>
         </div>
         <div class="col-3">
-          <%= image_file.description %>
+          <%= image_file.description.truncate(35) %>
         </div>
         <div class="col-1" style="min-height: 2em;">
           <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
@@ -81,6 +87,16 @@
       <div class="col-1">
       </div>
       <div class="col-1">
+        <%= form.label :group_cont, "Caption", class: "form-label" %>
+      </div>
+      <div class="col-4">
+        <%= form.search_field :group_cont, style: "min-width: 100%;" %>
+      </div>
+      <div class="col-1">
+      </div>
+    </div>
+    <div class="row mt-2 mb-2">
+      <div class="col-1">
         <%= form.label :caption_cont, "Caption", class: "form-label" %>
       </div>
       <div class="col-4">
@@ -88,13 +104,13 @@
       </div>
       <div class="col-1">
       </div>
-      <div class="row mt-2 mb-2">
-        <div class="col-1">
-          <%= form.label :description_cont, "Description", class: "form-label" %>
-        </div>
-        <div class="col-11">
-          <%= form.search_field :description_cont, style: "min-width: 100%;" %>
-        </div>
+      <div class="col-1">
+        <%= form.label :description_cont, "Description", class: "form-label" %>
+      </div>
+      <div class="col-4">
+        <%= form.search_field :description_cont, style: "min-width: 100%;" %>
+      </div>
+      <div class="col-1">
       </div>
     </div>
     <div>

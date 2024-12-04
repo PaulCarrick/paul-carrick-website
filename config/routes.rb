@@ -10,7 +10,6 @@ Rails.application.routes.draw do
       resources :blog_posts
       resources :post_comments
       resources :image_files
-      resources :image_collections
 
       post 'validate_html', to: 'validations#validate_html'
     end
@@ -41,15 +40,11 @@ Rails.application.routes.draw do
     resources :image_files, except: [ :show, :destroy ]
     delete "/image_files/:id", to: "image_files#destroy", as: "delete_image_file"
     get "/image_files/:id/delete", to: "image_files#destroy", as: "destroy_image_file"
-    resources :image_collections, except: [ :show, :destroy ]
-    delete "/image_collections/:id", to: "image_collections#destroy", as: "delete_image_collection"
-    get "/image_collections/:id/delete", to: "image_collections#destroy", as: "destroy_image_collection"
   end
 
   resources :blog
   resources :contact, only: [ :new, :create, :show ]
   resources :image_files
-  resources :image_collections
   resources :section, only: [ :index ]
   resources :search, only: [ :new ]
 

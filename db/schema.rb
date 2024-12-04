@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_03_165956) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_04_133010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -78,25 +78,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_165956) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
-  create_table "image_collections", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "content_type"
-    t.string "section_name"
-    t.integer "section_order"
-    t.index ["name"], name: "index_image_collections_on_name", unique: true
-  end
-
-  create_table "image_collections_files", force: :cascade do |t|
-    t.bigint "image_collection_id", null: false
-    t.bigint "image_file_id", null: false
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
-    t.index ["image_collection_id"], name: "index_image_collections_files_on_image_collection_id"
-    t.index ["image_file_id"], name: "index_image_collections_files_on_image_file_id"
-  end
-
   create_table "image_files", force: :cascade do |t|
     t.string "name", null: false
     t.string "caption"
@@ -104,6 +85,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_165956) do
     t.string "mime_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "group"
+    t.integer "slide_order"
     t.index ["name"], name: "index_image_files_on_name", unique: true
   end
 
@@ -176,6 +159,4 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_03_165956) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "image_collections_files", "image_collections"
-  add_foreign_key "image_collections_files", "image_files"
 end

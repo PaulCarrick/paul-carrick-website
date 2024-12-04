@@ -39,7 +39,6 @@ class Admin::ImageFilesController < ApplicationController
       @image_file.save!
       redirect_to admin_image_files_path, notice: "Image created successfully."
     rescue => e
-      byebug
       render :new
     end
   end
@@ -67,6 +66,6 @@ class Admin::ImageFilesController < ApplicationController
   end
 
   def image_params
-    params.require(:image_file).permit(:name, :mime_type, :caption, :description, :image)
+    params.require(:image_file).permit(:name, :group, :slide_order, :mime_type, :caption, :description, :image)
   end
 end
