@@ -36,9 +36,9 @@
           <div class="col-2"><%= image_file.description.truncate(23) %></div>
           <div class="col-2" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
-            <%= button("Add Group",
-                        class: "btn btn-link",
-                        onclick: "addToGroup(event, #{image_file.id})") %>
+            <button class="btn btn-link" onclick="addToGroup(<%= image_file.id %>)">
+              Add Group
+            </button>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
           </div>
         </div>
@@ -87,9 +87,7 @@
 <!-- JavaScript -->
 <script>
   const apiUrl = "/api/v1/image_files/groups";
-
-  function addToGroup(event, imageFileId)
-  {
+  async function addToGroup(imageFileId) {
     try {
       // Fetch groups from the API
       const response = await fetch(apiUrl);
@@ -127,4 +125,5 @@
       alert("An error occurred: " + error.message);
     }
   }
+
 </script>
