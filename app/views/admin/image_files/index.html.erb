@@ -34,7 +34,7 @@
           <div class="col-1"><%= image_file.slide_order %></div>
           <div class="col-2"><%= image_file.caption %></div>
           <div class="col-2"><%= image_file.description.truncate(25) %></div>
-          <div class="col-2" style="min-height: 2em;">
+          <div class="col-2 d-flex align-items-center" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
             <%= link_to("Add Group", "#", class: "btn btn-link", data: { image_file_id: image_file.id, action: "add-to-group#open" }) %>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
