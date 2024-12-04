@@ -24,9 +24,13 @@ module Api
       end
 
       def show
-        image_file = ImageFile.find(params[:id])
+        if params[:id] == 'groups'
+          get_groups
+        else
+          image_file = ImageFile.find(params[:id])
 
-        render json: image_file
+          render json: image_file
+        end
       end
 
       def create
@@ -63,6 +67,14 @@ module Api
         rescue => e
           render json: { error: e.message }, status: :unprocessable_entity
         end
+      end
+
+      def get_group(group)
+        render json: ImageFile.where(group: group).maximum(:slide_order)
+      end
+
+      def get_groups
+        render json: ImageFile.where.not(group: nil).group(:group).maximum(:slide_order)
       end
 
       private
