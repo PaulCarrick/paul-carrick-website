@@ -57,7 +57,12 @@
 
     <!-- Add to Group Button -->
     <div class="mb-3">
-      <button type="button" id="add-to-group-btn" class="btn btn-secondary">Add to Group</button>
+      <button type="button"
+              id="add-to-group-btn"
+              class="btn btn-secondary"
+              onclick="fetchGroups(); groupSelectContainer.style.display = 'block';">
+        Add to Group
+      </button>
     </div>
 
     <!-- Select Group Dropdown -->
@@ -81,7 +86,6 @@
 <% end %>
 
 <script>
-  const addToGroupBtn = document.getElementById("add-to-group-btn");
   const groupSelectContainer = document.getElementById("group-select-container");
   const groupSelect = document.getElementById("group-select");
   const groupField = document.getElementById("group-field");
@@ -112,12 +116,6 @@
       groupSelect.appendChild(option);
     }
   }
-
-  // Handle "Add to Group" button click
-  addToGroupBtn.addEventListener("click", function () {
-    fetchGroups();
-    groupSelectContainer.style.display = "block";
-  });
 
   // Handle group selection
   groupSelect.addEventListener("change", function () {
