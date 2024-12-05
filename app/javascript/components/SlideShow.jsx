@@ -2,24 +2,34 @@ import React, { useState } from 'react';
 
 const SlideShow = ({ images, captions, slideType }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [dropdownValue, setDropdownValue] = useState(""); // Controlled state for dropdown
+
   const buttonClass = "btn btn-link p-1 text-dark";
   let captionsText = null;
   let captionsTitles = null;
-debugger;
+
   const handleFirst = () => {
     setCurrentIndex(0);
+    updateDropdownValue(0);
   };
 
   const handleNext = () => {
-    if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
+    if (currentIndex < images.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      updateDropdownValue(currentIndex + 1);
+    }
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      updateDropdownValue(currentIndex - 1);
+    }
   };
 
   const handleLast = () => {
     setCurrentIndex(images.length - 1);
+    updateDropdownValue(images.length - 1);
   };
 
   const handleDropdownChange = (event) => {
@@ -27,16 +37,21 @@ debugger;
     const index = captionsTitles.findIndex((title) => title === selectedValue);
     if (index !== -1) {
       setCurrentIndex(index);
+      setDropdownValue(selectedValue);
     }
   };
 
-  // Extract text content of <section> tags
+  const updateDropdownValue = (index) => {
+    if (captionsTitles && captionsTitles[index]) {
+      setDropdownValue(captionsTitles[index]);
+    }
+  };
+
   const extractTextFromSections = (html) => {
     const matches = html.match(/<section>(.*?)<\/section>/gs);
     return matches ? matches.map((section) => section.replace(/<\/?section>/g, "")) : [];
   };
 
-  // Extract text content of <title> tags
   const extractTitlesFromSections = (html) => {
     const matches = html.match(/<title>(.*?)<\/title>/gs);
     return matches ? matches.map((title) => title.replace(/<\/?title>/g, "")) : [];
@@ -46,12 +61,10 @@ debugger;
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
 
-    // Select all <p> elements and modify their class attribute
     doc.querySelectorAll('p').forEach((p) => {
       p.classList.add('text-start');
     });
 
-    // Return the transformed HTML as a string
     return doc.body.innerHTML;
   };
 
@@ -60,7 +73,6 @@ debugger;
     captionsTitles = extractTitlesFromSections(captions);
   }
 
-  // Get unique captionsTitles
   const uniqueCaptionsTitles = [...new Set(captionsTitles)];
 
   return (
@@ -68,8 +80,8 @@ debugger;
       <div
         style={{
           marginBottom: '1em',
-          maxWidth: '100%', // Set maxWidth for the container
-          display: 'inline-block', // Center the container
+          maxWidth: '100%',
+          display: 'inline-block',
           textAlign: 'center',
         }}
       >
@@ -78,7 +90,7 @@ debugger;
             className="display-5 fw-bold mb-1 text-dark"
             style={{
               maxWidth: '100%',
-              margin: '0 auto', // Center the text
+              margin: '0 auto',
               padding: '0.5em 0',
               fontSize: '1.25em',
             }}
@@ -114,7 +126,7 @@ debugger;
         <select
           style={{ marginLeft: '1em' }}
           onChange={handleDropdownChange}
-          defaultValue=""
+          value={dropdownValue} // Controlled value for dropdown
         >
           <option value="" disabled>
             Select a {slideType || "option"}
