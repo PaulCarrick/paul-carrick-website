@@ -25,7 +25,10 @@ class Section < ApplicationRecord
   private
 
   def verify_checksum
+    return unless description.present?
+
     expected_checksum = generate_checksum(description)
+
     unless checksum == expected_checksum
       Rails.logger.error "Checksum mismatch for record ##{id}"
       raise ActiveRecord::RecordInvalid, "Checksum verification failed for Section record ##{id}"
