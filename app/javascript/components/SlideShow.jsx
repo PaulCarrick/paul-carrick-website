@@ -9,7 +9,7 @@ const SlideShow = ({images, captions, slideType}) => {
   let captionsText = null;
   let captionsTitles = null;
 
-  if (images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
+  if ((typeof images === "string") && images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
     const match = images.match(/^\s*ImageGroup:\s*(.+)\s*$/);
 
     images = []
