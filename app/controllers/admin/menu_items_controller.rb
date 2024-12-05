@@ -21,7 +21,7 @@ class Admin::MenuItemsController < ApplicationController
     @menu_item = MenuItem.new(menu_item_params)
 
     if @menu_item.save
-      redirect_to admin_menus_path, notice: "MenuItem created successfully."
+      redirect_to admin_menu_items_path, notice: "MenuItem created successfully."
     else
       render :new
     end
@@ -32,7 +32,7 @@ class Admin::MenuItemsController < ApplicationController
 
   def update
     if @menu_item.update(menu_item_params)
-      redirect_to admin_menus_path, notice: "MenuItem updated successfully."
+      redirect_to admin_menu_items_path, notice: "MenuItem updated successfully."
     else
       render :edit
     end
@@ -40,7 +40,7 @@ class Admin::MenuItemsController < ApplicationController
 
   def destroy
     @menu_item.destroy
-    redirect_to admin_menus_path, notice: "MenuItem deleted successfully."
+    redirect_to admin_menu_items_path, notice: "MenuItem deleted successfully."
   end
 
   private

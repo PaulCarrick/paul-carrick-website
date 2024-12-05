@@ -21,7 +21,7 @@ class Admin::FooterItemsController < ApplicationController
     @footer_item = FooterItem.new(footer_item_params)
 
     if @footer_item.save
-      redirect_to admin_footers_path, notice: "FooterItem created successfully."
+      redirect_to admin_footer_items_path, notice: "FooterItem created successfully."
     else
       render :new
     end
@@ -32,7 +32,7 @@ class Admin::FooterItemsController < ApplicationController
 
   def update
     if @footer_item.update(footer_item_params)
-      redirect_to admin_footers_path, notice: "FooterItem updated successfully."
+      redirect_to admin_footer_items_path, notice: "FooterItem updated successfully."
     else
       render :edit
     end
@@ -40,7 +40,7 @@ class Admin::FooterItemsController < ApplicationController
 
   def destroy
     @footer_item.destroy
-    redirect_to admin_footers_path, notice: "FooterItem deleted successfully."
+    redirect_to admin_footer_items_path, notice: "FooterItem deleted successfully."
   end
 
   private
