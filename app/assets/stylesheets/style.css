@@ -1,6 +1,6 @@
 .auto-size {
   width: auto;
-  height: auto;
+  height: fit-content;
 }
 
 .btn-link {
@@ -26,9 +26,18 @@
 }
 
 .action-links {
+  white-space: nowrap;
+  margin: 3px 10px 0 0;
+  padding: 0px;
+  font-size: 8pt;
+  float: right;
+}
+
+.action-link {
+  white-space: nowrap;
   margin: 3px 0 0 0;
   padding: 0px;
-  float: right;
+  font-size: 8pt;
 }
 
 .rounded-box {
@@ -45,6 +54,7 @@ div.reset-styles {
   max-height: 70vh;
   overflow-y: auto;
   overflow-x: hidden;
+  font-size: 10pt;
 }
 
 .slideshow-container {

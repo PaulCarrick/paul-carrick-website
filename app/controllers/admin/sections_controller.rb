@@ -18,7 +18,7 @@ class Admin::SectionsController < ApplicationController
     sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
 
     # Paginate the sorted results
-    @pagy, @sections = pagy(sorted_results, limit: 5)
+    @pagy, @sections = pagy(sorted_results, limit: 1)
   end
 
   def show

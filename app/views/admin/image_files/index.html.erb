@@ -14,7 +14,7 @@
       <div class="col-2"><%= sortable_column('Description', 'description', "image_files") %></div>
       <div class="col-2"></div>
     </div>
-    <div class="scrollable-container p-2" style="min-height: 75%">
+    <div class="scrollable-container p-2" style="min-height: 90%">
       <% @image_files.each do |image_file| %>
         <div class="row">
           <div class="col-2">
@@ -36,7 +36,7 @@
           <div class="col-2"><%= image_file.description.truncate(23) %></div>
           <div class="col-2" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
-            <button class="btn btn-link" onclick="addToGroup(<%= image_file.id %>)">
+            <button class="btn btn-link action-links" onclick="addToGroup(<%= image_file.id %>)">
               Add Group
             </button>
             <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>

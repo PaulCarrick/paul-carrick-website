@@ -9,6 +9,7 @@ namespace :html do
     Rake::Task["html:cleanup_sections_html_and_json"].invoke(args[:interactive])
     Rake::Task["html:cleanup_blogs_html"].invoke(args[:interactive])
     Rake::Task["html:cleanup_comments_html"].invoke(args[:interactive])
+    Rake::Task["html:cleanup_image_file_html"].invoke(args[:interactive])
 
     puts "Finished Cleaning HTML"
   end
@@ -91,6 +92,28 @@ namespace :html do
         display_error(e, comment, identifier, comment.content)
 
         # Call prompt only if interactive mode is enabled
+        prompt if args[:interactive]
+      end
+    end
+  end
+
+  desc "Cleanup Image File HTML"
+  task :cleanup_image_file_html, [:interactive] => :environment do |t, args|
+    args.with_defaults(interactive: false)
+    puts "Cleaning Image Files with interactive mode: #{args[:interactive]}"
+
+    ImageFile.find_each(batch_size: 1000) do |image_file|
+      begin
+        if image_file.description.present?
+          image_file.description = Utilities.pretty_print_html(image_file.description)
+        end
+
+        image_file.save!
+      rescue => e
+        identifier = "(#{image_file.id} - #{image_file.name})"
+
+        display_error(e, image_file, identifier, image_file.description)
+
         prompt if args[:interactive]
       end
     end

@@ -15,7 +15,11 @@ class Section < ApplicationRecord
   scope :by_content_type, ->(type) { where(content_type: type).order(:section_order) }
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[content_type section_name image_file link description]
+    %w[content_type section_name image link description]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
   end
 
   private
