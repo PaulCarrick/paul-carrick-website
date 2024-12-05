@@ -3,10 +3,28 @@ import React, { useState } from 'react';
 const SlideShow = ({ images, captions, slideType }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dropdownValue, setDropdownValue] = useState(""); // Controlled state for dropdown
+  const [imageGroup, setImageGroup] = useState(mil);
 
   const buttonClass = "btn btn-link p-1 text-dark";
   let captionsText = null;
   let captionsTitles = null;
+
+  if (images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
+    const match = images.match(/^\s*ImageGroup:\s*(.+)\s*$/);
+
+    if (match)
+      setImageGroup(match[1]);
+
+    images = []
+    captionsTitles = []
+    captionsText = []
+
+    // *** Call /api/v1/image_files?q[group_eq]=${group}
+    // for each record
+    //   extract image_url and add it into images
+    //   extract caption and add it into captionsTitles
+    //   extract description and add it to captionsText
+  }
 
   const handleFirst = () => {
     setCurrentIndex(0);
@@ -68,7 +86,7 @@ const SlideShow = ({ images, captions, slideType }) => {
     return doc.body.innerHTML;
   };
 
-  if (captions) {
+  if (captions && !imageGroup) {
     captionsText = extractTextFromSections(captions);
     captionsTitles = extractTitlesFromSections(captions);
   }
