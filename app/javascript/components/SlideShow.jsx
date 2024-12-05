@@ -1,61 +1,25 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-const SlideShow = ({images, captions, slideType}) => {
+const SlideShow = ({ images, captions, slideType }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dropdownValue, setDropdownValue] = useState(""); // Controlled state for dropdown
-  const [imageGroup, setImageGroup] = useState(null);
-
   const buttonClass = "btn btn-link p-1 text-dark";
   let captionsText = null;
   let captionsTitles = null;
-
-  if ((typeof images === "string") && images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
-    const match = images.match(/^\s*ImageGroup:\s*(.+)\s*$/);
-
-    images = []
-    captionsTitles = []
-    captionsText = []
-
-    if (match) {
-      setImageGroup(match[1]);
-
-      fetch(`/api/v1/image_files?q[group_eq]=${match[1]}`)
-        .then((response) => response.json())
-        .then((data) => {
-          data.forEach((record) => {
-            images.push(record.image_url);
-            captionsTitles.push(record.caption);
-            captionsText.push(record.description);
-          });
-        })
-        .catch((error) => {
-          console.error("Error fetching image group data:", error);
-        });
-    }
-  }
-
+debugger;
   const handleFirst = () => {
     setCurrentIndex(0);
-    updateDropdownValue(0);
   };
 
   const handleNext = () => {
-    if (currentIndex < images.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-      updateDropdownValue(currentIndex + 1);
-    }
+    if (currentIndex < images.length - 1) setCurrentIndex(currentIndex + 1);
   };
 
   const handlePrev = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-      updateDropdownValue(currentIndex - 1);
-    }
+    if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
   };
 
   const handleLast = () => {
     setCurrentIndex(images.length - 1);
-    updateDropdownValue(images.length - 1);
   };
 
   const handleDropdownChange = (event) => {
@@ -63,21 +27,16 @@ const SlideShow = ({images, captions, slideType}) => {
     const index = captionsTitles.findIndex((title) => title === selectedValue);
     if (index !== -1) {
       setCurrentIndex(index);
-      setDropdownValue(selectedValue);
     }
   };
 
-  const updateDropdownValue = (index) => {
-    if (captionsTitles && captionsTitles[index]) {
-      setDropdownValue(captionsTitles[index]);
-    }
-  };
-
+  // Extract text content of <section> tags
   const extractTextFromSections = (html) => {
     const matches = html.match(/<section>(.*?)<\/section>/gs);
     return matches ? matches.map((section) => section.replace(/<\/?section>/g, "")) : [];
   };
 
+  // Extract text content of <title> tags
   const extractTitlesFromSections = (html) => {
     const matches = html.match(/<title>(.*?)<\/title>/gs);
     return matches ? matches.map((title) => title.replace(/<\/?title>/g, "")) : [];
@@ -87,27 +46,30 @@ const SlideShow = ({images, captions, slideType}) => {
     const parser = new DOMParser();
     const doc = parser.parseFromString(htmlString, 'text/html');
 
+    // Select all <p> elements and modify their class attribute
     doc.querySelectorAll('p').forEach((p) => {
       p.classList.add('text-start');
     });
 
+    // Return the transformed HTML as a string
     return doc.body.innerHTML;
   };
 
-  if (captions && !imageGroup) {
+  if (captions) {
     captionsText = extractTextFromSections(captions);
     captionsTitles = extractTitlesFromSections(captions);
   }
 
+  // Get unique captionsTitles
   const uniqueCaptionsTitles = [...new Set(captionsTitles)];
 
   return (
-    <div style={{textAlign: 'center'}}>
+    <div style={{ textAlign: 'center' }}>
       <div
         style={{
           marginBottom: '1em',
-          maxWidth: '100%',
-          display: 'inline-block',
+          maxWidth: '100%', // Set maxWidth for the container
+          display: 'inline-block', // Center the container
           textAlign: 'center',
         }}
       >
@@ -116,7 +78,7 @@ const SlideShow = ({images, captions, slideType}) => {
             className="display-5 fw-bold mb-1 text-dark"
             style={{
               maxWidth: '100%',
-              margin: '0 auto',
+              margin: '0 auto', // Center the text
               padding: '0.5em 0',
               fontSize: '1.25em',
             }}
@@ -128,12 +90,12 @@ const SlideShow = ({images, captions, slideType}) => {
           <img
             src={images[currentIndex]}
             alt={`Slide ${currentIndex}`}
-            style={{maxWidth: '100%', maxHeight: '640px', height: 'auto'}}
+            style={{ maxWidth: '100%', maxHeight: '640px', height: 'auto' }}
           />
         </a>
 
         {captionsText && captionsText[currentIndex] && (
-          <div dangerouslySetInnerHTML={{__html: addTextAlignLeftClass(captionsText[currentIndex])}}/>
+          <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
         )}
       </div>
       <div>
@@ -150,9 +112,9 @@ const SlideShow = ({images, captions, slideType}) => {
           Last
         </button>
         <select
-          style={{marginLeft: '1em'}}
+          style={{ marginLeft: '1em' }}
           onChange={handleDropdownChange}
-          value={dropdownValue} // Controlled value for dropdown
+          defaultValue=""
         >
           <option value="" disabled>
             Select a {slideType || "option"}
