@@ -112,7 +112,7 @@
     const htmlContent = field.value;
 
     // Call the API to validate HTML
-    const response = await fetch('/api/validate_html', {
+    const response = await fetch('/api/v1/validate_html', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
