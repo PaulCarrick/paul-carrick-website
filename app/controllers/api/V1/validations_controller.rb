@@ -14,7 +14,7 @@ module Api
           if html.present?
             begin
               # Parse the HTML
-              Nokogiri::HTML::Document.parse(html_string) do |config|
+              Nokogiri::HTML::Document.parse(html) do |config|
                 config.strict # Enables strict parsing for validation
               end
 
