@@ -45,9 +45,21 @@
       <%= form.text_field :caption, class: "form-control", placeholder: "Enter the caption for the image." %>
     </div>
 
-    <div class="mb-3">
+    <div>
       <%= form.label :description, "Description", class: "form-label" %>
-      <%= form.text_field :description, class: "form-control", placeholder: "Enter the description for the image." %>
+
+      <!-- RTF Editor -->
+      <div id="rtf-editor">
+        <%= form.rich_text_area :description, class: "form-control rtf-text-area", style: "max-height: 6em;", onblur: "checkHTML();" %>
+      </div>
+
+      <!-- Raw Text Editor -->
+      <div id="raw-editor" style="display: none;">
+        <%= form.text_area :description, class: "form-control", rows: 3, onblur: "checkHTML();" %>
+      </div>
+
+      <!-- Toggle Button -->
+      <button type="button" id="toggle-editor" class="btn btn-primary mt-2" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw HTML</button>
     </div>
 
     <div class="mb-3">
@@ -141,4 +153,63 @@
     groupField.value = selectedGroup;
     slideOrderField.value = maxSlideOrder + 1;
   }
+
+  async function validateHtml(field, fieldName) {
+    const htmlContent = field.value;
+
+    // Call the API to validate HTML
+    const response = await fetch('/api/validate_html', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content // CSRF token for Rails
+      },
+      body: JSON.stringify({ html: htmlContent, field: fieldName })
+    });
+
+    // Handle the response
+    if (response.ok) {
+      field.classList.remove('invalid');
+      return true;
+    } else {
+      const result = await response.json();
+      alert(`HTML Validation Errors:\n${result.errors.join('\n')}`);
+      field.classList.add('invalid'); // Add error styling
+      return false;
+    }
+  }
+
+  async function checkHTML(field) {
+    const fieldName = field.getAttribute("name"); // Get the field name dynamically
+
+    // Call validateHtml to check the HTML content
+    const isValid = await validateHtml(field, fieldName);
+    const errorArea = document.getElementById('error_area');
+
+    if (!isValid) {
+      if (errorArea)
+        errorArea.innerHTML = `<p style="color: red;">The HTML content is invalid. Please correct it.</p>`;
+    }
+    else {
+      if (errorArea)
+        errorArea.innerHTML = ``;
+    }
+  }
+
+  function toggleEditor(button, rtfEditorId, rawEditorId) {
+    const rtfEditor = document.getElementById(rtfEditorId);
+    const rawEditor = document.getElementById(rawEditorId);
+
+    if (rtfEditor.style.display === "none") {
+      rtfEditor.style.display = "block";
+      rawEditor.style.display = "none";
+      button.textContent = "Raw HTML";
+    } else {
+      rtfEditor.style.display = "none";
+      rawEditor.style.display = "block";
+      button.textContent = "HTML";
+    }
+  }
+
 </script>
