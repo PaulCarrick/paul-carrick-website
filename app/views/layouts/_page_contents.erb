@@ -55,7 +55,7 @@
                 <%
                   image = nil
 
-                  if content.image
+                  if content.image && image !~ /^\s*ImageGroup:.*$/
                     begin
                       image = image_path(content.image)
                     rescue
