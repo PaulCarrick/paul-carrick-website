@@ -1,44 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 
-const SlideShow = ({ images, captions, slideType }) => {
+const SlideShow = ({images, captions, slideType}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dropdownValue, setDropdownValue] = useState(""); // Controlled state for dropdown
-  const [imageGroup, setImageGroup] = useState(null); // Default value for imageGroup
-  const [fetchedImages, setFetchedImages] = useState([]);
-  const [captionsTitles, setCaptionsTitles] = useState([]);
-  const [captionsText, setCaptionsText] = useState([]);
+  const [imageGroup, setImageGroup] = useState(null);
 
   const buttonClass = "btn btn-link p-1 text-dark";
+  let captionsText = null;
+  let captionsTitles = null;
 
-  useEffect(() => {
-    if (images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
-      const match = images.match(/^\s*ImageGroup:\s*(.+)\s*$/);
+  if (images.search(/^\s*ImageGroup:\s*(.+)\s*$/)) {
+    const match = images.match(/^\s*ImageGroup:\s*(.+)\s*$/);
 
-      if (match) {
-        setImageGroup(match[1]);
-        fetch(`/api/v1/image_files?q[group_eq]=${match[1]}`)
-          .then((response) => response.json())
-          .then((data) => {
-            const fetchedImages = [];
-            const fetchedTitles = [];
-            const fetchedTexts = [];
+    images = []
+    captionsTitles = []
+    captionsText = []
 
-            data.forEach((record) => {
-              fetchedImages.push(record.image_url);
-              fetchedTitles.push(record.caption);
-              fetchedTexts.push(record.description);
-            });
+    if (match) {
+      setImageGroup(match[1]);
 
-            setFetchedImages(fetchedImages);
-            setCaptionsTitles(fetchedTitles);
-            setCaptionsText(fetchedTexts);
-          })
-          .catch((error) => {
-            console.error("Error fetching image group data:", error);
+      fetch(`/api/v1/image_files?q[group_eq]=${match[1]}`)
+        .then((response) => response.json())
+        .then((data) => {
+          data.forEach((record) => {
+            images.push(record.image_url);
+            captionsTitles.push(record.caption);
+            captionsText.push(record.description);
           });
-      }
+        })
+        .catch((error) => {
+          console.error("Error fetching image group data:", error);
+        });
     }
-  }, [images]);
+  }
 
   const handleFirst = () => {
     setCurrentIndex(0);
@@ -46,7 +40,7 @@ const SlideShow = ({ images, captions, slideType }) => {
   };
 
   const handleNext = () => {
-    if (currentIndex < fetchedImages.length - 1) {
+    if (currentIndex < images.length - 1) {
       setCurrentIndex(currentIndex + 1);
       updateDropdownValue(currentIndex + 1);
     }
@@ -60,8 +54,8 @@ const SlideShow = ({ images, captions, slideType }) => {
   };
 
   const handleLast = () => {
-    setCurrentIndex(fetchedImages.length - 1);
-    updateDropdownValue(fetchedImages.length - 1);
+    setCurrentIndex(images.length - 1);
+    updateDropdownValue(images.length - 1);
   };
 
   const handleDropdownChange = (event) => {
@@ -101,14 +95,14 @@ const SlideShow = ({ images, captions, slideType }) => {
   };
 
   if (captions && !imageGroup) {
-    setCaptionsText(extractTextFromSections(captions));
-    setCaptionsTitles(extractTitlesFromSections(captions));
+    captionsText = extractTextFromSections(captions);
+    captionsTitles = extractTitlesFromSections(captions);
   }
 
   const uniqueCaptionsTitles = [...new Set(captionsTitles)];
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{textAlign: 'center'}}>
       <div
         style={{
           marginBottom: '1em',
@@ -130,16 +124,16 @@ const SlideShow = ({ images, captions, slideType }) => {
             {captionsTitles[currentIndex]}
           </p>
         )}
-        <a href={fetchedImages[currentIndex]} target="_blank" rel="noopener noreferrer">
+        <a href={images[currentIndex]} target="_blank" rel="noopener noreferrer">
           <img
-            src={fetchedImages[currentIndex]}
+            src={images[currentIndex]}
             alt={`Slide ${currentIndex}`}
-            style={{ maxWidth: '100%', maxHeight: '640px', height: 'auto' }}
+            style={{maxWidth: '100%', maxHeight: '640px', height: 'auto'}}
           />
         </a>
 
         {captionsText && captionsText[currentIndex] && (
-          <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
+          <div dangerouslySetInnerHTML={{__html: addTextAlignLeftClass(captionsText[currentIndex])}}/>
         )}
       </div>
       <div>
@@ -149,14 +143,14 @@ const SlideShow = ({ images, captions, slideType }) => {
         <button className={buttonClass} onClick={handlePrev} disabled={currentIndex === 0}>
           Prev
         </button>
-        <button className={buttonClass} onClick={handleNext} disabled={currentIndex === fetchedImages.length - 1}>
+        <button className={buttonClass} onClick={handleNext} disabled={currentIndex === images.length - 1}>
           Next
         </button>
-        <button className={buttonClass} onClick={handleLast} disabled={currentIndex === fetchedImages.length - 1}>
+        <button className={buttonClass} onClick={handleLast} disabled={currentIndex === images.length - 1}>
           Last
         </button>
         <select
-          style={{ marginLeft: '1em' }}
+          style={{marginLeft: '1em'}}
           onChange={handleDropdownChange}
           value={dropdownValue} // Controlled value for dropdown
         >
@@ -170,7 +164,7 @@ const SlideShow = ({ images, captions, slideType }) => {
           ))}
         </select>
         <p>
-          {currentIndex + 1} of {fetchedImages.length}
+          {currentIndex + 1} of {images.length}
         </p>
       </div>
     </div>
