@@ -1,5 +1,5 @@
 class ImageFile < ApplicationRecord
-  # after_find :verify_checksum
+  after_find :verify_checksum
 
   include Rails.application.routes.url_helpers
   include Checksum
