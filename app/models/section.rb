@@ -36,9 +36,9 @@ class Section < ApplicationRecord
   end
 
   def at_least_one_field_present
-    return unless image_file.blank? && link.blank? && description.blank?
+    return unless image.blank? && link.blank? && description.blank?
 
-    errors.add(:base, "At least one of image_file, link, or description must be present.")
+    errors.add(:base, "At least one of image, link, or description must be present.")
   end
 
   def formatting_is_valid
