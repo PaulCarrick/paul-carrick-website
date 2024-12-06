@@ -146,24 +146,3 @@
 
 <%= render layout: "layouts/footer" do %>
 <% end %>
-
-
-<div class="row border-bottom border-dark mb-2">
-  <div class="col-2">
-    <%= sortable_column('Content Type', 'content_type', "sections") %>
-  </div>
-  <div class="col-2">
-    <%= sortable_column('Section Name', 'section_name', "sections") %>
-  </div>
-  <div class="col-2">
-    <%= sortable_column('Section Order', 'section_order', "sections") %>
-  </div>
-  <div class="col-2">
-    <%= sortable_column('Image(s)', 'image', "sections") %>
-  </div>
-  <div class="col-2">
-    <%= sortable_column('Url', 'link', "sections") %>
-  </div>
-  <div class="col-2">
-  </div>
-</div>
