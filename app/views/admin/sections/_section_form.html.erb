@@ -85,7 +85,10 @@
       %>
     </div>
     <div>
-      <%= form.label :description, "Description", class: "form-label" %>
+      <div>
+        <%= form.label :description, "Description", class: "form-label me-4" %>
+        <button type="button" id="toggle-editor" class="btn btn-link form-label pt-1" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw HTML</button>
+      </div>
 
       <!-- RTF Editor -->
       <div id="rtf-editor">
@@ -103,18 +106,13 @@
                            rows: 9,
                            onblur: "checkHTML();" %>
       </div>
-
-      <!-- Toggle Button -->
-      <button type="button" id="toggle-editor" class="btn btn-primary mt-2" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw
-        HTML
-      </button>
     </div>
     <div class="mt-2 mb-2">
       * - Required Fields
     </div>
     <div class="mb-1">
       <%= form.submit @section.persisted? ? "Update Section" : "Create Section", class: "btn btn-primary me-3" %>
-      <%= link_to("Cancel", admin_sections_url, class: "btn btn-primary") %>
+      <%= link_to("Cancel", admin_sections_url, class: "btn btn-secondary") %>
     </div>
   <% end %>
 <% end %>

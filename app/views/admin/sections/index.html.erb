@@ -107,31 +107,35 @@
         </div>
         <div class="col-half">
         </div>
+        <div class="col-1-and-a-half">
+          <%= form.label :section_name_cont, "Section Name", class: "form-label" %>
+        </div>
+        <div class="col-2">
+          <%= form.search_field :section_name_cont, style: "min-width: 100%;" %>
+        </div>
+        <div class="col-half">
+        </div>
         <div class="col-half">
           <%= form.label :image_cont, "Image", class: "form-label" %>
         </div>
-        <div class="col-2">
+        <div class="col-3">
           <%= form.search_field :image_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-half">
-        </div>
-        <div class="col-half">
-          <%= form.label :link_cont, "URL", class: "form-label" %>
-        </div>
-        <div class="col-4">
-          <%= form.search_field :link_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
         </div>
       </div>
       <div class="row mb-2">
         <div class="col-1-and-a-half">
+          <%= form.label :link_cont, "URL", class: "form-label" %>
+        </div>
+        <div class="col-2">
+          <%= form.search_field :link_cont, style: "min-width: 100%;" %>
+        </div>
+        <div class="col-half">
+        </div>
+        <div class="col-1-and-a-half">
           <%= form.label :description_cont, "Description", class: "form-label" %>
         </div>
-        <div class="col-10">
+        <div class="col-6">
           <%= form.search_field :description_cont, style: "min-width: 100%;" %>
-        </div>
-        <div class="col-1">
         </div>
       </div>
       <div>
