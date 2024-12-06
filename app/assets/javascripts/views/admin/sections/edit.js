@@ -21,7 +21,7 @@ function checkJSON(text) {
     if (error instanceof SyntaxError) {
 
       if (errorArea)
-        errorArea.innerHTML = `<p style="color: red;">The JSON content is invalid: ${error.message}</p>`;
+        errorArea.innerHTML = `<p style="color: red;">The JSON content is invalid: ${error.message}</p><p>${text}</p>`;
     } else {
       console.error("Unexpected Error in parsing JSON:", error.message);
     }
