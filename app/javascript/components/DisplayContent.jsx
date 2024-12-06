@@ -75,14 +75,13 @@ const DisplayContent = ({
                           sectionId,
                           user,
                         }) => {
-  // Parse format or fallback to hard-coded defaults
   let options = null;
 
   if (format) {
     try {
       options = JSON.parse(format);
-    } catch (error) {
-      console.error("Invalid JSON string for format:", error);
+    } catch (parse_error) {
+      console.error("Invalid JSON string for format:", parse_error);
     }
   }
 

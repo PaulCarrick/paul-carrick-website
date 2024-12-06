@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # app/models/section.rb
 
 class Section < ApplicationRecord
@@ -22,6 +20,46 @@ class Section < ApplicationRecord
     []
   end
 
+  def formatting_to_text
+    results = []
+
+    if formatting.present? && formatting_is_valid
+      formatting_json = JSON.parse(formatting)
+
+      formatting_json.each do |option|
+        results << "#{option[0]}: #{option[1]}"
+      end
+
+      results.join("\n")
+    end
+  end
+
+  def text_to_formatting(text)
+    return unless text.present?
+
+    options = text.split("\n")
+
+    return unless options.present?
+
+    results = "{\n"
+
+    options.each do |option|
+      option_name, option_value = option.split(":", 2)
+
+      next unless option_name.present? && option_value.present?
+
+      if results != "{\n"
+        results << ",\n    \"#{option_name}\": \"#{option_value}\""
+      else
+        results << "    \"#{option_name}\": \"#{option_value}\""
+      end
+    end
+
+    results += "\n}"
+
+    self.formatting = results if json_is_valid(results)
+  end
+
   private
 
   def verify_checksum
@@ -41,14 +79,18 @@ class Section < ApplicationRecord
     errors.add(:base, "At least one of image, link, or description must be present.")
   end
 
-  def formatting_is_valid
-    return unless formatting.present?
+  def json_is_valid(json)
+    return unless json.present?
 
     begin
-      JSON.parse(formatting)
-    rescue
-      errors.add(:base, "Invalid JSON in formatting.")
+      JSON.parse(json)
+    rescue => e
+      errors.add(:base, "Invalid JSON: #{e.message}\ninput: #{json}.")
     end
+  end
+
+  def formatting_is_valid
+    json_is_valid(formatting)
   end
 
   def description_is_valid

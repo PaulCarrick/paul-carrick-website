@@ -1,5 +1,6 @@
 <!-- app/views/admin/image_files/index.html.erb -->
 <% content_for :title, "paul-carrick.com - Admin Dashboard - Image Files" %>
+<%= javascript_include_tag 'views/admin/image_files/index' %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
@@ -19,11 +20,29 @@
         <div class="row">
           <div class="col-2">
             <% if image_file.image.attached? %>
-              <%= link_to image_file.image_url, target: "_blank" do %>
+              <% if image_file.mime_type === "video/mp4" %>
                 <%= image_tag(image_file.image_url,
                               alt: image_file.name,
                               class: "img-thumbnail",
-                              style: "max-width: 150px; max-height: 150px;") %>
+                              style: "max-width: 150px; max-height: 150px;",
+                              onclick: "showVideoPlayer(this.getAttribute('src'))")
+                %>
+                <br>
+                <div id="videoPlayer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000;">
+                  <div style="position: relative; width: 80%; max-width: 800px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px;">
+                    <video id="videoElement" controls style="width: 100%;"></video>
+                    <button onclick="closeVideoPlayer()" style="display: block; margin: 20px auto; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                      Close
+                    </button>
+                  </div>
+                </div>
+              <% else %>
+                <%= link_to image_file.image_url, target: "_blank" do %>
+                  <%= image_tag(image_file.image_url,
+                                alt: image_file.name,
+                                class: "img-thumbnail",
+                                style: "max-width: 150px; max-height: 150px;") %>
+                <% end %>
               <% end %>
             <% else %>
               <p>No image available</p>
@@ -87,6 +106,7 @@
 <!-- JavaScript -->
 <script>
   const apiUrl = "/api/v1/image_files/groups";
+
   async function addToGroup(imageFileId) {
     try {
       // Fetch groups from the API

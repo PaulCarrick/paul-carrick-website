@@ -76,7 +76,7 @@ const SlideShow = ({ images, captions, slideType }) => {
   const uniqueCaptionsTitles = [...new Set(captionsTitles)];
 
   return (
-    <div style={{ textAlign: 'center' }}>
+    <div style={{ textAlign: 'left' }}>
       <div
         style={{
           marginBottom: '1em',
@@ -107,10 +107,14 @@ const SlideShow = ({ images, captions, slideType }) => {
         </a>
 
         {captionsText && captionsText[currentIndex] && (
-          <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
+          <div className="text-start">
+            <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
+          </div>
         )}
       </div>
       <div>
+        {currentIndex + 1} of {images.length} -
+
         <button className={buttonClass} onClick={handleFirst} disabled={currentIndex === 0}>
           First
         </button>
@@ -137,9 +141,6 @@ const SlideShow = ({ images, captions, slideType }) => {
             </option>
           ))}
         </select>
-        <p>
-          {currentIndex + 1} of {images.length}
-        </p>
       </div>
     </div>
   );

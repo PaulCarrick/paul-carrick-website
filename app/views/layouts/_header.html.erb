@@ -1,4 +1,5 @@
 <header>
+  <%= javascript_include_tag 'views/layouts/header' %>
   <div class="bg-light">
     <nav class="bg-primary navbar navbar-dark navbar-expand-lg py-4">
       <div class="container">
@@ -70,21 +71,4 @@
       </div>
     </nav>
   </div>
-  <script>
-    /* TO DO:
-       I have no idea why the link_to is not working.
-       Everything looks good but something is happening under the covers.
-       When this is figured out this code should be removed.
-     */
-    document.querySelectorAll('.dropdown-item').forEach(item => {
-      item.addEventListener('click', (event) => {
-        window.location.href = event.target.href;
-      });
-    });
-    document.querySelectorAll('.nav-link').forEach(item => {
-      item.addEventListener('click', (event) => {
-        window.location.href = event.target.href;
-      });
-    });
-  </script>
 </header>

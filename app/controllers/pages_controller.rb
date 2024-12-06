@@ -28,19 +28,53 @@ class PagesController < ApplicationController
           images = section.image.dup
           description = sanitize_html(section.description)
           formatting = section.formatting
+          subsection = nil
 
           if images =~ /^\s*ImageGroup:\s*(.+)\s*$/
             image_files = ImageFile.where(group: Regexp.last_match(1))
-            images = []
-            description = ""
 
-            image_files.each do |image_file|
-              images << image_file.image_url
-              description += "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
-            end if image_files.present?
+            if image_files.present?
+              images = []
+              description = ""
 
-            formatting = add_images_to_formatting(formatting, images)
-            images = nil
+              image_files.each do |image_file|
+                images << image_file.image_url
+                description += "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
+              end if image_files.present?
+
+              formatting = add_images_to_formatting(formatting, images)
+              images = nil
+            else
+              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+
+              images = @missing_image
+            end
+          elsif images =~ /^\s*ImageFile:\s*(.+)\s*$/
+            image_file = ImageFile.find_by(name: Regexp.last_match(1))
+
+            if image_file&.image_url.present?
+              images = image_file.image_url
+            else
+              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+
+              images = @missing_image
+            end
+          elsif images =~ /^\s*ImageSection:\s*(.+)\s*$/
+            image_file = ImageFile.find_by(name: Regexp.last_match(1))
+
+            if image_file&.image_url.present?
+              images = image_file.image_url
+              description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
+              subsection = section.dup
+              subsection.image = nil
+              subsection.link = nil
+              subsection.formatting = flip_formatting_side(formatting)
+              subsection.description = image_file.description
+            else
+              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+
+              images = @missing_image
+            end
           elsif images =~ /^\s*\[\s*(.+?)\s*\]\s*$/m
             image_files = Regexp.last_match(1).split(",")
             images = []
@@ -61,6 +95,21 @@ class PagesController < ApplicationController
         end
 
         @contents << section
+        @contents << subsection if subsection.present?
+      end
+
+      @contents.each do |content|
+        if content.description =~ /VideoImage:\s*"(.+)"/
+          image_file = ImageFile.find_by(name: Regexp.last_match(1))
+
+          if image_file&.image_url.present?
+            video_tag = view_context.image_tag(image_file.image_url,
+                                               alt: image_file.name,
+                                               class: "btn btn-link",
+                                               onclick: "showVideoPlayer(this.getAttribute('src'))")
+            content.description.gsub!(/VideoImage:\s*"(.+)"/, video_tag)
+          end
+        end
       end
     else
       redirect_to root_path, alert: "Can't find page for: #{params[:id]}."
@@ -80,6 +129,44 @@ class PagesController < ApplicationController
       byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
 
       @missing_image
+    end
+  end
+
+  def flip_formatting_side(formatting)
+    formatting_json = JSON.parse(formatting) if formatting.present?
+
+    if formatting_json.present?
+      if formatting_json["row_style"].present?
+        if formatting_json["row_style"] === "text-left"
+          formatting_json["row_style"] = "text-right"
+        else
+          formatting_json["row_style"] = "text-left"
+        end
+      elsif formatting_json.present?
+        formatting_json["row_style"] = "text-right"
+      else
+        formatting_json["row_style"] = "text-right"
+      end
+
+      if formatting_json["text_classes"].present? && formatting_json["image_classes"].present?
+        text_classes = formatting_json["text_classes"]
+        image_classes = formatting_json["image_classes"]
+        formatting_json["text_classes"] = image_classes
+        formatting_json["image_classes"] = text_classes
+      end
+
+      if formatting_json["row_classes"].present?
+        row_classes = formatting_json["row_classes"]
+
+        row_classes.gsub!(/mt-\d/, '')
+        row_classes.gsub!(/pt-\d/, '')
+
+        formatting_json["row_classes"] = row_classes
+      end
+
+      formatting_json.to_json
+    else
+      '{ row_style: "text-right" }'
     end
   end
 

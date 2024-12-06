@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -92,7 +87,10 @@
       <recent name="$PROJECT_DIR$/app/assets/images/travel" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Development: rails-website">
+  <component name="RunManager" selected="Node.js.SlideShow.jsx">
+    <configuration name="SlideShow.jsx" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" working-dir="$PROJECT_DIR$/app/javascript/components">
+      <method v="2" />
+    </configuration>
     <configuration name="Development: rails-website" type="RailsRunConfigurationType" factoryName="Rails">
       <module name="rails-website" />
       <predefined_log_file enabled="true" id="RUBY_RAILS_SERVER" />
@@ -194,6 +192,11 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TESTOPTS" VALUE="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.SlideShow.jsx" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
@@ -243,7 +246,7 @@
       <workItem from="1733349983036" duration="143000" />
       <workItem from="1733350306662" duration="242000" />
       <workItem from="1733356476378" duration="977000" />
-      <workItem from="1733404878254" duration="21599000" />
+      <workItem from="1733404878254" duration="32750000" />
     </task>
     <servers />
   </component>

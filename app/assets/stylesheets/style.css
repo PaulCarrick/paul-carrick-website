@@ -3,6 +3,36 @@
   height: fit-content;
 }
 
+.col-quarter {
+  flex: 0 0 2.0833335%;
+  max-width: 2.0833335%;
+}
+
+.col-half {
+  flex: 0 0 4.166667%;
+  max-width: 4.166667%;
+}
+
+.col-1-and-a-half {
+  flex: 0 0 12.4999995%;
+  max-width: 12.4999995%;
+}
+
+.col-2-and-a-half {
+  flex: 0 0 20.8333325%;
+  max-width: 20.8333325%;
+}
+
+.col-3-and-a-half {
+  flex: 0 0 29.1666655%;
+  max-width: 29.1666655%;
+}
+
+.col-4-and-a-half {
+  flex: 0 0 37.4999985%;
+  max-width: 37.4999985%;
+}
+
 .btn-link {
   background: none;
   border: none;

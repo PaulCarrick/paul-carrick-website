@@ -21,18 +21,25 @@
       <div id="contents">
         <% @contents.each do |content| %>
           <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
-
           <div class="<%= section_classes %>">
             <%= react_component("DisplayContent", {
               content: content.description,
               image: content.image,
               link: content.link,
               format: content.formatting,
-              section_id: content.section_name,
+              sectionId: content.section_name,
               user: @user
             }) %>
           </div>
         <% end %>
+      </div>
+      <div id="videoPlayer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000;">
+        <div style="position: relative; width: 80%; max-width: 800px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px;">
+          <video id="videoElement" controls style="width: 100%;"></video>
+          <button onclick="closeVideoPlayer()" style="display: block; margin: 20px auto; padding: 10px 20px; background: red; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Close
+          </button>
+        </div>
       </div>
       <input type="hidden" id="content-rendered-signal" value="true"/>
     </div>

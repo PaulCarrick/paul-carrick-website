@@ -70,7 +70,12 @@
           Formatting:
         </div>
         <div class="col-9">
-          <%= raw(Utilities.pretty_print_json(section.formatting)) %>
+          <%=
+            formatting = section.formatting_to_text
+            formatting = formatting.gsub("\n", "<br>") if formatting.present?
+
+            raw(formatting)
+          %>
         </div>
         <div class="col-2">
         </div>
@@ -94,15 +99,23 @@
                         method: :get,
                         local: true do |form| %>
       <div class="row mb-2">
-        <div class="col-1">
+        <div class="col-1-and-a-half">
+          <%= form.label :content_type_cont, "Content Type", class: "form-label" %>
+        </div>
+        <div class="col-2">
+          <%= form.search_field :content_type_cont, style: "min-width: 100%;" %>
+        </div>
+        <div class="col-half">
+        </div>
+        <div class="col-half">
           <%= form.label :image_cont, "Image", class: "form-label" %>
         </div>
-        <div class="col-4">
+        <div class="col-2">
           <%= form.search_field :image_cont, style: "min-width: 100%;" %>
         </div>
-        <div class="col-1">
+        <div class="col-half">
         </div>
-        <div class="col-1">
+        <div class="col-half">
           <%= form.label :link_cont, "URL", class: "form-label" %>
         </div>
         <div class="col-4">
@@ -112,7 +125,7 @@
         </div>
       </div>
       <div class="row mb-2">
-        <div class="col-1">
+        <div class="col-1-and-a-half">
           <%= form.label :description_cont, "Description", class: "form-label" %>
         </div>
         <div class="col-10">
