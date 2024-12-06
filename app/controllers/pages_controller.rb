@@ -68,8 +68,14 @@ class PagesController < ApplicationController
               subsection = section.dup
               subsection.image = nil
               subsection.link = nil
-              subsection.formatting = flip_formatting_side(formatting)
+              formatting_json = JSON.parse(formatting) if formatting.present?
+              subsection.formatting = flip_formatting_side(formatting_json)
               subsection.description = image_file.description
+
+              if formatting_json.present? && formatting_json["expanding_rows"].present?
+                formatting_json.delete("expanding_rows")
+                formatting = formatting_json.to_json
+              end
             else
               byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
 
@@ -132,9 +138,7 @@ class PagesController < ApplicationController
     end
   end
 
-  def flip_formatting_side(formatting)
-    formatting_json = JSON.parse(formatting) if formatting.present?
-
+  def flip_formatting_side(formatting_json)
     if formatting_json.present?
       if formatting_json["row_style"].present?
         if formatting_json["row_style"] === "text-left"
