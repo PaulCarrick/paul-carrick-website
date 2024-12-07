@@ -50,7 +50,7 @@ Rails.application.routes.draw do
 
   resources :blog
   resources :contact, only: [ :new, :create, :show ]
-  resources :image_files
+  resources :image_files, only: [ :show ]
   resources :section, only: [ :index ]
   resources :search, only: [ :new ]
 
