@@ -18,7 +18,6 @@ const parseStyle = (styleString) => {
 
 // Helper to set up toggle functionality
 const setupToggle = (elementId, className) => {
-debugger;
   useEffect(() => {
     const setupLogic = () => {
       const toggleButton = document.getElementById(elementId);
