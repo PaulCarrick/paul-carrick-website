@@ -69,9 +69,10 @@
           ]
         end
       %>
+
       <%= form.label :parent_id, "Parent Menu", class: "form-label" %><br>
       <%= form.select :parent_id,
-                      options_for_select(menus),
+                      options_for_select(menus, form.object.parent_id),
                       class: 'form-control' %>
     </div>
 

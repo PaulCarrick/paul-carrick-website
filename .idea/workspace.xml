@@ -14,11 +14,11 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Ruby Module" />
         <option value="Ruby Class" />
         <option value="ERB File" />
         <option value="Ruby File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -57,7 +57,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$APPLICATION_CONFIG_DIR$/scratches" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/javascripts/views/pages" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
@@ -73,18 +73,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/pages" />
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/layouts" />
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/image_files" />
       <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
       <recent name="$PROJECT_DIR$/app/views/admin" />
-      <recent name="$PROJECT_DIR$/app/controllers/admin" />
-      <recent name="$PROJECT_DIR$/db/migrate" />
-      <recent name="$PROJECT_DIR$/app/views/admin/image_collections" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/javascripts" />
       <recent name="$PROJECT_DIR$/app/views/section" />
       <recent name="$PROJECT_DIR$/app/assets/images/employment" />
       <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/app/assets/images/home" />
-      <recent name="$PROJECT_DIR$/app/assets/images/travel" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.SlideShow.jsx">
@@ -247,6 +247,7 @@
       <workItem from="1733350306662" duration="242000" />
       <workItem from="1733356476378" duration="977000" />
       <workItem from="1733404878254" duration="32750000" />
+      <workItem from="1733489758618" duration="36919000" />
     </task>
     <servers />
   </component>

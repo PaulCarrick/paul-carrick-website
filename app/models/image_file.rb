@@ -10,6 +10,9 @@ class ImageFile < ApplicationRecord
   validates :name, :image, presence: true
   validate :description_is_valid
 
+  scope :by_image_group, ->(group) { where(group: group).order(:slide_order) }
+  scope :by_name, ->(name) { where(name: name) }
+
   def self.ransackable_attributes(auth_object = nil)
     %w[ name group caption description ]
   end

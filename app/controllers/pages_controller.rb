@@ -12,175 +12,193 @@ class PagesController < ApplicationController
   private
 
   def load_page
-    page = Page.find_by(name: params[:id])
+    @page = Page.find_by(name: params[:id])
 
-    if page.present?
-      @missing_image ||= view_context.image_path("missing-image.jpg")
-      @contents = []
-      sections = Section.by_content_type(page.section)
+    if @page.present?
+      setup_defaults
 
-      if params[:section_name].present?
-        @focused_section = sections.find { |section| section.section_name == params[:section_name] }
-      end
+      @contents = build_contents
 
-      sections.each do |section|
-        if section.image.present?
-          images = section.image.dup
-          description = sanitize_html(section.description)
-          formatting = section.formatting
-          subsection = nil
-
-          if images =~ /^\s*ImageGroup:\s*(.+)\s*$/
-            image_files = ImageFile.where(group: Regexp.last_match(1).strip)
-
-            if image_files.present?
-              images = []
-              description = ""
-
-              image_files.each do |image_file|
-                images << image_file.image_url
-                description += "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
-              end if image_files.present?
-
-              formatting = add_images_to_formatting(formatting, images)
-              images = nil
-            else
-              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-
-              images = @missing_image
-            end
-          elsif images =~ /^\s*ImageFile:\s*(.+)\s*$/
-            image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
-
-            if image_file&.image_url.present?
-              images = image_file.image_url
-            else
-              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-
-              images = @missing_image
-            end
-          elsif images =~ /^\s*ImageSection:\s*(.+)\s*$/
-            image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
-
-            if image_file&.image_url.present?
-              images = image_file.image_url
-              description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
-              subsection = section.deep_dup
-              subsection.image = nil
-              subsection.link = nil
-              formatting_json = JSON.parse(formatting) if formatting.present?
-              subsection.formatting = flip_formatting_side(formatting_json.dup)
-              subsection.description = image_file.description
-
-              if formatting_json.present? && formatting_json["expanding_rows"].present?
-                formatting_json.delete("expanding_rows")
-                formatting = formatting_json.to_json
-              end
-            else
-              byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
-
-              images = @missing_image
-            end
-          elsif images =~ /^\s*\[\s*(.+?)\s*\]\s*$/m
-            image_files = Regexp.last_match(1).strip.split(",")
-            images = []
-
-            image_files.each do |image_file|
-              images << get_image_path(image_file)
-            end if image_files.present?
-
-            formatting = add_images_to_formatting(formatting, images)
-            images = nil
-          else
-            images = get_image_path(images)
-          end
-
-          section.image = images
-          section.description = description
-          section.formatting = formatting
-        end
-
-        @contents << section
-        @contents << subsection if subsection.present?
-      end
-
-      @contents.each do |content|
-        if content.description =~ /VideoImage:\s*"(.+)"/
-          image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
-
-          if image_file&.image_url.present?
-            video_tag = view_context.image_tag(image_file.image_url,
-                                               alt: image_file.name,
-                                               class: "btn btn-link",
-                                               onclick: "showVideoPlayer(this.getAttribute('src'))")
-            content.description.gsub!(/VideoImage:\s*"(.+)"/, video_tag)
-          end
-        end
-      end
+      process_video_images
     else
       redirect_to root_path, alert: "Can't find page for: #{params[:id]}."
     end
   end
 
-  def get_image_path(image_url)
-    begin
-      image_url.strip!
+  def setup_defaults
+    @missing_image ||= view_context.image_path("missing-image.jpg")
+  end
 
-      if image_url =~ /^\s*http/i
-        image_url
-      else
-        view_context.image_path(image_url)
-      end
-    rescue
-      byebug if Rails.env === "development" # rubocop:disable Lint/Debugger
+  def build_contents
+    contents = []
+    sections = Section.by_content_type(@page.section)
 
-      @missing_image
+    set_focused_section(sections)
+
+    sections.each do |section|
+      subsection = process_section(section)
+      contents << section
+      contents << subsection if subsection.present?
+    end
+
+    contents
+  end
+
+  def set_focused_section(sections)
+    return unless params[:section_name].present?
+
+    @focused_section = sections.find { |section| section.section_name == params[:section_name] }
+  end
+
+  def process_section(section)
+    return unless section.image.present?
+
+    images, description, formatting, subsection = process_image(section)
+    section.image = images
+    section.description = description
+    section.formatting = formatting
+
+    subsection
+  end
+
+  def process_image(section)
+    images = section.image.dup.strip
+    description = sanitize_html(section.description)
+    formatting = section.formatting
+    subsection = nil
+
+    case images
+    when /^\s*ImageGroup:\s*(.+)\s*$/
+      images, description, formatting = handle_image_group(Regexp.last_match(1), formatting)
+    when /^\s*ImageFile:\s*(.+)\s*$/
+      images = handle_single_image_file(Regexp.last_match(1))
+    when /^\s*ImageSection:\s*(.+)\s*$/
+      images, description, subsection = handle_image_section(section, Regexp.last_match(1), formatting)
+    when /^\s*\[\s*(.+?)\s*\]\s*$/m
+      images, formatting = handle_image_array(Regexp.last_match(1), formatting)
+    else
+      images = get_image_path(images)
+    end
+
+    [ images, description, formatting, subsection ]
+  end
+
+  def handle_image_group(group_name, formatting)
+    image_files = ImageFile.by_image_group(group_name)
+
+    if image_files.present?
+      images = image_files.map(&:image_url)
+      description = image_files.map do |image_file|
+        "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
+      end.join
+      formatting = add_images_to_formatting(formatting, images)
+      [ nil, description, formatting ]
+    else
+      [ @missing_image, "", formatting ]
     end
   end
 
-  def flip_formatting_side(formatting_json)
-    if formatting_json.present?
-      if formatting_json["row_style"].present?
-        if formatting_json["row_style"] === "text-left"
-          formatting_json["row_style"] = "text-right"
-        else
-          formatting_json["row_style"] = "text-left"
-        end
-      elsif formatting_json.present?
-        formatting_json["row_style"] = "text-right"
-      else
-        formatting_json["row_style"] = "text-right"
-      end
+  def handle_single_image_file(file_name)
+    image_file = ImageFile.find_by(name: file_name)
+    image_file&.image_url || @missing_image
+  end
 
-      if formatting_json["text_classes"].present? && formatting_json["image_classes"].present?
-        text_classes = formatting_json["text_classes"]
-        image_classes = formatting_json["image_classes"]
-        formatting_json["text_classes"] = image_classes
-        formatting_json["image_classes"] = text_classes
-      end
+  def handle_image_section(section, file_name, formatting)
+    image_file = ImageFile.find_by(name: file_name)
 
-      if formatting_json["row_classes"].present?
-        row_classes = formatting_json["row_classes"]
-
-        row_classes.gsub!(/mt-\d/, '')
-        row_classes.gsub!(/pt-\d/, '')
-
-        formatting_json["row_classes"] = row_classes
-      end
-
-      formatting_json.to_json
+    if image_file&.image_url.present?
+      description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
+      subsection = build_subsection(section, image_file, formatting)
+      [ image_file.image_url, description, subsection ]
     else
-      '{ row_style: "text-right" }'
+      [ @missing_image, "", nil ]
+    end
+  end
+
+  def build_subsection(section, image_file, formatting)
+    subsection = section.deep_dup
+    subsection.link = nil
+    subsection.image = nil
+    formatting_json = JSON.parse(formatting) if formatting.present?
+    subsection.formatting = flip_formatting_side(formatting_json.dup)
+    subsection.description = image_file.description
+
+    if formatting_json.present? && formatting_json["expanding_rows"].present?
+      formatting_json.delete("expanding_rows")
+
+      section.formatting = formatting_json.to_json
+    end
+
+    subsection
+  end
+
+  def handle_image_array(image_list, formatting)
+    images = image_list.split(",").map { |image_file| get_image_path(image_file) }
+    [ nil, add_images_to_formatting(formatting, images) ]
+  end
+
+  def process_video_images
+    @contents.each do |content|
+      next unless content.description =~ /VideoImage:\s*"(.+)"/
+
+      replace_video_image_tag(content, Regexp.last_match(1))
+    end
+  end
+
+  def replace_video_image_tag(content, file_name)
+    image_file = ImageFile.find_by(name: file_name)
+
+    if image_file&.image_url.present?
+      video_tag = view_context.image_tag(
+        image_file.image_url,
+        alt: image_file.name,
+        class: "btn btn-link",
+        onclick: "showVideoPlayer(this.getAttribute('src'))"
+      )
+      content.description.gsub!(/VideoImage:\s*"(.+)"/, video_tag)
+    end
+  end
+
+  def get_image_path(image_url)
+    image_url.strip!
+
+    if image_url =~ /^\s*http/i
+      image_url
+    else
+      view_context.image_path(image_url)
+    end
+  rescue
+    @missing_image
+  end
+
+  def flip_formatting_side(formatting_json)
+    return '{ row_style: "text-right" }' unless formatting_json.present?
+
+    formatting_json["row_style"] =
+      case formatting_json["row_style"]
+      when "text-left" then "text-right"
+      else "text-left"
+      end
+
+    swap_classes!(formatting_json)
+
+    formatting_json.to_json
+  end
+
+  def swap_classes!(formatting_json)
+    if formatting_json["text_classes"].present? && formatting_json["image_classes"].present?
+      formatting_json["text_classes"], formatting_json["image_classes"] =
+        formatting_json["image_classes"], formatting_json["text_classes"]
+    end
+
+    if formatting_json["row_classes"].present?
+      formatting_json["row_classes"].gsub!(/mt-\d|pt-\d/, "")
     end
   end
 
   def add_images_to_formatting(formatting, images)
-    if formatting.present?
-      json = JSON.parse(formatting)
-      json["slide_show_images"] = images
-      json.to_json
-    else
-      { slide_show_images: images }.to_json
-    end
+    json = formatting.present? ? JSON.parse(formatting) : {}
+    json["slide_show_images"] = images
+    json.to_json
   end
 end
