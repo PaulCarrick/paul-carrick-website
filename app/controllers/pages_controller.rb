@@ -31,8 +31,7 @@ class PagesController < ApplicationController
           subsection = nil
 
           if images =~ /^\s*ImageGroup:\s*(.+)\s*$/
-byebug
-            image_files = ImageFile.where(group: Regexp.last_match(1))
+            image_files = ImageFile.where(group: Regexp.last_match(1).strip)
 
             if image_files.present?
               images = []
@@ -51,7 +50,7 @@ byebug
               images = @missing_image
             end
           elsif images =~ /^\s*ImageFile:\s*(.+)\s*$/
-            image_file = ImageFile.find_by(name: Regexp.last_match(1))
+            image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
 
             if image_file&.image_url.present?
               images = image_file.image_url
@@ -61,7 +60,7 @@ byebug
               images = @missing_image
             end
           elsif images =~ /^\s*ImageSection:\s*(.+)\s*$/
-            image_file = ImageFile.find_by(name: Regexp.last_match(1))
+            image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
 
             if image_file&.image_url.present?
               images = image_file.image_url
@@ -83,7 +82,7 @@ byebug
               images = @missing_image
             end
           elsif images =~ /^\s*\[\s*(.+?)\s*\]\s*$/m
-            image_files = Regexp.last_match(1).split(",")
+            image_files = Regexp.last_match(1).strip.split(",")
             images = []
 
             image_files.each do |image_file|
@@ -107,7 +106,7 @@ byebug
 
       @contents.each do |content|
         if content.description =~ /VideoImage:\s*"(.+)"/
-          image_file = ImageFile.find_by(name: Regexp.last_match(1))
+          image_file = ImageFile.find_by(name: Regexp.last_match(1).strip)
 
           if image_file&.image_url.present?
             video_tag = view_context.image_tag(image_file.image_url,
