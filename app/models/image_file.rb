@@ -10,6 +10,7 @@ class ImageFile < ApplicationRecord
   validates :name, :image, presence: true
   validate :description_is_valid
 
+  scope :jpegs_with_captions_in_an_image_group, ->() { where.not(group: nil).where.not(caption: nil).where(mime_type: 'image/jpeg') }
   scope :by_image_group, ->(group) { where(group: group).order(:slide_order) }
   scope :by_name, ->(name) { where(name: name) }
 

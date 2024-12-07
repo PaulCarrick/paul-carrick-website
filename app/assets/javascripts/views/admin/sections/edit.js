@@ -7,11 +7,11 @@ function setError(errorMessage) {
     errorArea.innerHTML = '<p style="color: red;">' + errorMessage + '</p>';
 }
 
-function checkJSON(text) {
+function checkJSON(formatting) {
   const errorArea = document.getElementById('error-area');
 
   try {
-    JSON.parse(text);
+    JSON.parse(formatting);
 
     if (errorArea)
       errorArea.innerHTML = ``;
@@ -21,7 +21,7 @@ function checkJSON(text) {
     if (error instanceof SyntaxError) {
 
       if (errorArea)
-        errorArea.innerHTML = `<p style="color: red;">The JSON content is invalid: ${error.message}</p><p>${text}</p>`;
+        errorArea.innerHTML = `<p style="color: red;">The JSON content is invalid: ${error.message}</p><p>${formatting}</p>`;
     } else {
       console.error("Unexpected Error in parsing JSON:", error.message);
     }
