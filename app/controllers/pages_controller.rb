@@ -120,14 +120,15 @@ class PagesController < ApplicationController
     subsection = section.deep_dup
     subsection.link = nil
     subsection.image = nil
-    formatting_json = JSON.parse(formatting) if formatting.present?
-    subsection.formatting = flip_formatting_side(formatting_json.dup)
+    subsection.formatting = flip_formatting_side(formatting)
     subsection.description = image_file.description
 
-    if formatting_json.present? && formatting_json["expanding_rows"].present?
-      formatting_json.delete("expanding_rows")
+    if formatting.include?('expanding_rows')
+      json = JSON.parse(formatting)
 
-      formatting = formatting_json.to_json
+      json.delete("expanding_rows")
+
+      formatting = json.to_json
     end
 
     [ subsection, formatting ]
@@ -172,8 +173,10 @@ class PagesController < ApplicationController
     @missing_image
   end
 
-  def flip_formatting_side(formatting_json)
-    return '{ row_style: "text-right" }' unless formatting_json.present?
+  def flip_formatting_side(formatting)
+    return '{ row_style: "text-right" }' unless formatting.present?
+
+    formatting_json = JSON.parse(formatting)
 
     formatting_json["row_style"] =
       case formatting_json["row_style"]
