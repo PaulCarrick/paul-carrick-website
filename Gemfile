@@ -62,9 +62,10 @@ gem 'htmlbeautifier'
 
 gem 'active_model_serializers'
 
+gem "byebug"
+
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
-  gem "byebug"
   gem "brakeman", require: false
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]

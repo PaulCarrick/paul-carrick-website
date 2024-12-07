@@ -31,6 +31,7 @@ class PagesController < ApplicationController
           subsection = nil
 
           if images =~ /^\s*ImageGroup:\s*(.+)\s*$/
+byebug
             image_files = ImageFile.where(group: Regexp.last_match(1))
 
             if image_files.present?
