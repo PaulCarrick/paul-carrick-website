@@ -23,7 +23,7 @@ LOCAL_DUMP_NAME="${DATABASE}_local_database_${DATE_STRING}.dump"
 REMOTE_STORAGE_NAME="paul@paul-carrick.com:${DATABASE}_images_${DATE_STRING}.tar.gz"
 LOCAL_STORAGE_NAME="${DATABASE}_images_${DATE_STRING}.tar.gz"
 
-if [ "$NO_COPY_FLAG" = "true" ]; then
+if [ "$NO_COPY_FLAG" = "false" ]; then
     scp "${REMOTE_DUMP_NAME}" "${HOME}"
 
     if [ $? -ne 0 ]; then
