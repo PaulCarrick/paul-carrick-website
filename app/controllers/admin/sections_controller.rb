@@ -4,7 +4,31 @@ class Admin::SectionsController < ApplicationController
   before_action :set_section, only: %i[show edit update destroy]
 
   def index
+    if params[:q].present?
+      session[:sections_search] = params[:q]
+    elsif session[:sections_search].present?
+      params[:q] = session[:sections_search]
+    else
+      session[:sections_search] = nil
+    end
+
     @q = Section.ransack(params[:q]) # Initialize Ransack search object
+
+    if params[:sort].present?
+      session[:sections_sort] = params[:sort]
+    elsif session[:sections_sort].present?
+      params[:sort] = session[:sections_sort]
+    else
+      params[:sort] = nil
+    end
+
+    if params[:direction].present?
+      session[:sections_sort_direction] = params[:direction]
+    elsif session[:sections_sort_direction].present?
+      params[:direction] = session[:sections_sort_direction]
+    else
+      params[:direction] = nil
+    end
 
     # Set default sort column and direction
     sort_column = params[:sort].presence || "content_type"
