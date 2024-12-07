@@ -2,6 +2,7 @@
 
 class Section < ApplicationRecord
   after_find :verify_checksum
+  after_find :cleanup_formatting
 
   include Checksum
   include Validation
@@ -49,15 +50,24 @@ class Section < ApplicationRecord
       next unless option_name.present? && option_value.present?
 
       if results != "{\n"
-        results << ",\n    \"#{option_name}\": \"#{option_value}\""
+        results << ",\n    \"#{option_name.strip}\": \"#{option_value.strip}\""
       else
-        results << "    \"#{option_name}\": \"#{option_value}\""
+        results << "    \"#{option_name.strip}\": \"#{option_value.strip}\""
       end
     end
 
     results += "\n}"
 
     self.formatting = results if json_is_valid(results)
+  end
+
+  def cleanup_formatting
+    return unless self.formatting.present?
+
+    formatting_json = JSON.parse(self.formatting)
+    formatting_json.transform_keys!(&:strip)
+    formatting_json.transform_values!(&:strip)
+    self.formatting = formatting_json.to_json
   end
 
   private

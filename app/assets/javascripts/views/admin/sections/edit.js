@@ -75,10 +75,13 @@ function textToFormatting(text) {
   let results = "{\n";
 
   for (const option of options) {
-    const [optionName, optionValue] = option.split(/:(.+)/);
+    let [optionName, optionValue] = option.split(/:(.+)/);
 
     if (!(optionName && optionValue))
       continue;
+
+    optionName = optionName.trim();
+    optionValue = optionValue.trim();
 
     if (results !== "{\n")
       results += ",\n    ";

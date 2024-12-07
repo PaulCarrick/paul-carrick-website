@@ -65,11 +65,11 @@ class PagesController < ApplicationController
             if image_file&.image_url.present?
               images = image_file.image_url
               description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
-              subsection = section.dup
+              subsection = section.deep_dup
               subsection.image = nil
               subsection.link = nil
               formatting_json = JSON.parse(formatting) if formatting.present?
-              subsection.formatting = flip_formatting_side(formatting_json)
+              subsection.formatting = flip_formatting_side(formatting_json.dup)
               subsection.description = image_file.description
 
               if formatting_json.present? && formatting_json["expanding_rows"].present?
