@@ -73,7 +73,7 @@ class PagesController < ApplicationController
     when /^\s*ImageFile:\s*(.+)\s*$/
       images = handle_single_image_file(Regexp.last_match(1))
     when /^\s*ImageSection:\s*(.+)\s*$/
-      images, description, subsection = handle_image_section(section, Regexp.last_match(1), formatting)
+      images, description, subsection, formatting = handle_image_section(section, Regexp.last_match(1), formatting)
     when /^\s*\[\s*(.+?)\s*\]\s*$/m
       images, formatting = handle_image_array(Regexp.last_match(1), formatting)
     else
@@ -108,10 +108,11 @@ class PagesController < ApplicationController
 
     if image_file&.image_url.present?
       description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
-      subsection = build_subsection(section, image_file, formatting)
-      [ image_file.image_url, description, subsection ]
+      subsection, formatting = build_subsection(section, image_file, formatting)
+
+      [ image_file.image_url, description, subsection, formatting ]
     else
-      [ @missing_image, "", nil ]
+      [ @missing_image, "", nil, nil ]
     end
   end
 
@@ -126,10 +127,10 @@ class PagesController < ApplicationController
     if formatting_json.present? && formatting_json["expanding_rows"].present?
       formatting_json.delete("expanding_rows")
 
-      section.formatting = formatting_json.to_json
+      formatting = formatting_json.to_json
     end
 
-    subsection
+    [ subsection, formatting ]
   end
 
   def handle_image_array(image_list, formatting)
