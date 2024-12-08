@@ -71,7 +71,7 @@ class PagesController < ApplicationController
     when /^\s*ImageGroup:\s*(.+)\s*$/
       images, description, formatting = handle_image_group(Regexp.last_match(1), formatting)
     when /^\s*ImageFile:\s*(.+)\s*$/
-      images = handle_single_image_file(Regexp.last_match(1))
+      images = handle_single_image_file(section, Regexp.last_match(1))
     when /^\s*ImageSection:\s*(.+)\s*$/
       images, description, subsection, formatting = handle_image_section(section, Regexp.last_match(1), formatting)
     when /^\s*\[\s*(.+?)\s*\]\s*$/m
@@ -98,8 +98,9 @@ class PagesController < ApplicationController
     end
   end
 
-  def handle_single_image_file(file_name)
+  def handle_single_image_file(section, file_name)
     image_file = ImageFile.find_by(name: file_name)
+    section.link = image_file.image_url
     image_file&.image_url || @missing_image
   end
 
@@ -107,6 +108,7 @@ class PagesController < ApplicationController
     image_file = ImageFile.find_by(name: file_name)
 
     if image_file&.image_url.present?
+      section.link = image_file.image_url
       description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
       subsection, formatting = build_subsection(section, image_file, formatting)
 
