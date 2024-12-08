@@ -13,7 +13,7 @@
       <div class="col-1"><%= sortable_column('Order', 'slide_order', "image_files") %></div>
       <div class="col-2"><%= sortable_column('Caption', 'caption', "image_files") %></div>
       <div class="col-2"><%= sortable_column('Description', 'description', "image_files") %></div>
-      <div class="col-2"></div>
+      <div class="col-2"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
     </div>
     <div class="scrollable-container p-2" style="min-height: 90%">
       <% @image_files.each do |image_file| %>

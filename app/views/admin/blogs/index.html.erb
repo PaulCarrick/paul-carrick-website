@@ -1,4 +1,5 @@
 <!-- app/views/admin/blogs/index.html.erb -->
+<%= javascript_include_tag 'views/admin/blogs/index' %>
 <% content_for :title, "paul-carrick.com - Amin Dashboard - Blogs" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
@@ -18,6 +19,7 @@
       Contents
     </div>
     <div class="col-1">
+      <%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %>
     </div>
   </div>
   <div class="scrollable-container p-2">

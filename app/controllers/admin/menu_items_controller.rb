@@ -4,8 +4,29 @@ class Admin::MenuItemsController < ApplicationController
   before_action :set_menu_item, only: %i[show edit update destroy]
 
   def index
-    sort_column = params[:sort] || 'label' # Default sorting column
-    sort_direction = params[:direction] || 'asc' # Default sorting direction
+    if params[:sort].present?
+      session[:menu_items_sort] = params[:sort]
+    elsif session[:menu_items_sort].present?
+      params[:sort] = session[:menu_items_sort]
+    else
+      params[:sort] = nil
+    end
+
+    if params[:direction].present?
+      session[:menu_items_sort_direction] = params[:direction]
+    elsif session[:menu_items_sort_direction].present?
+      params[:direction] = session[:menu_items_sort_direction]
+    else
+      params[:direction] = nil
+    end
+
+    # Set default sort column and direction
+    sort_column = params[:sort].presence || "label"
+    sort_direction = params[:direction].presence || "asc"
+
+    # Safeguard against invalid columns and directions
+    sort_column = MenuItem.column_names.include?(sort_column) ? sort_column : "label"
+    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
     @pagy, @menus = pagy(MenuItem.order("#{sort_column} #{sort_direction}"), limit: 30)
   end
 

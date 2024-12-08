@@ -7,15 +7,38 @@ class Admin::ImageFilesController < ApplicationController
   before_action :set_image, only: %i[show edit update destroy]
 
   def index
+    if params[:q].present?
+      session[:image_files_search] = params[:q]
+    elsif session[:image_files_search].present?
+      params[:q] = session[:image_files_search]
+    else
+      session[:image_files_search] = nil
+    end
+
     @q = ImageFile.ransack(params[:q]) # Initialize Ransack search object
+
+    if params[:sort].present?
+      session[:image_files_sort] = params[:sort]
+    elsif session[:image_files_sort].present?
+      params[:sort] = session[:image_files_sort]
+    else
+      params[:sort] = nil
+    end
+
+    if params[:direction].present?
+      session[:image_files_sort_direction] = params[:direction]
+    elsif session[:image_files_sort_direction].present?
+      params[:direction] = session[:image_files_sort_direction]
+    else
+      params[:direction] = nil
+    end
 
     if params[:q]&.include?("group_cont") && !params[:sort].presence
       sort_column = "slide_order"
       sort_direction = "asc"
     else
-      # Set default sort column and direction
-      sort_column = params[:sort].presence || "name"
-      sort_direction = params[:direction].presence || "asc"
+      sort_column = ImageFile.column_names.include?(sort_column) ? sort_column : "name"
+      sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
     end
 
     # Safeguard against invalid columns and directions

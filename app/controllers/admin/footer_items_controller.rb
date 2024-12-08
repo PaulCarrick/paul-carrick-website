@@ -4,8 +4,29 @@ class Admin::FooterItemsController < ApplicationController
   before_action :set_footer_item, only: %i[show edit update destroy]
 
   def index
-    sort_column = params[:sort] || 'label' # Default sorting column
-    sort_direction = params[:direction] || 'asc' # Default sorting direction
+    if params[:sort].present?
+      session[:footer_items_sort] = params[:sort]
+    elsif session[:footer_items_sort].present?
+      params[:sort] = session[:footer_items_sort]
+    else
+      params[:sort] = nil
+    end
+
+    if params[:direction].present?
+      session[:footer_items_sort_direction] = params[:direction]
+    elsif session[:footer_items_sort_direction].present?
+      params[:direction] = session[:footer_items_sort_direction]
+    else
+      params[:direction] = nil
+    end
+
+    # Set default sort column and direction
+    sort_column = params[:sort].presence || "label"
+    sort_direction = params[:direction].presence || "asc"
+
+    # Safeguard against invalid columns and directions
+    sort_column = FooterItem.column_names.include?(sort_column) ? sort_column : "label"
+    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
     @pagy, @footers = pagy(FooterItem.order("#{sort_column} #{sort_direction}"), limit: 30)
   end
 

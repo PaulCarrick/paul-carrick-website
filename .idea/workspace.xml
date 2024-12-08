@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -255,7 +249,7 @@
       <workItem from="1733404878254" duration="32750000" />
       <workItem from="1733489758618" duration="36919000" />
       <workItem from="1733578496606" duration="14998000" />
-      <workItem from="1733602432158" duration="3497000" />
+      <workItem from="1733602432158" duration="6658000" />
     </task>
     <servers />
   </component>

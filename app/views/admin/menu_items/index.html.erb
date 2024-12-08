@@ -1,4 +1,5 @@
 <!-- app/views/admin/menu_items/index.html.erb -->
+<%= javascript_include_tag 'views/admin/menu_items/index' %>
 <% content_for :title, "paul-carrick.com - Amin Dashboard - Menu Items" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
@@ -18,6 +19,7 @@
       <%= sortable_column('Link', 'link', "menu_items") %>
     </div>
     <div class="col-2">
+      <%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %>
     </div>
   </div>
   <div class="scrollable-container p-2">
