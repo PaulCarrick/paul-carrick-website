@@ -196,7 +196,7 @@ class PagesController < ApplicationController
     end
 
     if formatting_json["row_classes"].present?
-      formatting_json["row_classes"].gsub!(/mt-\d|pt-\d/, "")
+      formatting_json["row_classes"].gsub!(/mt-\d|pt-\d|w-\d+/, "")
     end
   end
 
