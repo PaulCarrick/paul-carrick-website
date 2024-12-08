@@ -198,6 +198,10 @@ class PagesController < ApplicationController
     if formatting_json["row_classes"].present?
       formatting_json["row_classes"].gsub!(/mt-\d|pt-\d|w-\d\d|w-\d\d\d/, "")
     end
+
+    if formatting_json["image_classes"].present?
+      formatting_json["image_classes"].gsub!(/w-\d\d|w-\d\d\d/, "")
+    end
   end
 
   def add_images_to_formatting(formatting, images)
