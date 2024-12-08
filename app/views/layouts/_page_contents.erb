@@ -48,32 +48,3 @@
 
 <%= render layout: "layouts/footer" do %>
 <% end %>
-<script>
-  function waitForRender() {
-    const signalElement = document.getElementById("content-rendered-signal");
-
-    if (signalElement) {
-      const params = new URLSearchParams(window.location.search);
-      const sectionName = params.get("section_name");
-
-      if (sectionName) {
-        const sectionElement = document.getElementById(sectionName);
-
-        if (sectionElement) {
-          sectionElement.scrollIntoView({behavior: "smooth", block: "start"});
-        }
-      }
-    } else {
-      // Retry after a short delay if the signal element is not yet rendered
-      setTimeout(waitForRender, 50);
-    }
-  }
-
-  window.addEventListener("turbo:load", () => {
-    const params = new URLSearchParams(window.location.search);
-    const sectionName = params.get("section_name");
-
-    if (sectionName)
-      setTimeout(waitForRender, 750);
-  });
-</script>

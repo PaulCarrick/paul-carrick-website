@@ -1,5 +1,7 @@
 // /app/javascript/views/admin/image_files/index.js
 
+const apiUrl = "/api/v1/image_files/groups";
+
 function showVideoPlayer(src) {
   const videoPlayer = document.getElementById('videoPlayer');
   const videoElement = document.getElementById('videoElement');
@@ -42,4 +44,43 @@ function clearSort() {
     document.location.href = `${currentUrl.pathname}?${params.toString()}`;
   else
     document.location.href = currentUrl.pathname;
+}
+
+async function addToGroup(imageFileId) {
+  try {
+    // Fetch groups from the API
+    const response = await fetch(apiUrl);
+    if (!response.ok) throw new Error("Failed to fetch groups");
+    const groups = await response.json();
+
+    // Show popup and populate select
+    const group = prompt(
+      `Select a group:\n${Object.entries(groups)
+        .map(([group, max]) => `${group} (max: ${max})`)
+        .join("\n")}`
+    );
+    if (group && groups[group] !== undefined) {
+      const maxSlideOrder = groups[group];
+
+      // Update record via Rails
+      await fetch(`/admin/image_files/${imageFileId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector("[name='csrf-token']").content,
+        },
+        body: JSON.stringify({
+          image_file: {
+            group: group,
+            slide_order: maxSlideOrder + 1,
+          },
+        }),
+      });
+
+      // Reload page to reflect changes
+      location.reload();
+    }
+  } catch (error) {
+    alert("An error occurred: " + error.message);
+  }
 }

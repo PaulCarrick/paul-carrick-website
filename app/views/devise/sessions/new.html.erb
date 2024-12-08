@@ -1,4 +1,5 @@
 <!-- app/views/admin/devise/sessions/new.html.erb -->
+<%= javascript_include_tag 'views/devise/sessions/new' %>
 <% content_for :title, "paul-carrick.com - Administration" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
@@ -47,23 +48,6 @@
       </div>
   </div>
 </section>
-
-<script>
-  function togglePasswordVisibility() {
-    const passwordField = document.getElementById("password-field");
-    const toggleIcon = document.getElementById("toggle-password-icon");
-
-    if (passwordField.type === "password") {
-      passwordField.type = "text";
-      toggleIcon.classList.remove("fa-eye");
-      toggleIcon.classList.add("fa-eye-slash");
-    } else {
-      passwordField.type = "password";
-      toggleIcon.classList.remove("fa-eye-slash");
-      toggleIcon.classList.add("fa-eye");
-    }
-  }
-</script>
 
 <%= render layout: "layouts/footer" do %>
 <% end %>
