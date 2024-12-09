@@ -1,5 +1,5 @@
-<!-- app/views/admin/blogs/index.html.erb -->
-<%= javascript_include_tag 'views/admin/blogs/index' %>
+<!-- app/views/admin/blog_posts/index.html.erb -->
+<%= javascript_include_tag 'views/admin/blog_posts/index' %>
 <% content_for :title, "paul-carrick.com - Amin Dashboard - Blogs" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
@@ -7,13 +7,13 @@
 <%= render layout: "layouts/admin_menu" do %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-2">
-      <%= sortable_column('Author', 'author', "blogs") %>
+      <%= sortable_column('Author', 'author', "blog_posts") %>
     </div>
     <div class="col-2">
-      <%= sortable_column('Title', 'title', "blogs") %>
+      <%= sortable_column('Title', 'title', "blog_posts") %>
     </div>
     <div class="col-2">
-      <%= sortable_column('Posted', 'posted', "blogs") %>
+      <%= sortable_column('Posted', 'posted', "blog_posts") %>
     </div>
     <div class="col-5">
       Contents
@@ -23,7 +23,7 @@
     </div>
   </div>
   <div class="scrollable-container p-2">
-    <% @blogs.each do |blog| %>
+    <% @blog_posts.each do |blog| %>
       <div class="row">
         <div class="col-2">
           <%= blog.author %>
@@ -38,8 +38,8 @@
           <%= raw(Utilities.truncate_html(blog.content, 768)) %>
         </div>
         <div class="col-1" style="min-height: 2em;">
-          <% delete_path = admin_blog_path(blog).to_s + "/delete" %>
-          <%= action_links(blog, edit_admin_blog_path(blog), delete_path) %>
+          <% delete_path = admin_blog_post_path(blog).to_s + "/delete" %>
+          <%= action_links(blog, edit_admin_blog_post_path(blog), delete_path) %>
         </div>
       </div>
     <% end %>
@@ -67,12 +67,38 @@
     </div>
     <div class="row">
       <div class="col-2">
-        <%= link_to("New Blog", new_admin_blog_path, class: "btn btn-primary") %>
+        <%= link_to("New Blog", new_admin_blog_post_path, class: "btn btn-primary") %>
       </div>
       <div class="col-10">
       </div>
     </div>
   </div>
+  <%= search_form_for @q,
+                      url: admin_blog_posts_path,
+                      class: "mt-3 p-2 rounded-box",
+                      method: :get,
+                      local: true do |form| %>
+    <div class="row mt-2 mb-2">
+      <div class="col-1"><%= form.label :author_cont, "Author", class: "form-label" %></div>
+      <div class="col-4"><%= form.search_field :author_cont, style: "min-width: 100%;" %></div>
+      <div class="col-1"></div>
+      <div class="col-1"><%= form.label :title_cont, "Title", class: "form-label" %></div>
+      <div class="col-4"><%= form.search_field :title_cont, style: "min-width: 100%;" %></div>
+      <div class="col-1"></div>
+    </div>
+    <div class="row mt-2 mb-2">
+      <div class="col-1"><%= form.label :posted_cont, "Posted", class: "form-label" %></div>
+      <div class="col-4"><%= form.search_field :posted_cont, style: "min-width: 100%;" %></div>
+      <div class="col-1"></div>
+      <div class="col-1"><%= form.label :content_cont, "Contents", class: "form-label" %></div>
+      <div class="col-4"><%= form.search_field :content_cont, style: "min-width: 100%;" %></div>
+      <div class="col-1"></div>
+    </div>
+    <div>
+      <%= form.submit "Search Blogs", class: "btn btn-primary" %>
+      <%= link_to 'Clear Search', admin_blog_posts_path(clear_search: true), class: "btn btn-secondary" %>
+    </div>
+  <% end %>
 <% end %>
 
 <%= render layout: "layouts/footer" do %>

@@ -6,16 +6,16 @@
 
 <%= render layout: "layouts/admin_menu" do %>
   <div class="row border-bottom border-dark mb-2">
-    <div class="col-1">
+    <div class="col-2">
       <%= sortable_column('Name', 'name', "pages") %>
     </div>
-    <div class="col-1">
+    <div class="col-2">
       <%= sortable_column('Section', 'section', "pages") %>
     </div>
-    <div class="col-7">
+    <div class="col-4">
       <%= sortable_column('Title', 'title', "pages") %>
     </div>
-    <div class="col-1">
+    <div class="col-2">
       <%= sortable_column('Access', 'access', "pages") %>
     </div>
     <div class="col-2">
@@ -25,16 +25,16 @@
   <div class="scrollable-container p-2">
     <% @pages.each do |page| %>
       <div class="row">
-        <div class="col-1">
+        <div class="col-2">
           <%= page.name %>
         </div>
-        <div class="col-1">
+        <div class="col-2">
           <%= page.section %>
         </div>
-        <div class="col-7">
+        <div class="col-4">
           <%= page.title %>
         </div>
-        <div class="col-1">
+        <div class="col-2">
           <%= page.access %>
         </div>
         <div class="col-2" style="min-height: 2em;">
@@ -47,9 +47,9 @@
       <div class="col-2">
         <%= link_to("New page", new_admin_page_path, class: "btn btn-primary") %>
       </div>
-      <div class="col-6">
+      <div class="col-5">
       </div>
-      <div class="col-4 justify-content-end">
+      <div class="col-5 justify-content-end">
         <%= render 'shared/page_navigation' %>
       </div>
     </div>

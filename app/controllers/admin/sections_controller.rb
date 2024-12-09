@@ -1,131 +1,103 @@
-class Admin::SectionsController < ApplicationController
-  include Pagy::Backend
+# /app/controllers/admin/sections
 
-  before_action :set_section, only: %i[show edit update destroy]
+class Admin::SectionsController < Admin::AbstractAdminController
+  def initialize
+    super
 
-  def index
-    if params[:q].present?
-      session[:sections_search] = params[:q]
-    elsif session[:sections_search].present?
-      params[:q] = session[:sections_search]
-    else
-      session[:sections_search] = nil
-    end
-
-    @q = Section.ransack(params[:q]) # Initialize Ransack search object
-
-    if params[:sort].present?
-      session[:sections_sort] = params[:sort]
-    elsif session[:sections_sort].present?
-      params[:sort] = session[:sections_sort]
-    else
-      params[:sort] = nil
-    end
-
-    if params[:direction].present?
-      session[:sections_sort_direction] = params[:direction]
-    elsif session[:sections_sort_direction].present?
-      params[:direction] = session[:sections_sort_direction]
-    else
-      params[:direction] = nil
-    end
-
-    # Set default sort column and direction
-    sort_column = params[:sort].presence || "content_type"
-    sort_direction = params[:direction].presence || "asc"
-
-    # Safeguard against invalid columns and directions
-    sort_column = Section.column_names.include?(sort_column) ? sort_column : "content_type"
-    sort_direction = %w[asc desc].include?(sort_direction) ? sort_direction : "asc"
-
-    # Combine sorting and Ransack results
-    sorted_results = @q.result(distinct: true).order("#{sort_column} #{sort_direction}")
-
-    # Paginate the sorted results
-    @pagy, @sections = pagy(sorted_results, limit: 1)
-  end
-
-  def show
+    @page_limit = 1
+    @default_column = 'content_type'
+    @has_query = true
+    @has_sort = true
+    @sort_column = nil
+    @sort_direction = nil
+    @results = nil
+    @model_class = Section
   end
 
   def new
-    @section = Section.new
+    super
+
     @content_types = Section.distinct.pluck(:content_type)
   end
 
   def create
-    @section = Section.new(section_params)
+    begin
+      section = @model_class.new(get_params)
+      section.description = Utilities.pretty_print_html(section.description) if section.description.present?
+      section.formatting = Utilities.pretty_print_json(section.formatting, false) if section.formatting.present?
 
-    if @section&.description.present?
-      @section&.description = Utilities.pretty_print_html(@section.description)
-    end
+      section.save!
 
-    if @section&.formatting.present?
-      @section&.formatting = Utilities.pretty_print_json(@section.formatting, false)
-    end
-
-    if @section.save
       redirect_to admin_sections_path, notice: "Section created successfully."
-    else
-      render :new
+    rescue => e
+      render :new, notice: "Cannot save section (#{e.message}) please correct errors and resubmit"
     end
   end
 
   def edit
-    if @section&.description.present?
-      @section&.description = Utilities.pretty_print_html(@section.description)
-    end
+    super
 
-    if @section&.formatting.present?
-      @section&.formatting = Utilities.pretty_print_json(@section.formatting, false)
-    end
-
+    @model_name.description = Utilities.pretty_print_html(@model_name.description) if @model_name.description.present?
+    @model_name.formatting = Utilities.pretty_print_json(@model_name.formatting, false) if @model_name.formatting.present?
     @content_types = Section.distinct.pluck(:content_type)
   end
 
   def update
     @error_message = nil
-    data = section_params
-
-    if data[:description].present?
-      data[:description] = Utilities.pretty_print_html(data[:description])
-    end
-
-    if data[:formatting].present?
-      data[:formatting] = Utilities.pretty_print_json(data[:formatting], false)
-    end
+    data = get_params
+    data[:description] = Utilities.pretty_print_html(data[:description]) if data[:description].present?
+    data[:formatting] = Utilities.pretty_print_json(data[:formatting], false) if data[:formatting].present?
 
     begin
-      @section.update!(data)
+      @model_name.update!(data)
+
       redirect_to admin_sections_path, notice: "Section updated successfully."
     rescue => e
-      @content_types = Section.distinct.pluck(:content_type)
-      @error_message = @section.errors.full_messages.join(", ")
+      @content_types =  @model_name.distinct.pluck(:content_type)
+      @error_message = @model_name.errors.full_messages.join(", ")
       @error_message = e.message unless @error_message.present?
       @error_message = "There was an error updating the section: #{@error_message}"
       flash[:error] = @error_message
+
       render :edit, turbo: false
     end
   end
 
-  def destroy
-    @section.destroy
-    redirect_to admin_sections_path, notice: "Section deleted successfully."
-  end
-
   private
 
-  def set_section
-    @section = Section.find(params[:id])
-  end
+  def get_params
+    parameters = {}
 
-  def section_params
-    params.require(:section).permit(:content_type,
-                                    :section_name,
-                                    :section_order,
-                                    :image,
-                                    :link,
-                                    :formatting,
-                                    :description)
+    if params[:q].present? # Searching via ransack
+      parameters[:q] = params.require(:q).permit(:content_type_cont,
+                                                 :section_name_cont,
+                                                 :title_cont,
+                                                 :section_order_cont,
+                                                 :image_cont,
+                                                 :link_cont,
+                                                 :formatting_cont,
+                                                 :description_cont)
+    else
+      # Item
+      if params[:menu_item].present?
+        parameters = params.require(:menu_item).permit(:content_type,
+                                                       :section_name,
+                                                       :title,
+                                                       :section_order,
+                                                       :image,
+                                                       :link,
+                                                       :formatting,
+                                                       :description,
+                                                       :checksum)
+      else
+        # Get
+        parameters = params.permit(:sort,
+                                   :direction,
+                                   :clear_sort,
+                                   :clear_search)
+      end
+    end
+
+    parameters
   end
 end

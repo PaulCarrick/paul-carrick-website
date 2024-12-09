@@ -25,9 +25,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#index" # Admin dashboard
-    resources :blogs, except: [ :destroy ]
-    delete "/blogs/:id", to: "blogs#destroy", as: "delete_blog"
-    get "/blogs/:id/delete", to: "blogs#destroy", as: "destroy_blog"
+    resources :blog_posts, except: [ :destroy ]
+    delete "/blog_posts/:id", to: "blog_posts#destroy", as: "delete_blog_post"
+    get "/blog_posts/:id/delete", to: "blog_posts#destroy", as: "destroy_blog_post"
     resources :sections, except: [ :destroy ]
     delete "/sections/:id", to: "sections#destroy", as: "delete_section"
     get "/sections/:id/delete", to: "sections#destroy", as: "destroy_section"

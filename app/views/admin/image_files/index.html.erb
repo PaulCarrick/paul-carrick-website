@@ -8,12 +8,12 @@
   <div class="auto-size">
     <div class="row border-bottom border-dark mb-2">
       <div class="col-2"></div>
-      <div class="col-2"><%= sortable_column('Name', 'name', "image_files") %></div>
-      <div class="col-1"><%= sortable_column('Group', 'group', "image_files") %></div>
-      <div class="col-1"><%= sortable_column('Order', 'slide_order', "image_files") %></div>
-      <div class="col-2"><%= sortable_column('Caption', 'caption', "image_files") %></div>
-      <div class="col-2"><%= sortable_column('Description', 'description', "image_files") %></div>
-      <div class="col-2"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
+      <div class="col-2" style="font-size: 8pt"><%= sortable_column('Name', 'name', "image_files") %></div>
+      <div class="col-1" style="font-size: 8pt"><%= sortable_column('Group', 'group', "image_files") %></div>
+      <div class="col-1" style="font-size: 8pt"><%= sortable_column('Order', 'slide_order', "image_files") %></div>
+      <div class="col-1-and-a-half" style="font-size: 8pt"><%= sortable_column('Caption', 'caption', "image_files") %></div>
+      <div class="col-2-and-a-half" style="font-size: 8pt"><%= sortable_column('Description', 'description', "image_files") %></div>
+      <div class="col-2" style="font-size: 8pt"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
     </div>
     <div class="scrollable-container p-2" style="min-height: 90%">
       <% @image_files.each do |image_file| %>
@@ -21,11 +21,9 @@
           <div class="col-2">
             <% if image_file.image.attached? %>
               <% if image_file.mime_type === "video/mp4" %>
-                <%= image_tag(image_file.image_url,
-                              alt: image_file.name,
-                              class: "img-thumbnail",
-                              style: "max-width: 150px; max-height: 150px;",
-                              onclick: "showVideoPlayer(this.getAttribute('src'))")
+                <%= link_to(image_file.caption,
+                            '#',
+                            onclick: "showVideoPlayer(event, #{image_file.image_url}')")
                 %>
                 <div id="videoPlayer" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); z-index: 1000;">
                   <div style="position: relative; width: 80%; max-width: 800px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px;">
@@ -47,11 +45,11 @@
               <p>No image available</p>
             <% end %>
           </div>
-          <div class="col-2"><%= image_file.name %></div>
-          <div class="col-1"><%= image_file.group %></div>
-          <div class="col-1"><%= image_file.slide_order %></div>
-          <div class="col-2"><%= image_file.caption %></div>
-          <div class="col-2"><%= image_file.description.truncate(23) %></div>
+          <div class="col-2" style="font-size: 8pt"><%= image_file.name %></div>
+          <div class="col-1" style="font-size: 8pt"><%= image_file.group %></div>
+          <div class="col-1" style="font-size: 8pt"><%= image_file.slide_order %></div>
+          <div class="col-1-and-a-half" style="font-size: 8pt"><%= image_file.caption %></div>
+          <div class="col-1-and-a-half" style="font-size: 8pt"><%= image_file.description.truncate(75) %></div>
           <div class="col-2" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
             <button class="btn btn-link action-links" onclick="addToGroup(<%= image_file.id %>)">
@@ -94,6 +92,7 @@
       </div>
       <div>
         <%= form.submit "Search Images", class: "btn btn-primary" %>
+        <%= link_to 'Clear Search', admin_image_files_path(clear_search: true), class: "btn btn-secondary" %>
       </div>
     <% end %>
   </div>

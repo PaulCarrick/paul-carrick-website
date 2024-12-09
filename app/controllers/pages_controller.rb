@@ -155,8 +155,7 @@ class PagesController < ApplicationController
     if image_file&.image_url.present?
       video_tag = view_context.link_to(image_file.caption,
                                        '#',
-                                       class: "btn btn-link",
-                                       onclick: "showVideoPlayer(#{image_file.image_url}')")
+                                       onclick: "showVideoPlayer('#{image_file.image_url}')")
       content.description.gsub!(/VideoImage:\s*"(.+)"/, video_tag)
     end
   end

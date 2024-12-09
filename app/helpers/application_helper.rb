@@ -10,7 +10,7 @@ module ApplicationHelper
               "↓↑"
             end
 
-    # Generate the dynamic path helper (e.g., admin_blogs_path)
+    # Generate the dynamic path helper (e.g., admin_blog_posts_path)
     path_helper = "admin_#{model_path_name}_path"
     path = send(path_helper, sort: column, direction: current_direction)
 

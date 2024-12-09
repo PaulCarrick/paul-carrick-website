@@ -19,7 +19,7 @@
         </div>
         <div class="col-2" style="min-height: 1em;">
           <% delete_path = admin_section_path(section).to_s + "/delete" %>
-          <%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %>
+          <%= link_to 'Clear Sort', admin_sections_path(clear_sort: true) %>
           <%= action_links(section, edit_admin_section_path(section), delete_path) %>
         </div>
       </div>
@@ -143,7 +143,7 @@
     </div>
     <div>
       <%= form.submit "Search Sections", class: "btn btn-primary" %>
-      <%= link_to "Clear", '#', class: "btn btn-secondary ms-2", onclick: "clearSearchForm('sections_search_form')" %>
+      <%= link_to 'Clear Search', admin_sections_path(clear_search: true), class: "btn btn-secondary" %>
     </div>
   <% end %>
 <% end %>
