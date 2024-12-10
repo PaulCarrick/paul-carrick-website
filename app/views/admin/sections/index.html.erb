@@ -5,8 +5,9 @@
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
   <div class="auto-size p-2 border-bottom border-dark ">
-    <% @sections.each do |section| %>
+    <% controller.get_items.each do |section| %>
       <div class="row">
         <h4>Section</h4>
       </div>
@@ -19,7 +20,7 @@
         </div>
         <div class="col-2" style="min-height: 1em;">
           <% delete_path = admin_section_path(section).to_s + "/delete" %>
-          <%= link_to 'Clear Sort', admin_sections_path(clear_sort: true) %>
+          <%= link_to 'Clear Sort', admin_sections_path(clear_sort: true), class: "action-links" %>
           <%= action_links(section, edit_admin_section_path(section), delete_path) %>
         </div>
       </div>

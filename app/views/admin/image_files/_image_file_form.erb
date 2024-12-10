@@ -1,22 +1,25 @@
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{@image_file&.persisted? ? "Edit Image" : "New Image"}" %>
+<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item&.persisted? ? "Edit Image" : "New Image"}" %>
 <%= javascript_include_tag 'views/admin/image_files/edit' %>
 
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <%= form_with(model: @image_file,
-                url: @image_file&.persisted? ? admin_image_file_path(@image_file) : admin_image_files_path,
-                method: @image_file&.persisted? ? :patch : :post,
-                local: true) do |form| %>
+  <%= render 'shared/flash_error' %>
+  <%= form_with(model: controller.get_item,
+                url: controller.get_item&.persisted? ? admin_image_file_path(controller.get_item) : admin_image_files_path,
+                method: controller.get_item&.persisted? ? :patch : :post,
+                local: true,
+                html: { onsubmit: 'return validate(this)' }) do |form|
+  %>
     <div class="mb-3">
       <%= form.label :name, "Name*", class: "form-label" %>
-      <%= form.text_field :name, class: "form-control", required: true, placeholder: "Enter the name of the image." %>
+      <%= form.text_field :name, class: "form-control", required: true, readonly: controller.get_item&.persisted?, placeholder: "Enter the name of the image." %>
     </div>
 
     <div class="mb-3">
       <%= form.label :image, "Upload Image*" %>
-      <%= form.file_field :image, required: (!@image_file&.persisted? || !@image_file.image.attached?), class: "form-control" %>
+      <%= form.file_field :image, required: (!controller.get_item&.persisted? || !controller.get_item.image.attached?), class: "form-control" %>
     </div>
 
     <div class="mb-3">
@@ -64,7 +67,7 @@
 
     <div class="mb-3">
       <%= form.label :slide_order, "Slide Order", class: "form-label" %>
-      <%= form.number_field :slide_order, id: "slide-order-field", class: "form-control", step: 1, min: 1, max: 999, value: @image_file.slide_order || nil %>
+      <%= form.number_field :slide_order, id: "slide-order-field", class: "form-control", step: 1, min: 1, max: 999, value: controller.get_item.slide_order || nil %>
     </div>
 
     <div class="mb-3">
@@ -75,17 +78,21 @@
     <div>
       <div>
         <%= form.label :description, "Description", class: "form-label me-4" %>
-        <button type="button" id="toggle-editor" class="btn btn-link form-label pt-1" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw HTML</button>
+        <button type="button"
+                id="toggle-editor"
+                class="btn btn-link form-label pt-1"
+                style="max-width: 8em"
+                onclick="toggleEditor(this, 'rtf-editor', 'image_file_description', 'raw-editor', 'image_file_raw_description')">Raw HTML</button>
       </div>
 
       <!-- RTF Editor -->
       <div id="rtf-editor">
-        <%= form.rich_text_area :description, class: "form-control rtf-text-area", style: "max-height: 6em;", onblur: "checkHTML();" %>
+        <%= form.rich_text_area :description, class: "form-control rtf-text-area", style: "max-height: 6em;", onblur: "checkHtml(this);" %>
       </div>
 
       <!-- Raw Text Editor -->
       <div id="raw-editor" style="display: none;">
-        <%= form.text_area :description, class: "form-control", rows: 3, onblur: "checkHTML();" %>
+        <%= form.text_area :description, class: "form-control", rows: 3, onblur: "checkHtml(this);" %>
       </div>
     </div>
 

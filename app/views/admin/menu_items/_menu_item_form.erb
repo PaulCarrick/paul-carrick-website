@@ -1,12 +1,13 @@
 <!-- app/views/admin/menu_items/_menu_item_form.html.erb -->
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{@menu_item.persisted? ? "Edit Menu Item" : "New Menu Item"}" %>
+<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Menu Item" : "New Menu Item"}" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <%= form_with(model: @menu_item,
-                url: @menu_item.persisted? ? admin_menu_item_path(@menu_item) : admin_menu_items_path,
-                method: @menu_item.persisted? ? :patch : :post,
+  <%= render 'shared/flash_error' %>
+  <%= form_with(model: controller.get_item,
+                url: controller.get_item.persisted? ? admin_menu_item_path(controller.get_item) : admin_menu_items_path,
+                method: controller.get_item.persisted? ? :patch : :post,
                 local: true) do |form| %>
     <div class="mb-3">
       <%= form.label :menu_type, "Menu Type*", class: "form-label" %>
@@ -55,14 +56,14 @@
                             step: 1,
                             min: 1,
                             max: 999,
-                            value: @menu_item.menu_order || nil %>
+                            value: controller.get_item.menu_order || nil %>
     </div>
 
     <div class="mb-3">
       <%
         menus = [["", nil]]
 
-        @menus.each do |menu_item|
+        controller.get_unfiltered_items.each do |menu_item|
           menus << [
             menu_item.label,
             menu_item.id

@@ -5,6 +5,7 @@
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
   <div class="auto-size">
     <div class="row border-bottom border-dark mb-2">
       <div class="col-2"></div>
@@ -16,7 +17,7 @@
       <div class="col-2" style="font-size: 8pt"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
     </div>
     <div class="scrollable-container p-2" style="min-height: 90%">
-      <% @image_files.each do |image_file| %>
+      <% controller.get_items.each do |image_file| %>
         <div class="row">
           <div class="col-2">
             <% if image_file.image.attached? %>

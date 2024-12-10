@@ -5,6 +5,7 @@
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-2">
       <%= sortable_column('Author', 'author', "blog_posts") %>
@@ -23,7 +24,7 @@
     </div>
   </div>
   <div class="scrollable-container p-2">
-    <% @blog_posts.each do |blog| %>
+    <% controller.get_items.each do |blog| %>
       <div class="row">
         <div class="col-2">
           <%= blog.author %>

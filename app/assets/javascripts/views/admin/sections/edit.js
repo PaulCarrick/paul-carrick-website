@@ -35,8 +35,15 @@ function textToFormatting(text) {
 
 function validate(form) {
   const formattingField = form.querySelector('[name="section[formatting]"]');
-  const descriptionField = document.getElementById('rtf-editor')
-  let isValid = checkHtml(descriptionField);
+  const rtfEditor = document.getElementById('rtf-editor')
+  const rawEditor = document.getElementById('raw-editor')
+
+  if (getEditorModeFlag() === 'rtf') // Copy the text to both editors
+    rawEditor.value = rtfEditor.value;
+  else
+    rtfEditor.value = rawEditor.value;
+
+  let isValid = checkHtml(rawEditor);
 
   if (isValid) {
     const formatting = textToFormatting(formattingField.value);

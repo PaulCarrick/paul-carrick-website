@@ -2,41 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/blog_posts/index.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/views/shared/utilities.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/admin/abstract_admin_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/admin/blog_posts_controller.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/controllers/concerns/persistence.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/blogs/index.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/footer_items/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/footer_items/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/image_files/edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/image_files/edit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/image_files/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/image_files/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/menu_items/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/menu_items/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/pages/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/edit.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/edit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/pages/show.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/pages/show.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/admin/blogs_controller.rb" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/abstract_admin_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/abstract_admin_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/blog_posts_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/blog_posts_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/admin/footer_items_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/footer_items_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/admin/image_files_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/image_files_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/admin/menu_items_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/menu_items_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/admin/pages_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/pages_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/pages_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/pages_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/blog_post.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/blog_post.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/_blog_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/_blog_form.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/edit.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/blogs/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/footer_items/_footer_item_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/footer_items/_footer_item_form.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/footer_items/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/footer_items/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/pages/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/pages/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/menu_items/_menu_item_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/menu_items/_menu_item_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/menu_items/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/menu_items/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/_section_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,7 +263,7 @@
       <workItem from="1733489758618" duration="36919000" />
       <workItem from="1733578496606" duration="14998000" />
       <workItem from="1733602432158" duration="6658000" />
-      <workItem from="1733667826021" duration="42342000" />
+      <workItem from="1733667826021" duration="52854000" />
     </task>
     <servers />
   </component>

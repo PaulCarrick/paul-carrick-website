@@ -1,4 +1,14 @@
 // /app/assets/javascripts/views/shared/utilities
+let editor_mode = "rtf";
+
+function setEditorModeFlag(flag) {
+  editor_mode = flag;
+}
+
+function getEditorModeFlag() {
+  return editor_mode;
+}
+
 function setError(errorMessage) {
   const errorArea = document.getElementById('error-area');
 
@@ -98,19 +108,45 @@ function closeVideoPlayer() {
   videoPlayer.style.display = 'none';
 }
 
-function toggleEditor(button, rtfEditorId, rawEditorId) {
+function toggleEditor(button, rtfEditorContainerId, rtfEditorID, rawEditorContainerId, rawEditorId) {
+  const rtfEditorContainer = document.getElementById(rtfEditorContainerId);
+  const rtfEditor = document.getElementById(rtfEditorID);
+  const rawEditorContainer = document.getElementById(rawEditorContainerId);
+  const rawEditor = document.getElementById(rawEditorId);
+
+  if (!rtfEditorContainer || !rtfEditor || !rawEditorContainer || !rawEditor)
+    return;
+
+  if (getEditorModeFlag() === 'rtf') { // We are in RTF switching to raw
+    rawEditor.value = rtfEditor.value;
+    rtfEditorContainer.style.display = "none";
+    rawEditorContainer.style.display = "block";
+    button.textContent = "RTF Editor";
+
+    setEditorModeFlag('raw');
+  } else {// We are in Raw switching to RTF
+    rtfEditor.value = rawEditor.value;
+    rtfEditorContainer.style.display = "block";
+    rawEditorContainer.style.display = "none";
+    button.textContent = "Raw HTML";
+
+    setEditorModeFlag('rtf');
+  }
+}
+
+function validateEditor(rtfEditorId, rawEditorId) {
   const rtfEditor = document.getElementById(rtfEditorId);
   const rawEditor = document.getElementById(rawEditorId);
 
-  if (rtfEditor.style.display === "none") {
-    rtfEditor.style.display = "block";
-    rawEditor.style.display = "none";
-    button.textContent = "Raw HTML";
-  } else {
-    rtfEditor.style.display = "none";
-    rawEditor.style.display = "block";
-    button.textContent = "HTML";
-  }
+  if (!rtfEditor || !rawEditor)
+    return;
+
+  if (getEditorModeFlag() === 'raw') // We are in raw mode copy the data to the RTF
+    rtfEditor.value = rawEditor.value;
+
+  let isValid = checkHtml(rtfEditor);
+
+  return isValid;
 }
 
 function clearSort() {

@@ -4,7 +4,8 @@
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <%= form_with(model: @page, url: admin_page_path(@page), method: :patch, local: true) do |form| %>
+  <%= render 'shared/flash_error' %>
+  <%= form_with(model: controller.get_item, url: admin_page_path(controller.get_item), method: :patch, local: true) do |form| %>
     <div class="mb-3">
       <%= form.label :name, "Name*", class: "form-label" %>
       <%= form.text_field :name, class: "form-control", required: true, placeholder: "Enter the name of the page." %>

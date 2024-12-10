@@ -6,12 +6,10 @@ NO_COPY_FLAG=false
 for arg in "$@"; do
   if [ "$arg" = "INCLUDE_STORAGE" ]; then
     INCLUDE_STORAGE_FLAG=true
-    break
   fi
 
   if [ "$arg" = "NO_COPY" ]; then
     NO_COPY_FLAG=true
-    break
   fi
 done
 
@@ -32,7 +30,7 @@ if [ "$NO_COPY_FLAG" = "false" ]; then
     fi
 
     if [ "$INCLUDE_STORAGE_FLAG" = "true" ]; then
-        echo scp "${REMOTE_STORAGE_NAME}" "${HOME}"
+        scp "${REMOTE_STORAGE_NAME}" "${HOME}"
 
         if [ $? -ne 0 ]; then
           echo "Error: Failed to copy ${REMOTE_STORAGE_NAME} to ${HOME}"

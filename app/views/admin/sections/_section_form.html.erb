@@ -1,31 +1,14 @@
 <!-- app/views/admin/sections/_section_form.html.erb -->
 <%= javascript_include_tag 'views/admin/sections/edit' %>
-<% content_for :title, @section.persisted? ? "Edit Section" : "New Section" %>
+<% content_for :title, controller.get_item.persisted? ? "Edit Section" : "New Section" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <div id="error-area">
-    <% @error_displayed = false %>
-    <% flash.each do |key, message| %>
-      <% if key == "error" %>
-        <div class="alert alert-danger">
-          <%= message %>
-        </div>
-        <% @error_displayed = true %>
-      <% end %>
-    <% end %>
-
-    <% if !@error_displayed && @error_message.present? %>
-      <div class="alert alert-danger">
-        <%= @error_message %>
-      </div>
-    <% end %>
-  </div>
-
-  <%= form_with(model: @section,
-                url: @section.persisted? ? admin_section_path(@section) : admin_sections_path,
-                method: @section.persisted? ? :patch : :post,
+  <%= render 'shared/flash_error' %>
+  <%= form_with(model: controller.get_item,
+                url: controller.get_item.persisted? ? admin_section_path(controller.get_item) : admin_sections_path,
+                method: controller.get_item.persisted? ? :patch : :post,
                 local: true,
                 html: { onsubmit: 'return validate(this)' }) do |form| %>
     <div class="row">
@@ -54,7 +37,7 @@
         <%= form.label :section_order, "Section Order", class: "form-label" %>
       </div>
       <div class="col-2">
-        <%= form.number_field :section_order, class: "form-control", step: 1, min: 1, max: 999, value: @section.section_order || 1 %>
+        <%= form.number_field :section_order, class: "form-control", step: 1, min: 1, max: 999, value: controller.get_item.section_order || 1 %>
       </div>
       <div class="col-8">
       </div>
@@ -80,13 +63,17 @@
       <%= form.text_area :formatting,
                          class: "form-control",
                          rows: 7,
-                         value: @section.formatting_to_text
+                         value: controller.get_item.formatting_to_text
       %>
     </div>
     <div>
       <div>
         <%= form.label :description, "Description", class: "form-label me-4" %>
-        <button type="button" id="toggle-editor" class="btn btn-link form-label pt-1" style="max-width: 8em" onclick="toggleEditor(this, 'rtf-editor', 'raw-editor')">Raw HTML</button>
+        <button type="button"
+                id="toggle-editor"
+                class="btn btn-link form-label pt-1"
+                style="max-width: 8em"
+                onclick="toggleEditor(this, 'rtf-editor', 'section_description', 'raw-editor', 'section_raw_description')">Raw HTML</button>
       </div>
 
       <!-- RTF Editor -->
@@ -94,7 +81,7 @@
         <%= form.rich_text_area :description,
                                 id: "rtf-description",
                                 class: "form-control rtf-text-area",
-                                onblur: "checkHTML();" %>
+                                onblur: "checkHtml(this);" %>
       </div>
 
       <!-- Raw Text Editor -->
@@ -103,14 +90,14 @@
                            id: "raw-description",
                            class: "form-control",
                            rows: 9,
-                           onblur: "checkHTML();" %>
+                           onblur: "checkHtml(this);" %>
       </div>
     </div>
     <div class="mt-2 mb-2">
       * - Required Fields
     </div>
     <div class="mb-1">
-      <%= form.submit @section.persisted? ? "Update Section" : "Create Section", class: "btn btn-primary me-3" %>
+      <%= form.submit controller.get_item.persisted? ? "Update Section" : "Create Section", class: "btn btn-primary me-3" %>
       <%= link_to("Cancel", admin_sections_url, class: "btn btn-secondary") %>
     </div>
   <% end %>

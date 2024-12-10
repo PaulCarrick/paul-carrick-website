@@ -4,6 +4,7 @@
 <% end %>
 
 <div>
+  <%= render 'shared/flash_error' %>
   <h1 class="text-dark">Blog Entries</h1>
 
   <% @blog_posts.each do |blog_post| %>

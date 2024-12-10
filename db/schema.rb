@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_05_141425) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_10_170747) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -138,7 +138,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_05_141425) do
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "checksum", limit: 512
-    t.index ["content_type", "section_name", "section_order"], name: "index_sections_on_content_type_and_name_and_order", unique: true, where: "((section_name IS NOT NULL) AND (section_order IS NOT NULL))"
   end
 
   create_table "users", force: :cascade do |t|

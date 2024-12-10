@@ -6,9 +6,6 @@ class Admin::AbstractAdminController < ApplicationController
   include Pagy::Backend
   include Persistence
 
-  before_action :set_item, only: %i[ show edit update destroy ]
-  before_action :set_items, only: %i[ index ]
-
   def initialize
     if self.class == Admin::AbstractAdminController
       raise NotImplementedError, "#{self.class} is an abstract class and cannot be instantiated."
@@ -24,63 +21,143 @@ class Admin::AbstractAdminController < ApplicationController
     @sort_direction = nil
     @results = nil
     @model_class = controller_name.classify.constantize
+    @fields = @model_class.column_names
+                          .map(&:to_sym)
+                          .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
   end
 
   def index
+    begin
+      set_items
+    rescue => e
+      handle_error(:index, e)
+    end
   end
 
   def new
-    @model_class.new
+    begin
+      set_item(true)
+    rescue => e
+      handle_error(:index, e)
+    end
   end
 
   def create
-    result = @model_class.create(get_params)
+    begin
+      result = @model_class.create!(get_params)
 
-    if result.persisted?
-      redirect_to action: :index, notice: "#{controller_name.classify.constantize} created successfully."
-    else
-      redirect_to action: :new, notice: "Could not create #{controller_name.classify.constantize}."
+      if result.persisted?
+        redirect_to action: :index, notice: "#{controller_name.classify.constantize} created successfully."
+      else
+        raise("Could not create #{controller_name.classify.constantize}.")
+      end
+    rescue => e
+      handle_error(:new, e)
     end
   end
 
   def update
-    if @model_class.update(get_params)
-      redirect_to action: :index, notice: "#{controller_name.classify.constantize} updated successfully."
-    else
-      redirect_to action: :edit, notice: "Could not update #{controller_name.classify.constantize}, ID: #{get_params[:id]}."
+    begin
+      set_item
+
+      if get_record&.update(get_params)
+        redirect_to action: :index, notice: "#{controller_name.classify.constantize} updated successfully."
+      else
+        raise("Could not update #{controller_name.classify.constantize}, ID: #{params[:id]}.")
+      end
+    rescue => e
+      handle_error(:edit, e)
     end
   end
 
   def edit
+    begin
+      set_item
+    rescue => e
+      handle_error(:index, e)
+    end
   end
 
   def show
+    begin
+      set_item
+    rescue => e
+      handle_error(:index, e)
+    end
   end
 
   def destroy
-    result = self.destroy
+    begin
+      set_item
 
-    if result.destroyed?
-      redirect_to action: :index, notice: "#{controller_name.classify.constantize} deleted successfully."
-    else
-      redirect_to action: :index, notice: "Could not delete #{controller_name.classify.constantize}, ID: #{get_params[:id]}."
+      result = get_record&.destroy
+
+      if result.destroyed?
+        redirect_to action: :index, notice: "#{controller_name.classify.constantize} deleted successfully."
+      else
+        raise("Could not delete #{controller_name.classify.constantize}, ID: #{params[:id]}.")
+      end
+    rescue => e
+      handle_error(:index, e)
     end
+  end
+
+  def get_item
+    get_record
+  end
+
+  def get_items
+    get_records
+  end
+
+  def get_unfiltered_items
+    @model_class.all
   end
 
   private
 
-  def set_item
-    instance_variable_name = "@#{controller_name.singularize}"
+  def get_singular_record_name
+    "@_#{controller_name.singularize}"
+  end
 
-    instance_variable_set(instance_variable_name, @model_name.find(get_params[:id]))
+  def get_plural_record_name
+    "@_#{controller_name}"
+  end
+
+  def get_record
+    instance_variable_get(get_singular_record_name)
+  end
+
+  def get_records
+    instance_variable_get(get_plural_record_name)
+  end
+
+  def handle_error(action, e)
+    debugger if Rails.env == 'development' && ENV["PAUSE_ERRORS"]
+
+    @error_message = get_record&.errors&.full_messages&.join(", ")
+    @error_message = e&.message unless @error_message.present?
+    @error_message = "An error occurred." unless @error_message.present?
+    @error_message = "There was an error with the #{@model_class}: #{@error_message}"
+    flash[:error] = @error_message
+
+    redirect_to action: action, notice: "#{@error_message}) please correct any errors."
+  end
+
+  def set_item(create = false, create_params = {})
+    if create
+      @result = @model_class.new(create_params)
+    else
+      @result = @model_class.find(params[:id])
+    end
+
+    instance_variable_set(get_singular_record_name, @result)
   end
 
   def set_items
-    parameters = get_params
-    instance_variable_name = "@#{controller_name}"
     @results = []
-    @sort_column, @sort_direction = set_sorting(@default_column, parameters)
-    @q = set_search(parameters)
+    @sort_column, @sort_direction = set_sorting(@default_column, params.deep_dup)
+    @q = set_search(params.deep_dup)
 
     if @has_query && @q.present?
       if @has_sort && @sort_column.present? && @sort_direction.present?
@@ -107,10 +184,10 @@ class Admin::AbstractAdminController < ApplicationController
       end
     end
 
-    @results = instance_variable_set(instance_variable_name, @results)
+    @results = instance_variable_set(get_plural_record_name, @results)
   end
 
   def get_params
-    params
+    params.require(controller_name.singularize.to_sym).permit(@fields)
   end
 end

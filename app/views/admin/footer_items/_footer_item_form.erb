@@ -1,12 +1,13 @@
 <!-- app/views/admin/footer_items/_footer_item_form.html.erb -->
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{@footer_item.persisted? ? "Edit Footer Item" : "New Footer Item"}" %>
+<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Footer Item" : "New Footer Item"}" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
-  <%= form_with(model: @footer_item,
-                url: @footer_item.persisted? ? admin_footer_item_path(@footer_item) : admin_footer_items_path,
-                method: @footer_item.persisted? ? :patch : :post,
+  <%= render 'shared/flash_error' %>
+  <%= form_with(model: controller.get_item,
+                url: controller.get_item.persisted? ? admin_footer_item_path(controller.get_item) : admin_footer_items_path,
+                method: controller.get_item.persisted? ? :patch : :post,
                 local: true) do |form| %>
     <div class="mb-3">
       <%= form.label :label, "Label*", class: "form-label" %>
@@ -50,14 +51,14 @@
                             step: 1,
                             min: 1,
                             max: 999,
-                            value: @footer_item.footer_order || nil %>
+                            value: controller.get_item.footer_order || nil %>
     </div>
 
     <div class="mb-3">
       <%
         footers = [["", nil]]
 
-        @footer_items.each do |footer_item|
+        controller.get_items.each do |footer_item|
           footers << [
             footer_item.label,
             footer_item.id

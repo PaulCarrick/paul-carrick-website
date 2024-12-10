@@ -5,6 +5,7 @@
 <% end %>
 
 <%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-2">
       <%= sortable_column('Label', 'label', "footer_items") %>
@@ -20,7 +21,7 @@
     </div>
   </div>
   <div class="scrollable-container p-2">
-    <% @footer_items.each do |footer_item| %>
+    <% controller.get_items.each do |footer_item| %>
       <div class="row">
         <div class="col-2">
           <%= footer_item.label %>
