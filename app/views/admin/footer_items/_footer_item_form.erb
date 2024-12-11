@@ -58,7 +58,7 @@
       <%
         footers = [["", nil]]
 
-        controller.get_items.each do |footer_item|
+        controller.get_unfiltered_items.each do |footer_item|
           footers << [
             footer_item.label,
             footer_item.id

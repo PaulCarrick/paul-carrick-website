@@ -34,18 +34,11 @@ function textToFormatting(text) {
 }
 
 function validate(form) {
-  const formattingField = form.querySelector('[name="section[formatting]"]');
-  const rtfEditor = document.getElementById('rtf-editor')
-  const rawEditor = document.getElementById('raw-editor')
-
-  if (getEditorModeFlag() === 'rtf') // Copy the text to both editors
-    rawEditor.value = rtfEditor.value;
-  else
-    rtfEditor.value = rawEditor.value;
-
-  let isValid = checkHtml(rawEditor);
+debugger;
+  let isValid = validateEditor('rtf-description', 'raw-description')
 
   if (isValid) {
+    const formattingField = form.querySelector('[name="section[formatting]"]');
     const formatting = textToFormatting(formattingField.value);
 
     isValid = checkJSON(formattingField, formatting)

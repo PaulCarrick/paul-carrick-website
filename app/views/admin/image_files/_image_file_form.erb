@@ -82,17 +82,24 @@
                 id="toggle-editor"
                 class="btn btn-link form-label pt-1"
                 style="max-width: 8em"
-                onclick="toggleEditor(this, 'rtf-editor', 'image_file_description', 'raw-editor', 'image_file_raw_description')">Raw HTML</button>
+                onclick="toggleEditor(this, 'rtf-editor', 'rtf-description', 'raw-editor', 'raw-description')">Raw HTML</button>
       </div>
 
       <!-- RTF Editor -->
       <div id="rtf-editor">
-        <%= form.rich_text_area :description, class: "form-control rtf-text-area", style: "max-height: 6em;", onblur: "checkHtml(this);" %>
+        <%= form.rich_text_area :description,
+                                id: "rtf-description",
+                                class: "form-control rtf-text-area",
+                                onblur: "checkHtml(this);" %>
       </div>
 
       <!-- Raw Text Editor -->
       <div id="raw-editor" style="display: none;">
-        <%= form.text_area :description, class: "form-control", rows: 3, onblur: "checkHtml(this);" %>
+        <%= form.text_area :description,
+                           id: "raw-description",
+                           class: "form-control",
+                           rows: 9,
+                           onblur: "checkHtml(this);" %>
       </div>
     </div>
 

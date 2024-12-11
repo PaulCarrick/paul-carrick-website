@@ -9,8 +9,8 @@ class Admin::ImageFilesController < Admin::AbstractAdminController
     @has_query = true
     @has_sort = true
     @model_class = ImageFile
-    @fields = ImageFile.column_names
-                       .map(&:to_sym)
-                       .reject { |column| [ :id, :name, :created_at, :updated_at ].include?(column) }
+    @fields = %i[ image ] + ImageFile.column_names
+                                      .map(&:to_sym)
+                                      .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
   end
 end

@@ -1,11 +1,9 @@
 // /app/javascript/views/admin/image_files/index.js
 
-const apiUrl = "/api/v1/image_files/groups";
-
 async function addToGroup(imageFileId) {
   try {
     // Fetch groups from the API
-    const response = await fetch(apiUrl);
+    const response = await fetch( "/api/v1/image_files/groups");
     if (!response.ok) throw new Error("Failed to fetch groups");
     const groups = await response.json();
 

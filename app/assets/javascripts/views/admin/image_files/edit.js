@@ -54,15 +54,5 @@ function groupChanged() {
 }
 
 function validate(form) {
-  const rtfEditor = document.getElementById('rtf-editor')
-  const rawEditor = document.getElementById('raw-editor')
-
-  if (getEditorModeFlag() === 'rtf') // Copy the text to both editors
-    rawEditor.value = rtfEditor.value;
-  else
-    rtfEditor.value = rawEditor.value;
-
-  let isValid = checkHtml(rawEditor);
-
-  return isValid;
+  return validateEditor('rtf-description', 'raw-description');
 }

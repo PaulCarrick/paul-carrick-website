@@ -1,12 +1,12 @@
 // /app/assets/javascripts/views/shared/utilities
-let editor_mode = "rtf";
+var editorMode = "rtf";
 
 function setEditorModeFlag(flag) {
-  editor_mode = flag;
+  editorMode = flag;
 }
 
 function getEditorModeFlag() {
-  return editor_mode;
+  return editorMode;
 }
 
 function setError(errorMessage) {
@@ -108,43 +108,53 @@ function closeVideoPlayer() {
   videoPlayer.style.display = 'none';
 }
 
-function toggleEditor(button, rtfEditorContainerId, rtfEditorID, rawEditorContainerId, rawEditorId) {
-  const rtfEditorContainer = document.getElementById(rtfEditorContainerId);
-  const rtfEditor = document.getElementById(rtfEditorID);
-  const rawEditorContainer = document.getElementById(rawEditorContainerId);
+function copyEditorData(rtfEditorId, rawEditorId) {
+  const rtfEditor = document.getElementById(rtfEditorId);
   const rawEditor = document.getElementById(rawEditorId);
+  let result = false;
 
-  if (!rtfEditorContainer || !rtfEditor || !rawEditorContainer || !rawEditor)
-    return;
+  if (rtfEditor && rawEditor) {
+    if (getEditorModeFlag() === 'rtf')
+      rawEditor.value = rtfEditor.value;
+    else
+      rtfEditor.value = rawEditor.value;
+
+    result = true;
+  }
+
+  return result;
+}
+
+function toggleEditor(button, rtfEditorContainerId, rtfEditorId, rawEditorContainerId, rawEditorId) {
+  const rtfEditorContainer = document.getElementById(rtfEditorContainerId);
+  const rawEditorContainer = document.getElementById(rawEditorContainerId);
+  let result = copyEditorData(rtfEditorId, rawEditorId);
 
   if (getEditorModeFlag() === 'rtf') { // We are in RTF switching to raw
-    rawEditor.value = rtfEditor.value;
     rtfEditorContainer.style.display = "none";
     rawEditorContainer.style.display = "block";
     button.textContent = "RTF Editor";
 
     setEditorModeFlag('raw');
   } else {// We are in Raw switching to RTF
-    rtfEditor.value = rawEditor.value;
     rtfEditorContainer.style.display = "block";
     rawEditorContainer.style.display = "none";
     button.textContent = "Raw HTML";
 
     setEditorModeFlag('rtf');
   }
+
+  return result;
 }
 
 function validateEditor(rtfEditorId, rawEditorId) {
-  const rtfEditor = document.getElementById(rtfEditorId);
-  const rawEditor = document.getElementById(rawEditorId);
+  let isValid = copyEditorData(rtfEditorId, rawEditorId);
 
-  if (!rtfEditor || !rawEditor)
-    return;
+  if (isValid) {
+    const editorField = document.getElementById(rtfEditorId);
 
-  if (getEditorModeFlag() === 'raw') // We are in raw mode copy the data to the RTF
-    rtfEditor.value = rawEditor.value;
-
-  let isValid = checkHtml(rtfEditor);
+    isValid = checkHtml(editorField);
+  }
 
   return isValid;
 }
