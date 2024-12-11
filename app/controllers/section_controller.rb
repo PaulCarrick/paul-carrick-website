@@ -3,7 +3,7 @@ class SectionController < ApplicationController
 
   def index
     @q = Section.ransack(params[:q])
-    @pagy, @results = pagy(@q.result(distinct: true), limit: 5) # Paginate results
+    @pagy, @results = pagy(@q.result(distinct: true), limit: 3)
     @sections = []
     previous_order = nil
     previous_type = nil

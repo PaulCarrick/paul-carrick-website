@@ -34,7 +34,6 @@ function textToFormatting(text) {
 }
 
 function validate(form) {
-debugger;
   let isValid = validateEditor('rtf-description', 'raw-description')
 
   if (isValid) {

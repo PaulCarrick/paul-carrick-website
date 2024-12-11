@@ -24,25 +24,10 @@
       </div>
     <% end %>
     <div class="row pb-3">
-      <div class="col-11">
+      <div class="col-7">
       </div>
-      <div class="col-1 justify-content-end" width="100%">
-        <nav aria-label="Pagination">
-          <ul class="pagination justify-content-center">
-            <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
-              <%= link_to 'First', url_for(page: 1), class: 'page-link' %>
-            </li>
-            <li class="page-item <%= 'disabled' unless @pagy.prev %>">
-              <%= link_to 'Previous', url_for(page: @pagy.prev), class: 'page-link' %>
-            </li>
-            <li class="page-item <%= 'disabled' unless @pagy.next %>">
-              <%= link_to 'Next', url_for(page: @pagy.next), class: 'page-link' %>
-            </li>
-            <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
-              <%= link_to 'Last', url_for(page: @pagy.last), class: 'page-link' %>
-            </li>
-          </ul>
-        </nav>
+      <div class="col-5 justify-content-end">
+        <%= render 'shared/page_navigation' %>
       </div>
     </div>
   </div>
