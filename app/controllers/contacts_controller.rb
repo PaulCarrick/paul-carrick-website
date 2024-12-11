@@ -15,7 +15,7 @@ class ContactsController < ApplicationController
 
       ContactMailer.contact_email(@contact.name, @contact.email, @contact.phone, @contact.message).deliver_now
 
-      @contact.submit_information = "The contacts information was successfully sent."
+      @contact.submit_information = "The contact information was successfully sent."
       @contact.save!
 
       flash[:info] = @contact.submit_information
