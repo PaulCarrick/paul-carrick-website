@@ -10,6 +10,6 @@ window.addEventListener("load", () => {
 
       if (sectionElement)
         sectionElement.scrollIntoView({behavior: "smooth", block: "start"});
-    }, 500); // Delay in milliseconds
+    }, 750); // Delay in milliseconds
   }
 });
