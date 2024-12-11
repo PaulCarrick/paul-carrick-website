@@ -6,7 +6,9 @@ class ContactController < ApplicationController
   end
 
   def create
+debugger
     @contact_params = post_comment_params
+    @contact_params[:errors] = []
 
     unless verify_recaptcha(model: @contact_params)
       flash[:error] = "Recaptcha verification failed. Please try again."
