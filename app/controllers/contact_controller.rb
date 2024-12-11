@@ -8,11 +8,11 @@ class ContactController < ApplicationController
   def create
     @contact_params = post_comment_params
 
-    # Uncomment this block if using Recaptcha
-    # unless verify_recaptcha(model: @contact_params)
-    #   flash[:alert] = "Recaptcha verification failed. Please try again."
-    #   return redirect_to contact_url("failure", error: "Recaptcha verification failed")
-    # end
+    unless verify_recaptcha(model: @contact_params)
+      flash[:error] = "Recaptcha verification failed. Please try again."
+
+      return redirect_to contact_url("failure", error: "Recaptcha verification failed")
+    end
 
     begin
       # Send the email using ContactMailer
@@ -23,7 +23,7 @@ class ContactController < ApplicationController
         @contact_params[:message]
       ).deliver_now
 
-      flash[:info] = "The contact information was successfully sent."
+      flash[:info]  = "The contact information was successfully sent."
       redirect_path = contact_url("success")
 
       redirect_path.gsub!("http:", "https:")
@@ -42,9 +42,9 @@ class ContactController < ApplicationController
   def show
     @results = if params[:id] == "success"
                  "The contact information was successfully sent."
-    else
+               else
                  "The contact information could not be sent: #{params[:error]}."
-    end
+               end
   end
 
   private
