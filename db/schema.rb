@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_10_170747) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_11_163533) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -64,6 +64,17 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_10_170747) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.index ["author"], name: "index_blog_posts_on_author"
     t.index ["title"], name: "index_blog_posts_on_title"
+  end
+
+  create_table "contacts", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "message", null: false
+    t.string "phone"
+    t.string "submit_information"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.index ["name", "email", "phone", "message"], name: "index_contacts_on_name_email_phone_and_message"
   end
 
   create_table "footer_items", force: :cascade do |t|

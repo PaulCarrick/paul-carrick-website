@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   end
 
   resources :blog
-  resources :contact, only: [ :new, :create, :show ]
+  resources :contacts, only: [:new, :create, :show ]
   resources :image_files, only: [ :show ]
   resources :section, only: [ :index ]
   resources :search, only: [ :new ]
