@@ -1,6 +1,6 @@
 <!-- app/views/admin/blog_posts/_blog_form.html.erb -->
 <%= javascript_include_tag 'views/admin/blog_posts/edit' %>
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Blog" : "New Blog"}" %>
+<% content_for :title, "#{@site_information.site_name} - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Blog" : "New Blog"}" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 

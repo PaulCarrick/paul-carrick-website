@@ -1,5 +1,5 @@
 <!-- app/views/admin/footer_items/_footer_item_form.html.erb -->
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Footer Item" : "New Footer Item"}" %>
+<% content_for :title, "#{@site_information.site_name} - Admin Dashboard - #{controller.get_item.persisted? ? "Edit Footer Item" : "New Footer Item"}" %>
 <%= render layout: "layouts/header" do %>
 <% end %>
 

@@ -1,4 +1,4 @@
-<% content_for :title, "paul-carrick.com - Admin Dashboard - #{controller.get_item&.persisted? ? "Edit Image" : "New Image"}" %>
+<% content_for :title, "#{@site_information.site_name} - Admin Dashboard - #{controller.get_item&.persisted? ? "Edit Image" : "New Image"}" %>
 <%= javascript_include_tag 'views/admin/image_files/edit' %>
 
 <%= render layout: "layouts/header" do %>

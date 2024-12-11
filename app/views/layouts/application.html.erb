@@ -2,9 +2,9 @@
 <html>
 <head>
   <% if @page.present? %>
-    <title><%= "paul-carrick.com - #{@page.title}" %></title>
+    <title><%= "#{@site_information.site_name} - #{@page.title}" %></title>
   <% else %>
-    <title><%= "paul-carrick.com" %></title>
+    <title><%= @site_information.site_name %></title>
   <% end %>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
