@@ -1,7 +1,7 @@
 class ContactMailer < ApplicationMailer
   default to: "carrick.paul.jeffrey@gmail.com",
           from: "paul@paul-carrick.com",
-          subject: "New Contact Form Submission from #{@site_information.site_name}"
+          subject: "New Contact Form Submission from Paul-Carrick.com"
 
   def contact_email(name, email, phone, message)
     @sender_email = email
