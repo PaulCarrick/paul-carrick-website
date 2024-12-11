@@ -11,7 +11,7 @@ class ContactsController < ApplicationController
     begin
       @contact = Contact.create!(contact_params)
 
-      #      raise "Invalid Captcha." unless verify_recaptcha(model: @contact)
+      # raise "Invalid Captcha." unless verify_recaptcha(model: @contact)
 
       ContactMailer.contact_email(@contact.name, @contact.email, @contact.phone, @contact.message).deliver_now
 
