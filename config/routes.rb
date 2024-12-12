@@ -48,7 +48,7 @@ Rails.application.routes.draw do
     get "/footer_items/:id/delete", to: "footer_items#destroy", as: "destroy_footer_item"
   end
 
-  resources :blog
+  resources :blogs
   resources :contacts, only: [:new, :create, :show ]
   resources :image_files, only: [ :show ]
   resources :section, only: [ :index ]

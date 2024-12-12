@@ -1,15 +1,13 @@
-# app/controllers/blog_controller.rb
+# app/controllers/blogs_controller.rb
 # frozen_string_literal: true
 
 include HtmlSanitizer
 
-class BlogController < ApplicationController
+class BlogsController < ApplicationController
   def index
     @blog_type = params[:blog_type].present? ? params[:blog_type] : "Personal"
-    @contents = Section.where(content_type: "Blog").map do |section|
-      section.tap do |content|
-        content.description = sanitize_html(content.description)
-      end
+    @contents = BlogPost.where(blog_type:  @blog_type, visibility: 'Public').map do |blog|
+      blog.content = sanitize_html(blog.content)
     end
   end
 
@@ -17,7 +15,7 @@ class BlogController < ApplicationController
     @blog_type = params[:blog_type].present? ? params[:blog_type] : "Personal"
 
     if params[:id] == "latest"
-      @blog = BlogPost.where(blog_type:@blog_type).order(posted: 'desc').first
+      @blog = BlogPost.where(blog_type: @blog_type).order(posted: 'desc').first
       @blog.content = sanitize_html(@blog.content) if @blog.present?
 
       render "latest"
