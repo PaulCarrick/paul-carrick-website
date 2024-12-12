@@ -34,7 +34,7 @@ const PostEditor = ({ user, post, blog_type, closeEditor }) => {
         if (response.ok) {
           console.log('Post saved successfully!');
           closeEditor(); // Close the editor on success
-          window.location.href = '/blog'; // Redirect to the blog page
+          window.location.href = '/blogs'; // Redirect to the blogs page
         } else {
           console.error('Failed to save post');
         }

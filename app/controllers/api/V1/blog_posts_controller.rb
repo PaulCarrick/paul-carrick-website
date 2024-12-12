@@ -6,13 +6,13 @@ module Api
       before_action :set_blog, only: %i[show update destroy]
 
       def index
-        # Filter blog posts based on `visibility`
+        # Filter blogs posts based on `visibility`
         blog_posts = if params[:visibility].present?
                        if params[:visibility] == "Private"
                          if params[:blog_type].present?
-                           BlogPost.where(blog_type: params[:blog_type]) # Include all blog posts (Public, Private, and nil)
+                           BlogPost.where(blog_type: params[:blog_type]) # Include all blogs posts (Public, Private, and nil)
                          else
-                           BlogPost.all # Include all blog posts (Public, Private, and nil)
+                           BlogPost.all # Include all blogs posts (Public, Private, and nil)
                          end
                        else
                          if params[:blog_type].present?

@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/assets/javascripts/views/contacts/new.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/contacts/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/contacts/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/contacts/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/contacts/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/builds/application.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/builds/application.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/api/V1/blog_posts_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/api/V1/blog_posts_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/contacts_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/contacts_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/blogs/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/blogs/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/search/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/search/new.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +65,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/assets/javascripts/views/admin/blog_posts" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/models" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Ruby" />
@@ -77,18 +81,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/models" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/blog_posts" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/blogs" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/pages" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/footer_items" />
-      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/admin/menu_items" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/pages" />
+      <recent name="$PROJECT_DIR$/app/assets/javascripts/views/show" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts" />
       <recent name="$PROJECT_DIR$/app/views/section" />
       <recent name="$PROJECT_DIR$/app/assets/images/employment" />
-      <recent name="$PROJECT_DIR$/public" />
-      <recent name="$PROJECT_DIR$/app/assets/images/home" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.SlideShow.jsx">
@@ -255,7 +259,7 @@
       <workItem from="1733578496606" duration="14998000" />
       <workItem from="1733602432158" duration="6658000" />
       <workItem from="1733667826021" duration="78357000" />
-      <workItem from="1733924334289" duration="18569000" />
+      <workItem from="1733924334289" duration="31371000" />
     </task>
     <servers />
   </component>

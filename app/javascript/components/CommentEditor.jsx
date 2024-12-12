@@ -34,7 +34,7 @@ const CommentEditor = ({ user, post, comment, closeEditor }) => {
         if (response.ok) {
           console.log('Comment saved successfully!');
           closeEditor(); // Close the editor on success
-          // Redirect to the parent blog post or refresh comments
+          // Redirect to the parent blogs post or refresh comments
           window.location.href = `/blog`;
         } else {
           console.error('Failed to save comment');
