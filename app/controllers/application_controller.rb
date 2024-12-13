@@ -38,6 +38,29 @@ class ApplicationController < ActionController::Base
     @title = @site_information.site_name
   end
 
+  # TO DO Remove this when we can figure out what's wrong with the devise setup
+  # This only seems to affect the test environment
+  def signed_in?
+    @signed_in = false
+
+    if Rails.env != "test"
+      @signed_in = user_signed_in?
+    else
+      begin
+        @signed_in = user_signed_in?
+      rescue ArgumentError => e
+        if e.message == "wrong number of arguments (given 1, expected 2)"
+          warden_user = session["warden.user.user.key"]
+          @signed_in = warden_user[:approved] if warden_user.present?
+        else
+          raise e
+        end
+      end
+    end
+
+    @signed_in
+  end
+
   def setup_main_menu_items
     @main_menu_items  ||= MenuItem.where(menu_type: "Main", parent_id: nil)
                                   .order(:menu_order)

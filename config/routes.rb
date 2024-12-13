@@ -37,13 +37,13 @@ Rails.application.routes.draw do
     resources :users, except: [ :show, :destroy ]
     delete "/users/:id", to: "users#destroy", as: "delete_user"
     get "/users/:id/delete", to: "users#destroy", as: "destroy_user"
-    resources :image_files, except: [ :show, :destroy ]
+    resources :image_files, except: [ :destroy ]
     delete "/image_files/:id", to: "image_files#destroy", as: "delete_image_file"
     get "/image_files/:id/delete", to: "image_files#destroy", as: "destroy_image_file"
-    resources :menu_items, except: [ :show, :destroy ]
+    resources :menu_items, except: [ :destroy ]
     delete "/menu_items/:id", to: "menu_items#destroy", as: "delete_menu_item"
     get "/menu_items/:id/delete", to: "menu_items#destroy", as: "destroy_menu_item"
-    resources :footer_items, except: [ :show, :destroy ]
+    resources :footer_items, except: [ :destroy ]
     delete "/footer_items/:id", to: "footer_items#destroy", as: "delete_footer_item"
     get "/footer_items/:id/delete", to: "footer_items#destroy", as: "destroy_footer_item"
   end

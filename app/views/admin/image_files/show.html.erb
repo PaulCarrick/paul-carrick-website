@@ -1,0 +1,64 @@
+<!-- app/views/admin/pages/index.html.erb -->
+<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Pages" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
+  <div class="row mb-3">
+    <div class="col-2">
+      Name:
+    </div>
+    <div class="col-10">
+      <%= @image_file.name %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      caption:
+    </div>
+    <div class="col-10">
+      <%= @image_file.caption %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Description:
+    </div>
+    <div class="col-10">
+      <%= @image_file.description %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      MIME Type:
+    </div>
+    <div class="col-10">
+      <%= @image_file.mime_type %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Group:
+    </div>
+    <div class="col-10">
+      <%= @image_file.group %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Slide Order:
+    </div>
+    <div class="col-10">
+      <%= @image_file.slide_order %>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

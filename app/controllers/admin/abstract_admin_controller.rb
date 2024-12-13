@@ -47,7 +47,8 @@ class Admin::AbstractAdminController < ApplicationController
       result = @model_class.create!(get_params)
 
       if result.persisted?
-        redirect_to action: :index, notice: "#{controller_name.classify.constantize} created successfully."
+        flash[:notice] = "#{@model_class.name} created successfully."
+        redirect_to action: :index
       else
         raise("Could not create #{controller_name.classify.constantize}.")
       end
@@ -61,7 +62,8 @@ class Admin::AbstractAdminController < ApplicationController
       set_item
 
       if get_record&.update(get_params)
-        redirect_to action: :index, notice: "#{controller_name.classify.constantize} updated successfully."
+        flash[:notice] = "#{controller_name.classify.constantize} updated successfully."
+        redirect_to action: :index
       else
         raise("Could not update #{controller_name.classify.constantize}, ID: #{params[:id]}.")
       end
@@ -93,7 +95,8 @@ class Admin::AbstractAdminController < ApplicationController
       result = get_record&.destroy
 
       if result.destroyed?
-        redirect_to action: :index, notice: "#{controller_name.classify.constantize} deleted successfully."
+        flash[:notice] = "#{controller_name.classify.constantize} deleted successfully."
+        redirect_to action: :index
       else
         raise("Could not delete #{controller_name.classify.constantize}, ID: #{params[:id]}.")
       end
@@ -133,7 +136,7 @@ class Admin::AbstractAdminController < ApplicationController
   end
 
   def handle_error(action, e)
-    debugger if Rails.env == 'development' && ENV["PAUSE_ERRORS"]
+    debugger if ((Rails.env == 'development' || Rails.env == 'test')) && ENV["PAUSE_ERRORS"]
 
     @error_message = get_record&.errors&.full_messages&.join(", ")
     @error_message = e&.message unless @error_message.present?
@@ -141,7 +144,7 @@ class Admin::AbstractAdminController < ApplicationController
     @error_message = "There was an error with the #{@model_class}: #{@error_message}"
     flash[:error] = @error_message
 
-    redirect_to action: action, notice: "#{@error_message}) please correct any errors."
+    redirect_to action: action
   end
 
   def set_item(create = false, create_params = {})

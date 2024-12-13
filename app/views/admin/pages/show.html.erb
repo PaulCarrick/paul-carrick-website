@@ -1,0 +1,46 @@
+<!-- app/views/admin/pages/show.html.erb -->
+<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Pages" %>
+<%= render layout: "layouts/header" do %>
+<% end %>
+
+<%= render layout: "layouts/admin_menu" do %>
+  <%= render 'shared/flash_error' %>
+  <div class="row mb-3">
+    <div class="col-2">
+      Name:
+    </div>
+    <div class="col-10">
+      <%= @page.name %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Section:
+    </div>
+    <div class="col-10">
+      <%= @page.section %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Title:
+    </div>
+    <div class="col-10">
+      <%= @page.title %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-2">
+      Access:
+    </div>
+    <div class="col-10">
+      <%= @page.access %>
+    </div>
+  </div>
+<% end %>
+
+<%= render layout: "layouts/footer" do %>
+<% end %>

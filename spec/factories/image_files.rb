@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :image_file do
-    name { "test" }
+    sequence(:name) { |n| "Test Image - #{n}" }
     caption { "Test Image" }
     description { "This is a test image." }
     mime_type { "image/jpeg" }
