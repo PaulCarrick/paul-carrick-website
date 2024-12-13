@@ -77,14 +77,29 @@
      Everything looks good but something is happening under the covers.
      When this is figured out this code should be removed.
    */
-  document.querySelectorAll('.dropdown-item').forEach(item => {
-    item.addEventListener('click', (event) => {
-      window.location.href = event.target.href;
+
+  window.addEventListener("load", () => {
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', (event) => {
+        window.location.href = event.target.href;
+      });
     });
-  });
-  document.querySelectorAll('.nav-link').forEach(item => {
-    item.addEventListener('click', (event) => {
-      window.location.href = event.target.href;
+
+    document.querySelectorAll('.nav-link').forEach(item => {
+      item.addEventListener('click', (event) => {
+        window.location.href = event.target.href;
+      });
+    });
+
+    document.querySelectorAll("a").forEach(item => {
+      if (item.href.startsWith(window.location.origin + '/')) {
+        if (!item.onclick) {
+          item.addEventListener('click', (event) => {
+            event.preventDefault(); // Prevent the default link behavior
+            window.location.href = event.target.href; // Manually redirect
+          });
+        }
+      }
     });
   });
 </script>
