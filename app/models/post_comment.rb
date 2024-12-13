@@ -7,6 +7,7 @@ class PostComment < ApplicationRecord
   belongs_to :blog_post
 
   validates :title, :author, :posted, :content, presence: true
+  validate :content_is_valid
 
   def self.ransackable_attributes(auth_object = nil)
     %w[content]

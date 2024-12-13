@@ -68,8 +68,18 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
 
+  gem 'rspec-rails'
+  gem 'vcr'
+  gem 'webmock'
+  gem 'factory_bot_rails'
+  gem 'rails-controller-testing'
+
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+end
+
+group :test do
+  gem 'shoulda-matchers'
 end
 
 group :development do
