@@ -24,6 +24,9 @@ class Admin::AbstractAdminController < ApplicationController
     @fields = @model_class.column_names
                           .map(&:to_sym)
                           .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
+    @title = "#{get_site_information.site_name} - Admin Dashboard: #{controller_name.titleize}"
+
+    set_title(@title)
   end
 
   def index
@@ -47,10 +50,10 @@ class Admin::AbstractAdminController < ApplicationController
       result = @model_class.create!(get_params)
 
       if result.persisted?
-        flash[:notice] = "#{@model_class.name} created successfully."
+        flash[:notice] = "#{controller_name.singularize.titleize} created successfully."
         redirect_to action: :index
       else
-        raise("Could not create #{controller_name.classify.constantize}.")
+        raise("Could not create #{controller_name.singularize.titleize}.")
       end
     rescue => e
       handle_error(:new, e)
@@ -62,10 +65,10 @@ class Admin::AbstractAdminController < ApplicationController
       set_item
 
       if get_record&.update(get_params)
-        flash[:notice] = "#{controller_name.classify.constantize} updated successfully."
+        flash[:notice] = "#{controller_name.singularize.titleize} updated successfully."
         redirect_to action: :index
       else
-        raise("Could not update #{controller_name.classify.constantize}, ID: #{params[:id]}.")
+        raise("Could not update #{controller_name.singularize.titleize}, ID: #{params[:id]}.")
       end
     rescue => e
       handle_error(:edit, e)
@@ -95,14 +98,18 @@ class Admin::AbstractAdminController < ApplicationController
       result = get_record&.destroy
 
       if result.destroyed?
-        flash[:notice] = "#{controller_name.classify.constantize} deleted successfully."
+        flash[:notice] = "#{controller_name.singularize.titleize} deleted successfully."
         redirect_to action: :index
       else
-        raise("Could not delete #{controller_name.classify.constantize}, ID: #{params[:id]}.")
+        raise("Could not delete #{controller_name.singularize.titleize}, ID: #{params[:id]}.")
       end
     rescue => e
       handle_error(:index, e)
     end
+  end
+
+  def model_title
+    controller_name.singularize.titleize
   end
 
   def get_item

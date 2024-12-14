@@ -1,10 +1,5 @@
 <!-- app/views/admin/pages/index.html.erb -->
-<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Pages" %>
-<%= render layout: "layouts/header" do %>
-<% end %>
-
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-2">
       <%= sortable_column('Name', 'name', "pages") %>
@@ -39,7 +34,10 @@
         </div>
         <div class="col-2" style="min-height: 2em;">
           <% delete_path = admin_page_path(page).to_s + "/delete" %>
-          <%= action_links(page, edit_admin_page_path(page), delete_path) %>
+          <%= action_links(page,
+                           admin_page_path(page),
+                           edit_admin_page_path(page),
+                           delete_path) %>
         </div>
       </div>
     <% end %>
@@ -54,7 +52,4 @@
       </div>
     </div>
   </div>
-<% end %>
-
-<%= render layout: "layouts/footer" do %>
 <% end %>

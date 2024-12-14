@@ -1,10 +1,5 @@
 <!-- app/views/admin/sections/index.html.erb -->
-<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Sections" %>
-<%= render layout: "layouts/header" do %>
-<% end %>
-
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <div class="auto-size p-2 border-bottom border-dark ">
     <% controller.get_items.each do |section| %>
       <div class="row">
@@ -20,7 +15,10 @@
         <div class="col-2" style="min-height: 1em;">
           <% delete_path = admin_section_path(section).to_s + "/delete" %>
           <%= link_to 'Clear Sort', admin_sections_path(clear_sort: true), class: "action-links" %>
-          <%= action_links(section, edit_admin_section_path(section), delete_path) %>
+          <%= action_links(section,
+                           admin_section_path(section),
+                           edit_admin_section_path(section),
+                           delete_path) %>
         </div>
       </div>
       <div class="row">
@@ -146,7 +144,4 @@
       <%= link_to 'Clear Search', admin_sections_path(clear_search: true), class: "btn btn-secondary" %>
     </div>
   <% end %>
-<% end %>
-
-<%= render layout: "layouts/footer" do %>
 <% end %>

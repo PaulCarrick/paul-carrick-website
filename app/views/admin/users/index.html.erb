@@ -1,8 +1,4 @@
-<% content_for :title, "#{@site_information.site_name} - Admin Dashboard - Sections" %>
-
-<%= render "layouts/header" %>
-<%= render "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <div class="row mb-2">
     <h1>Manage Users</h1>
     <div class="row border-bottom border-dark mb-2">
@@ -44,7 +40,12 @@
               <%= user.roles.present? ? user.roles : "None" %>
             </div>
             <div class="col-2" style="min-height: 2em;">
-              <%= action_links(user, edit_admin_user_path(user), admin_destroy_user_path(user)) %>
+              <%= action_links(user,
+                               admin_user_path(user),
+                               edit_admin_user_path(user),
+                               admin_delete_user_path(user))
+              %>
+
             </div>
           </div>
         <% end %>
@@ -64,4 +65,3 @@
     </div>
   </div>
 <% end %>
-<%= render "layouts/footer" %>

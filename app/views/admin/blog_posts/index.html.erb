@@ -1,11 +1,6 @@
 <!-- app/views/admin/blog_posts/index.html.erb -->
 <%= javascript_include_tag 'views/admin/blog_posts/index' %>
-<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Blogs" %>
-<%= render layout: "layouts/header" do %>
-<% end %>
-
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <div class="row border-bottom border-dark mb-2">
     <div class="col-2">
       <%= sortable_column('Author', 'author', "blog_posts") %>
@@ -40,7 +35,7 @@
         </div>
         <div class="col-1" style="min-height: 2em;">
           <% delete_path = admin_blog_post_path(blog).to_s + "/delete" %>
-          <%= action_links(blog, edit_admin_blog_post_path(blog), delete_path) %>
+          <%= action_links(blog, admin_blog_post_path(blog), edit_admin_blog_post_path(blog), delete_path) %>
         </div>
       </div>
     <% end %>
@@ -75,10 +70,10 @@
     </div>
   </div>
   <%= search_form_for @q,
-                      url: admin_blog_posts_path,
-                      class: "mt-3 p-2 rounded-box",
+                      url:    admin_blog_posts_path,
+                      class:  "mt-3 p-2 rounded-box",
                       method: :get,
-                      local: true do |form| %>
+                      local:  true do |form| %>
     <div class="row mt-2 mb-2">
       <div class="col-1"><%= form.label :author_cont, "Author", class: "form-label" %></div>
       <div class="col-4"><%= form.search_field :author_cont, style: "min-width: 100%;" %></div>

@@ -68,6 +68,20 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.before(:each) do
+    Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
+  end
+
+  Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include FactoryBot::Syntax::Methods
+  config.include TrixEditorHelper, type: :system
+  config.include HtmlTools, type: :system
+  config.include Utilities, type: :system
 end
 
 Shoulda::Matchers.configure do |config|
@@ -75,19 +89,4 @@ Shoulda::Matchers.configure do |config|
     with.test_framework :rspec
     with.library :rails
   end
-end
-
-RSpec.configure do |config|
-  config.before(:each) do
-    Rails.application.routes.default_url_options[:host] = 'http://localhost:3000'
-  end
-end
-
-RSpec.configure do |config|
-  config.include Devise::Test::ControllerHelpers, type: :controller
-  config.include Devise::Test::IntegrationHelpers, type: :request
-end
-
-RSpec.configure do |config|
-  config.include FactoryBot::Syntax::Methods
 end

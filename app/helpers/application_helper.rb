@@ -18,10 +18,13 @@ module ApplicationHelper
     link_to "#{display_name} #{arrow}".html_safe, path, class: custom_class
   end
 
-  def action_links(resource, edit_path, delete_path = nil)
+  def action_links(resource, show_path, edit_path, delete_path = nil)
     delete_path ||= resource
     content_tag(:div, class: "action-links") do
       [
+        link_to("View",
+                show_path,
+                class: "btn-link me-2"),
         link_to("Edit",
                 edit_path,
                 class: "btn-link me-2"),

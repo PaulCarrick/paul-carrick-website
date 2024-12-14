@@ -7,6 +7,8 @@
     column_count += 1
   end
 
+  column_count = 1 if column_count == 0
+
   div_size = (12 / column_count).floor
   div_class = "col-lg-#{div_size}"
 %>

@@ -1,2 +1,4 @@
 <!-- app/views/admin/menu_item/new.html.erb -->
-<%= render :partial =>  "menu_item_form" %>
+<%= render layout: "layouts/admin_page" do %>
+  <%= render :partial => "menu_item_form" %>
+<% end %>

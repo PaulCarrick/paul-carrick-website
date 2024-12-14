@@ -7,6 +7,10 @@
           <%= message %>
         </div>
         <% @error_displayed = true %>
+      <% else %>
+        <div class="alert alert-info">
+          <%= message %>
+        </div>
       <% end %>
     <% end %>
 

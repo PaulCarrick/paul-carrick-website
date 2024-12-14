@@ -1,11 +1,8 @@
 <!-- app/views/admin/image_files/index.html.erb -->
 <% content_for :title, "#{@site_information.site_name} - Admin Dashboard - Image Files" %>
 <%= javascript_include_tag 'views/admin/image_files/index' %>
-<%= render layout: "layouts/header" do %>
-<% end %>
 
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <div class="auto-size">
     <div class="row border-bottom border-dark mb-2">
       <div class="col-2"></div>
@@ -56,7 +53,10 @@
             <button class="btn btn-link action-links" onclick="addToGroup(<%= image_file.id %>)">
               Add Group
             </button>
-            <%= action_links(image_file, edit_admin_image_file_path(image_file), delete_path) %>
+            <%= action_links(image_file,
+                             admin_image_file_path(image_file),
+                             edit_admin_image_file_path(image_file),
+                             delete_path) %>
           </div>
         </div>
       <% end %>
@@ -97,7 +97,4 @@
       </div>
     <% end %>
   </div>
-<% end %>
-
-<%= render layout: "layouts/footer" do %>
 <% end %>

@@ -1,31 +1,39 @@
-<!-- app/views/admin/pages/index.html.erb -->
+<!-- app/views/admin/pages/show.html.erb -->
 <%= render layout: "layouts/admin_page" do %>
   <% if controller.get_item&.present? %>
     <div class="row mb-3">
       <div class="col-1">
-        Label:
+        Content Type:
       </div>
       <div class="col-11">
-        <%= controller.get_item.label %>
+        <%= controller.get_item.content_type %>
       </div>
-    </div>
-
-    <div class="d-flex align-items-center col-11">
-      <% if controller.get_item.icon %>
-        <%= image_tag(controller.get_item.icon,
-                      alt:   "Icon",
-                      class: "me-3 bg-primary",
-                      style: "min-width: 40px;") %>
-      <% end %>
-      <%= controller.get_item.icon %>
     </div>
 
     <div class="row mb-3">
       <div class="col-1">
-        Options:
+        Section Name:
       </div>
       <div class="col-11">
-        <%= controller.get_item.options %>
+        <%= controller.get_item.section_name %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-1">
+        Section Order:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.section_order %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-1">
+        Image:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.image %>
       </div>
     </div>
 
@@ -40,28 +48,19 @@
 
     <div class="row mb-3">
       <div class="col-1">
-        Access:
+        Formatting:
       </div>
       <div class="col-11">
-        <%= controller.get_item.access %>
+        <%= controller.get_item.formatting %>
       </div>
     </div>
 
     <div class="row mb-3">
       <div class="col-1">
-        Footer Order:
+        Description:
       </div>
       <div class="col-11">
-        <%= controller.get_item.footer_order %>
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-1">
-        Parent:
-      </div>
-      <div class="col-11">
-        <%= controller.get_item.parent_id %>
+        <%= raw(controller.get_item.description) %>
       </div>
     </div>
   <% end %>

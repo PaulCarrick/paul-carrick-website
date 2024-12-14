@@ -1,11 +1,7 @@
 <% content_for :title, "#{@site_information.site_name} - Admin Dashboard - #{controller.get_item&.persisted? ? "Edit Image" : "New Image"}" %>
 <%= javascript_include_tag 'views/admin/image_files/edit' %>
 
-<%= render layout: "layouts/header" do %>
-<% end %>
-
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
+<%= render layout: "layouts/admin_page" do %>
   <%= form_with(model: controller.get_item,
                 url: controller.get_item&.persisted? ? admin_image_file_path(controller.get_item) : admin_image_files_path,
                 method: controller.get_item&.persisted? ? :patch : :post,
@@ -67,7 +63,12 @@
 
     <div class="mb-3">
       <%= form.label :slide_order, "Slide Order", class: "form-label" %>
-      <%= form.number_field :slide_order, id: "slide-order-field", class: "form-control", step: 1, min: 1, max: 999, value: controller.get_item.slide_order || nil %>
+      <%= form.number_field :slide_order,
+                            id: "slide-order-field",
+                            class: "form-control",
+                            step: 1, min: 1, max: 999,
+                            value: controller.get_item.slide_order || nil
+      %>
     </div>
 
     <div class="mb-3">
@@ -108,7 +109,4 @@
       <%= link_to("Cancel", admin_image_files_url, class: "btn btn-secondary") %>
     </div>
   <% end %>
-<% end %>
-
-<%= render layout: "layouts/footer" do %>
 <% end %>

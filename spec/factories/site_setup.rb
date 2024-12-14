@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :site_setup do
-    configuration_name { 'default'}
+    configuration_name { 'default' }
     site_name { 'Test' }
     site_domain { 'test.com' }
     site_host { 'test.com' }

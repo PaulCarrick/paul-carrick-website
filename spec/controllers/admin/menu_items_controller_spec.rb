@@ -74,7 +74,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         }.to change(MenuItem, :count).by(1)
 
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("MenuItem created successfully.")
+        expect(flash[:notice]).to eq("Menu Item created successfully.")
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         menu_item.reload
         expect(menu_item.label).to eq("Updated Menu Item")
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("MenuItem updated successfully.")
+        expect(flash[:notice]).to eq("Menu Item updated successfully.")
       end
     end
 
@@ -132,7 +132,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
       }.to change(MenuItem, :count).by(-1)
 
       expect(response).to redirect_to(action: :index)
-      expect(flash[:notice]).to eq("MenuItem deleted successfully.")
+      expect(flash[:notice]).to eq("Menu Item deleted successfully.")
     end
   end
 end

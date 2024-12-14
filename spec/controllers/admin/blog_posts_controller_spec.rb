@@ -83,7 +83,7 @@ RSpec.describe Admin::BlogPostsController, type: :controller do
         }.to change(BlogPost, :count).by(1)
 
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("BlogPost created successfully.")
+        expect(flash[:notice]).to eq("Blog Post created successfully.")
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe Admin::BlogPostsController, type: :controller do
         blog_post.reload
         expect(blog_post.title).to eq("Updated Blog Post")
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("BlogPost updated successfully.")
+        expect(flash[:notice]).to eq("Blog Post updated successfully.")
       end
     end
 
@@ -141,7 +141,7 @@ RSpec.describe Admin::BlogPostsController, type: :controller do
       }.to change(BlogPost, :count).by(-1)
 
       expect(response).to redirect_to(action: :index)
-      expect(flash[:notice]).to eq("BlogPost deleted successfully.")
+      expect(flash[:notice]).to eq("Blog Post deleted successfully.")
     end
   end
 end

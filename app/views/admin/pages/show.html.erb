@@ -1,46 +1,40 @@
 <!-- app/views/admin/pages/show.html.erb -->
-<% content_for :title, "#{@site_information.site_name} - Amin Dashboard - Pages" %>
-<%= render layout: "layouts/header" do %>
-<% end %>
+<%= render layout: "layouts/admin_page" do %>
+  <% if controller.get_item&.present? %>
+    <div class="row mb-3">
+      <div class="col-1">
+        Name:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.name %>
+      </div>
+    </div>
 
-<%= render layout: "layouts/admin_menu" do %>
-  <%= render 'shared/flash_error' %>
-  <div class="row mb-3">
-    <div class="col-2">
-      Name:
+    <div class="row mb-3">
+      <div class="col-1">
+        Section:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.section %>
+      </div>
     </div>
-    <div class="col-10">
-      <%= @page.name %>
-    </div>
-  </div>
 
-  <div class="row mb-3">
-    <div class="col-2">
-      Section:
+    <div class="row mb-3">
+      <div class="col-1">
+        Title:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.title %>
+      </div>
     </div>
-    <div class="col-10">
-      <%= @page.section %>
-    </div>
-  </div>
 
-  <div class="row mb-3">
-    <div class="col-2">
-      Title:
+    <div class="row mb-3">
+      <div class="col-1">
+        Access:
+      </div>
+      <div class="col-11">
+        <%= controller.get_item.access %>
+      </div>
     </div>
-    <div class="col-10">
-      <%= @page.title %>
-    </div>
-  </div>
-
-  <div class="row mb-3">
-    <div class="col-2">
-      Access:
-    </div>
-    <div class="col-10">
-      <%= @page.access %>
-    </div>
-  </div>
-<% end %>
-
-<%= render layout: "layouts/footer" do %>
+  <% end %>
 <% end %>

@@ -74,7 +74,7 @@ RSpec.describe Admin::FooterItemsController, type: :controller do
         }.to change(FooterItem, :count).by(1)
 
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("FooterItem created successfully.")
+        expect(flash[:notice]).to eq("Footer Item created successfully.")
       end
     end
 
@@ -104,7 +104,7 @@ RSpec.describe Admin::FooterItemsController, type: :controller do
         footer_item.reload
         expect(footer_item.label).to eq("Updated Footer Item")
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("FooterItem updated successfully.")
+        expect(flash[:notice]).to eq("Footer Item updated successfully.")
       end
     end
 
@@ -132,7 +132,7 @@ RSpec.describe Admin::FooterItemsController, type: :controller do
       }.to change(FooterItem, :count).by(-1)
 
       expect(response).to redirect_to(action: :index)
-      expect(flash[:notice]).to eq("FooterItem deleted successfully.")
+      expect(flash[:notice]).to eq("Footer Item deleted successfully.")
     end
   end
 end

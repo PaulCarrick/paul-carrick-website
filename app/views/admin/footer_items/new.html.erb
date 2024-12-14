@@ -1,2 +1,4 @@
 <!-- app/views/admin/footer_item/new.html.erb -->
-<%= render :partial =>  "footer_item_form" %>
+<%= render layout: "layouts/admin_page" do %>
+  <%= render :partial =>  "footer_item_form" %>
+<% end %>

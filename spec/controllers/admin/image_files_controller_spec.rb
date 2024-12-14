@@ -88,7 +88,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         }.to change(ImageFile, :count).by(1)
 
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("ImageFile created successfully.")
+        expect(flash[:notice]).to eq("Image File created successfully.")
       end
     end
 
@@ -118,7 +118,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         image_file.reload
         expect(image_file.name).to eq("Updated Image")
         expect(response).to redirect_to(action: :index)
-        expect(flash[:notice]).to eq("ImageFile updated successfully.")
+        expect(flash[:notice]).to eq("Image File updated successfully.")
       end
     end
 
@@ -146,7 +146,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
       }.to change(ImageFile, :count).by(-1)
 
       expect(response).to redirect_to(action: :index)
-      expect(flash[:notice]).to eq("ImageFile deleted successfully.")
+      expect(flash[:notice]).to eq("Image File deleted successfully.")
     end
   end
 end

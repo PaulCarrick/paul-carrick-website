@@ -11,6 +11,20 @@ class ApplicationController < ActionController::Base
   before_action :setup_footer_items
   before_action :setup_user
 
+  def get_site_information
+    setup_site unless @site_information.present?
+
+    return @site_information
+  end
+
+  def set_title(title)
+    @title = title
+  end
+
+  def get_title
+    @title
+  end
+
   private
 
   def setup_site
@@ -35,7 +49,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    @title = @site_information.site_name
+    @title = @site_information.site_name unless @title.present?
   end
 
   # TO DO Remove this when we can figure out what's wrong with the devise setup
