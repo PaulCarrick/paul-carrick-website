@@ -3,6 +3,14 @@
 # frozen_string_literal: true
 
 class ContactsController < ApplicationController
+  def initialize(...)
+    super
+
+    @title = "#{get_site_information.site_name} - Contact"
+
+    set_title(@title)
+  end
+
   def new
     @contact = Contact.new
   end
@@ -15,7 +23,7 @@ class ContactsController < ApplicationController
 
       ContactMailer.contact_email(@contact.name, @contact.email, @contact.phone, @contact.message).deliver_now
 
-      @contact.submit_information = "The contactapp/controllers/contacts_controller.rb information was successfully sent."
+      @contact.submit_information = "The contact information was successfully sent."
       @contact.save!
 
       flash[:info] = @contact.submit_information
