@@ -6,12 +6,12 @@
   <div class="auto-size">
     <div class="row border-bottom border-dark mb-2">
       <div class="col-2"></div>
-      <div class="col-2" style="font-size: 8pt"><%= sortable_column('Name', 'name', "image_files") %></div>
+      <div class="col-1" style="font-size: 8pt"><%= sortable_column('Name', 'name', "image_files") %></div>
       <div class="col-1" style="font-size: 8pt"><%= sortable_column('Group', 'group', "image_files") %></div>
       <div class="col-1" style="font-size: 8pt"><%= sortable_column('Order', 'slide_order', "image_files") %></div>
-      <div class="col-1-and-a-half" style="font-size: 8pt"><%= sortable_column('Caption', 'caption', "image_files") %></div>
-      <div class="col-2-and-a-half" style="font-size: 8pt"><%= sortable_column('Description', 'description', "image_files") %></div>
-      <div class="col-2" style="font-size: 8pt"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
+      <div class="col-2" style="font-size: 8pt"><%= sortable_column('Caption', 'caption', "image_files") %></div>
+      <div class="col-2" style="font-size: 8pt"><%= sortable_column('Description', 'description', "image_files") %></div>
+      <div class="col-3" style="font-size: 8pt"><%= link_to "Clear Sort", '#', class: "action-links", onclick: "clearSort()" %></div>
     </div>
     <div class="scrollable-container p-2" style="min-height: 90%">
       <% controller.get_items.each do |image_file| %>
@@ -43,12 +43,12 @@
               <p>No image available</p>
             <% end %>
           </div>
-          <div class="col-2" style="font-size: 8pt"><%= image_file.name %></div>
+          <div class="col-1" style="font-size: 8pt"><%= image_file.name %></div>
           <div class="col-1" style="font-size: 8pt"><%= image_file.group %></div>
           <div class="col-1" style="font-size: 8pt"><%= image_file.slide_order %></div>
-          <div class="col-1-and-a-half" style="font-size: 8pt"><%= image_file.caption %></div>
-          <div class="col-1-and-a-half" style="font-size: 8pt"><%= image_file.description.truncate(75) %></div>
-          <div class="col-2" style="min-height: 2em;">
+          <div class="col-2" style="font-size: 8pt"><%= image_file.caption %></div>
+          <div class="col-2" style="font-size: 8pt"><%= image_file.description.truncate(75) %></div>
+          <div class="col-3" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
             <button class="btn btn-link action-links" onclick="addToGroup(<%= image_file.id %>)">
               Add Group
@@ -76,19 +76,19 @@
                         method: :get,
                         local: true do |form| %>
       <div class="row mt-2 mb-2">
-        <div class="col-1"><%= form.label :name_cont, "Name", class: "form-label" %></div>
-        <div class="col-4"><%= form.search_field :name_cont, style: "min-width: 100%;" %></div>
+        <div class="col-2"><%= form.label :name_cont, "Name", class: "form-label" %></div>
+        <div class="col-3"><%= form.search_field :name_cont %></div>
         <div class="col-1"></div>
-        <div class="col-1"><%= form.label :group_cont, "Group", class: "form-label" %></div>
-        <div class="col-4"><%= form.search_field :group_cont, style: "min-width: 100%;" %></div>
+        <div class="col-2"><%= form.label :group_cont, "Group", class: "form-label" %></div>
+        <div class="col-3"><%= form.search_field :group_cont %></div>
         <div class="col-1"></div>
       </div>
       <div class="row mt-2 mb-2">
-        <div class="col-1"><%= form.label :caption_cont, "Caption", class: "form-label" %></div>
-        <div class="col-4"><%= form.search_field :caption_cont, style: "min-width: 100%;" %></div>
+        <div class="col-2"><%= form.label :caption_cont, "Caption", class: "form-label" %></div>
+        <div class="col-3"><%= form.search_field :caption_cont %></div>
         <div class="col-1"></div>
-        <div class="col-1"><%= form.label :description_cont, "Description", class: "form-label" %></div>
-        <div class="col-4"><%= form.search_field :description_cont, style: "min-width: 100%;" %></div>
+        <div class="col-2"><%= form.label :description_cont, "Description", class: "form-label" %></div>
+        <div class="col-3"><%= form.search_field :description_cont %></div>
         <div class="col-1"></div>
       </div>
       <div>

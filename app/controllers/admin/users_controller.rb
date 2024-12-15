@@ -6,6 +6,14 @@ class Admin::UsersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
   before_action :check_admin
 
+  def initialize(...)
+    super
+
+    @title = "#{get_site_information.site_name} - Admin Dashboard: Users"
+
+    set_title(@title)
+  end
+
   def check_admin
     redirect_to root_path, alert: "Access denied." unless current_user.admin?
   end

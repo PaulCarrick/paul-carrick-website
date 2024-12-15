@@ -41,32 +41,11 @@
     <% end %>
   </div>
   <div class="row">
-    <div class="col-9">
+    <div class="col-2">
+      <%= link_to("New Blog", new_admin_blog_post_path, class: "btn btn-primary") %>
     </div>
-    <div class="col-3 justify-content-end">
-      <nav aria-label="Pagination">
-        <ul class="pagination justify-content-center">
-          <li class="page-item <%= 'disabled' unless @pagy.page > 1 %>">
-            <%= link_to 'First', url_for(page: 1), class: 'page-link' %>
-          </li>
-          <li class="page-item <%= 'disabled' unless @pagy.prev %>">
-            <%= link_to 'Previous', url_for(page: @pagy.prev), class: 'page-link' %>
-          </li>
-          <li class="page-item <%= 'disabled' unless @pagy.next %>">
-            <%= link_to 'Next', url_for(page: @pagy.next), class: 'page-link' %>
-          </li>
-          <li class="page-item <%= 'disabled' unless @pagy.page < @pagy.last %>">
-            <%= link_to 'Last', url_for(page: @pagy.last), class: 'page-link' %>
-          </li>
-        </ul>
-      </nav>
-    </div>
-    <div class="row">
-      <div class="col-2">
-        <%= link_to("New Blog", new_admin_blog_post_path, class: "btn btn-primary") %>
-      </div>
-      <div class="col-10">
-      </div>
+    <div class="col-10 justify-content-end">
+      <%= render 'shared/page_navigation' %>
     </div>
   </div>
   <%= search_form_for @q,
@@ -75,20 +54,18 @@
                       method: :get,
                       local:  true do |form| %>
     <div class="row mt-2 mb-2">
-      <div class="col-1"><%= form.label :author_cont, "Author", class: "form-label" %></div>
-      <div class="col-4"><%= form.search_field :author_cont, style: "min-width: 100%;" %></div>
+      <div class="col-2"><%= form.label :author_cont, "Author", class: "form-label" %></div>
+      <div class="col-3"><%= form.search_field :author_cont %></div>
       <div class="col-1"></div>
-      <div class="col-1"><%= form.label :title_cont, "Title", class: "form-label" %></div>
-      <div class="col-4"><%= form.search_field :title_cont, style: "min-width: 100%;" %></div>
-      <div class="col-1"></div>
+      <div class="col-2"><%= form.label :title_cont, "Title", class: "form-label" %></div>
+      <div class="col-3"><%= form.search_field :title_cont %></div>
     </div>
     <div class="row mt-2 mb-2">
-      <div class="col-1"><%= form.label :posted_cont, "Posted", class: "form-label" %></div>
-      <div class="col-4"><%= form.search_field :posted_cont, style: "min-width: 100%;" %></div>
+      <div class="col-2"><%= form.label :posted_cont, "Posted", class: "form-label" %></div>
+      <div class="col-3"><%= form.search_field :posted_cont %></div>
       <div class="col-1"></div>
-      <div class="col-1"><%= form.label :content_cont, "Contents", class: "form-label" %></div>
-      <div class="col-4"><%= form.search_field :content_cont, style: "min-width: 100%;" %></div>
-      <div class="col-1"></div>
+      <div class="col-2"><%= form.label :content_cont, "Contents", class: "form-label" %></div>
+      <div class="col-3"><%= form.search_field :content_cont %></div>
     </div>
     <div>
       <%= form.submit "Search Blogs", class: "btn btn-primary" %>

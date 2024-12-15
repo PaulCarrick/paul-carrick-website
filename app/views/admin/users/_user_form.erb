@@ -22,7 +22,13 @@
 
   <div class="mb-3">
     <%= form.label :password, "Password*", class: "form-label" %>
-    <%= form.password_field :password, class: "form-control", required: true, placeholder: "Enter the password for the user." %>
+    <%= form.password_field :password,
+                            class: "form-control",
+                            required: !@user.persisted?,
+                            placeholder: @user.persisted? ?
+                                           "Leave blank to keep the current password." :
+                                           "Enter the password for the user." %>
+    %>
   </div>
 
   <div class="mb-3 form-check">
