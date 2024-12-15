@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   before_action :setup_site
   before_action :setup_main_menu_items
   before_action :setup_footer_items
-  before_action :setup_user
 
   def get_site_information
     setup_site unless @site_information.present?
@@ -23,6 +22,14 @@ class ApplicationController < ActionController::Base
 
   def get_title
     @title
+  end
+
+  def set_current_user(user)
+    @current_user = user if Rails.env == 'test' # Only for testing.
+  end
+
+  def get_current_user
+    @current_user
   end
 
   private
@@ -49,7 +56,7 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    @title = @site_information.site_name unless @title.present?
+    @title            = @site_information.site_name unless @title.present?
   end
 
   # TO DO Remove this when we can figure out what's wrong with the devise setup
@@ -59,18 +66,26 @@ class ApplicationController < ActionController::Base
 
     if Rails.env != "test"
       @signed_in = user_signed_in?
+
+      if @signed_in
+        @current_user ||= User.find(current_user.id)
+      end
     else
       begin
         @signed_in = user_signed_in?
+        @current_user = current_user
       rescue ArgumentError => e
         if e.message == "wrong number of arguments (given 1, expected 2)"
-          warden_user = session["warden.user.user.key"]
-          @signed_in = warden_user[:approved] if warden_user.present?
+          warden_user   = session["warden.user.user.key"]
+          @signed_in    = warden_user[:approved] if warden_user.present?
+          @current_user ||= User.find(warden_user[:id])
         else
           raise e
         end
       end
     end
+
+    @current_user ||= User.find_by(email: 'guest@paul-carrick.com')
 
     @signed_in
   end
@@ -87,7 +102,7 @@ class ApplicationController < ActionController::Base
                                   .references(:sub_items)
                                   .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
 
-    if user_signed_in?
+    if signed_in?
       @main_menu_items.each do |menu_item|
         next unless menu_item.link == "/users/sign_in"
 
@@ -105,17 +120,5 @@ class ApplicationController < ActionController::Base
                                 .includes(:sub_items)
                                 .references(:sub_items)
                                 .order("footer_items.footer_order", "sub_items_footer_items.footer_order")
-  end
-
-  def setup_user
-    @user = if user_signed_in?
-              user = User.find_by(email: current_user.email)
-
-              user.as_json.merge(logged_in: true) if user.present?
-            else
-              user = User.find_by(email: 'guest@paul-carrick.com')
-
-              user.as_json if user.present?
-            end
   end
 end

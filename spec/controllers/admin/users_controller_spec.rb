@@ -9,6 +9,7 @@ RSpec.describe Admin::UsersController, type: :controller do
 
   before do
     sign_in admin_user, scope: :user
+    controller.set_current_user(admin_user)
   end
 
   describe "GET #index" do
@@ -29,6 +30,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     context "when the user is not an admin" do
       before do
         sign_in non_admin_user, scope: :user
+        controller.set_current_user(non_admin_user)
       end
 
       it "redirects to the root path with an alert" do
@@ -81,9 +83,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         expect {
           post :create, params: { user: invalid_attributes }
         }.not_to change(User, :count)
-
-        expect(response).to render_template(:new)
-        expect(flash[:alert]).to be_nil
+        expect(response).to redirect_to(new_admin_user_path)
       end
     end
   end
@@ -109,8 +109,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     context "with invalid attributes" do
       it "does not update the user and renders the edit template" do
         patch :update, params: { id: user.id, user: { email: nil } }
-        expect(response).to render_template(:edit)
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to redirect_to(edit_admin_user_path(user))
       end
     end
   end

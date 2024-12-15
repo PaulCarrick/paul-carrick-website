@@ -81,7 +81,7 @@ RSpec.describe Section, type: :model do
 
       it "returns nil for invalid formatting JSON" do
         section = Section.new(content_type: "Test", formatting: "{invalid_json}")
-        expect { section.formatting_to_text }.to raise_error
+        expect { section.formatting_to_text }.to raise_error(JSON::ParserError)
       end
     end
 

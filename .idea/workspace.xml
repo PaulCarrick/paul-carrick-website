@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/users_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/users_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/users/sessions_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/users/sessions_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/devise/sessions/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_footer.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_footer.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/controllers/admin/dashboard_controller_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/controllers/admin/dashboard_controller_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/controllers/admin/users_controller_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/controllers/admin/users_controller_spec.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/system/admin_menu_items_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_menu_items_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +65,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/admin/image_files" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/app/views/admin/users" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Ruby" />
@@ -83,11 +81,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/views/admin/image_files" />
+      <recent name="$PROJECT_DIR$/app/views/admin/users" />
+      <recent name="$PROJECT_DIR$/app/views/admin/sections" />
+      <recent name="$PROJECT_DIR$/spec/system" />
       <recent name="$PROJECT_DIR$/app/views/admin/menu_items" />
-      <recent name="$PROJECT_DIR$/spec/controllers/admin" />
-      <recent name="$PROJECT_DIR$/app/views/admin/footer_items" />
-      <recent name="$PROJECT_DIR$/app/views/admin/blog_posts" />
+      <recent name="$PROJECT_DIR$/app/views/admin/image_files" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/spec/models" />
@@ -262,7 +260,7 @@
       <workItem from="1733602432158" duration="6658000" />
       <workItem from="1733667826021" duration="78357000" />
       <workItem from="1733924334289" duration="31371000" />
-      <workItem from="1734009303094" duration="61158000" />
+      <workItem from="1734009303094" duration="127773000" />
     </task>
     <servers />
   </component>
