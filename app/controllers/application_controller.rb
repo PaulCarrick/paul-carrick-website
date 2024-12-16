@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
   end
 
   def set_current_user(user)
-    @current_user = user if Rails.env == 'test' # Only for testing.
+    @application_user = user if Rails.env == 'test' # Only for testing.
   end
 
   def get_current_user
-    @current_user
+    @application_user
   end
 
   private
@@ -68,24 +68,24 @@ class ApplicationController < ActionController::Base
       @signed_in = user_signed_in?
 
       if @signed_in
-        @current_user ||= User.find(current_user.id)
+        @application_user ||= User.find(current_user.id)
       end
     else
       begin
         @signed_in = user_signed_in?
-        @current_user = current_user
+        @application_user = current_user
       rescue ArgumentError => e
         if e.message == "wrong number of arguments (given 1, expected 2)"
           warden_user   = session["warden.user.user.key"]
           @signed_in    = warden_user[:approved] if warden_user.present?
-          @current_user ||= User.find(warden_user[:id])
+          @application_user ||= User.find(warden_user[:id])
         else
           raise e
         end
       end
     end
 
-    @current_user ||= User.find_by(email: 'guest@paul-carrick.com')
+    @application_user ||= User.find_by(email: 'guest@paul-carrick.com')
 
     @signed_in
   end

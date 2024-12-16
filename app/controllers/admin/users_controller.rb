@@ -15,8 +15,8 @@ class Admin::UsersController < ApplicationController
   end
 
   def check_admin
-    if @current_user
-      redirect_to root_path, alert: "Access denied." unless @current_user.admin
+    if @application_user
+      redirect_to root_path, alert: "Access denied." unless @application_user.admin
     else
       redirect_to root_path, alert: "Access denied." unless current_user.admin?
     end
