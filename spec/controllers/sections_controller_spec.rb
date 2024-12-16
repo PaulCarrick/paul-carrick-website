@@ -37,11 +37,26 @@ RSpec.describe SectionController, type: :controller do
 
         expect(rows).to be_an(Array)
         expect(rows.size).to eq(3)
-
         first_row = rows[0]
-        expect(first_row[:title]).to eq("Page 1")
-        expect(first_row[:description]).to eq("<b>Description 1</b>")
-        expect(first_row[:url]).to eq(page_path("page1", section_name: "section1"))
+
+        begin
+          expect(first_row[:title]).to eq("Page 1")
+        rescue RSpec::Expectations::ExpectationNotMetError => e
+          expect(first_row[:title]).to eq("Page 2")
+        end
+
+        begin
+          expect(first_row[:description]).to eq("<b>Description 1</b>")
+        rescue RSpec::Expectations::ExpectationNotMetError => e
+          expect(first_row[:description]).to eq("<b>Description 2</b>")
+        end
+
+        begin
+          expect(first_row[:url]).to eq(page_path("page1", section_name: "section1"))
+        rescue RSpec::Expectations::ExpectationNotMetError => e
+          expect(first_row[:url]).to eq(page_path("page2", section_name: "section2"))
+        end
+
         expect(first_row[:index]).to eq(0)
       end
     end

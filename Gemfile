@@ -51,26 +51,21 @@ gem "thruster", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 gem "image_processing", "~> 1.2"
-
 gem "react-rails"
-
 gem 'pagy'
-
 gem 'htmlbeautifier'
-
 gem 'active_model_serializers'
-
 gem "byebug"
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem "brakeman", require: false
-
   gem 'rspec-rails'
   gem 'vcr'
   gem 'webmock'
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
+  gem 'faker'
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false

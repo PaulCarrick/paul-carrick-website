@@ -1,3 +1,21 @@
+def build_html_paragraphs(paragraph_count = 9)
+  styles = [
+    ->(p) { "<p>#{p}</p>\n" },
+    ->(p) { "<p><b>#{p}</b></p>\n" },
+    ->(p) { "<p><i>#{p}</i></p>\n" },
+    ->(p) { "<ul><li>#{p}</li></ul>\n" },
+    ->(p) { "<h1>#{p}</h1>" },
+    ->(p) { "<div class=\"fs-2\">#{p}</div>" },
+    ->(p) { "<div class=\"display-4\">#{p}</div>" },
+    ->(p) { "<div style=\"background: red\">#{p}</div>" },
+    ->(p) { "<div class=\"row\"><div class=\"col-6\">#{p}</div><div class=\"col-6\">#{p}</div></div>" }
+  ]
+
+  Faker::Lorem.paragraphs(number: paragraph_count).each_with_index.map do |paragraph, index|
+    styles[index % styles.length].call(paragraph)
+  end.join
+end
+
 FactoryBot.define do
   factory :section do
     content_type { "Test" }
@@ -7,5 +25,42 @@ FactoryBot.define do
     link { "/images/test.jpg" }
     formatting { '{ "row_style": "text-left" }' }
     description { "This is a test." }
+
+    # Traits
+    trait :plain_text do
+      content_type  { "text_page" }
+      section_name  { 'plain_text' }
+      section_order { nil }
+      image         { nil }
+      link          { nil }
+      formatting    { nil }
+      description   { Faker::Lorem.paragraphs(number: 5).join(". ") }
+    end
+
+    trait :plain_html do
+      content_type  { "html_page" }
+      section_name  { 'plain_html' }
+      section_order { nil }
+      image         { nil }
+      link          { nil }
+      formatting    { nil }
+
+      after(:build) do |section, evaluator|
+        section.description = build_html_paragraphs(9)
+      end
+    end
+
+    trait :text_left do
+      content_type  { "text_left" }
+      section_name  { 'text_left' }
+      section_order { nil }
+      image         { "ImageFile:paul-transparent" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-left", "image_classes": "col-4 mb-3", "text_classes": "col-8" }' }
+
+      after(:build) do |section, evaluator|
+        section.description = build_html_paragraphs(9)
+      end
+    end
   end
 end

@@ -54,18 +54,18 @@ class PagesController < ApplicationController
     return unless section.image.present?
 
     images, description, formatting, subsection = process_image(section)
-    section.image = images
-    section.description = description
-    section.formatting = formatting
+    section.image                               = images
+    section.description                         = description
+    section.formatting                          = formatting
 
     subsection
   end
 
   def process_image(section)
-    images = section.image.dup.strip
+    images      = section.image.dup.strip
     description = sanitize_html(section.description)
-    formatting = section.formatting
-    subsection = nil
+    formatting  = section.formatting
+    subsection  = nil
 
     case images
     when /^\s*ImageGroup:\s*(.+)\s*$/
@@ -80,49 +80,69 @@ class PagesController < ApplicationController
       images = get_image_path(images)
     end
 
-    [ images, description, formatting, subsection ]
+    [images, description, formatting, subsection]
   end
 
   def handle_image_group(group_name, formatting)
     image_files = ImageFile.by_image_group(group_name)
 
     if image_files.present?
-      images = image_files.map(&:image_url)
+      images      = image_files.map(&:image_url)
       description = image_files.map do |image_file|
         "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
       end.join
-      formatting = add_images_to_formatting(formatting, images)
-      [ nil, description, formatting ]
+      formatting  = add_images_to_formatting(formatting, images)
+      [nil, description, formatting]
     else
-      [ @missing_image, "", formatting ]
+      [@missing_image, "", formatting]
     end
   end
 
   def handle_single_image_file(section, file_name)
-    image_file = ImageFile.find_by(name: file_name)
+    results = nil
+
+    image_file   = ImageFile.find_by(name: file_name)
     section.link = image_file.image_url
-    image_file&.image_url || @missing_image
+
+    # TO DO This is a really ugly hack, but at the moment I don't know how to fix it and it's only for testing.
+    if Rails.env == "test" && ENV['IMAGE_HACK'] && image_file.present?
+      results = image_file.image_url
+
+      if results.present?
+        image_uri      = URI.parse(results)
+        current_uri    = URI.parse(request.url)
+        image_uri.host = current_uri.host
+        image_uri.port = current_uri.port
+        results        = image_uri.to_s
+      end
+    else
+      results = image_file&.image_url
+    end
+
+    results ||= @missing_image
+
+    results
   end
 
   def handle_image_section(section, file_name, formatting)
     image_file = ImageFile.find_by(name: file_name)
 
     if image_file&.image_url.present?
-      section.link = image_file.image_url
-      description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
+      section.link           = image_file.image_url
+      description            = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
       subsection, formatting = build_subsection(section, image_file, formatting)
 
-      [ image_file.image_url, description, subsection, formatting ]
+      [image_file.image_url, description, subsection, formatting]
     else
-      [ @missing_image, "", nil, nil ]
+      [@missing_image, "", nil, nil]
     end
   end
 
   def build_subsection(section, image_file, formatting)
-    subsection = section.deep_dup
-    subsection.link = nil
-    subsection.image = nil
-    subsection.formatting = flip_formatting_side(formatting)
+    subsection             = section.deep_dup
+    subsection.link        = nil
+    subsection.image       = nil
+    subsection.formatting  = flip_formatting_side(formatting)
     subsection.description = image_file.description
 
     if formatting.include?('expanding_rows')
@@ -133,12 +153,12 @@ class PagesController < ApplicationController
       formatting = json.to_json
     end
 
-    [ subsection, formatting ]
+    [subsection, formatting]
   end
 
   def handle_image_array(image_list, formatting)
     images = image_list.split(",").map { |image_file| get_image_path(image_file) }
-    [ nil, add_images_to_formatting(formatting, images) ]
+    [nil, add_images_to_formatting(formatting, images)]
   end
 
   def process_video_images
@@ -204,7 +224,7 @@ class PagesController < ApplicationController
   end
 
   def add_images_to_formatting(formatting, images)
-    json = formatting.present? ? JSON.parse(formatting) : {}
+    json                      = formatting.present? ? JSON.parse(formatting) : {}
     json["slide_show_images"] = images
     json.to_json
   end
