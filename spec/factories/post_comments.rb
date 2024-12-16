@@ -8,5 +8,3 @@ FactoryBot.define do
     content { "This is a test comment." }
   end
 end
-
-

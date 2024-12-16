@@ -130,4 +130,3 @@ RSpec.describe Admin::SectionsController, type: :controller do
     end
   end
 end
-

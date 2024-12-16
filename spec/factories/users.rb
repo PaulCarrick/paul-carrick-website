@@ -6,4 +6,3 @@ FactoryBot.define do
     admin { false }
   end
 end
-

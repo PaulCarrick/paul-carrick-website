@@ -66,7 +66,7 @@ RSpec.describe Section, type: :model do
     describe ".by_content_type" do
       it "returns sections by content type ordered by section_order" do
         result = Section.by_content_type("type1")
-        expect(result).to eq([section_1, section_2])
+        expect(result).to eq([ section_1, section_2 ])
         expect(result).not_to include(section_3)
       end
     end
@@ -102,7 +102,7 @@ RSpec.describe Section, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns ransackable attributes" do
-      expect(Section.ransackable_attributes).to eq(["content_type", "section_name", "image", "link", "description"])
+      expect(Section.ransackable_attributes).to eq([ "content_type", "section_name", "image", "link", "description" ])
     end
   end
 

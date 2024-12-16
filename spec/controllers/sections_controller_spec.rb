@@ -78,4 +78,3 @@ RSpec.describe SectionController, type: :controller do
     end
   end
 end
-

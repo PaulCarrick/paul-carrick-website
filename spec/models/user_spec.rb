@@ -60,7 +60,7 @@ RSpec.describe User, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns only ransackable attributes" do
-      expect(User.ransackable_attributes).to eq(["email", "name"])
+      expect(User.ransackable_attributes).to eq([ "email", "name" ])
     end
   end
 end

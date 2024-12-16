@@ -24,7 +24,7 @@ RSpec.describe Page, type: :model do
         result = Page.by_page_name("Page 1")
         expect(result).to include(page_1)
         expect(result).not_to include(page_2)
-        expect(result.first.sections).to eq([section_1, section_2])
+        expect(result.first.sections).to eq([ section_1, section_2 ])
       end
     end
 

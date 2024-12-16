@@ -9,5 +9,3 @@ FactoryBot.define do
     parent_id { nil }
   end
 end
-
-

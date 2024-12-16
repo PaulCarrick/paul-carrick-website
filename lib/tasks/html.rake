@@ -2,7 +2,7 @@
 
 namespace :html do
   desc "Cleanup HTML"
-  task :clean, [:interactive] => :environment do |t, args|
+  task :clean, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
 
     # Invoke subtasks with the interactive argument
@@ -28,7 +28,7 @@ namespace :html do
   end
 
   desc "Cleanup Sections HTML and JSON"
-  task :cleanup_sections_html_and_json, [:interactive] => :environment do |t, args|
+  task :cleanup_sections_html_and_json, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
     puts "Cleaning Sections with interactive mode: #{args[:interactive]}"
 
@@ -54,7 +54,7 @@ namespace :html do
   end
 
   desc "Cleanup Blogs HTML"
-  task :cleanup_blogs_html, [:interactive] => :environment do |t, args|
+  task :cleanup_blogs_html, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
     puts "Cleaning Blogs with interactive mode: #{args[:interactive]}"
 
@@ -76,7 +76,7 @@ namespace :html do
   end
 
   desc "Cleanup Post Comments HTML"
-  task :cleanup_comments_html, [:interactive] => :environment do |t, args|
+  task :cleanup_comments_html, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
     puts "Cleaning Comments with interactive mode: #{args[:interactive]}"
 
@@ -98,7 +98,7 @@ namespace :html do
   end
 
   desc "Cleanup Image File HTML"
-  task :cleanup_image_file_html, [:interactive] => :environment do |t, args|
+  task :cleanup_image_file_html, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
     puts "Cleaning Image Files with interactive mode: #{args[:interactive]}"
 

@@ -98,13 +98,13 @@ RSpec.describe ImageFile, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns only ransackable attributes" do
-      expect(ImageFile.ransackable_attributes).to eq(["name", "group", "caption", "description"])
+      expect(ImageFile.ransackable_attributes).to eq([ "name", "group", "caption", "description" ])
     end
   end
 
   describe ".ransackable_associations" do
     it "returns only ransackable associations" do
-      expect(ImageFile.ransackable_associations).to eq(["image_attachment", "image_blob"])
+      expect(ImageFile.ransackable_associations).to eq([ "image_attachment", "image_blob" ])
     end
   end
 end

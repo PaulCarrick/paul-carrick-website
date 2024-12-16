@@ -90,14 +90,13 @@ RSpec.describe BlogPost, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns only ransackable attributes" do
-      expect(BlogPost.ransackable_attributes).to eq(["author", "title", "posted", "content"])
+      expect(BlogPost.ransackable_attributes).to eq([ "author", "title", "posted", "content" ])
     end
   end
 
   describe ".ransackable_associations" do
     it "returns only ransackable associations" do
-      expect(BlogPost.ransackable_associations).to eq(["post_comments"])
+      expect(BlogPost.ransackable_associations).to eq([ "post_comments" ])
     end
   end
 end
-

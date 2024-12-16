@@ -29,6 +29,6 @@ class Contact < ActiveRecord::Base
       result = true
     end
 
-    return result
+    result
   end
 end

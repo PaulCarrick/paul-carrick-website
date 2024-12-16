@@ -100,7 +100,7 @@ RSpec.describe PostComment, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns only ransackable attributes" do
-      expect(PostComment.ransackable_attributes).to eq(["content"])
+      expect(PostComment.ransackable_attributes).to eq([ "content" ])
     end
   end
 end

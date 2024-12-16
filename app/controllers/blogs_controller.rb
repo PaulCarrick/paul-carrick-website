@@ -20,7 +20,7 @@ class BlogsController < ApplicationController
 
       render "latest"
 
-      return
+      nil
     else
       @blog = BlogPost.find(params[:id])
     end

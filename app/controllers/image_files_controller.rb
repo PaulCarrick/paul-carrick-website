@@ -10,7 +10,7 @@ class ImageFilesController < ApplicationController
 
       render "picture_of_the_day"
 
-      return
+      nil
     else
       set_image
     end

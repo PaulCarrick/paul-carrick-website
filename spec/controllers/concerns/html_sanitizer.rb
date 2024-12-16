@@ -74,4 +74,3 @@ RSpec.describe HtmlSanitizer do
     end
   end
 end
-

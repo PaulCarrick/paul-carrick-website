@@ -3,7 +3,7 @@ class Admin::UsersController < ApplicationController
   include Pagy::Backend
 
   #  before_action :authenticate_user! # Ensure only authenticated users can access
-  before_action :set_user, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [ :edit, :update, :destroy ]
   before_action :check_admin
 
   def initialize(...)

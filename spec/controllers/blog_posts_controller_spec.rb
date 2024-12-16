@@ -21,7 +21,7 @@ RSpec.describe BlogsController, type: :controller do
 
     it "sanitizes the content of public blogs for the given blog type" do
       get :index, params: { blog_type: "Personal" }
-      expect(assigns(:contents)).to eq(["<b>Content 1</b>", "<i>Content 2</i>"])
+      expect(assigns(:contents)).to eq([ "<b>Content 1</b>", "<i>Content 2</i>" ])
     end
 
     it "excludes private blogs from the contents" do

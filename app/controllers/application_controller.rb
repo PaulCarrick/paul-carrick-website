@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   def get_site_information
     setup_site unless @site_information.present?
 
-    return @site_information
+    @site_information
   end
 
   def set_title(title)

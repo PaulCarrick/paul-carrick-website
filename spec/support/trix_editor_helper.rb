@@ -4,4 +4,3 @@ module TrixEditorHelper
     page.execute_script("arguments[0].editor.insertString('#{with}')", trix_editor.native)
   end
 end
-

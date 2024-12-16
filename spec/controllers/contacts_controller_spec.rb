@@ -113,4 +113,3 @@ RSpec.describe ContactsController, type: :controller do
     end
   end
 end
-
