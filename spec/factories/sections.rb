@@ -62,5 +62,45 @@ FactoryBot.define do
         section.description = build_html_paragraphs(9)
       end
     end
+
+    trait :text_right do
+      content_type  { "text_right" }
+      section_name  { 'text_right' }
+      section_order { nil }
+      image         { "ImageFile:paul-transparent" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-right", "image_classes": "col-4 mb-3", "text_classes": "col-8" }' }
+
+      after(:build) do |section, evaluator|
+        section.description = build_html_paragraphs(9)
+      end
+    end
+
+    trait :text_top do
+      content_type  { "text_top" }
+      section_name  { 'text_top' }
+      section_order { nil }
+      image         { "ImageFile:paul-transparent" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-top" }' }
+
+      after(:build) do |section, evaluator|
+        section.description = build_html_paragraphs(9)
+      end
+    end
+
+    trait :text_bottom do
+      content_type  { "text_bottom" }
+      section_name  { 'text_bottom' }
+      section_order { nil }
+      image         { "ImageFile:paul-transparent" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-bottom" }' }
+      description   { Faker::Lorem.paragraphs(number: 5).join(". ") }
+
+      after(:build) do |section, evaluator|
+        section.description = build_html_paragraphs(9)
+      end
+    end
   end
 end

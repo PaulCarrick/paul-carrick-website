@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/spec/fixtures/files/WideBackyardPhoto.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spec/fixtures/files/lori.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spec/fixtures/files/paul-transparent.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spec/fixtures/files/paulandvirginia.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spec/fixtures/files/virginia-kings-canyon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/spec/system/pages_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/controllers/sections_controller_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/controllers/sections_controller_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/factories/image_files.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/factories/image_files.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/factories/sections.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/factories/sections.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/system/pages_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/pages_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -266,7 +260,9 @@
       <workItem from="1733602432158" duration="6658000" />
       <workItem from="1733667826021" duration="78357000" />
       <workItem from="1733924334289" duration="31371000" />
-      <workItem from="1734009303094" duration="146878000" />
+      <workItem from="1734009303094" duration="161950000" />
+      <workItem from="1734368236863" duration="2938000" />
+      <workItem from="1734389136492" duration="1636000" />
     </task>
     <servers />
   </component>
