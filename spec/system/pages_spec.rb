@@ -49,6 +49,7 @@ RSpec.describe "Pages", type: :system do
       rendered_html_normalized = Nokogiri::HTML.fragment(rendered_html).to_html
       expected_html_normalized = Nokogiri::HTML.fragment(expected_html).to_html
       expect(rendered_html_normalized).to eq(expected_html_normalized)
+      expect(page).to have_css('img.img-fluid')
     end
   end
 end
