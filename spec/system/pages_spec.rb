@@ -9,12 +9,14 @@ RSpec.describe "Pages", type: :system do
   let!(:text_right) { create(:page, name: "text_right_page", section: "text_right", title: "Text Right Page") }
   let!(:text_top) { create(:page, name: "text_top_page", section: "text_top", title: "Text Top Page") }
   let!(:text_bottom) { create(:page, name: "text_bottom_page", section: "text_bottom", title: "Text Bottom Page") }
+  let!(:image_section) { create(:page, name: "image_section_page", section: "image_section", title: "Image Section Page") }
   let!(:text_section) { create(:section, :plain_text) }
   let!(:html_section) { create(:section, :plain_html) }
   let!(:text_left_section) { create(:section, :text_left) }
   let!(:text_right_section) { create(:section, :text_right) }
   let!(:text_top_section) { create(:section, :text_top) }
   let!(:text_bottom_section) { create(:section, :text_bottom) }
+  let!(:image_section__section) { create(:section, :image_section) }
   let!(:paul_transparent) { create(:image_file, :paul_transparent) }
 
   before do
@@ -94,6 +96,14 @@ RSpec.describe "Pages", type: :system do
     before { visit page_path("text_bottom_page") }
 
     it "displays the text bottom page correctly" do
+      expect(page).to have_css('img.img-fluid')
+    end
+  end
+
+  describe "Renders a text bottom Page" do
+    before { visit page_path("image_section_page") }
+
+    it "displays the Image Section page correctly" do
       expect(page).to have_css('img.img-fluid')
     end
   end

@@ -102,5 +102,14 @@ FactoryBot.define do
         section.description = build_html_paragraphs(9)
       end
     end
+
+    trait :image_section do
+      content_type  { "image_section" }
+      section_name  { 'image_section' }
+      section_order { nil }
+      image         { "ImageSection:paul-transparent" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+    end
   end
 end
