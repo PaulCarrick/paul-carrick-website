@@ -46,10 +46,10 @@ class ApplicationController < ActionController::Base
 
       unless @site_information.present?
         @site_information = SiteSetup.new(configuration_name:    'default',
-                                          site_name:             'Paul Carrick',
-                                          site_domain:           'paul-carrick.com',
-                                          site_host:             'paul-carrick.com',
-                                          site_url:              'https://paul-carrick.com',
+                                          site_name:             'Example Site',
+                                          site_domain:           'example.com',
+                                          site_host:             'example.com',
+                                          site_url:              'https://example.com',
                                           header_background:     '#0d6efd',
                                           header_text_color:     '#f8f9fa',
                                           footer_background:     '#0d6efd',
@@ -57,13 +57,13 @@ class ApplicationController < ActionController::Base
                                           container_background:  '#f8f9fa',
                                           container_text_color:  '#000000',
                                           page_background_image: "none",
-                                          facebook_url:          'https://www.facebook.com/paul.j.carrick',
-                                          twitter_url:           'https://x.com/PaulJCarrick',
-                                          instagram_url:         'https://www.instagram.com/pauljcarrick/',
-                                          linkedin_url:          'https://www.linkedin.com/in/pauljcarrick/',
-                                          github_url:            'https://github.com/PaulCarrick',
-                                          owner_name:            'Paul Carrick',
-                                          copyright:             'Copyright © 2024 Paul Carrick all rights reserved')
+                                          facebook_url:          nil,
+                                          twitter_url:           nil,
+                                          instagram_url:         nil,
+                                          linkedin_url:          nil,
+                                          github_url:            nil,
+                                          owner_name:            'Anyone',
+                                          copyright:             'Copyright © 2024')
       end
     end
 
