@@ -1,8 +1,15 @@
 <header>
   <div class="bg-light">
     <nav class="header-bg navbar navbar-dark navbar-expand-lg py-4">
-      <div class="d-flex align-items-center header-bg container">
+      <div class="header-bg container">
         <!-- Brand Name -->
+        <%= link_to @site_information.site_name,
+                    root_path,
+                    target: "_self",
+                    class: "fs-2 fw-bold header-text nav-link text-uppercase",
+                    style: "margin-top: 3px"
+        %>
+
         <!-- Toggler Button for Hamburger Menu -->
         <%= button_tag type:  "button",
                        class: "navbar-toggler",
@@ -14,14 +21,6 @@
         <!-- Collapsible Menu -->
         <div class="header-bg collapse navbar-collapse" id="navbarNav">
           <ul class="header-bg ms-auto navbar-nav">
-            <li class="header-bg">
-              <%= link_to @site_information.site_name,
-                          root_path,
-                          target: "_self",
-                          class: "fs-2 fw-bold header-text nav-link text-uppercase",
-                          style: "margin-top: 3px"
-              %>
-            </li>
             <% @main_menu_items.each_with_index do |menu_item, index| %>
               <% next if menu_item.access == 'admin' && !controller.current_user_is_admin? %>
               <li class="header-bg nav-item">

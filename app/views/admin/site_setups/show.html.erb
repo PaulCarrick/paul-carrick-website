@@ -1,0 +1,175 @@
+<!-- app/views/admin/site_setups/show.html.erb -->
+<%= render layout: "layouts/admin_page" do %>
+  <% if controller.get_item&.present? %>
+    <div class="row mb-3">
+      <div class="col-2">
+        Configuration Name
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.configuration_name %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Site Owner
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.owner_name %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Site Name
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.site_name %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Site Domain
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.site_domain %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Site Host
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.site_host %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Site URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.site_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Header Background Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.header_background %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Header Text Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.header_text_color %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Footer Background Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.footer_background %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Footer Text Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.footer_text_color %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Container Background Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.container_background %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Container Text Color
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.container_text_color %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Page Background Image
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.page_background_image %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Facebook URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.facebook_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Twitter URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.twitter_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Instagram URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.instagram_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        LinkedIn URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.linkedin_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        GitHub URL
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.github_url %>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-2">
+        Copyright
+      </div>
+      <div class="col-10">
+        <%= controller.get_item.copyright %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
