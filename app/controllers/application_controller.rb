@@ -32,6 +32,10 @@ class ApplicationController < ActionController::Base
     @application_user
   end
 
+  def current_user_is_admin?
+    signed_in? && @application_user.admin?
+  end
+
   private
 
   def setup_site
@@ -41,18 +45,25 @@ class ApplicationController < ActionController::Base
       @site_information = SiteSetup.first
 
       unless @site_information.present?
-        @site_information = SiteSetup.new(configuration_name: 'default',
-                                          site_name:          'Paul Carrick',
-                                          site_domain:        'paul-carrick.com',
-                                          site_host:          'paul-carrick.com',
-                                          site_url:           'https://paul-carrick.com',
-                                          facebook_url:       'https://www.facebook.com/paul.j.carrick',
-                                          twitter_url:        'https://x.com/PaulJCarrick',
-                                          instagram_url:      'https://www.instagram.com/pauljcarrick/',
-                                          linkedin_url:       'https://www.linkedin.com/in/pauljcarrick/',
-                                          github_url:         'https://github.com/PaulCarrick',
-                                          owner_name:         'Paul Carrick',
-                                          copyright:          'Copyright © 2024 Paul Carrick all rights reserved')
+        @site_information = SiteSetup.new(configuration_name:    'default',
+                                          site_name:             'Paul Carrick',
+                                          site_domain:           'paul-carrick.com',
+                                          site_host:             'paul-carrick.com',
+                                          site_url:              'https://paul-carrick.com',
+                                          header_background:     '#0d6efd',
+                                          header_text_color:     '#f8f9fa',
+                                          footer_background:     '#0d6efd',
+                                          footer_text_color:     '#f8f9fa',
+                                          container_background:  '#f8f9fa',
+                                          container_text_color:  '#000000',
+                                          page_background_image: "none",
+                                          facebook_url:          'https://www.facebook.com/paul.j.carrick',
+                                          twitter_url:           'https://x.com/PaulJCarrick',
+                                          instagram_url:         'https://www.instagram.com/pauljcarrick/',
+                                          linkedin_url:          'https://www.linkedin.com/in/pauljcarrick/',
+                                          github_url:            'https://github.com/PaulCarrick',
+                                          owner_name:            'Paul Carrick',
+                                          copyright:             'Copyright © 2024 Paul Carrick all rights reserved')
       end
     end
 
@@ -72,12 +83,12 @@ class ApplicationController < ActionController::Base
       end
     else
       begin
-        @signed_in = user_signed_in?
+        @signed_in        = user_signed_in?
         @application_user = current_user
       rescue ArgumentError => e
         if e.message == "wrong number of arguments (given 1, expected 2)"
-          warden_user   = session["warden.user.user.key"]
-          @signed_in    = warden_user[:approved] if warden_user.present?
+          warden_user       = session["warden.user.user.key"]
+          @signed_in        = warden_user[:approved] if warden_user.present?
           @application_user ||= User.find(warden_user[:id])
         else
           raise e
@@ -101,13 +112,38 @@ class ApplicationController < ActionController::Base
                                   .includes(:sub_items)
                                   .references(:sub_items)
                                   .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
+    @footer_items     ||= FooterItem.where(parent_id: nil)
+                                    .order(:footer_order)
+                                    .includes(:sub_items)
+                                    .references(:sub_items)
+                                    .order("footer_items.footer_order", "footer_items.footer_order")
 
     if signed_in?
       @main_menu_items.each do |menu_item|
-        next unless menu_item.link == "/users/sign_in"
+        next unless menu_item.link&.strip == "/users/sign_in"
 
         menu_item.label = "logout"
-        menu_item.link  = "/users/sign_out|delete"
+        menu_item.icon  = "/images/no-keys.svg"
+        menu_item.link  = "/users/sign_out"
+        break
+      end
+
+      @footer_items.each do |footer_item|
+        footer_item.sub_items.each do |sub_item|
+          next unless sub_item.link&.strip == "/users/sign_in"
+
+          sub_item.label = "logout"
+          sub_item.icon  = "/images/no-keys.svg"
+          sub_item.link  = "/users/sign_out"
+
+          break
+        end
+
+        next unless footer_item.link&.strip == "/users/sign_in"
+
+        footer_item.label = "logout"
+        footer_item.icon  = "/images/no-keys.svg"
+        footer_item.link  = "/users/sign_out"
 
         break
       end

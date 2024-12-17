@@ -1,8 +1,10 @@
 <!-- app/views/admin/menu_items/_menu_item_form.html.erb -->
+<%= javascript_include_tag 'views/admin/menu_items/edit' %>
 <%= form_with(model:  controller.get_item,
               url:    controller.get_item.persisted? ? admin_menu_item_path(controller.get_item) : admin_menu_items_path,
               method: controller.get_item.persisted? ? :patch : :post,
-              local:  true) do |form| %>
+              local:  true,
+              html: { onsubmit: 'return validate(this)' }) do |form| %>
 
   <h1>
     <% if controller.get_item&.persisted? %>
