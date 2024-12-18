@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,9 +19,9 @@
         <option value="Ruby Module" />
         <option value="ERB File" />
         <option value="Ruby Class" />
-        <option value="JavaScript File" />
         <option value="RSpec" />
         <option value="Ruby File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -61,7 +61,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File" value="JavaScript&#10;ECMAScript 6&#10;HTML&#10;TEXT" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/spec/fixtures/files" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/spec/system" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Ruby" />
@@ -77,18 +77,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/spec/fixtures/files" />
       <recent name="$PROJECT_DIR$/spec/system" />
-      <recent name="$PROJECT_DIR$/app/views/admin/users" />
-      <recent name="$PROJECT_DIR$/app/views/admin/sections" />
-      <recent name="$PROJECT_DIR$/app/views/admin/menu_items" />
+      <recent name="$PROJECT_DIR$/app/views/admin" />
+      <recent name="$PROJECT_DIR$/app/controllers/admin" />
+      <recent name="$PROJECT_DIR$/public/images" />
+      <recent name="$PROJECT_DIR$/public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public/images" />
       <recent name="$PROJECT_DIR$/spec/models" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/pages" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts/views/show" />
       <recent name="$PROJECT_DIR$/app/assets/javascripts" />
-      <recent name="$PROJECT_DIR$/app/views/section" />
     </key>
   </component>
   <component name="RunManager" selected="Node.js.SlideShow.jsx">
@@ -259,7 +259,7 @@
       <workItem from="1734009303094" duration="161950000" />
       <workItem from="1734368236863" duration="2938000" />
       <workItem from="1734389136492" duration="3151000" />
-      <workItem from="1734394903269" duration="124000" />
+      <workItem from="1734394903269" duration="32096000" />
     </task>
     <servers />
   </component>
