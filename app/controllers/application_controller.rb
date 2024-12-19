@@ -127,7 +127,7 @@ class ApplicationController < ActionController::Base
                                 .references(:sub_items)
                                 .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
 
-    if !signed_in?
+    if !signed_in? || !@application_user.present?
       @main_menu_items = main_menu_items
     else
       @main_menu_items = []
