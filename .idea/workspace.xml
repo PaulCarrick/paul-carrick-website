@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/app/assets/images/icon.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db/migrate/20241218123331_add_read_only_to_users.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/shared/utilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/shared/utilities.js" afterDir="false" />
