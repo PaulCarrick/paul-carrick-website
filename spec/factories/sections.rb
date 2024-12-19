@@ -111,5 +111,23 @@ FactoryBot.define do
       link          { nil }
       formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
     end
+
+    trait :image_group do
+      content_type  { "image_group" }
+      section_name  { 'image_group' }
+      section_order { nil }
+      image         { "ImageGroup:test-group" }
+      link          { nil }
+      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+    end
+
+    trait :video_image do
+      content_type  { "video_image" }
+      section_name  { 'video_image' }
+      section_order { nil }
+      image         { nil }
+      link          { nil }
+      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+    end
   end
 end

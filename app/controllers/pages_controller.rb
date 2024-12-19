@@ -80,31 +80,31 @@ class PagesController < ApplicationController
       images = get_image_path(images)
     end
 
-    [ images, description, formatting, subsection ]
+    [images, description, formatting, subsection]
   end
 
   def handle_image_group(group_name, formatting)
     image_files = ImageFile.by_image_group(group_name)
 
     if image_files.present?
-      images      = image_files.map(&:image_url)
+      images      = image_files.map { |image_file| get_image_url(image_file) }
       description = image_files.map do |image_file|
         "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
       end.join
       formatting  = add_images_to_formatting(formatting, images)
-      [ nil, description, formatting ]
+      [nil, description, formatting]
     else
-      [ @missing_image, "", formatting ]
+      [@missing_image, "", formatting]
     end
   end
 
-  def handle_single_image_file(section, file_name)
+  # TO DO This is a really ugly hack, but at the moment I don't know how to fix it and it's only for testing.
+  # The issue is the test environment isn't running on localhost but in the test environment and nothing I did
+  # changing the test config in config/environments or changing the test environment in RSpec would fix it.
+  # We get the current path and replace it with the test environment host and port.
+  def get_image_url(image_file)
     results = nil
 
-    image_file   = ImageFile.find_by(name: file_name)
-    section.link = image_file.image_url
-
-    # TO DO This is a really ugly hack, but at the moment I don't know how to fix it and it's only for testing.
     if Rails.env == "test" && ENV['IMAGE_HACK'] && image_file.present?
       results = image_file.image_url
 
@@ -124,17 +124,26 @@ class PagesController < ApplicationController
     results
   end
 
+  def handle_single_image_file(section, file_name)
+    image_file   = ImageFile.find_by(name: file_name)
+    results      = get_image_url(image_file)
+    section.link = results
+
+    results
+  end
+
   def handle_image_section(section, file_name, formatting)
     image_file = ImageFile.find_by(name: file_name)
+    image_url  = get_image_url(image_file)
 
-    if image_file&.image_url.present?
-      section.link           = image_file.image_url
+    if image_url.present?
+      section.link           = image_url
       description            = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
       subsection, formatting = build_subsection(section, image_file, formatting)
 
-      [ image_file.image_url, description, subsection, formatting ]
+      [image_url, description, subsection, formatting]
     else
-      [ @missing_image, "", nil, nil ]
+      [@missing_image, "", nil, nil]
     end
   end
 
@@ -153,12 +162,12 @@ class PagesController < ApplicationController
       formatting = json.to_json
     end
 
-    [ subsection, formatting ]
+    [subsection, formatting]
   end
 
   def handle_image_array(image_list, formatting)
     images = image_list.split(",").map { |image_file| get_image_path(image_file) }
-    [ nil, add_images_to_formatting(formatting, images) ]
+    [nil, add_images_to_formatting(formatting, images)]
   end
 
   def process_video_images
@@ -171,14 +180,15 @@ class PagesController < ApplicationController
 
   def replace_video_image_tag(content, file_name)
     image_file = ImageFile.find_by(name: file_name)
+    image_url  = get_image_url(image_file)
 
-    if image_file&.image_url.present?
+    if image_url.present?
       label = image_file.caption
       label = image_file.name unless label.present?
 
       video_tag = view_context.link_to(label,
                                        '#',
-                                       onclick: "showVideoPlayer('#{image_file.image_url}')")
+                                       onclick: "showVideoPlayer('#{image_url}')")
       content.description.gsub!(/VideoImage:\s*"(.+)"/, video_tag)
     end
   end

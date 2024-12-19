@@ -90,7 +90,23 @@ FactoryBot.define do
         image_file.image.attach(
           io:           File.open(Rails.root.join('spec/fixtures/files/virginia-kings-canyon.jpg')),
           filename:     "virginia - kings - canyon.jpg ",
-          content_type: ' image / jpeg '
+          content_type: 'image/jpeg'
+        )
+      end
+    end
+
+    trait :pact_video do
+      name { "pact_video" }
+      caption { "This is an introduction to PACT" }
+      description { "<p>PACT is a product that Paul wrote.</p>" }
+      group { nil }
+      slide_order { nil }
+
+      after(:build) do |image_file|
+        image_file.image.attach(
+          io:           File.open(Rails.root.join('spec/fixtures/files/introduction-to-pact.mp4')),
+          filename:     "introduction-to-pact.mp4",
+          content_type: 'video/mp4'
         )
       end
     end

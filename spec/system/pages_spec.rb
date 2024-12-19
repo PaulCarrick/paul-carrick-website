@@ -10,16 +10,27 @@ RSpec.describe "Pages", type: :system do
   let!(:text_top) { create(:page, name: "text_top_page", section: "text_top", title: "Text Top Page") }
   let!(:text_bottom) { create(:page, name: "text_bottom_page", section: "text_bottom", title: "Text Bottom Page") }
   let!(:image_section) { create(:page, name: "image_section_page", section: "image_section", title: "Image Section Page") }
+  let!(:image_group) { create(:page, name: "image_group_page", section: "image_group", title: "Image Group Page") }
+  let!(:video_image) { create(:page, name: "video_image_page", section: "video_image", title: "Video Image Page") }
   let!(:text_section) { create(:section, :plain_text) }
   let!(:html_section) { create(:section, :plain_html) }
   let!(:text_left_section) { create(:section, :text_left) }
   let!(:text_right_section) { create(:section, :text_right) }
   let!(:text_top_section) { create(:section, :text_top) }
   let!(:text_bottom_section) { create(:section, :text_bottom) }
-  let!(:image_section__section) { create(:section, :image_section) }
+  let!(:image_section_section) { create(:section, :image_section) }
+  let!(:image_group_section) { create(:section, :image_group) }
+  let!(:video_image_section) { create(:section, :video_image, description: 'VideoImage:"pact_video"') }
   let!(:paul_transparent) { create(:image_file, :paul_transparent) }
+  let!(:lori) { create(:image_file, :lori) }
+  let!(:paul_virginia) { create(:image_file, :paul_virginia) }
+  let!(:virginia) { create(:image_file, :virginia) }
+  let!(:backyard) { create(:image_file, :backyard) }
+  let!(:pact_video) { create(:image_file, :pact_video) }
 
   before do
+    ENV['IMAGE_HACK'] = true.to_s
+
     if ENV["DEBUG"].present?
       driven_by(:selenium_chrome)
     else
@@ -100,11 +111,27 @@ RSpec.describe "Pages", type: :system do
     end
   end
 
-  describe "Renders a text bottom Page" do
+  describe "Renders a image section Page" do
     before { visit page_path("image_section_page") }
 
     it "displays the Image Section page correctly" do
       expect(page).to have_css('img.img-fluid')
+    end
+  end
+
+  describe "Renders an image group Page" do
+    before { visit page_path("image_group_page") }
+
+    it "displays the Image Group page correctly" do
+      expect(page).to have_content("Next")
+    end
+  end
+
+  describe "Renders a video image Page" do
+    before { visit page_path("video_image_page") }
+
+    it "displays the Video Image page correctly" do
+      expect(page).to have_content("This is an introduction to PACT")
     end
   end
 end
