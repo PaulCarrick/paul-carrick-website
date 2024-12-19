@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   if Rails.env === "test"
     def signin_user(user)
-      @signed_in = false
+      @signed_in    = false
       @current_user = user
 
       signed_in?
@@ -170,32 +170,37 @@ class ApplicationController < ActionController::Base
   def setup_footer_items
     return @footer_items if @footer_items.present? && !@signed_in
 
-    footer_items  ||= FooterItem.where(parent_id: nil)
-                                .order(:footer_order)
-                                .includes(:sub_items)
-                                .references(:sub_items)
-                                .order("footer_items.footer_order", "sub_items_footer_items.footer_order")
-    @footer_items = []
+    footer_items ||= FooterItem.where(parent_id: nil)
+                               .order(:footer_order)
+                               .includes(:sub_items)
+                               .references(:sub_items)
+                               .order("footer_items.footer_order", "sub_items_footer_items.footer_order")
 
-    footer_items.each do |footer_item|
-      if footer_item.access.present?
-        if footer_item.access =~ /^!(.+)$/
-          if Regexp.last_match(1) != @application_user.roles
-            @footer_items << footer_item
+    if !signed_in? || !@application_user.present?
+      @main_menu_items = main_menu_items
+    else
+      @footer_items = []
+
+      footer_items.each do |footer_item|
+        if footer_item.access.present?
+          if footer_item.access =~ /^!(.+)$/
+            if Regexp.last_match(1) != @application_user.roles
+              @footer_items << footer_item
+            end
+          else
+            if Regexp.last_match(1) == @application_user.roles
+              @footer_items << footer_item
+            end
           end
         else
-          if Regexp.last_match(1) == @application_user.roles
+          if footer_item.link&.strip == "/users/sign_in"
+            footer_item.label = "logout"
+            footer_item.icon  = "/images/no-keys.svg"
+            footer_item.link  = "/users/sign_out"
+            @footer_items << footer_item
+          else
             @footer_items << footer_item
           end
-        end
-      else
-        if footer_item.link&.strip == "/users/sign_in"
-          footer_item.label = "logout"
-          footer_item.icon  = "/images/no-keys.svg"
-          footer_item.link  = "/users/sign_out"
-          @footer_items << footer_item
-        else
-          @footer_items << footer_item
         end
       end
     end
