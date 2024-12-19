@@ -47,6 +47,8 @@ class Admin::AbstractAdminController < ApplicationController
 
   def create
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       result = @model_class.create!(get_params)
 
       if result.persisted?
@@ -62,6 +64,8 @@ class Admin::AbstractAdminController < ApplicationController
 
   def update
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       set_item
 
       if get_record&.update(get_params)
@@ -93,6 +97,8 @@ class Admin::AbstractAdminController < ApplicationController
 
   def destroy
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       set_item
 
       result = get_record&.destroy
@@ -110,6 +116,10 @@ class Admin::AbstractAdminController < ApplicationController
 
   def model_title
     controller_name.singularize.titleize
+  end
+
+  def class_title
+    controller_name.titleize
   end
 
   def get_item

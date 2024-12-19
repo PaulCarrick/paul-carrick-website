@@ -3,14 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::UsersController, type: :controller do
   include Devise::Test::ControllerHelpers
 
-  let(:admin_user) { create(:user, admin: true) }
-  let(:non_admin_user) { create(:user, admin: false) }
+  let!(:admin_user) { create_admin_user }
   let!(:user) { create(:user) }
-
-  before do
-    sign_in admin_user, scope: :user
-    controller.set_current_user(admin_user)
-  end
 
   describe "GET #index" do
     context "when the user is an admin" do
@@ -28,10 +22,7 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
 
     context "when the user is not an admin" do
-      before do
-        sign_in non_admin_user, scope: :user
-        controller.set_current_user(non_admin_user)
-      end
+      let!(:non_admin_user) { create_regular_user }
 
       it "redirects to the root path with an alert" do
         # TO DO Find a fix for devise.
@@ -66,7 +57,7 @@ RSpec.describe Admin::UsersController, type: :controller do
                    password:              "password123",
                    password_confirmation: "password123",
                    name:                  "New User",
-                   admin:                 false
+                   access:                "regular"
                  }
                }
         }.to change(User, :count).by(1)
@@ -128,9 +119,10 @@ RSpec.describe Admin::UsersController, type: :controller do
   describe "Filters" do
     context "check_admin" do
       it "redirects non-admin users to root with an alert" do
-        sign_out admin_user
-        sign_in non_admin_user
+        user = create_regular_user
+
         get :index
+
         expect(response).to redirect_to(root_path)
         expect(flash[:alert]).to eq("Access denied.")
       end

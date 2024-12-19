@@ -7,7 +7,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def custom_redirect
     if signed_in?
-      if current_user.admin?
+      if @application_user.admin? ||  @application_user.read_only?
         redirect_to admin_root_path, turbo: false
       else
         redirect_to root_path(data: current_user.as_json), turbo: false

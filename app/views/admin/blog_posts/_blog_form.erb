@@ -81,7 +81,11 @@
     * - Required Fields
   </div>
   <div class="mb-3">
-    <%= form.submit "Save Blog", class: "btn btn-primary me-3" %>
+    <%= form.submit "Save #{controller.model_title}",
+                    class: "btn btn-primary me-3",
+                    disabled: !@application_user.admin?
+    %>
+
     <%= link_to("Cancel", admin_blog_posts_url, class: "btn btn-primary") %>
   </div>
 <% end %>

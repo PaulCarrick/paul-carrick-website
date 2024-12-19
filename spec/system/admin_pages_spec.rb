@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Pages", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
   let!(:page_record) do
     create(:page,

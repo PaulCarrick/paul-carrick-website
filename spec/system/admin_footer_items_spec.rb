@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Footer Items", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
   let!(:footer_item_1) { create(:footer_item, label: "Item 1", footer_order: 1, link: "https://example.com/item1") }
   let!(:footer_item_2) { create(:footer_item, label: "Item 2", footer_order: 2, link: "https://example.com/item2") }

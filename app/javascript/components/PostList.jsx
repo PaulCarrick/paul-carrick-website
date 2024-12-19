@@ -253,7 +253,7 @@ const PostList = ({ user, blog_type }) => {
         <>
           <div className="row">
             <div className="col-2">
-              {user.admin && (
+              {((user.access == 'blogs') || (user.access == 'admin') || (user.access == 'super')) && (
                 <button onClick={() => openPostEditor()} className="btn btn-primary">
                   Add Post
                 </button>

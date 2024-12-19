@@ -48,7 +48,7 @@ RSpec.describe SectionController, type: :controller do
         begin
           expect(first_row[:description]).to eq("<b>Description 1</b>")
         rescue RSpec::Expectations::ExpectationNotMetError => e
-          expect(first_row[:description]).to eq("<b>Description 2</b>")
+          expect(first_row[:description]).to eq("<i>Description 2</i>")
         end
 
         begin

@@ -1,15 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Users", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
   let!(:user) do
     create(:user,
            email: "test@example.com",
            name: "Test User",
-           admin: true,
-           super: false,
-           roles: "Editor")
+           access: "admin",
+           roles: "professional")
   end
 
   before do
@@ -33,9 +32,8 @@ RSpec.describe "Admin Users", type: :system do
       within ".scrollable-container" do
         expect(page).to have_content("test@example.com")
         expect(page).to have_content("Test User")
-        expect(page).to have_content("Yes") # Admin
-        expect(page).to have_content("No")  # Super
-        expect(page).to have_content("Editor")
+        expect(page).to have_content("admin")
+        expect(page).to have_content("professional")
       end
     end
 
@@ -61,8 +59,7 @@ RSpec.describe "Admin Users", type: :system do
       expect(page).to have_field("user[email]", type: "text")
       expect(page).to have_field("user[name]", type: "text")
       expect(page).to have_field("user[password]", type: "password")
-      expect(page).to have_field("Admin", type: "checkbox")
-      expect(page).to have_field("Super", type: "checkbox")
+      expect(page).to have_select("user[access]")
       expect(page).to have_field("Roles", type: "text")
     end
 
@@ -70,14 +67,14 @@ RSpec.describe "Admin Users", type: :system do
       fill_in "Email*", with: "new_user@example.com"
       fill_in "Name*", with: "New User"
       fill_in "Password*", with: "password123"
-      check "Admin"
+      select("Administrator", from: "user[access]")
       fill_in "Roles", with: "Manager"
       click_button "Save User"
 
       expect(page).to have_current_path(admin_users_path)
       expect(page).to have_content("new_user@example.com")
       expect(page).to have_content("New User")
-      expect(page).to have_content("Yes") # Admin
+      expect(page).to have_content("admin") # Admin
       expect(page).to have_content("Manager")
     end
   end
@@ -92,19 +89,18 @@ RSpec.describe "Admin Users", type: :system do
     it "pre-fills the form with existing data" do
       expect(page).to have_field("user[email]", with: "test@example.com")
       expect(page).to have_field("user[name]", with: "Test User")
-      expect(page).to have_field("Admin", checked: true)
-      expect(page).to have_field("Super", checked: false)
-      expect(page).to have_field("Roles", with: "Editor")
+      expect(page).to have_select("user[access]", selected: "Administrator")
+      expect(page).to have_field("Roles", with: "professional")
     end
 
     it "updates a user successfully" do
       fill_in "user[name]", with: "Updated User"
-      uncheck "Admin"
+      select("Regular", from: "user[access]")
       click_button "Save User"
 
       expect(page).to have_current_path(admin_users_path)
       expect(page).to have_content("Updated User")
-      expect(page).to have_content("No") # Admin
+      expect(page).to have_content("regular") # Admin
     end
   end
 
@@ -120,7 +116,7 @@ RSpec.describe "Admin Users", type: :system do
       expect(page).to have_content("Test User")
       expect(page).to have_content("Yes") # Admin
       expect(page).to have_content("No")  # Super
-      expect(page).to have_content("Editor")
+      expect(page).to have_content("professional")
     end
   end
 

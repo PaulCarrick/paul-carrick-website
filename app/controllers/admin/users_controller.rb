@@ -16,7 +16,7 @@ class Admin::UsersController < ApplicationController
 
   def check_admin
     if @application_user
-      redirect_to root_path, alert: "Access denied." unless @application_user.admin
+      redirect_to root_path, alert: "Access denied." unless @application_user.admin?
     else
       redirect_to root_path, alert: "Access denied." unless current_user.admin?
     end
@@ -50,6 +50,8 @@ class Admin::UsersController < ApplicationController
 
   def create
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       @user = User.new(user_params)
 
       @user.save!
@@ -66,6 +68,8 @@ class Admin::UsersController < ApplicationController
 
   def update
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       @user.update!(user_params)
       redirect_to admin_users_path, notice: "User updated successfully"
     rescue => e
@@ -75,6 +79,8 @@ class Admin::UsersController < ApplicationController
 
   def destroy
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       set_user
 
       @user.destroy!
@@ -106,6 +112,12 @@ class Admin::UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:id, :email, :password, :password_confirmation, :name, :admin, :super, :roles)
+    params.require(:user).permit(:id,
+                                 :email,
+                                 :password,
+                                 :password_confirmation,
+                                 :name,
+                                 :access,
+                                 :roles)
   end
 end

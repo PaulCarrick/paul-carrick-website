@@ -23,22 +23,27 @@
   <div class="mb-3">
     <%= form.label :password, "Password*", class: "form-label" %>
     <%= form.password_field :password,
-                            class: "form-control",
-                            required: !@user.persisted?,
+                            class:       "form-control",
+                            required:    !@user.persisted?,
                             placeholder: @user.persisted? ?
                                            "Leave blank to keep the current password." :
-                                           "Enter the password for the user." %>
+                                           "Enter the password for the user."
     %>
   </div>
 
-  <div class="mb-3 form-check">
-    <%= form.check_box :admin, { class: "form-check-input" }, true, false %>
-    <%= form.label :admin, "Admin", class: "form-check-label" %>
-  </div>
-
-  <div class="mb-3 form-check">
-    <%= form.check_box :super, { class: "form-check-input" }, true, false %>
-    <%= form.label :super, "Super", class: "form-check-label" %>
+  <div class="mb-3">
+    <%= form.label :access, "Access", class: "form-label" %><br>
+    <%= form.select :access,
+                    options_for_select([
+                                         ["Regular", "regular"],
+                                         ["Read Only", "read_only"],
+                                         ["Post Blogs", "blogs"],
+                                         ["Administrator", "admin"],
+                                         ["Super User", "super"]
+                                       ], @user.access),
+                    required: true,
+                    class:    "form-control"
+    %>
   </div>
 
   <div class="mb-3">
@@ -49,8 +54,9 @@
   <div class="pb-3">
     * - Required Fields
   </div>
+
   <div class="mb-3">
-    <%= form.submit "Save User", class: "btn btn-primary me-3" %>
-    <%= link_to("Cancel", admin_pages_url, class: "btn btn-primary") %>
+    <%= form.submit "Save User", class: "btn btn-primary me-3", disabled: !@application_user.admin? %>
+    <%= link_to("Cancel", admin_users_url, class: "btn btn-primary") %>
   </div>
 <% end %>

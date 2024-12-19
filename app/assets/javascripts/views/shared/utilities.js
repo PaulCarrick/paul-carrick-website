@@ -39,10 +39,12 @@ function checkHtml(field) {
       results = false;
 
       field.classList.add('invalid');
-    } else {
+    }
+    else {
       results = true;
     }
-  } catch (e) {
+  }
+  catch (e) {
     errorMessage = `HTML Validation Errors:<br>${e.toString()}`;
 
     field.classList.add('invalid');
@@ -67,7 +69,8 @@ function checkJSON(field, jsonText) {
 
   try {
     JSON.parse(jsonText ? jsonText : field.value);
-  } catch (e) {
+  }
+  catch (e) {
     errorMessage = `JSON Validation Errors:<br>${e.toString()}`;
 
     field.classList.add('invalid');
@@ -136,7 +139,8 @@ function toggleEditor(button, rtfEditorContainerId, rtfEditorId, rawEditorContai
     button.textContent = "RTF Editor";
 
     setEditorModeFlag('raw');
-  } else {// We are in Raw switching to RTF
+  }
+  else {// We are in Raw switching to RTF
     rtfEditorContainer.style.display = "block";
     rawEditorContainer.style.display = "none";
     button.textContent = "Raw HTML";
@@ -228,4 +232,42 @@ function clearForm(formId) {
         break;
     }
   });
+}
+
+function setSelectedForArray(group, fields) {
+  const selectedRadio = document.querySelector(`input[name="${group}"]:checked`);
+
+  if (!selectedRadio) return;
+
+  fields.forEach((fieldId) => {
+    const hiddenField = document.getElementById(fieldId);
+
+    if (hiddenField)
+      hiddenField.value = (fieldId === selectedRadio.value).toString();
+    else
+      console.warn(`Hidden field with ID "${fieldId}" not found.`);
+  });
+}
+
+function setupRadioGroupArray(group, fields) {
+  let selectedField = null;
+
+  fields.forEach((fieldId) => {
+    const hiddenField = document.getElementById(fieldId);
+
+    if (hiddenField && hiddenField.value === "true")
+      selectedField = fieldId;
+  });
+
+  if (!selectedField) {
+    console.warn("No hidden field is set to true.");
+    return;
+  }
+
+  const radioToSelect = document.querySelector(`input[name="${group}"][value="${selectedField}"]`);
+
+  if (radioToSelect)
+    radioToSelect.checked = true;
+  else
+    console.warn(`Radio button with value "${selectedField}" not found in group "${group}".`);
 }

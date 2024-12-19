@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::PagesController, type: :controller do
   include_context "debug setup"
 
+  let!(:admin_user) { create_admin_user }
   let(:valid_attributes) { { name: "Test Page", title: "Test Page", section: "test" } }
   let(:invalid_attributes) { { name: nil, title: nil, section: nil } }
   let!(:page) { create(:page, valid_attributes) }
@@ -14,6 +15,7 @@ RSpec.describe Admin::PagesController, type: :controller do
            section_name:  "section")
   }
 
+  let!(:admin_user) { create_admin_user }
   before do
     allow(controller).to receive(:controller_name).and_return("pages")
   end

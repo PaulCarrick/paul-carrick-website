@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Blog Posts", type: :system do
-  let!(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:blog_post) { create(:blog_post) }
   let!(:site_setup) { create(:site_setup) }
   let!(:blog_post_1) { create(:blog_post, author: "Author One", title: "Title One", posted: 1.day.ago, content: "Content One") }
@@ -133,7 +133,6 @@ RSpec.describe "Admin Blog Posts", type: :system do
     it "clears the search results" do
       fill_in "Author", with: "Author One"
       click_button "Search Blogs"
-
       click_link "Clear Search"
       expect(page).to have_content("Author One")
       expect(page).to have_content("Author Two")

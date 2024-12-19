@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
 
   before_action :setup_site
   before_action :setup_main_menu_items
+  before_action :setup_admin_menu_items
   before_action :setup_footer_items
 
   def get_site_information
@@ -34,6 +35,15 @@ class ApplicationController < ActionController::Base
 
   def current_user_is_admin?
     signed_in? && @application_user.admin?
+  end
+
+  if Rails.env === "test"
+    def signin_user(user)
+      @signed_in = false
+      @current_user = user
+
+      signed_in?
+    end
   end
 
   private
@@ -73,6 +83,8 @@ class ApplicationController < ActionController::Base
   # TO DO Remove this when we can figure out what's wrong with the devise setup
   # This only seems to affect the test environment
   def signed_in?
+    return @signed_in if @signed_in
+
     @signed_in = false
 
     if Rails.env != "test"
@@ -96,65 +108,116 @@ class ApplicationController < ActionController::Base
       end
     end
 
-    @application_user ||= User.find_by(email: 'guest@paul-carrick.com')
+    if request.url.include?('professional')
+      @application_user ||= User.find_by(email: 'professional@paul-carrick.com')
+      @signed_in        = true
+    else
+      @application_user ||= User.find_by(email: 'guest@paul-carrick.com')
+    end
 
     @signed_in
   end
 
   def setup_main_menu_items
-    @main_menu_items  ||= MenuItem.where(menu_type: "Main", parent_id: nil)
-                                  .order(:menu_order)
-                                  .includes(:sub_items)
-                                  .references(:sub_items)
-                                  .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
-    @admin_menu_items ||= MenuItem.where(menu_type: "Admin", parent_id: nil)
-                                  .order(:menu_order)
-                                  .includes(:sub_items)
-                                  .references(:sub_items)
-                                  .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
-    @footer_items     ||= FooterItem.where(parent_id: nil)
-                                    .order(:footer_order)
-                                    .includes(:sub_items)
-                                    .references(:sub_items)
-                                    .order("footer_items.footer_order", "footer_items.footer_order")
+    return @main_menu_items if @main_menu_items.present? && !@signed_in
 
-    if signed_in?
-      @main_menu_items.each do |menu_item|
-        next unless menu_item.link&.strip == "/users/sign_in"
+    main_menu_items ||= MenuItem.where(menu_type: "Main", parent_id: nil)
+                                .order(:menu_order)
+                                .includes(:sub_items)
+                                .references(:sub_items)
+                                .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
 
-        menu_item.label = "logout"
-        menu_item.icon  = "/images/no-keys.svg"
-        menu_item.link  = "/users/sign_out"
-        break
-      end
+    if !signed_in?
+      @main_menu_items = main_menu_items
+    else
+      @main_menu_items = []
 
-      @footer_items.each do |footer_item|
-        footer_item.sub_items.each do |sub_item|
-          next unless sub_item.link&.strip == "/users/sign_in"
-
-          sub_item.label = "logout"
-          sub_item.icon  = "/images/no-keys.svg"
-          sub_item.link  = "/users/sign_out"
-
-          break
+      main_menu_items.each do |main_menu_item|
+        if main_menu_item.access.present?
+          if main_menu_item.access =~ /^!(.+)$/
+            if Regexp.last_match(1) != @application_user.roles
+              @main_menu_items << main_menu_item
+            end
+          else
+            if Regexp.last_match(1) == @application_user.roles
+              @main_menu_items << main_menu_item
+            end
+          end
+        else
+          if main_menu_item.link&.strip == "/users/sign_in"
+            main_menu_item.label = "logout"
+            main_menu_item.icon  = "/images/no-keys.svg"
+            main_menu_item.link  = "/users/sign_out"
+            @main_menu_items << main_menu_item
+          else
+            @main_menu_items << main_menu_item
+          end
         end
-
-        next unless footer_item.link&.strip == "/users/sign_in"
-
-        footer_item.label = "logout"
-        footer_item.icon  = "/images/no-keys.svg"
-        footer_item.link  = "/users/sign_out"
-
-        break
       end
     end
   end
 
+  def setup_admin_menu_items
+    return @admin_menu_items if @admin_menu_items.present?
+
+    @admin_menu_items = MenuItem.where(menu_type: "Admin", parent_id: nil)
+                                .order(:menu_order)
+                                .includes(:sub_items)
+                                .references(:sub_items)
+                                .order("menu_items.menu_order", "sub_items_menu_items.menu_order")
+  end
+
   def setup_footer_items
-    @footer_items ||= FooterItem.where(parent_id: nil)
+    return @footer_items if @footer_items.present? && !@signed_in
+
+    footer_items  ||= FooterItem.where(parent_id: nil)
                                 .order(:footer_order)
                                 .includes(:sub_items)
                                 .references(:sub_items)
                                 .order("footer_items.footer_order", "sub_items_footer_items.footer_order")
+    @footer_items = []
+
+    footer_items.each do |footer_item|
+      if footer_item.access.present?
+        if footer_item.access =~ /^!(.+)$/
+          if Regexp.last_match(1) != @application_user.roles
+            @footer_items << footer_item
+          end
+        else
+          if Regexp.last_match(1) == @application_user.roles
+            @footer_items << footer_item
+          end
+        end
+      else
+        if footer_item.link&.strip == "/users/sign_in"
+          footer_item.label = "logout"
+          footer_item.icon  = "/images/no-keys.svg"
+          footer_item.link  = "/users/sign_out"
+          @footer_items << footer_item
+        else
+          @footer_items << footer_item
+        end
+      end
+    end
+
+    @footer_items.each do |footer_item|
+      footer_item.sub_items.each do |sub_item|
+        next unless sub_item.link&.strip == "/users/sign_in"
+
+        sub_item.label = "logout"
+        sub_item.icon  = "/images/no-keys.svg"
+        sub_item.link  = "/users/sign_out"
+
+        break
+      end
+
+      next unless footer_item.link&.strip == "/users/sign_in"
+
+      footer_item.label = "logout"
+      footer_item.icon  = "/images/no-keys.svg"
+      footer_item.link  = "/users/sign_out"
+
+      break
+    end
   end
 end

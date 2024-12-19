@@ -79,7 +79,7 @@
     * - Required Fields
   </div>
   <div class="mb-3">
-    <%= form.submit "Save Footer Item", class: "btn btn-primary me-3" %>
+    <%= form.submit "Save Footer Item", class: "btn btn-primary me-3", disabled: !@application_user.admin? %>
     <%= link_to("Cancel", admin_footer_items_url, class: "btn btn-primary") %>
   </div>
 <% end %>

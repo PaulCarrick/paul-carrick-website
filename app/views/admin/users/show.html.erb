@@ -24,7 +24,7 @@
         Admin:
       </div>
       <div class="col-11">
-        <% if @user.admin %>
+        <% if @user.admin? %>
           Yes
         <% else %>
           No
@@ -37,7 +37,7 @@
         Super:
       </div>
       <div class="col-11">
-        <% if @user.super %>
+        <% if @user.super? %>
           Yes
         <% else %>
           No
@@ -59,7 +59,7 @@
         Approved:
       </div>
       <div class="col-11">
-        <% if @user.super %>
+        <% if @user.super? %>
           Yes
         <% else %>
           No

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Menu Items", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
   let!(:menu_item_1) { create(:menu_item, label: "Item 1", menu_order: 1, link: "https://example.com/item1") }
   let!(:menu_item_2) { create(:menu_item, label: "Item 2", menu_order: 2, link: "https://example.com/item2") }

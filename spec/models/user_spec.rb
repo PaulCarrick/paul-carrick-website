@@ -47,12 +47,12 @@ RSpec.describe User, type: :model do
   describe "instance methods" do
     describe "#admin?" do
       it "returns true if the user is an admin" do
-        user = User.new(admin: true)
+        user = User.new(access: 'admin')
         expect(user.admin?).to be true
       end
 
       it "returns false if the user is not an admin" do
-        user = User.new(admin: false)
+        user = User.new(access: nil)
         expect(user.admin?).to be false
       end
     end

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Sections", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
   let!(:section) do
     create(:section,

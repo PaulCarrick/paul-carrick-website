@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Admin::DashboardController, type: :controller do
-  let(:admin_user) { create(:user, admin: true) }
-  let(:non_admin_user) { create(:user, admin: false) }
+  let!(:admin_user) { create_admin_user }
+  let!(:non_admin_user) { create_regular_user }
 
   describe "GET #index" do
     context "when the user is logged in as an admin" do

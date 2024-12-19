@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Admin::MenuItemsController, type: :controller do
   include_context "debug setup"
 
+  let!(:admin_user) { create_admin_user }
   let(:valid_attributes) {
     {
       label:        "Test Menu Item",

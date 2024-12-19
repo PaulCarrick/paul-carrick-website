@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Admin::FooterItemsController, type: :controller do
+  let!(:admin_user) { create_admin_user }
   include_context "debug setup"
 
   let(:valid_attributes) {

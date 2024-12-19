@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Site Setups", type: :system do
-  let(:admin_user) { create(:user, admin: true) }
+  let(:admin_user) { create(:user, access: "super") }
   let!(:site_setup) { create(:site_setup) }
 
   before do
@@ -80,7 +80,7 @@ RSpec.describe "Admin Site Setups", type: :system do
 
         click_button "Save Site Setup"
 
-        expect(page).to have_current_path(edit_admin_site_setup_path(site_setup))
+        expect(page).to have_current_path(admin_site_setups_path)
         expect(page).to have_content("Site Setup updated successfully.")
         expect(site_setup.reload.owner_name).to eq("Example User")
         expect(site_setup.reload.site_name).to eq("Example")

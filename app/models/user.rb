@@ -9,8 +9,24 @@ class User < ApplicationRecord
     new_record? || password.present?
   end
 
+  def regular?
+    !access.present? || (access === 'regular')
+  end
+
+  def read_only?
+    access === 'read_only'
+  end
+
+  def blogs?
+    (access === 'blogs') || admin?
+  end
+
   def admin?
-    admin
+    (access === 'admin') || (access === 'super')
+  end
+
+  def super?
+    access === 'super'
   end
 
   def self.ransackable_attributes(auth_object = nil)

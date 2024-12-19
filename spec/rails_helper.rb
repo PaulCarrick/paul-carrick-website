@@ -33,8 +33,6 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 RSpec.configure do |config|
-  config.include LoginHelpers, type: :system
-
   # @note Include named routes
   config.include Rails.application.routes.url_helpers
 
@@ -79,6 +77,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include FactoryBot::Syntax::Methods
+  config.include LoginHelper
   config.include TrixEditorHelper, type: :system
   config.include HtmlTools, type: :system
   config.include Utilities, type: :system

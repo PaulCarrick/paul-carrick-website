@@ -19,6 +19,8 @@ class Admin::SectionsController < Admin::AbstractAdminController
 
   def create
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       set_item(true, get_params)
 
       get_item&.description = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
@@ -47,6 +49,8 @@ class Admin::SectionsController < Admin::AbstractAdminController
     data[:formatting] = Utilities.pretty_print_json(data[:formatting], false) if data[:formatting].present?
 
     begin
+      throw "You are not permitted to change #{class_title}." unless @application_user.admin?
+
       set_item
 
       get_record&.update!(get_params)
