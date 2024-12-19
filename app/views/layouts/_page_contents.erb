@@ -1,3 +1,4 @@
+<!-- /app/views/layouts/_page_contents.erb -->
 
 <style>
   <% if @site_information.present? %>
@@ -42,8 +43,7 @@
               image: content.image,
               link: content.link,
               format: content.formatting,
-              sectionId: content.section_name,
-              user: @user
+              sectionId: content.section_name
             }) %>
           </div>
         <% end %>
