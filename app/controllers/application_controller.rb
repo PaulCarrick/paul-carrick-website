@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user_is_admin?
-    signed_in? && @application_user.admin?
+    signed_in? && @application_user.present? && @application_user.admin?
   end
 
   if Rails.env === "test"
