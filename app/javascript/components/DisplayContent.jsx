@@ -14,7 +14,6 @@ const DisplayContent = ({
                           format,
                           sectionId
                         }) => {
-  debugger;
   let options = getDefaultOptions(format);
 
   const toggleId = options.expanding_rows

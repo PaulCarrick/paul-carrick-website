@@ -5,7 +5,6 @@
 import React from "react";
 
 const ContentBlock = ({content, options, toggleId, toggleClass}) => {
-  debugger;
   return (
     <>
       <div dangerouslySetInnerHTML={{__html: content}}/>

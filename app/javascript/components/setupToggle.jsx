@@ -5,7 +5,6 @@ import React, {useEffect} from "react";
 const setupToggle = (elementId, className) => {
   useEffect(() => {
     const setupLogic = () => {
-debugger;
       const toggleButton = document.getElementById(elementId);
       const rows = document.querySelectorAll(className);
 

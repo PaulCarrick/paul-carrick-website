@@ -15,7 +15,6 @@ const RenderContent = ({
                          toggleId,
                          toggleClass
                        }) => {
-  debugger;
   const rowClasses = `row ${options.row_classes}`;
   let text = content;
   let captions = null;

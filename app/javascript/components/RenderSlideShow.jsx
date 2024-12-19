@@ -6,7 +6,6 @@ import React from "react";
 import SlideShow from "./SlideShow";
 
 const RenderSlideShow = ({ images, captions, slideType }) => {
-  debugger;
   return (
     <div className="slideshow-container">
       <SlideShow images={images} captions={captions}
