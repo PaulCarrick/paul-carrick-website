@@ -1,15 +1,15 @@
 <!-- app/views/image_file/picture_of_the_day.html.erb -->
 <% if @image_file.present? %>
-  <container class="auto-fit">
-    <h1 style="font-size: 1.8em !important">Picture of the Day</h1>
-    <div class="ps-3" style="font-size: 1.5em !important">
+  <container>
+    <h1 style="font-size: 1em !important">Picture of the Day</h1>
+    <div class="ps-3" style="font-size: 1em !important">
       <h2><%= @image_file.caption %></h2>
     </div>
     <div class="ps-5">
       <%= link_to @image_file.image_url, target: "_blank" do %>
         <%= image_tag(@image_file.image_url,
                       alt: @image_file.name,
-                      style: "max-width: 400px; max-height: 150px; object-fit: contain;")
+                      style: "object-fit: contain;")
         %>
       <% end %>
     </div>
