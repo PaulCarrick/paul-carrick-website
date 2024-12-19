@@ -26,7 +26,7 @@ module ApplicationHelper
               class: "btn-link me-2"),
       link_to("Edit",
               edit_path,
-              class: "btn-link me-2"),
+              class: "btn-link me-2")
     ]
 
     if @application_user.admin?

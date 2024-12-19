@@ -80,7 +80,7 @@ class PagesController < ApplicationController
       images = get_image_path(images)
     end
 
-    [images, description, formatting, subsection]
+    [ images, description, formatting, subsection ]
   end
 
   def handle_image_group(group_name, formatting)
@@ -92,9 +92,9 @@ class PagesController < ApplicationController
         "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
       end.join
       formatting  = add_images_to_formatting(formatting, images)
-      [nil, description, formatting]
+      [ nil, description, formatting ]
     else
-      [@missing_image, "", formatting]
+      [ @missing_image, "", formatting ]
     end
   end
 
@@ -141,9 +141,9 @@ class PagesController < ApplicationController
       description            = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
       subsection, formatting = build_subsection(section, image_file, formatting)
 
-      [image_url, description, subsection, formatting]
+      [ image_url, description, subsection, formatting ]
     else
-      [@missing_image, "", nil, nil]
+      [ @missing_image, "", nil, nil ]
     end
   end
 
@@ -162,12 +162,12 @@ class PagesController < ApplicationController
       formatting = json.to_json
     end
 
-    [subsection, formatting]
+    [ subsection, formatting ]
   end
 
   def handle_image_array(image_list, formatting)
     images = image_list.split(",").map { |image_file| get_image_path(image_file) }
-    [nil, add_images_to_formatting(formatting, images)]
+    [ nil, add_images_to_formatting(formatting, images) ]
   end
 
   def process_video_images
