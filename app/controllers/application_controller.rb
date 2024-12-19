@@ -177,7 +177,7 @@ class ApplicationController < ActionController::Base
                                .order("footer_items.footer_order", "sub_items_footer_items.footer_order")
 
     if !signed_in? || !@application_user.present?
-      @main_menu_items = main_menu_items
+      @footer_items = footer_items
     else
       @footer_items = []
 
