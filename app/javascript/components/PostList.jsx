@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import PostEditor from './PostEditor';
@@ -19,6 +20,7 @@ const PostList = ({ user, blog_type }) => {
   const [editingComment, setEditingComment] = useState(null);
 
   const fetchPosts = (page = 1) => {
+debugger;
     const queryParams = Object.entries(searchFields)
       .filter(([_, value]) => value.trim() !== '')
       .map(
@@ -357,6 +359,19 @@ const PostList = ({ user, blog_type }) => {
       )}
     </div>
   );
+};
+
+PostList.propTypes = {
+  user: PropTypes.shape({
+                          id: PropTypes.number.isRequired,
+                          name: PropTypes.string.isRequired,
+                          email: PropTypes.string,
+                        }).isRequired,
+  blog_type: PropTypes.oneOf(['Personal', 'Professional']).isRequired
+};
+
+PostList.defaultProps = {
+  blog_type: 'Personal'
 };
 
 export default PostList;

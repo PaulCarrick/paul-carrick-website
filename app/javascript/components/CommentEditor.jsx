@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -71,6 +72,24 @@ const CommentEditor = ({ user, post, comment, closeEditor }) => {
       </div>
     </div>
   );
+};
+
+
+// Define propTypes
+CommentEditor.propTypes = {
+  user: PropTypes.shape({
+                          name: PropTypes.string.isRequired,
+                        }).isRequired,
+  post: PropTypes.shape({
+                          id: PropTypes.number.isRequired,
+                        }).isRequired,
+  comment: PropTypes.shape({
+                             id: PropTypes.number.isRequired,
+                             title: PropTypes.string.isRequired,
+                             content: PropTypes.string.isRequired,
+                             posted: PropTypes.string.isRequired,
+                           }).isRequired,
+  closeEditor: PropTypes.func.isRequired,
 };
 
 export default CommentEditor;
