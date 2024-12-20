@@ -20,7 +20,6 @@ const PostList = ({ user, blog_type }) => {
   const [editingComment, setEditingComment] = useState(null);
 
   const fetchPosts = (page = 1) => {
-debugger;
     const queryParams = Object.entries(searchFields)
       .filter(([_, value]) => value.trim() !== '')
       .map(
