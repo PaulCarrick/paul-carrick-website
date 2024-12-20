@@ -43,7 +43,7 @@ FactoryBot.define do
       section_order { nil }
       image         { nil }
       link          { nil }
-      formatting    { nil }
+      formatting    { '{ "row_classes": "col-12" }' }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -82,7 +82,7 @@ FactoryBot.define do
       section_order { nil }
       image         { "ImageFile:paul-transparent" }
       link          { nil }
-      formatting    { '{ "row_style": "text-top" }' }
+      formatting    { '{ "row_style": "text-top", "row_classes": "col-12" }' }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -95,7 +95,7 @@ FactoryBot.define do
       section_order { nil }
       image         { "ImageFile:paul-transparent" }
       link          { nil }
-      formatting    { '{ "row_style": "text-bottom" }' }
+      formatting    { '{ "row_style": "text-bottom", "row_classes": "col-12"  }' }
       description   { Faker::Lorem.paragraphs(number: 5).join(". ") }
 
       after(:build) do |section, evaluator|
