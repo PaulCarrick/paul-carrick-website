@@ -3,6 +3,7 @@
 // Render an Image
 
 import React from "react";
+import PropTypes from 'prop-types';
 import RenderSlideShow from "./RenderSlideShow";
 import RenderSingleImage from "./RenderSingleImage";
 
@@ -24,6 +25,30 @@ const RenderImage = ({content, image, link, options}) => {
       />
     );
   }
+};
+
+RenderImage.propTypes = {
+  content: PropTypes.string,
+  image: PropTypes.oneOfType([
+                               PropTypes.string,
+                               PropTypes.object,
+                             ]),
+  link: PropTypes.string,
+  options: PropTypes.shape({
+                             slide_show_images: PropTypes.arrayOf(
+                               PropTypes.oneOfType([
+                                                     PropTypes.string,
+                                                     PropTypes.object,
+                                                   ])
+                             ),
+                             slide_show_type: PropTypes.string
+                           }).isRequired,
+};
+
+RenderImage.defaultProps = {
+  content: null,
+  image: null,
+  link: null
 };
 
 export default RenderImage;

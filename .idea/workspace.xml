@@ -2,11 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/ContentBlock.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/ContentBlock.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/NavMenu.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/NavMenu.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PostEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/PostList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PostList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/RenderContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/RenderContent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/RenderImage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/RenderImage.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/RenderSingleImage.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/RenderSingleImage.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,10 +27,10 @@
       <list>
         <option value="Ruby Module" />
         <option value="ERB File" />
-        <option value="Ruby Class" />
         <option value="RSpec" />
         <option value="Ruby File" />
         <option value="JavaScript File" />
+        <option value="Ruby Class" />
       </list>
     </option>
   </component>
@@ -267,7 +272,7 @@
       <workItem from="1734484014569" duration="83000" />
       <workItem from="1734484358120" duration="3252000" />
       <workItem from="1734526167510" duration="68601000" />
-      <workItem from="1734654084897" duration="2101000" />
+      <workItem from="1734654084897" duration="8302000" />
     </task>
     <servers />
   </component>

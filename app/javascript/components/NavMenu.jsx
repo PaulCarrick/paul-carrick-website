@@ -1,5 +1,7 @@
 // app/javascript/components/NavMenu.jsx
+
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const NavMenu = ({menuItems}) => {
   return (
@@ -13,7 +15,7 @@ const NavMenu = ({menuItems}) => {
         aria-expanded="false"
         aria-label="Toggle navigation"
       >
-      <span className="navbar-toggler-icon"></span>
+      <span className="navbar-toggler-icon"/>
       </button>
       <div className="collapse navbar-collapse" id="navbarNavDropdown">
         <ul className="ms-auto navbar-nav">
@@ -44,7 +46,7 @@ const NavMenu = ({menuItems}) => {
                 </div>
               ) : (
                 // Render regular item with a conditional for SVG icon button
-                (item.options == "image-file") ? (
+                (item.options === "image-file") ? (
                   <img src={item.icon} alt={item.icon} style={{ paddingTop: '20px' }} />
                 ) : (
                   <a className="nav-link px-lg-3 py-lg-4 text-uppercase" href={item.link}>
@@ -58,6 +60,23 @@ const NavMenu = ({menuItems}) => {
       </div>
     </div>
   );
+};
+
+NavMenu.propTypes = {
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+                      label: PropTypes.string.isRequired,
+                      link: PropTypes.string,
+                      sub_items: PropTypes.arrayOf(
+                        PropTypes.shape({
+                                          label: PropTypes.string.isRequired,
+                                          link: PropTypes.string
+                                        })
+                      ).isRequired,
+                      options: PropTypes.string,
+                      icon: PropTypes.string,
+                    })
+  ).isRequired
 };
 
 export default NavMenu;

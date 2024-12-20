@@ -1,3 +1,5 @@
+// /app/javascript/components/PostList.jsx
+
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -365,6 +367,8 @@ PostList.propTypes = {
                           id: PropTypes.number.isRequired,
                           name: PropTypes.string.isRequired,
                           email: PropTypes.string,
+                          logged_in: PropTypes.bool.isRequired,
+                          access: PropTypes.oneOf(['blogs', 'admin', 'super']).isRequired,
                         }).isRequired,
   blog_type: PropTypes.oneOf(['Personal', 'Professional']).isRequired
 };

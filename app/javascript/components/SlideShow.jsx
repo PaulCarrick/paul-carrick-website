@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 const SlideShow = ({ images, captions, slideType }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dropdownValue, setDropdownValue] = useState(""); // Controlled state for dropdown
+  const [dropdownValue, setDropdownValue] = useState("");
 
   const buttonClass = "btn btn-link p-1 text-dark";
   let captionsText = null;
@@ -130,10 +131,10 @@ const SlideShow = ({ images, captions, slideType }) => {
         <select
           style={{ marginLeft: '1em' }}
           onChange={handleDropdownChange}
-          value={dropdownValue} // Controlled value for dropdown
+          value={dropdownValue}
         >
           <option value="" disabled>
-            Select a {slideType || "option"}
+            Select a {slideType || "topic"}
           </option>
           {uniqueCaptionsTitles.map((title, index) => (
             <option key={index} value={title}>
@@ -144,6 +145,22 @@ const SlideShow = ({ images, captions, slideType }) => {
       </div>
     </div>
   );
+};
+
+SlideShow.propTypes = {
+  images: PropTypes.arrayOf(
+    PropTypes.oneOfType([
+                          PropTypes.string,
+                          PropTypes.object
+                        ])
+  ).isRequired,
+  captions: PropTypes.string,
+  slideType: PropTypes.string
+};
+
+SlideShow.defaultProps = {
+  captions: null,
+  slideType: "topic"
 };
 
 export default SlideShow;

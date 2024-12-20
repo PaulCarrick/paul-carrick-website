@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const PostEditor = ({ user, post, blog_type, closeEditor }) => {
-  const [title, setTitle] = useState(post?.title || ''); // Use existing title if editing
-  const [author, setAuthor] = useState(user.name); // Always set to the current user
-  const [content, setContent] = useState(post?.content || ''); // Use existing content if editing
-  const [posted, setPosted] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
-  const [visibility, setVisibility] = useState(post?.visibility || 'public'); // Default visibility to "public"
+const PostEditor = ({user, post, blog_type, closeEditor}) => {
+  const [ title, setTitle ] = useState(post?.title || ''); // Use existing
+                                                           // title if editing
+  const [ author, setAuthor ] = useState(user.name); // Always set to the
+                                                     // current user
+  const [ content, setContent ] = useState(post?.content || ''); // Use
+                                                                 // existing
+                                                                 // content if
+                                                                 // editing
+  const [ posted, setPosted ] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
+  const [ visibility, setVisibility ] = useState(post?.visibility || 'public'); // Default visibility to "public"
 
   const handleSubmit = () => {
     const getCsrfToken = () => {
@@ -27,15 +33,23 @@ const PostEditor = ({ user, post, blog_type, closeEditor }) => {
         'X-CSRF-Token': getCsrfToken(), // Include the CSRF token here
       },
       body: JSON.stringify({
-        blog_post: { title, author, blog_type, content, posted, visibility }, // Include all fields
-      }),
+                             blog_post: {
+                               title,
+                               author,
+                               blog_type,
+                               content,
+                               posted,
+                               visibility
+                             }, // Include all fields
+                           }),
     })
       .then((response) => {
         if (response.ok) {
           console.log('Post saved successfully!');
           closeEditor(); // Close the editor on success
           window.location.href = '/blogs'; // Redirect to the blogs page
-        } else {
+        }
+        else {
           console.error('Failed to save post');
         }
       })
@@ -75,14 +89,14 @@ const PostEditor = ({ user, post, blog_type, closeEditor }) => {
           value={visibility}
           onChange={(e) => setVisibility(e.target.value)}
           className="form-control"
-          style={{ maxWidth: '6em' }}
+          style={{maxWidth: '6em'}}
         >
           <option value="">Select visibility</option>
           <option value="Public">Public</option>
           <option value="Private">Private</option>
         </select>
       </div>
-      <ReactQuill value={content} onChange={setContent} />
+      <ReactQuill value={content} onChange={setContent}/>
       <div className="mt-3">
         <button onClick={handleSubmit} className="btn btn-primary me-2">
           {post ? 'Update' : 'Submit'}
@@ -93,6 +107,28 @@ const PostEditor = ({ user, post, blog_type, closeEditor }) => {
       </div>
     </div>
   );
+};
+
+PostEditor.propTypes = {
+  user: PropTypes.shape({
+                          name: PropTypes.string.isRequired
+                        }).isRequired,
+  post: PropTypes.shape({
+                          id: PropTypes.number,
+                          title: PropTypes.string,
+                          content: PropTypes.string,
+                          posted: PropTypes.string,
+                          visibility: PropTypes.oneOf([ 'public', 'private' ]),
+                        }),
+  blog_type: PropTypes.oneOf([ 'Personal', 'Professional' ]).isRequired,
+  closeEditor: PropTypes.func.isRequired
+};
+
+PostEditor.defaultProps = {
+  blog_type: 'Personal',
+  post: {
+    visibility: 'Public'
+  }
 };
 
 export default PostEditor;

@@ -3,6 +3,7 @@
 // Displays the contents of a section
 
 import React from "react";
+import PropTypes from 'prop-types';
 import RenderContent from "./RenderContent";
 import getDefaultOptions from "./getDefaultOptions";
 import setupToggle from "./setupToggle";
@@ -40,6 +41,14 @@ const DisplayContent = ({
                      toggleClass={toggleClass}
       />
     </div>);
+};
+
+DisplayContent.propTypes = {
+  content: PropTypes.string,
+  image: PropTypes.string,
+  link: PropTypes.string,
+  format: PropTypes.string,
+  sectionId: PropTypes.string
 };
 
 export default DisplayContent;
