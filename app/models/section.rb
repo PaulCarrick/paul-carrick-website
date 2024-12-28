@@ -24,6 +24,8 @@ class Section < ApplicationRecord
   private
 
   def setup_formatting
+    return unless self.formatting.present?
+
     row_style = self.formatting['row_style']
     self.row_style = row_style.gsub(/\A"|"\z/, '') if row_style.present? && !self.row_style.present?
 
