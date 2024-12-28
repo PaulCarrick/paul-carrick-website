@@ -51,6 +51,16 @@
     height: fit-content;
 }
 
+.distributed-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.center-item {
+    margin: 0 auto;
+}
+
 .col-quarter {
     flex: 0 0 2.0833335%;
     max-width: 2.0833335%;

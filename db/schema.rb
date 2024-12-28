@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_18_123331) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_22_125116) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -144,11 +144,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_12_18_123331) do
     t.integer "section_order"
     t.string "image"
     t.string "link"
-    t.string "formatting"
     t.text "description"
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.string "checksum", limit: 512
+    t.jsonb "formatting", default: {}, null: false
+    t.string "row_style"
+    t.string "div_ratio"
+    t.jsonb "image_attributes", default: {}, null: false
+    t.jsonb "text_attributes", default: {}, null: false
   end
 
   create_table "site_setups", force: :cascade do |t|

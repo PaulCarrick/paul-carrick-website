@@ -27,8 +27,8 @@ namespace :html do
     STDIN.gets.chomp # Explicitly read from STDIN to capture input
   end
 
-  desc "Cleanup Sections HTML and JSON"
-  task :cleanup_sections_html_and_json, [ :interactive ] => :environment do |t, args|
+  desc "Cleanup Sections HTML"
+  task :cleanup_sections_html, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
     puts "Cleaning Sections with interactive mode: #{args[:interactive]}"
 
@@ -38,9 +38,6 @@ namespace :html do
           section.description = Utilities.pretty_print_html(section.description)
         end
 
-        if section.formatting.present?
-          section.formatting = Utilities.pretty_print_json(section.formatting, false)
-        end
         section.save!
       rescue => e
         identifier = "(#{section.id} - #{section.content_type} #{section.section_order})"

@@ -71,10 +71,7 @@
         </div>
         <div class="col-9">
           <%=
-            formatting = section.formatting_to_text
-            formatting = formatting.gsub("\n", "<br>") if formatting.present?
-
-            raw(formatting)
+            section.formatting
           %>
         </div>
         <div class="col-2">

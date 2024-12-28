@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-const SlideShow = ({ images, captions, slideType }) => {
+const SlideShow = ({ images = [], slideType = "Topic" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [dropdownValue, setDropdownValue] = useState("");
 
   const buttonClass = "btn btn-link p-1 text-dark";
-  let captionsText = null;
-  let captionsTitles = null;
+  const uniqueCaptions = [...new Set(images.map(image => image.caption))];
 
   const handleFirst = () => {
     setCurrentIndex(0);
@@ -35,7 +34,7 @@ const SlideShow = ({ images, captions, slideType }) => {
 
   const handleDropdownChange = (event) => {
     const selectedValue = event.target.value;
-    const index = captionsTitles.findIndex((title) => title === selectedValue);
+    const index = images.findIndex(image => image.caption === selectedValue);
     if (index !== -1) {
       setCurrentIndex(index);
       setDropdownValue(selectedValue);
@@ -43,38 +42,8 @@ const SlideShow = ({ images, captions, slideType }) => {
   };
 
   const updateDropdownValue = (index) => {
-    if (captionsTitles && captionsTitles[index]) {
-      setDropdownValue(captionsTitles[index]);
-    }
+    if (images[index].caption) setDropdownValue(images[index].caption);
   };
-
-  const extractTextFromSections = (html) => {
-    const matches = html.match(/<section>(.*?)<\/section>/gs);
-    return matches ? matches.map((section) => section.replace(/<\/?section>/g, "")) : [];
-  };
-
-  const extractTitlesFromSections = (html) => {
-    const matches = html.match(/<title>(.*?)<\/title>/gs);
-    return matches ? matches.map((title) => title.replace(/<\/?title>/g, "")) : [];
-  };
-
-  const addTextAlignLeftClass = (htmlString) => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(htmlString, 'text/html');
-
-    doc.querySelectorAll('p').forEach((p) => {
-      p.classList.add('text-start');
-    });
-
-    return doc.body.innerHTML;
-  };
-
-  if (captions) {
-    captionsText = extractTextFromSections(captions);
-    captionsTitles = extractTitlesFromSections(captions);
-  }
-
-  const uniqueCaptionsTitles = [...new Set(captionsTitles)];
 
   return (
     <div style={{ textAlign: 'left' }}>
@@ -86,7 +55,7 @@ const SlideShow = ({ images, captions, slideType }) => {
           textAlign: 'center',
         }}
       >
-        {captionsTitles && captionsTitles[currentIndex] && (
+        {images[currentIndex].caption && (
           <p
             className="display-5 fw-bold mb-1 text-dark"
             style={{
@@ -96,20 +65,20 @@ const SlideShow = ({ images, captions, slideType }) => {
               fontSize: '1.25em',
             }}
           >
-            {captionsTitles[currentIndex]}
+            {images[currentIndex].caption}
           </p>
         )}
         <a href={images[currentIndex]} target="_blank" rel="noopener noreferrer">
           <img
-            src={images[currentIndex]}
+            src={images[currentIndex].image_url}
             alt={`Slide ${currentIndex}`}
             style={{ maxWidth: '100%', maxHeight: '640px', height: 'auto' }}
           />
         </a>
 
-        {captionsText && captionsText[currentIndex] && (
+        {images[currentIndex].description && (
           <div className="text-start">
-            <div dangerouslySetInnerHTML={{ __html: addTextAlignLeftClass(captionsText[currentIndex]) }} />
+            <div dangerouslySetInnerHTML={{ __html: images[currentIndex].description }} />
           </div>
         )}
       </div>
@@ -136,7 +105,7 @@ const SlideShow = ({ images, captions, slideType }) => {
           <option value="" disabled>
             Select a {slideType || "topic"}
           </option>
-          {uniqueCaptionsTitles.map((title, index) => (
+          {uniqueCaptions.map((title, index) => (
             <option key={index} value={title}>
               {title}
             </option>
@@ -154,13 +123,7 @@ SlideShow.propTypes = {
                           PropTypes.object
                         ])
   ).isRequired,
-  captions: PropTypes.string,
   slideType: PropTypes.string
-};
-
-SlideShow.defaultProps = {
-  captions: null,
-  slideType: "topic"
 };
 
 export default SlideShow;

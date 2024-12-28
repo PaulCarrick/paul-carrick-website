@@ -1,21 +1,12 @@
 // /app/javascript/components/getDefaultOptions.jsx
+// noinspection JSCheckFunctionSignatures
 
 // Default options for the DisplayContent
 
-import React from "react";
 import parseStyle from "./parseStyle";
 
-const getDefaultOptions = (format) => {
-  let options = null;
-
-  if (format) {
-    try {
-      options = JSON.parse(format);
-    }
-    catch (parse_error) {
-      console.error("Invalid JSON string for format:", parse_error);
-    }
-  }
+const getDefaultOptions = (format = "{}") => {
+  let options = format;
 
   if (!options) {
     options = {

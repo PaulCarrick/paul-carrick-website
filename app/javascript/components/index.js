@@ -1,3 +1,6 @@
+// /app/javascripts/components/index.js
+// noinspection JSUnresolvedFunction
+
 import React from "react";
 import {createRoot} from "react-dom/client";
 import App from "./App";
@@ -16,6 +19,13 @@ import ContentBlock from "./ContentBlock";
 import RenderImage from "./RenderImage";
 import RenderSingleImage from "./RenderSingleImage";
 import RenderSlideShow from "./RenderSlideShow";
+import EditableComboBox from "./EditableComboBox";
+import SelectControl from "./SelectControl";
+import SectionAttributes from "./SectionAttributes";
+import SectionEditor from "./SectionEditor";
+import HtmlEditor from "./HtmlEditor";
+import RenderControl from "./RenderControl";
+import RenderSection from "./RenderSection";
 
 try {
   ReactRailsUJS.register({
@@ -31,6 +41,13 @@ try {
                            RenderImage,
                            RenderSingleImage,
                            RenderSlideShow,
+                           EditableComboBox,
+                           SelectControl,
+                           SectionAttributes,
+                           SectionEditor,
+                           HtmlEditor,
+                           RenderControl,
+                           RenderSection,
                          });
 }
 catch (error) {

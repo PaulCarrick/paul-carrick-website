@@ -5,7 +5,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-const RenderSingleImage = ({image, link, options}) => {
+const RenderSingleImage = ({
+                               image = "",
+                               link = "",
+                               options = {}
+                           }) => {
   const renderImage = () => {
     if (link) {
       return (
@@ -50,16 +54,6 @@ RenderSingleImage.propTypes = {
                              image_caption: PropTypes.string,
                              caption_position: PropTypes.oneOf(["top", "bottom", null])
                            }).isRequired
-};
-
-RenderSingleImage.defaultProps = {
-  link: null,
-  options: {
-    image_styles: {},
-    caption_classes: "caption",
-    image_caption: null,
-    caption_position: "bottom",
-  },
 };
 
 export default RenderSingleImage;

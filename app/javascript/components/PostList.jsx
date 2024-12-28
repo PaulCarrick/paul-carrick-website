@@ -1,4 +1,5 @@
 // /app/javascript/components/PostList.jsx
+// noinspection JSUnresolvedVariable
 
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
@@ -6,7 +7,15 @@ import moment from 'moment';
 import PostEditor from './PostEditor';
 import CommentEditor from './CommentEditor';
 
-const PostList = ({ user, blog_type }) => {
+const PostList = ({
+                    user = {
+                      id: 2,
+                      name: "Unknown",
+                      email: "guest@paul-carrick.com",
+                      logged_in: false,
+                      access: "blogs"
+                    },
+                    blog_type = "Personal" }) => {
   const [posts, setPosts] = useState([]);
   const [meta, setMeta] = useState({ totalPages: 1, currentPage: 1, totalCount: 0 });
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,8 +67,7 @@ const PostList = ({ user, blog_type }) => {
   }, [currentPage]);
 
   const DateTimeDisplay = ({ dateTime }) => {
-    const formattedDate = moment(dateTime).local().format('MMM Do YYYY HH:mm');
-    return formattedDate;
+    return moment(dateTime).local().format('MMM Do YYYY HH:mm');
   };
 
   const openPostEditor = (post = null) => {
@@ -256,7 +264,7 @@ const PostList = ({ user, blog_type }) => {
         <>
           <div className="row">
             <div className="col-2">
-              {((user.access == 'blogs') || (user.access == 'admin') || (user.access == 'super')) && (
+              {((user.access === 'blogs') || (user.access === 'admin') || (user.access === 'super')) && (
                 <button onClick={() => openPostEditor()} className="btn btn-primary">
                   Add Post
                 </button>
@@ -371,10 +379,6 @@ PostList.propTypes = {
                           access: PropTypes.oneOf(['blogs', 'admin', 'super']).isRequired,
                         }).isRequired,
   blog_type: PropTypes.oneOf(['Personal', 'Professional']).isRequired
-};
-
-PostList.defaultProps = {
-  blog_type: 'Personal'
 };
 
 export default PostList;

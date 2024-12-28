@@ -55,10 +55,10 @@ gem "react-rails"
 gem 'pagy'
 gem 'htmlbeautifier'
 gem 'active_model_serializers'
-gem "byebug"
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem 'debug', platforms: [ :mri ]
   gem "brakeman", require: false
   gem 'rspec-rails'
   gem 'vcr'

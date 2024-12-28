@@ -23,10 +23,12 @@ module ApplicationHelper
     links       = [
       link_to("View",
               show_path,
-              class: "btn-link me-2"),
+              class: "btn-link me-2",
+              target: "_self"),
       link_to("Edit",
               edit_path,
-              class: "btn-link me-2")
+              class: "btn-link me-2",
+              target: "_self")
     ]
 
     if @application_user.admin?
@@ -40,5 +42,9 @@ module ApplicationHelper
     end
 
     content_tag(:div, class: "action-links") { links.join.html_safe }
+  end
+
+  def quil_editor(id, value_name, classes = "", styles = "")
+    render 'shared/quil_editor', locals: { id: id, value_name: value_name, classes: classes, styles: styles }
   end
 end

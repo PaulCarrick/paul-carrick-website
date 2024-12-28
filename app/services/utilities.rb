@@ -25,15 +25,22 @@ module Utilities
     truncated_doc.to_html
   end
 
-  def self.pretty_print_json(text, html = true)
-    return unless text.present?
+  def self.pretty_print_json(data, html = true)
+    return unless data.present?
 
+    # Ensure the data is a hash or array, if it's a string, parse it as JSON
+    parsed_data = data.is_a?(String) ? JSON.parse(data) : data
+
+    # Pretty print the JSON
     if html
-      results = JSON.pretty_generate(JSON.parse(text)).gsub(/^(\s+)/) { |match| "&nbsp;&nbsp;&nbsp;&nbsp;" * (match.size / 2) }
-
+      results = JSON.pretty_generate(parsed_data).gsub(/^(\s+)/) do |match|
+        "&nbsp;&nbsp;&nbsp;&nbsp;" * (match.size / 2)
+      end
       results.gsub("\n", "<br>")
     else
-      JSON.pretty_generate(JSON.parse(text)).gsub(/^(\s+)/) { |match| "    " * (match.size / 2) }
+      JSON.pretty_generate(parsed_data).gsub(/^(\s+)/) do |match|
+        "    " * (match.size / 2)
+      end
     end
   end
 

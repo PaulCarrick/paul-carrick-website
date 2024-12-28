@@ -1,11 +1,21 @@
 // /app/javascript/components/CommentEditor.jsx
+// noinspection JSUnusedLocalSymbols
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const CommentEditor = ({ user, post, comment, closeEditor }) => {
+const CommentEditor = ({
+                           user = {
+                               name: 'Unknown'
+                           },
+                           post =  {
+                               visibility: 'Public'
+                           },
+                           blog_type = "Personal",
+                           closeEditor = null
+                       }) => {
   const [blogPostId, setBlogPostId] = useState(post?.id || null);
   const [title, setTitle] = useState(comment?.title || ''); // Use existing title if editing
   const [author, setAuthor] = useState(user.name); // Always set to the current user
@@ -36,7 +46,9 @@ const CommentEditor = ({ user, post, comment, closeEditor }) => {
       .then((response) => {
         if (response.ok) {
           console.log('Comment saved successfully!');
-          closeEditor(); // Close the editor on success
+
+          if (closeEditor) closeEditor();
+
           // Redirect to the parent blogs post or refresh comments
           window.location.href = `/blog`;
         } else {
@@ -46,7 +58,8 @@ const CommentEditor = ({ user, post, comment, closeEditor }) => {
       .catch((error) => console.error('Error:', error));
   };
 
-  return (
+  // noinspection JSValidateTypes
+    return (
     <div>
       <h1>{comment ? 'Edit Comment' : 'Create a New Comment'}</h1>
       <input

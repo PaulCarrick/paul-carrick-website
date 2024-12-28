@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const NavMenu = ({menuItems}) => {
+const NavMenu = ({menuItems = []}) => {
   return (
     <div className="container">
       <button

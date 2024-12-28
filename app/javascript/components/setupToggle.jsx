@@ -2,7 +2,7 @@
 import React, {useEffect} from "react";
 
 // Helper to set up toggle functionality
-const setupToggle = (elementId, className) => {
+const setupToggle = (elementId = "", className = "") => {
   useEffect(() => {
     const setupLogic = () => {
       const toggleButton = document.getElementById(elementId);

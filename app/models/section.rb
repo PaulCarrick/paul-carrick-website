@@ -2,7 +2,7 @@
 
 class Section < ApplicationRecord
   after_find :verify_checksum
-  after_find :cleanup_formatting
+  after_find :setup_formatting
 
   include Checksum
   include Validation
@@ -21,56 +21,47 @@ class Section < ApplicationRecord
     []
   end
 
-  def formatting_to_text
-    results = []
-
-    if formatting.present? && formatting_is_valid
-      formatting_json = JSON.parse(formatting)
-
-      formatting_json.each do |option|
-        results << "#{option[0]}: #{option[1]}"
-      end
-
-      results.join("\n")
-    end
-  end
-
-  def text_to_formatting(text)
-    return unless text.present?
-
-    options = text.split("\n")
-
-    return unless options.present?
-
-    results = "{\n"
-
-    options.each do |option|
-      option_name, option_value = option.split(":", 2)
-
-      next unless option_name.present? && option_value.present?
-
-      if results != "{\n"
-        results << ",\n    \"#{option_name.strip}\": \"#{option_value.strip}\""
-      else
-        results << "    \"#{option_name.strip}\": \"#{option_value.strip}\""
-      end
-    end
-
-    results += "\n}"
-
-    self.formatting = results if json_is_valid(results)
-  end
-
-  def cleanup_formatting
-    return unless self.formatting.present?
-
-    formatting_json = JSON.parse(self.formatting)
-    formatting_json.transform_keys!(&:strip)
-    formatting_json.transform_values!(&:strip)
-    self.formatting = formatting_json.to_json
-  end
-
   private
+
+  def setup_formatting
+    row_style = self.formatting['row_style']
+    self.row_style = row_style.gsub(/\A"|"\z/, '') if row_style.present? && !self.row_style.present?
+
+    return if self.div_ratio.present?
+
+    if ((self.row_style == "text-left") || (self.row_style == "text-right"))
+      text_classes = self.formatting['text_classes']
+      image_classes = self.formatting['image_classes']
+      text_width = Regexp.last_match(1).to_i if text_classes.present? && text_classes =~ /col\-.*?(\d{1,2})/
+      image_width = Regexp.last_match(1).to_i if image_classes.present? && image_classes =~ /col\-.*?(\d{1,2})/
+
+      if text_width.present? && (text_width > 0) && image_width.present? && (image_width > 0)
+        text_percentage = ((text_width.to_f / 12.0) * 100).floor
+        image_percentage = ((image_width.to_f/ 12.0) * 100).floor
+
+        ratios = {
+          90 => "90:10",
+          80 => "80:20",
+          70 => "70:30",
+          60 => "60:40",
+          50 => "50:50",
+          40 => "40:60",
+          30 => "30:70",
+          20 => "20:80",
+          10 => "10:90"
+        }
+
+        closest_text_ratio = ratios.keys.min_by { |key| (text_percentage - key).abs }
+        closest_image_ratio = ratios.keys.min_by { |key| (image_percentage - key).abs }
+
+        if (closest_text_ratio + closest_image_ratio) === 100
+          div_ratio = ratios[closest_text_ratio]
+        end
+      end
+    end
+
+    self.div_ratio = div_ratio
+  end
 
   def verify_checksum
     return unless description.present?
@@ -87,20 +78,6 @@ class Section < ApplicationRecord
     return unless image.blank? && link.blank? && description.blank?
 
     errors.add(:base, "At least one of image, link, or description must be present.")
-  end
-
-  def json_is_valid(json)
-    return unless json.present?
-
-    begin
-      JSON.parse(json)
-    rescue => e
-      errors.add(:base, "Invalid JSON: #{e.message}\ninput: #{json}.")
-    end
-  end
-
-  def formatting_is_valid
-    json_is_valid(formatting)
   end
 
   def description_is_valid

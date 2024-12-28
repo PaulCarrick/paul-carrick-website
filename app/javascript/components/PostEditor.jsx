@@ -1,19 +1,25 @@
+// /app/javascript/components/PostEditor.jsx
+// noinspection JSUnusedLocalSymbols
+
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const PostEditor = ({user, post, blog_type, closeEditor}) => {
-  const [ title, setTitle ] = useState(post?.title || ''); // Use existing
-                                                           // title if editing
-  const [ author, setAuthor ] = useState(user.name); // Always set to the
-                                                     // current user
-  const [ content, setContent ] = useState(post?.content || ''); // Use
-                                                                 // existing
-                                                                 // content if
-                                                                 // editing
-  const [ posted, setPosted ] = useState(post?.posted || new Date().toISOString()); // Set posted if editing, otherwise use now
-  const [ visibility, setVisibility ] = useState(post?.visibility || 'public'); // Default visibility to "public"
+const PostEditor = ({
+                        user = {
+                            name: 'Unknown'
+                        },
+                        post =  {
+                            visibility: 'Public'
+                        },
+                        blog_type = "Personal",
+                        closeEditor = null }) => {
+  const [ title, setTitle ] = useState(post?.title || '');
+  const [ author, setAuthor ] = useState(user.name);
+  const [ content, setContent ] = useState(post?.content || '');
+  const [ posted, setPosted ] = useState(post?.posted || new Date().toISOString());
+  const [ visibility, setVisibility ] = useState(post?.visibility || 'public');
 
   const handleSubmit = () => {
     const getCsrfToken = () => {
@@ -46,7 +52,8 @@ const PostEditor = ({user, post, blog_type, closeEditor}) => {
       .then((response) => {
         if (response.ok) {
           console.log('Post saved successfully!');
-          closeEditor(); // Close the editor on success
+          // noinspection JSValidateTypes
+            closeEditor(); // Close the editor on success
           window.location.href = '/blogs'; // Redirect to the blogs page
         }
         else {
@@ -56,7 +63,8 @@ const PostEditor = ({user, post, blog_type, closeEditor}) => {
       .catch((error) => console.error('Error:', error));
   };
 
-  return (
+  // noinspection JSValidateTypes
+    return (
     <div>
       <h1>{post ? 'Edit Post' : 'Create a New Post'}</h1>
       <input
@@ -122,13 +130,6 @@ PostEditor.propTypes = {
                         }),
   blog_type: PropTypes.oneOf([ 'Personal', 'Professional' ]).isRequired,
   closeEditor: PropTypes.func.isRequired
-};
-
-PostEditor.defaultProps = {
-  blog_type: 'Personal',
-  post: {
-    visibility: 'Public'
-  }
 };
 
 export default PostEditor;

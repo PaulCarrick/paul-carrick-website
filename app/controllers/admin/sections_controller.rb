@@ -14,7 +14,8 @@ class Admin::SectionsController < Admin::AbstractAdminController
   def new
     super
 
-    @content_types = Section.distinct.pluck(:content_type)
+    @content_types = Section.distinct.order(:content_type).pluck(:content_type)
+    @images = ImageFile.distinct.order(:name).pluck(:name)
   end
 
   def create
@@ -24,7 +25,6 @@ class Admin::SectionsController < Admin::AbstractAdminController
       set_item(true, get_params)
 
       get_item&.description = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
-      get_item&.formatting = Utilities.pretty_print_json(get_item&.formatting, false) if get_item&.formatting.present?
 
       get_item&.save!
 
@@ -36,17 +36,15 @@ class Admin::SectionsController < Admin::AbstractAdminController
 
   def edit
     super
-
     get_item&.description = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
-    get_item&.formatting = Utilities.pretty_print_json(get_item&.formatting, false) if get_item&.formatting.present?
-    @content_types = Section.distinct.pluck(:content_type)
+    @content_types = Section.distinct.order(:content_type).pluck(:content_type)
+    @images = ImageFile.distinct.order(:name).pluck(:name)
   end
 
   def update
     @error_message = nil
     data = get_params
     data[:description] = Utilities.pretty_print_html(data[:description]) if data[:description].present?
-    data[:formatting] = Utilities.pretty_print_json(data[:formatting], false) if data[:formatting].present?
 
     begin
       throw "You are not permitted to change #{class_title}." unless @application_user.admin?

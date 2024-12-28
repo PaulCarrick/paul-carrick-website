@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+// /app/javascripts/components.parseStyle.jsx
 
 // Helper to parse inline styles
-const parseStyle = (styleString) => {
+
+const parseStyle = (styleString = "{}") => {
   if (!styleString || typeof styleString !== "string") return {};
 
   return styleString.split(";").reduce((styleObj, style) => {

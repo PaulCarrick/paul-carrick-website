@@ -80,21 +80,18 @@ class PagesController < ApplicationController
       images = get_image_path(images)
     end
 
-    [ images, description, formatting, subsection ]
+    [images, description, formatting, subsection]
   end
 
   def handle_image_group(group_name, formatting)
     image_files = ImageFile.by_image_group(group_name)
 
     if image_files.present?
-      images      = image_files.map { |image_file| get_image_url(image_file) }
-      description = image_files.map do |image_file|
-        "<title>\n#{sanitize_html(image_file.caption)}\n</title>\n<section>\n#{sanitize_html(image_file.description)}\n</section>\n"
-      end.join
-      formatting  = add_images_to_formatting(formatting, images)
-      [ nil, description, formatting ]
+      formatting = add_images_to_formatting(formatting, image_files)
+
+      [nil, "", formatting]
     else
-      [ @missing_image, "", formatting ]
+      [@missing_image, "", formatting]
     end
   end
 
@@ -120,8 +117,6 @@ class PagesController < ApplicationController
     end
 
     results ||= @missing_image
-
-    results
   end
 
   def handle_single_image_file(section, file_name)
@@ -141,9 +136,9 @@ class PagesController < ApplicationController
       description            = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
       subsection, formatting = build_subsection(section, image_file, formatting)
 
-      [ image_url, description, subsection, formatting ]
+      [image_url, description, subsection, formatting]
     else
-      [ @missing_image, "", nil, nil ]
+      [@missing_image, "", nil, nil]
     end
   end
 
@@ -155,19 +150,15 @@ class PagesController < ApplicationController
     subsection.description = image_file.description
 
     if formatting.include?('expanding_rows')
-      json = JSON.parse(formatting)
-
-      json.delete("expanding_rows")
-
-      formatting = json.to_json
+      formatting.delete("expanding_rows")
     end
 
-    [ subsection, formatting ]
+    [subsection, formatting]
   end
 
   def handle_image_array(image_list, formatting)
-    images = image_list.split(",").map { |image_file| get_image_path(image_file) }
-    [ nil, add_images_to_formatting(formatting, images) ]
+    images = image_list.split(",").map { |image_name| ImageFile.find_by_name(image_name) }
+    [nil, add_images_to_formatting(formatting, images)]
   end
 
   def process_video_images
@@ -206,36 +197,42 @@ class PagesController < ApplicationController
   end
 
   def flip_formatting_side(formatting)
-    return '{ row_style: "text-right" }' unless formatting.present?
+    return { row_style: "text-right" } unless formatting.present?
 
-    formatting_json = JSON.parse(formatting)
+    new_formatting = formatting.deep_dup
 
-    formatting_json["row_style"] =
-      case formatting_json["row_style"]
-      when "text-left" then "text-right"
-      else "text-left"
-      end
-
-    swap_classes!(formatting_json)
-
-    formatting_json.to_json
+    if new_formatting['row_style'] == "text-left"
+      new_formatting['row_style'] = "text-right"
+      swap_classes!(new_formatting)
+    else
+      new_formatting['row_style'] = "text-left"
+      swap_classes!(new_formatting)
+    end
   end
 
-  def swap_classes!(formatting_json)
-    if formatting_json["text_classes"].present? && formatting_json["image_classes"].present?
-      formatting_json["image_classes"].gsub!(/w-\d\d|w-\d\d\d/, "")
-      formatting_json["text_classes"], formatting_json["image_classes"] =
-        formatting_json["image_classes"], formatting_json["text_classes"]
+  def swap_classes!(formatting)
+    if formatting["text_classes"].present? && formatting["image_classes"].present?
+      formatting["image_classes"].gsub!(/w-\d\d|w-\d\d\d/, "")
+      formatting["text_classes"], formatting["image_classes"] = formatting["image_classes"],
+        formatting["text_classes"]
     end
 
-    if formatting_json["row_classes"].present?
-      formatting_json["row_classes"].gsub!(/mt-\d|pt-\d/, "")
+    if formatting["row_classes"].present?
+      formatting["row_classes"].gsub!(/mt-\d|pt-\d/, "")
     end
+
+    formatting
   end
 
   def add_images_to_formatting(formatting, images)
-    json                      = formatting.present? ? JSON.parse(formatting) : {}
-    json["slide_show_images"] = images
-    json.to_json
+    formatting["slide_show_images"] = images.map do |image|
+      {
+        image_url:   image.image_url,
+        caption:     image.caption,
+        description: image.description
+      }
+    end
+
+    formatting
   end
 end

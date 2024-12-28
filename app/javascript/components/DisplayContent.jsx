@@ -1,4 +1,5 @@
 // /app/javascript/components.DisplayContent.jsx
+// noinspection JSValidateTypes
 
 // Displays the contents of a section
 
@@ -9,15 +10,16 @@ import getDefaultOptions from "./getDefaultOptions";
 import setupToggle from "./setupToggle";
 
 const DisplayContent = ({
-                          content,
-                          image,
-                          link,
-                          format,
-                          sectionId
+                          content = "",
+                          image = null,
+                          link = "",
+                          format = null,
+                          sectionId = ""
                         }) => {
   let options = getDefaultOptions(format);
 
-  const toggleId = options.expanding_rows
+  // noinspection JSDeprecatedSymbols
+    const toggleId = options.expanding_rows
     ? `toggle-${Math.random().toString(36).substr(2, 9)}`
     : null;
   let toggleClass = "btn btn-primary my-2";
@@ -47,7 +49,10 @@ DisplayContent.propTypes = {
   content: PropTypes.string,
   image: PropTypes.string,
   link: PropTypes.string,
-  format: PropTypes.string,
+  format: PropTypes.oneOfType([
+                                PropTypes.object,
+                                PropTypes.array
+                              ]),
   sectionId: PropTypes.string
 };
 

@@ -48,16 +48,6 @@ RSpec.describe Section, type: :model do
       end
     end
 
-    describe "#cleanup_formatting" do
-      it "cleans up formatting JSON by stripping keys and values" do
-        section = Section.create!(content_type: 'Test', description: "<html><body><p>Valid HTML</p></body></html>", formatting: '{"key":"value"}')
-        section.update!(formatting: '{" key ": " value "}')
-        section = Section.find(section.id)
-        expect(section.formatting).to eq('{"key":"value"}')
-      end
-    end
-  end
-
   describe "scopes" do
     let!(:section_1) { Section.create!(content_type: "type1", description: "Section 1", section_order: 1) }
     let!(:section_2) { Section.create!(content_type: "type1", description: "Section 2", section_order: 2) }

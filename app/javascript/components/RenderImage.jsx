@@ -7,7 +7,12 @@ import PropTypes from 'prop-types';
 import RenderSlideShow from "./RenderSlideShow";
 import RenderSingleImage from "./RenderSingleImage";
 
-const RenderImage = ({content, image, link, options}) => {
+const RenderImage = ({
+                         content = "",
+                         image = "",
+                         link = "",
+                         options = {}
+                    }) => {
   if (options.slide_show_images) {
     return (
       <RenderSlideShow
@@ -43,12 +48,6 @@ RenderImage.propTypes = {
                              ),
                              slide_show_type: PropTypes.string
                            }).isRequired,
-};
-
-RenderImage.defaultProps = {
-  content: null,
-  image: null,
-  link: null
 };
 
 export default RenderImage;

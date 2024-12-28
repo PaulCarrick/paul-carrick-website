@@ -6,11 +6,13 @@ import React from "react";
 import PropTypes from 'prop-types';
 import SlideShow from "./SlideShow";
 
-const RenderSlideShow = ({ images, captions, slideType }) => {
+const RenderSlideShow = ({
+                             images = [],
+                             slideType = "Topic"
+                         }) => {
   return (
     <div className="slideshow-container">
-      <SlideShow images={images} captions={captions}
-                 slideType={slideType || "topic"}/>
+      <SlideShow images={images} slideType={slideType || "topic"}/>
     </div>
   );
 };
@@ -22,17 +24,7 @@ RenderSlideShow.propTypes = {
                           PropTypes.object
                         ])
   ).isRequired,
-  captions: PropTypes.oneOfType([
-                                  PropTypes.arrayOf(PropTypes.string),
-                                  PropTypes.string,
-                                  PropTypes.null
-                                ]),
   slideType: PropTypes.string
-};
-
-RenderSlideShow.defaultProps = {
-  captions: null,
-  slideType: "topic",
 };
 
 export default RenderSlideShow;

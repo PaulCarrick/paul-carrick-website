@@ -1,11 +1,15 @@
-// /app/javascript/componenets/ContentBlock.jsx
+// /app/javascript/components/ContentBlock.jsx
 
 // Render a content block
 
 import React from "react";
 import PropTypes from 'prop-types';
 
-const ContentBlock = ({content, options, toggleId, toggleClass}) => {
+const ContentBlock = ({
+                          content = null,
+                          options = {},
+                          toggleId = null,
+                          toggleClass = ""}) => {
   return (
     <>
       <div dangerouslySetInnerHTML={{__html: content}}/>
@@ -18,15 +22,10 @@ const ContentBlock = ({content, options, toggleId, toggleClass}) => {
 ContentBlock.propTypes = {
   content: PropTypes.string.isRequired,
   options: PropTypes.shape({
-                             expanding_rows: PropTypes.oneOf([true, false, null]),
-                           }).isRequired,
+                             expanding_rows: PropTypes.string,
+                           }),
   toggleId: PropTypes.string,
   toggleClass: PropTypes.string
-};
-
-ContentBlock.defaultProps = {
-  toggleId: null,
-  toggleClass: ''
 };
 
 export default ContentBlock;

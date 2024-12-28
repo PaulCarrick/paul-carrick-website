@@ -8,17 +8,17 @@ import ContentBlock from "./ContentBlock";
 import RenderImage from "./RenderImage";
 
 const RenderContent = ({
-                         options,
-                         content,
-                         image,
-                         link,
-                         sectionId,
-                         toggleId,
-                         toggleClass
+                         options = {},
+                         content = "",
+                         image = "",
+                         link = "",
+                         sectionId = "",
+                         toggleId = "",
+                         toggleClass = {}
                        }) => {
   const rowClasses = `row ${options.row_classes}`;
   let text = content;
-  let captions = null;
+  let captions = "";
 
   if (options.slide_show_images) {
     captions = content;
@@ -133,18 +133,6 @@ RenderContent.propTypes = {
   sectionId: PropTypes.string,
   toggleId: PropTypes.string,
   toggleClass: PropTypes.string
-};
-
-RenderContent.defaultProps = {
-  post: {
-    row_style: "text-single"
-  },
-  content: null,
-  image: null,
-  link: null,
-  sectionId: null,
-  toggleId: null,
-  toggleClass: ""
 };
 
 export default RenderContent;
