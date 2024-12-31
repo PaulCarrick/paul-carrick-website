@@ -36,6 +36,8 @@ function renderSection(content) {
               link={content.link}
               format={content.formatting}
               sectionId={content.sectionName}
+              textAttributes={content.text_attributes}
+              imageAttributes={content.image_attributes}
           />
         </div>
       </div>

@@ -2,6 +2,10 @@
   "name": "app",
   "license": "MIT",
   "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^8.18.1",
     "@typescript-eslint/parser": "^8.18.1",
@@ -41,6 +45,8 @@
     "trix": "^2.1.8"
   },
   "browserslist": [
-    "defaults"
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
   ]
 }

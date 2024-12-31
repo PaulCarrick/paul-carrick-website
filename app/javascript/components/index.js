@@ -26,6 +26,7 @@ import SectionEditor from "./SectionEditor";
 import HtmlEditor from "./HtmlEditor";
 import RenderControl from "./RenderControl";
 import RenderSection from "./RenderSection";
+import ErrorBoundary from "./ErrorBoundary";
 
 try {
   ReactRailsUJS.register({
@@ -48,6 +49,7 @@ try {
                            HtmlEditor,
                            RenderControl,
                            RenderSection,
+                           ErrorBoundary,
                          });
 }
 catch (error) {
