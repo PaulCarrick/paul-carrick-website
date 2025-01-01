@@ -20,7 +20,7 @@ const ContentBlock = ({
 }
 
 ContentBlock.propTypes = {
-  content: PropTypes.string.isRequired,
+  content: PropTypes.string,
   options: PropTypes.shape({
                              expanding_rows: PropTypes.string,
                            }),

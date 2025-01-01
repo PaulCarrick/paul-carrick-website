@@ -9,12 +9,21 @@ import PropTypes from "prop-types";
 import HtmlEditor from "./HtmlEditor";
 import {backgroundColors} from "./backgroundColors";
 import RenderSection from "./RenderSection";
-import {hasImageSection, hasSplitSections, isPresent, getColumWidths} from "./getDefaultOptions";
+import Select from "react-select";
+import {
+  isTextOnly,
+  isImageOnly,
+  hasSplitSections,
+  isPresent,
+  getColumWidths
+} from "./getDefaultOptions";
 
 const SectionEditor = ({
                          section = null,
                          availableContentTypes = null,
-                         availableImages = null
+                         availableImages = null,
+                         availableImageGroups = null,
+                         availableVideos = null
                        }) => {
   // Assign section Record
   const [sectionData, setSectionData] = useState(section);
@@ -51,13 +60,17 @@ const SectionEditor = ({
   const [imageMarginBottom, setImagemarginBottom]       = useState(sectionData.image_margin_bottom);
   const [imageMarginRight, setImagemarginRight]         = useState(sectionData.image_margin_right);
   const [imageBackgroundColor, setImageBackgroundColor] = useState(sectionData.image_background_color);
-  const previousRowStyle = useRef();
-  const previousDivRatio = useRef();
-  const lastChange = useRef();
+  const previousRowStyle                                = useRef();
+  const previousDivRatio                                = useRef();
+  const previousImageMode                               = useRef();
+  const lastChange                                      = useRef();
 
   // Assign select lists
   const [availableContentTypesData, setAvailableContentTypesData] = useState(availableContentTypes);
   const [availableImagesData, setAvailableImagesData]             = useState(availableImages);
+  const [availableImageGroupsData, setAvailableImageGroupsData]   = useState(availableImageGroups);
+  const [availableVideosData, setAvailableVideosData]             = useState(availableVideos);
+  const [imageMode, setImageMode]                                 = useState("Images");
 
   // Setup setters for change callback to update the values
   const attributeSetters = {
@@ -79,7 +92,8 @@ const SectionEditor = ({
     imageMarginBottom:    setImagemarginBottom,
     imageMarginRight:     setImagemarginRight,
     imageBackgroundColor: setImageBackgroundColor,
-  };
+    imageMode:            setImageMode,
+  }
 
   // Onchange/OnBlur Callback
   const setValue = (newValue, attribute) => {
@@ -90,16 +104,16 @@ const SectionEditor = ({
 
       lastChange.current = {
         attribute: attribute,
-        value: convertedValue
-      };
+        value:     convertedValue
+      }
 
       setter(convertedValue);
     }
-  };
+  }
 
   useEffect(() => {
     if (((previousRowStyle.current !== "text-right") &&
-         (previousRowStyle.current !== "text-left")) &&
+        (previousRowStyle.current !== "text-left")) &&
         ((rowStyle === 'text-right') ||
          (rowStyle === 'text-left'))) {
       if (isPresent(previousDivRatio.current))
@@ -115,13 +129,28 @@ const SectionEditor = ({
     previousDivRatio.current = divRatio;
   }, [divRatio]);
 
-  const imageSection = hasImageSection(rowStyle);
+  useEffect(() => {
+    if (previousImageMode.current !== imageMode)
+      setImage("");
+
+    previousDivRatio.current = imageMode;
+  }, [imageMode]);
+
   const splitSection = hasSplitSections(rowStyle)
 
   if (isPresent(lastChange) && isPresent(lastChange.current)) {
-    mapReactValuesToSection(sectionData,
-                            lastChange.current.attribute,
-                            lastChange.current.value);
+    const extraParameters = {
+      rowStyle:  rowStyle,
+      divRatio:  divRatio,
+      imageMode: imageMode,
+    }
+
+    mapReactValuesToSection(
+        sectionData,
+        lastChange.current.attribute,
+        lastChange.current.value,
+        extraParameters
+    );
   }
 
   // *** Main method ***/
@@ -130,28 +159,37 @@ const SectionEditor = ({
         {renderContentType(contentType, availableContentTypesData, setValue)}
         {renderSectionName(sectionName, setValue)}
         {renderSectionOrder(sectionOrder, setValue)}
-        {renderImage(image, availableImagesData, setValue)}
+        {
+          renderImage(
+              image,
+              imageMode,
+              availableImagesData,
+              availableImageGroupsData,
+              availableVideosData,
+              setValue
+          )}
         {renderLink(link, setValue)}
         {renderDescription(description, setValue)}
         {renderRowStyle(rowStyle, setValue)}
         {splitSection && renderDivRatio(divRatio, setValue)}
-        <div className="row">
-          <div className="col-12">
-            {renderAttributes(
-                imageSection,
-                textMarginTop,
-                textMarginBottom,
-                textMarginRight,
-                textMarginLeft,
-                textBackgroundColor,
-                imageMarginTop,
-                imageMarginBottom,
-                imageMarginRight,
-                imageMarginLeft,
-                imageBackgroundColor,
-                setValue
-            )}
-          </div>
+        {
+          renderAllAttributes(
+              rowStyle,
+              textMarginTop,
+              textMarginLeft,
+              textMarginBottom,
+              textMarginRight,
+              textBackgroundColor,
+              imageMarginTop,
+              imageMarginLeft,
+              imageMarginBottom,
+              imageMarginRight,
+              imageBackgroundColor,
+              setValue
+          )
+        }
+        <div className="row mb-2 display-6 center-item text-center">
+          <center>Preview</center>
         </div>
         <div className="row mb-2">
           <div id="sectionAttributes" className="w-100 border border-danger border-width-8">
@@ -167,15 +205,40 @@ const SectionEditor = ({
         </div>
       </div>
   );
-};
+}
 
 // *** Render Functions ***/
 
-function renderSelect(id, value, options, setValue) {
+function renderComboBox(id, value, optionsHash, setValue) {
+  return (
+      <Select
+          inputId={id}
+          value={
+              optionsHash.find((opt) => opt.value === value) ||
+              (value ? { label: value, value } : null)
+          }
+          options={optionsHash}
+          onChange={(newValue, actionMeta) => {
+            setValue(newValue?.value || "", id);
+          }}
+          onInputChange={(newInputValue, actionMeta) => {
+            if (actionMeta.action === "input-change") {
+              setValue(newInputValue, id); // Update the value state with typed input
+            }
+          }}
+          isSearchable
+          isClearable
+          placeholder="Select or type..."
+      />
+  );
+}
+
+function renderSelect(id, value, options, setValue, controlClass = "form-control") {
   return (
       <select
           id={id}
-          value={value ? value : ""}
+          value={isPresent(value) ? value : ""}
+          className={controlClass}
           onChange={(event) => setValue(event.target.value, id)}
       >
         <option value="">Select an option</option>
@@ -188,24 +251,38 @@ function renderSelect(id, value, options, setValue) {
   );
 }
 
+function renderInput(
+    id,
+    value,
+    setValue,
+    placeHolder  = "Please enter a value",
+    type         = "text",
+    controlClass = "form-control"
+) {
+  return (
+      <input
+          type={type}
+          id={id}
+          value={isPresent(value) ? value : ""}
+          placeholder={placeHolder}
+          className={controlClass}
+          onChange={(event) => setValue(event.target.value, id)}
+      />
+  );
+}
+
 function renderContentType(contentType, availableContentTypesData, setValue) {
+  const optionsHash = availableContentTypesData.map((item) => ({
+    label: item,
+    value: item,
+  }));
+
   return (
       <div className="row mb-2">
-        <div className="col-2">Content Type:</div>
+        <div className="col-2 d-flex align-items-center">Content Type:</div>
         <div className="col-10">
           <div id="contentTypeDiv">
-            <select
-                id="contentType"
-                value={contentType}
-                onChange={(event) => setValue(event.target.value, "contentType")}
-            >
-              <option value="">Select an option</option>
-              {availableContentTypesData.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-              ))}
-            </select>
+            {renderComboBox("contentType", contentType, optionsHash, setValue)}
           </div>
         </div>
       </div>
@@ -215,19 +292,17 @@ function renderContentType(contentType, availableContentTypesData, setValue) {
 function renderSectionName(sectionName, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">Section Name:</div>
+        <div className="col-2 d-flex align-items-center">Section Name:</div>
         <div className="col-10">
           <div id="sectionNameDiv">
-            <input
-                type="text"
-                id="sectionName"
-                value={sectionName ? sectionName : ""}
-                placeholder="Enter the name for the section (optional; used for section focus)"
-                onChange={(event) => setValue(
-                    event.target.value,
-                    "sectionName"
-                )}
-            />
+            {
+              renderInput(
+                  "sectionName",
+                  sectionName,
+                  setValue,
+                  "Enter the name for the section (optional; used for section focus)"
+              )
+            }
           </div>
         </div>
       </div>
@@ -237,44 +312,83 @@ function renderSectionName(sectionName, setValue) {
 function renderSectionOrder(sectionOrder, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">Section Order:</div>
+        <div className="col-2 d-flex align-items-center">Section Order:</div>
         <div className="col-10">
           <div id="sectionOrderDiv">
-            <input
-                type="number"
-                id="sectionOrder"
-                value={sectionOrder ? sectionOrder : 1}
-                placeholder="Enter the order of the section (1 is first)"
-                onChange={(event) => setValue(
-                    event.target.value,
-                    "sectionOrder"
-                )}
-            />
+            {
+              renderInput(
+                  "sectionOrder",
+                  isPresent(sectionOrder) ? sectionOrder : 1,
+                  setValue,
+                  "Enter the order of the section (1 is first)",
+                  "number"
+              )
+            }
           </div>
         </div>
       </div>
   );
 }
 
-function renderImage(image, availableImagesData, setValue) {
+function renderImage(
+    image,
+    imageMode,
+    availableImagesData,
+    availableImageGroupsData,
+    availableVideosData,
+    setValue
+) {
+  let optionsHash;
+
+  switch (imageMode) {
+    case "Groups":
+      optionsHash = availableImageGroupsData.map((item) => ({
+        label: item,
+        value: item,
+      }));
+      break;
+    case "Videos":
+      optionsHash = availableVideosData.map((item) => ({
+        label: item,
+        value: item,
+      }));
+      break;
+    default:
+      optionsHash = availableImagesData.map((item) => ({
+        label: item,
+        value: item,
+      }));
+      break;
+  }
+
   return (
       <div className="row mb-2">
-        <div className="col-2">Image:</div>
-        <div className="col-10">
+        <div className="col-2 d-flex align-items-center">Image:</div>
+        <div className="col-7">
           <div id="imageDiv">
-            <select
-                id="image"
-                value={image}
-                onChange={(event) => setValue(event.target.value, "image")}
-            >
-              <option value="">Select an option</option>
-              {availableImagesData.map((option, index) => (
-                  <option key={index} value={option}>
-                    {option}
-                  </option>
-              ))}
-            </select>
+            {renderComboBox("image", image, optionsHash, setValue)}
           </div>
+        </div>
+        <div className="col-3">
+          {renderSelect(
+              "imageMode",
+              imageMode,
+              [
+                {
+                  label: "Images",
+                  value: "Images",
+                },
+                {
+                  label: "Image Groups",
+                  value: "Groups",
+                },
+                {
+                  label: "Videos",
+                  value: "Videos",
+                }
+              ],
+              setValue
+          )}
         </div>
       </div>
   );
@@ -283,19 +397,17 @@ function renderImage(image, availableImagesData, setValue) {
 function renderLink(link, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">URL:</div>
+        <div className="col-2 d-flex align-items-center">Link (URL):</div>
         <div className="col-10">
           <div id="linkDiv">
-            <input
-                type="text"
-                id="link"
-                value={link ? link : ""}
-                placeholder="Enter the URL to be opend when an image is cliecked (optional)"
-                onChange={(event) => setValue(
-                    event.target.value,
-                    "link"
-                )}
-            />
+            {
+              renderInput(
+                  "link",
+                  link,
+                  setValue,
+                  "Enter the URL to be opened when an image is clicked (optional)"
+              )
+            }
           </div>
         </div>
       </div>
@@ -305,7 +417,7 @@ function renderLink(link, setValue) {
 function renderDescription(description, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">Content:</div>
+        <div className="col-2 d-flex align-items-center">Content:</div>
         <div className="col-10">
           <div id="description">
             <HtmlEditor
@@ -331,7 +443,7 @@ function renderDescription(description, setValue) {
 function renderRowStyle(rowStyle, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">Row Style:</div>
+        <div className="col-2 d-flex align-items-center">Row Style:</div>
         <div className="col-10">
           <div id="rowStyle">
             {renderSelect("rowStyle", rowStyle, rowStyleOptions(), setValue)}
@@ -347,6 +459,10 @@ function rowStyleOptions() {
         {
           label: "Only Text",
           value: "text-single",
+        },
+        {
+          label: "Only Image",
+          value: "image-single",
         },
         {
           label: "Text on the Top",
@@ -371,174 +487,293 @@ function rowStyleOptions() {
 function renderDivRatio(divRatio, setValue) {
   return (
       <div className="row mb-2">
-        <div className="col-2">Div Ratio:</div>
+        <div className="col-2 d-flex align-items-center">Div Ratio:</div>
         <div className="col-10">
-          <div id="divRatio">
-            <select
-                id="divRatio"
-                value={divRatio ? divRatio : ""}
-                onChange={(event) => setValue(
-                    event.target.value,
-                    "divRatio"
-                )}
-            >
-              <option key="" value={null}>
-              </option>
-              <option key="50:50" value="50:50">
-                50 percent Text - 50 Percent Image
-              </option>
-              <option key="90:10" value="90:10">
-                90 Percent Text - 10 Percent Image
-              </option>
-              <option key="80:20" value="80:20">
-                80 Percent Text - 20 Percent Image
-              </option>
-              <option key="70:30" value="70:30">
-                70 Percent Text - 30 Percent Image
-              </option>
-              <option key="60:40" value="60:40">
-                60 Percent Text - 40 Percent Image
-              </option>
-              <option key="40:60" value="40:60">
-                40 Percent Text - 60 Percent Image
-              </option>
-              <option key="30:70" value="30:70">
-                30 Percent Text - 70 Percent Image
-              </option>
-              <option key="20:80" value="20:80">
-                20 Percent Text - 80 Percent Image
-              </option>
-              <option key="10:90" value="10:90">
-                10 Percent Text - 90 Percent Image
-              </option>
-            </select>
+          <div id="divRatioDiv">
+            {renderSelect("divRatio", divRatio, ratioOptions(), setValue)}
           </div>
         </div>
       </div>
   );
 }
 
-function renderAttributeRow(
-    label,
-    setValue,
-    textId,
-    textValue,
-    textOptions,
-    imageSection = false,
-    imageId      = null,
-    imageValue   = null,
-    imageOptions = []
-) {
+function ratioOptions() {
   return (
-      <div className="row mb-2">
-        <div className="col-2">{label}</div>
-        <div className="col-5">
-          {renderSelect(textId, textValue, textOptions, setValue)}
-        </div>
-        <div className="col-5">
-          {imageSection && renderSelect(imageId, imageValue, imageOptions, setValue)}
-        </div>
-      </div>
+      [
+        {
+          label: "50 percent Text - 50 Percent Image",
+          value: "50:50",
+        },
+        {
+          label: "90 Percent Text - 10 Percent Image",
+          value: "90:10",
+        },
+        {
+          label: "80 Percent Text - 20 Percent Image",
+          value: "80:20",
+        },
+        {
+          label: "70 Percent Text - 30 Percent Image",
+          value: "70:30",
+        },
+        {
+          label: "60 Percent Text - 40 Percent Image",
+          value: "60:40",
+        },
+        {
+          label: "40 Percent Text - 60 Percent Image",
+          value: "40:60",
+        },
+        {
+          label: "30 Percent Text - 70 Percent Image",
+          value: "30:70",
+        },
+        {
+          label: "20 Percent Text - 80 Percent Image",
+          value: "20:80",
+        },
+        {
+          label: "10 Percent Text - 90 Percent Image",
+          value: "10:90",
+        },
+      ]
   );
 }
 
-function renderAttributes(
-    imageSection,
-    textMarginTop,
-    textMarginBottom,
-    textMarginRight,
-    textMarginLeft,
-    textBackgroundColor,
-    imageMarginTop,
-    imageMarginBottom,
-    imageMarginRight,
-    imageMarginLeft,
-    imageBackgroundColor,
-    setValue
-) {
+function renderAttributes(first, prefix, marginTop, marginLeft, marginBottom, marginRight, backgroundColor, setValue) {
   const marginTopOptions    = getMarginOptions("top");
   const marginLeftOptions   = getMarginOptions("left");
   const marginBottomOptions = getMarginOptions("bottom");
   const marginRightOptions  = getMarginOptions("right");
 
-  return (
-      <>
-        <div className="row mb-2">
-          <div className="col-2"></div>
-          <div className="col-5 text-center">
-            Text
+  if (first) {
+    return (
+        <>
+          <div className="row">
+            <div className="col-2 d-flex align-items-center">
+              Margin Top:
+            </div>
+            <div className="col-10">
+              {renderSelect(`${prefix}MarginTop`, marginTop, marginTopOptions, setValue)}
+            </div>
           </div>
-          <div className="col-5 text-center">
-            {imageSection && "Image"}
+          <div className="row">
+            <div className="col-2 d-flex align-items-center">
+              MarginLeft:
+            </div>
+            <div className="col-10">
+              {renderSelect(`${prefix}MarginLeft`, marginLeft, marginLeftOptions, setValue)}
+            </div>
           </div>
-        </div>
-        {
-          renderAttributeRow(
-              "Top Margin",
-              setValue,
-              "textMarginTop",
-              textMarginTop,
-              marginTopOptions,
-              imageSection,
-              "imageMarginTop",
-              imageMarginTop,
-              marginTopOptions
-          )
-        }
-        {
-          renderAttributeRow(
-              "Left Margin",
-              setValue,
-              "textMarginLeft",
-              textMarginLeft,
-              marginLeftOptions,
-              imageSection,
-              "imageMarginLeft",
-              imageMarginLeft,
-              marginLeftOptions
-          )
-        }
-        {
-          renderAttributeRow(
-              "Bottom Margin",
-              setValue,
-              "textMarginBottom",
-              textMarginBottom,
-              marginBottomOptions,
-              imageSection,
-              "imageMarginBottom",
-              imageMarginBottom,
-              marginBottomOptions
-          )
-        }
-        {
-          renderAttributeRow(
-              "Right Margin",
-              setValue,
-              "textMarginRight",
-              textMarginRight,
-              marginRightOptions,
-              imageSection,
-              "imageMarginRight",
-              imageMarginRight,
-              marginRightOptions
-          )
-        }
-        {
-          renderAttributeRow(
-              "Background Color",
-              setValue,
-              "textBackgroundColor",
-              textBackgroundColor,
-              backgroundColors,
-              imageSection,
-              "imageBackgroundColor",
-              imageBackgroundColor,
-              backgroundColors
-          )
-        }
-      </>
+          <div className="row">
+            <div className="col-2 d-flex align-items-center">
+              Margin Bottom:
+            </div>
+            <div className="col-10">
+              {renderSelect(`${prefix}MarginBottom`, marginBottom, marginBottomOptions, setValue)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-2 d-flex align-items-center">
+              Margin Right:
+            </div>
+            <div className="col-10">
+              {renderSelect(`${prefix}MarginRight`, marginRight, marginRightOptions, setValue)}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-2 d-flex align-items-center">
+              Background Color:
+            </div>
+            <div className="col-10">
+              {renderSelect(`${prefix}BackgroundColor`, backgroundColor, backgroundColors, setValue)}
+            </div>
+          </div>
+        </>
+    );
+  }
+  else {
+    return (
+        <>
+          <div className="row">
+            {renderSelect(`${prefix}MarginTop`, marginTop, marginTopOptions, setValue)}
+          </div>
+          <div className="row">
+            {renderSelect(`${prefix}MarginLeft`, marginLeft, marginLeftOptions, setValue)}
+          </div>
+          <div className="row">
+            {renderSelect(`${prefix}MarginBottom`, marginBottom, marginBottomOptions, setValue)}
+          </div>
+          <div className="row">
+            {renderSelect(`${prefix}MarginRight`, marginRight, marginRightOptions, setValue)}
+          </div>
+          <div className="row">
+            {renderSelect(`${prefix}BackgroundColor`, backgroundColor, backgroundColors, setValue)}
+          </div>
+        </>
+    )
+        ;
+  }
+}
+
+function renderTextAttributes(first, marginTop, marginLeft, marginBottom, marginRight, backgroundColor, setValue) {
+  return renderAttributes(
+      first,
+      "text",
+      marginTop,
+      marginLeft,
+      marginBottom,
+      marginRight,
+      backgroundColor,
+      setValue
   );
+}
+
+function renderImageAttributes(first, marginTop, marginLeft, marginBottom, marginRight, backgroundColor, setValue) {
+  return renderAttributes(
+      first,
+      "image",
+      marginTop,
+      marginLeft,
+      marginBottom,
+      marginRight,
+      backgroundColor,
+      setValue
+  );
+}
+
+function renderAllAttributes(
+    rowStyle,
+    textMarginTop,
+    textMarginLeft,
+    textMarginBottom,
+    textMarginRight,
+    textBackgroundColor,
+    imageMarginTop,
+    imageMarginLeft,
+    imageMarginBottom,
+    imageMarginRight,
+    imageBackgroundColor,
+    setValue
+) {
+  if (isTextOnly(rowStyle)) {
+    return (renderTextAttributes(
+        true,
+        textMarginTop,
+        textMarginLeft,
+        textMarginBottom,
+        textMarginRight,
+        textBackgroundColor,
+        setValue
+    ));
+  }
+  else if (isImageOnly(rowStyle)) {
+    return (renderImageAttributes(
+        true,
+        imageMarginTop,
+        imageMarginLeft,
+        imageMarginBottom,
+        imageMarginRight,
+        imageBackgroundColor,
+        setValue
+    ));
+  }
+  else {
+    switch (rowStyle) {
+      case 'text-left':
+      case 'text-top':
+        return (
+            <>
+              <div className="row">
+                <div className="col-2">
+                  <p className="fs-5 m-0 p-0 fw-bold">
+                    Text
+                  </p>
+                </div>
+                <div className="col-10">
+                </div>
+              </div>
+              {
+                renderTextAttributes(
+                    true,
+                    textMarginTop,
+                    textMarginLeft,
+                    textMarginBottom,
+                    textMarginRight,
+                    textBackgroundColor,
+                    setValue
+                )
+              }
+              <div className="row">
+                <div className="col-2">
+                  <p className="fs-5 m-0 p-0 fw-bold">
+                    Image
+                  </p>
+                </div>
+                <div className="col-10">
+                </div>
+              </div>
+              {
+                renderImageAttributes(
+                    true,
+                    imageMarginTop,
+                    imageMarginLeft,
+                    imageMarginBottom,
+                    imageMarginRight,
+                    imageBackgroundColor,
+                    setValue
+                )
+              }
+            </>
+        );
+      case 'text-bottom':
+      case 'text-right':
+        return (
+            <>
+              <div className="row">
+                <div className="col-2">
+                  <p className="fs-5 m-0 p-0 fw-bold">
+                    Image
+                  </p>
+                </div>
+                <div className="col-10">
+                </div>
+              </div>
+              {
+                renderImageAttributes(
+                    true,
+                    imageMarginTop,
+                    imageMarginLeft,
+                    imageMarginBottom,
+                    imageMarginRight,
+                    imageBackgroundColor,
+                    setValue
+                )
+              }
+              <div className="row">
+                <div className="col-2">
+                  <p className="fs-5 m-0 p-0 fw-bold">
+                    Text
+                  </p>
+                </div>
+                <div className="col-10">
+                </div>
+              </div>
+              {
+                renderTextAttributes(
+                    true,
+                    textMarginTop,
+                    textMarginLeft,
+                    textMarginBottom,
+                    textMarginRight,
+                    textBackgroundColor,
+                    setValue
+                )
+              }
+            </>
+        );
+    }
+  }
 }
 
 // *** Utility Functions ***/
@@ -550,7 +785,7 @@ function getMarginOptions(marginType) {
     bottom: "mb-",
     left:   "ms-",
     right:  "me-",
-  };
+  }
 
   const labelPrefixes = {
     none:   "",
@@ -558,7 +793,7 @@ function getMarginOptions(marginType) {
     bottom: "Margin Bottom",
     left:   "Margin Left",
     right:  "Margin Right",
-  };
+  }
 
   const prefix = prefixes[marginType];
   const label  = labelPrefixes[marginType];
@@ -623,7 +858,7 @@ function setFormattingStyleElement(sectionData, fieldName, newValue) {
   }
 }
 
-function mapReactValuesToSection(sectionData, attribute, value) {
+function mapReactValuesToSection(sectionData, attribute, value, extraParameters) {
   let textColumnWidth;
   let imageColumnWidth;
 
@@ -638,7 +873,21 @@ function mapReactValuesToSection(sectionData, attribute, value) {
       sectionData.section_order = value;
       break;
     case "image":
-      sectionData.image = value;
+      let mode = "Images";
+
+      if (isPresent(extraParameters?.imageMode)) mode = extraParameters?.imageMode;
+
+      switch (mode) {
+        case"Groups":
+          sectionData.image = `ImageGroup:${value}`;
+          break;
+        case "Videos":
+          sectionData.image = `VideoImage:"${value}"`;
+          break;
+        default:
+          sectionData.image = `ImageFile:${value}`;
+          break;
+      }
       break;
     case "link":
       sectionData.link = value;
@@ -665,7 +914,7 @@ function mapReactValuesToSection(sectionData, attribute, value) {
       setFormattingClassElement(sectionData, "textColumnWidth", textColumnWidth);
       setFormattingClassElement(sectionData, "imageColumnWidth", imageColumnWidth);
 
-      sectionData.div_ratio = value;
+      sectionData.div_ratio            = value;
       sectionData.formatting.div_ratio = value;
 
       break;
@@ -703,11 +952,11 @@ function mapReactValuesToSection(sectionData, attribute, value) {
       break;
     case 'textBackgroundColor':
       sectionData.text_attributes.background_color = value;
-      setFormattingStyleElement(sectionData, attribute, `background-color: ${value};`);
+      setFormattingStyleElement(sectionData, attribute, `background-color: ${value}`);
       break;
     case 'imageBackgroundColor':
       sectionData.image_attributes.background_color = value;
-      setFormattingStyleElement(sectionData, attribute, `background-color: ${value};`);
+      setFormattingStyleElement(sectionData, attribute, `background-color: ${value}`);
       break;
   }
 }
@@ -760,6 +1009,8 @@ function convertType(value, attribute) {
       return stringOrValue(value);
     case "imageBackgroundColor":
       return stringOrValue(value);
+    case "imageMode":
+      return stringOrValue(value);
     default:
       return null;
   }
@@ -779,31 +1030,37 @@ function arrayToOptions(stringArray) {
 }
 
 SectionEditor.propTypes = {
-  section:               PropTypes.shape({
-                                           content_type:     PropTypes.string,
-                                           section_name:     PropTypes.string,
-                                           section_order:    PropTypes.number,
-                                           image:            PropTypes.string,
-                                           link:             PropTypes.string,
-                                           description:      PropTypes.string,
-                                           row_style:        PropTypes.string,
-                                           text_attributes:  PropTypes.shape({
-                                                                               margin_top:       PropTypes.string,
-                                                                               margin_left:      PropTypes.string,
-                                                                               margin_right:     PropTypes.string,
-                                                                               margin_bottom:    PropTypes.string,
-                                                                               background_color: PropTypes.string,
-                                                                             }),
-                                           image_attributes: PropTypes.shape({
-                                                                               margin_top:       PropTypes.string,
-                                                                               margin_left:      PropTypes.string,
-                                                                               margin_right:     PropTypes.string,
-                                                                               margin_bottom:    PropTypes.string,
-                                                                               background_color: PropTypes.string,
-                                                                             }),
-                                         }),
-  availableContentTypes: PropTypes.arrayOf(PropTypes.string),
-  availableImages:       PropTypes.arrayOf(PropTypes.string),
-};
+  section: PropTypes.shape({
+                             content_type:     PropTypes.string,
+                             section_name:     PropTypes.string,
+                             section_order:    PropTypes.number,
+                             image:            PropTypes.string,
+                             link:             PropTypes.string,
+                             description:      PropTypes.string,
+                             row_style:        PropTypes.string,
+                             text_attributes:  PropTypes.shape({
+                                                                 margin_top:       PropTypes.string,
+                                                                 margin_left:      PropTypes.string,
+                                                                 margin_right:     PropTypes.string,
+                                                                 margin_bottom:    PropTypes.string,
+                                                                 background_color: PropTypes.string,
+                                                               }),
+                             image_attributes: PropTypes.shape({
+                                                                 margin_top:       PropTypes.string,
+                                                                 margin_left:      PropTypes.string,
+                                                                 margin_right:     PropTypes.string,
+                                                                 margin_bottom:    PropTypes.string,
+                                                                 background_color: PropTypes.string,
+                                                               }),
+                           }),
+  availableContentTypes:
+           PropTypes.arrayOf(PropTypes.string),
+  availableImages:
+           PropTypes.arrayOf(PropTypes.string),
+  availableImageGroups:
+           PropTypes.arrayOf(PropTypes.string),
+  availableVideos:
+           PropTypes.arrayOf(PropTypes.string),
+}
 
 export default SectionEditor;

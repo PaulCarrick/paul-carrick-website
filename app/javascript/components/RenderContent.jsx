@@ -22,14 +22,13 @@ const RenderContent = ({
 
   if (options.slide_show_images) {
     captions = content;
-    text     = null;
   }
 
   switch (options.row_style) {
     case "text-left":
       return (
           <>
-            <div className={rowClasses} {...(sectionId ? {id: sectionId} : {})}>
+            <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
               <div className={options.text_classes} style={options.text_styles}>
                 <ContentBlock content={text}
                               options={options}
@@ -46,7 +45,7 @@ const RenderContent = ({
     case "text-right":
       return (
           <>
-            <div className={rowClasses} {...(sectionId ? {id: sectionId} : {})}>
+            <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
               <div className={options.image_classes} style={options.image_styles}>
                 <RenderImage content={captions} image={image} link={link} options={options}/>
               </div>
@@ -62,7 +61,7 @@ const RenderContent = ({
       );
     case "text-single":
       return (
-          <div className={rowClasses} {...(sectionId ? {id: sectionId} : {})}>
+          <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
             <div className={options.text_classes} style={options.text_styles}>
               <ContentBlock content={text}
                             options={options}
@@ -72,10 +71,23 @@ const RenderContent = ({
             </div>
           </div>
       );
+    case "image-single":
+      return (
+          <>
+            <div className={rowClasses}>
+              <div className={options.image_classes} style={options.image_styles}>
+                <RenderImage content={captions}
+                             image={image}
+                             link={link}
+                             options={options}/>
+              </div>
+            </div>
+          </>
+      );
     case "text-top":
       return (
           <>
-            <div className={rowClasses} {...(sectionId ? {id: sectionId} : {})}>
+            <div className={rowClasses} {...(sectionId ? { id: sectionId } : {})}>
               <div className={options.text_classes} style={options.text_styles}>
                 <ContentBlock content={text}
                               options={options}
@@ -128,6 +140,7 @@ RenderContent.propTypes = {
                                                                       "text-left",
                                                                       "text-right",
                                                                       "text-single",
+                                                                      "image-single",
                                                                       "text-top",
                                                                       "text-bottom"
                                                                     ]).isRequired,
@@ -135,7 +148,7 @@ RenderContent.propTypes = {
                                  text_styles:       PropTypes.object,
                                  image_classes:     PropTypes.string,
                                  image_styles:      PropTypes.object,
-                                 slide_show_images: PropTypes.bool
+                                 slide_show_images: PropTypes.any
                                }).isRequired,
   content:     PropTypes.string,
   image:       PropTypes.oneOfType([PropTypes.string, PropTypes.object]),

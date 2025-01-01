@@ -9,13 +9,16 @@ class Admin::SectionsController < Admin::AbstractAdminController
     @has_query = true
     @has_sort = true
     @model_class = Section
+    @content_types = []
+    @images = []
+    @groups = []
+    @videos = []
   end
 
   def new
     super
 
-    @content_types = Section.distinct.order(:content_type).pluck(:content_type)
-    @images = ImageFile.distinct.order(:name).pluck(:name)
+    setup_options
   end
 
   def create
@@ -37,8 +40,8 @@ class Admin::SectionsController < Admin::AbstractAdminController
   def edit
     super
     get_item&.description = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
-    @content_types = Section.distinct.order(:content_type).pluck(:content_type)
-    @images = ImageFile.distinct.order(:name).pluck(:name)
+
+    setup_options
   end
 
   def update
@@ -57,5 +60,14 @@ class Admin::SectionsController < Admin::AbstractAdminController
     rescue => e
       handle_error(:edit, e)
     end
+  end
+
+  private
+
+  def setup_options
+    @content_types = Section.distinct.order(:content_type).pluck(:content_type)
+    @images = ImageFile.where.not(mime_type: "video/mp4").distinct.order(:name).pluck(:name)
+    @groups = ImageFile.distinct.order(:group).pluck(:group)
+    @videos = ImageFile.where(mime_type: "video/mp4").distinct.order(:name).pluck(:name)
   end
 end

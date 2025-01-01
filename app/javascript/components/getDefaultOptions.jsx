@@ -11,8 +11,8 @@ const getDefaultOptions = (
     textAttributes  = {},
     imageAttributes = {}
 ) => {
-  const formatOptions = (typeof format === "string") ? JSON.parse(format) : JSON.parse(JSON.stringify(format));
-  let options = {
+  const formatOptions = dupObject(format);
+  let options         = {
     row_style:         "text-single",
     div_ratio:         "",
     row_classes:       "align-items-center",
@@ -110,12 +110,35 @@ export function isPresent(variable) {
 
   return true;
 }
+
+export function dupObject(existingObject) {
+  if (!isPresent(existingObject)) return {};
+
+  return ((typeof existingObject === "string") ? JSON.parse(existingObject) : JSON.parse(JSON.stringify(existingObject)));
+}
+
 export function hasImageSection(rowStyle = "text-single") {
-  return (rowStyle !== "text-single") && (rowStyle !== "") && (rowStyle !== null);
+  return (rowStyle !== "text-single");
+}
+
+export function hasTextSection(rowStyle = "text-single") {
+  return (rowStyle !== "image-single");
 }
 
 export function hasSplitSections(rowStyle = "text-single") {
   return (rowStyle === "text-left") || (rowStyle === "text-right");
+}
+
+export function isTextOnly(rowStyle = "text-single") {
+  return (!isPresent(rowStyle) || rowStyle === "text-single");
+}
+
+export function isImageOnly(rowStyle = "text-single") {
+  return (rowStyle === "image-single");
+}
+
+export function hashTextAndImage(rowStyle = "text-single") {
+  return ((rowStyle !== "text-single") && (rowStyle !== "image-single"));
 }
 
 export function getColumWidths(divRatio = "50:50", rowStyle = "text-single") {
@@ -146,16 +169,18 @@ export function getColumWidths(divRatio = "50:50", rowStyle = "text-single") {
   return [textColumnWidth, imageColumnWidth]
 }
 
-export function updateFormatting(format,
-                                 fieldName,
-                                 value,
-                                 rowStyle = 'text-single',
-                                 divRatio = "50:50",
-                                 mode = "update", ) {
-  const textField = /^text/.test(fieldName);
-  const imageField = /^image/.test(fieldName);
-  const textOrImageField = textField || imageField;
-  const [ textColumnWidth, imageColumnWidth ] = getColumWidths(divRatio, rowStyle);
+export function updateFormatting(
+    format,
+    fieldName,
+    value,
+    rowStyle = 'text-single',
+    divRatio = "50:50",
+    mode     = "update",
+) {
+  const textField                           = /^text/.test(fieldName);
+  const imageField                          = /^image/.test(fieldName);
+  const textOrImageField                    = textField || imageField;
+  const [textColumnWidth, imageColumnWidth] = getColumWidths(divRatio, rowStyle);
 
   if ((mode !== "update") || !textOrImageField) {
     format[fieldName] = value;
@@ -177,20 +202,20 @@ export function updateFormatting(format,
 }
 
 getDefaultOptions.propTypes = {
-  format:  PropTypes.shape({
-                                 row_style:         PropTypes.string,
-                                 row_classes:       PropTypes.string,
-                                 text_classes:      PropTypes.string,
-                                 text_styles:       PropTypes.any,
-                                 image_classes:     PropTypes.string,
-                                 image_styles:      PropTypes.any,
-                                 image_caption:     PropTypes.string,
-                                 caption_position:  PropTypes.string,
-                                 caption_classes:   PropTypes.string,
-                                 expanding_rows:    PropTypes.string,
-                                 slide_show_images: PropTypes.any,
-                                 slide_show_type:   PropTypes.string,
-                               }),
+  format:           PropTypes.shape({
+                                      row_style:         PropTypes.string,
+                                      row_classes:       PropTypes.string,
+                                      text_classes:      PropTypes.string,
+                                      text_styles:       PropTypes.any,
+                                      image_classes:     PropTypes.string,
+                                      image_styles:      PropTypes.any,
+                                      image_caption:     PropTypes.string,
+                                      caption_position:  PropTypes.string,
+                                      caption_classes:   PropTypes.string,
+                                      expanding_rows:    PropTypes.string,
+                                      slide_show_images: PropTypes.any,
+                                      slide_show_type:   PropTypes.string,
+                                    }),
   text_attributes:  PropTypes.shape({
                                       margin_top:       PropTypes.string,
                                       margin_left:      PropTypes.string,

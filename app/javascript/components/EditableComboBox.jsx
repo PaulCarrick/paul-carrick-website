@@ -11,7 +11,7 @@ const EditableComboBox = ({
                             onChange = null,
                             inputCallback = null
                           }) => {
-  const [ options, setOptions ] = useState([ ...optionsHash ]);
+  const [options, setOptions] = useState([...optionsHash]);
 
   useEffect(() => {
               let transformedOptions = null;
@@ -22,10 +22,10 @@ const EditableComboBox = ({
               else if (Array.isArray(optionsHash) &&
                        (typeof (optionsHash) === "string")) {
                 transformedOptions = optionsHash.map((item) => (
-                  {
-                    label: item,
-                    value: item
-                  }))
+                    {
+                      label: item,
+                      value: item
+                    }))
               }
               else if (Array.isArray(optionsHash)) {
                 transformedOptions = optionsHash
@@ -33,40 +33,42 @@ const EditableComboBox = ({
 
               setOptions(transformedOptions);
             }
-    ,
-            [ optionsHash ]
+      ,
+            [optionsHash]
   );
 
   const handleInputChange = (inputValue) => {
     if (inputValue && !options.some((opt) => opt.value === inputValue)) {
-      setOptions((prevOptions) => [ ...prevOptions, {
-        value: inputValue,
-        label: inputValue
-      } ]);
+      setOptions((prevOptions) => [
+        ...prevOptions, {
+          value: inputValue,
+          label: inputValue
+        }
+      ]);
     }
 
     if (inputCallback) inputCallback(inputValue, id);
   };
 
   return (
-    <Select
-      inputId={id}
-      value={options.find((opt) => opt.value === value) || null}
-      options={options}
-      onChange={(selectedOption) => onChange?.(selectedOption, id)}
-      onInputChange={handleInputChange}
-      isSearchable
-      isClearable
-      placeholder="Select or type..."
-    />
+      <Select
+          inputId={id}
+          value={options.find((opt) => opt.value === value) || null}
+          options={options}
+          onChange={(selectedOption) => onChange?.(selectedOption, id)}
+          onInputChange={handleInputChange}
+          isSearchable
+          isClearable
+          placeholder="Select or type..."
+      />
   );
 };
 
 EditableComboBox.propTypes = {
-  id: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([ PropTypes.string, PropTypes.number ]),
-  optionsHash: PropTypes.any,
-  onChange: PropTypes.func,
+  id:            PropTypes.string.isRequired,
+  value:         PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  optionsHash:   PropTypes.any,
+  onChange:      PropTypes.func,
   inputCallback: PropTypes.func,
 };
 
