@@ -1,5 +1,6 @@
 // /app/javascript/components/getDefaultOptions.jsx
-// noinspection JSCheckFunctionSignatures
+// noinspection JSUnusedGlobalSymbols
+// noinspection RegExpRedundantEscape
 
 // Default options for the DisplayContent
 
@@ -81,20 +82,22 @@ const getDefaultOptions = (
   if (hasSplitSections(options.row_style)) {
     const [textColumnWidth, imageColumnWidth] = getColumWidths(options.div_ratio, options.row_style);
 
-    if (isPresent(options.text_classes)) {
-      options.text_classes = options.text_classes.replace(/\bcol-\w*-\d{1,2}/g, "").trim();
-      options.text_classes += " " + textColumnWidth;
-    }
-    else {
-      options.text_classes = textColumnWidth;
-    }
+    if (isPresent(textColumnWidth) && isPresent(imageColumnWidth)) {
+      if (isPresent(options.text_classes)) {
+        options.text_classes = options.text_classes.replace(/col\-\d{1,2}/g, "").trim();
+        options.text_classes += " " + textColumnWidth;
+      }
+      else {
+        options.text_classes = textColumnWidth;
+      }
 
-    if (isPresent(options.image_classes)) {
-      options.image_classes = options.image_classes.replace(/\bcol-\w*-\d{1,2}/g, "").trim();
-      options.image_classes += " " + imageColumnWidth;
-    }
-    else {
-      options.image_classes = `d-flex flex-column ${imageColumnWidth}`;
+      if (isPresent(options.image_classes)) {
+        options.image_classes = options.image_classes.replace(/col\-\d{1,2}/g, "").trim();
+        options.image_classes += " " + imageColumnWidth;
+      }
+      else {
+        options.image_classes = `d-flex flex-column ${imageColumnWidth}`;
+      }
     }
   }
 
@@ -113,8 +116,7 @@ export function isPresent(variable) {
 
 export function dupObject(existingObject) {
   if (!isPresent(existingObject)) return {};
-
-  return ((typeof existingObject === "string") ? JSON.parse(existingObject) : JSON.parse(JSON.stringify(existingObject)));
+  return structuredClone(existingObject);
 }
 
 export function hasImageSection(rowStyle = "text-single") {
@@ -137,7 +139,7 @@ export function isImageOnly(rowStyle = "text-single") {
   return (rowStyle === "image-single");
 }
 
-export function hashTextAndImage(rowStyle = "text-single") {
+export function hasTextAndImage(rowStyle = "text-single") {
   return ((rowStyle !== "text-single") && (rowStyle !== "image-single"));
 }
 
@@ -156,6 +158,10 @@ export function getColumWidths(divRatio = "50:50", rowStyle = "text-single") {
         textColumnWidth  = `col-${firstValue}`;
         imageColumnWidth = `col-${secondValue}`;
       }
+      else if (divRatio === "Custom") {
+        textColumnWidth  = "";
+        imageColumnWidth = "";
+      }
     }
     else {
       textColumnWidth  = "col-6";
@@ -169,36 +175,252 @@ export function getColumWidths(divRatio = "50:50", rowStyle = "text-single") {
   return [textColumnWidth, imageColumnWidth]
 }
 
-export function updateFormatting(
-    format,
-    fieldName,
-    value,
-    rowStyle = 'text-single',
-    divRatio = "50:50",
-    mode     = "update",
-) {
-  const textField                           = /^text/.test(fieldName);
-  const imageField                          = /^image/.test(fieldName);
-  const textOrImageField                    = textField || imageField;
-  const [textColumnWidth, imageColumnWidth] = getColumWidths(divRatio, rowStyle);
+export function rowStyleOptions() {
+  return (
+      [
+        {
+          label: "Only Text",
+          value: "text-single",
+        },
+        {
+          label: "Only Image",
+          value: "image-single",
+        },
+        {
+          label: "Text on the Top",
+          value: "text-top",
+        },
+        {
+          label: "Text on the Left",
+          value: "text-left",
+        },
+        {
+          label: "Text on the Bottom",
+          value: "text-bottom",
+        },
+        {
+          label: "Text on the Right",
+          value: "text-right",
+        },
+      ]
+  );
+}
 
-  if ((mode !== "update") || !textOrImageField) {
-    format[fieldName] = value;
-  }
-  else {
-    const attributeField = textField ? "text_classes" : "image_classes";
+export function ratioOptions(custom = false) {
+  let results = [
+    {
+      label: "50 percent Text - 50 Percent Image",
+      value: "50:50",
+    },
+    {
+      label: "90 Percent Text - 10 Percent Image",
+      value: "90:10",
+    },
+    {
+      label: "80 Percent Text - 20 Percent Image",
+      value: "80:20",
+    },
+    {
+      label: "70 Percent Text - 30 Percent Image",
+      value: "70:30",
+    },
+    {
+      label: "60 Percent Text - 40 Percent Image",
+      value: "60:40",
+    },
+    {
+      label: "40 Percent Text - 60 Percent Image",
+      value: "40:60",
+    },
+    {
+      label: "30 Percent Text - 70 Percent Image",
+      value: "30:70",
+    },
+    {
+      label: "20 Percent Text - 80 Percent Image",
+      value: "20:80",
+    },
+    {
+      label: "10 Percent Text - 90 Percent Image",
+      value: "10:90",
+    },
+  ];
 
-    // Strip out the existing classes
-    format[attributeField] = format[attributeField].replace(/\bcol-\w*-\d{1,2}|\bcol-\d{1,2}\b/g, "").trim();
-  }
+  if (custom) results.push({
+                             label: "Custom (set in formatting)",
+                             value: "Custom",
+                           });
 
-  // Strip out the existing col classes
-  format.text_classes  = format.text_classes.replace(/\bcol-\w*-\d{1,2}|\bcol-\d{1,2}\b/g, "").trim();
-  format.image_classes = format.image_classes.replace(/\bcol-\w*-\d{1,2}|\bcol-\d{1,2}\b/g, "").trim();
-  format.text_classes  = `${format.text_classes} ${textColumnWidth}`;
-  format.image_classes = `${format.image_classes} col-${imageColumnWidth}`;
+  return results;
+}
 
-  return format;
+export function captionOptions() {
+  return (
+      [
+        {
+          label: "Image Captions at Top",
+          value: "top",
+        },
+        {
+          label: "Image Captions at Bottom",
+          value: "bottom",
+        },
+      ]
+  );
+}
+
+export function formattingOptions(styleData) {
+  const fields = [];
+
+  fields.push({ label: "Select an option to add", value: null });
+
+  if (!isPresent(styleData?.row_style))
+    fields.push({ label: "Row Style", value: "row_style" });
+
+  if (!isPresent(styleData?.div_ratio))
+    fields.push({ label: "Div Ratio", value: "div_ratio" });
+
+  if (!isPresent(styleData?.row_classes))
+    fields.push({ label: "Row Classes", value: "row_classes" });
+
+  if (!isPresent(styleData?.text_classes))
+    fields.push({ label: "Text Classes", value: "text_classes" });
+
+  if (!isPresent(styleData?.text_styles))
+    fields.push({ label: "Text Styles", value: "text_styles" });
+
+  if (!isPresent(styleData?.image_classes))
+    fields.push({ label: "Image Classes", value: "image_classes" });
+
+  if (!isPresent(styleData?.image_styles))
+    fields.push({ label: "Image Styles", value: "image_styles" });
+
+  if (!isPresent(styleData?.image_caption))
+    fields.push({ label: "Image Caption", value: "image_caption" });
+
+  if (!isPresent(styleData?.caption_position))
+    fields.push({ label: "Image Caption Position", value: "caption_position" });
+
+  if (!isPresent(styleData?.caption_classes))
+    fields.push({ label: "Caption Classes", value: "caption_classes" });
+
+  if (!isPresent(styleData?.caption_classes))
+    fields.push({ label: "Caption Classes", value: "caption_classes" });
+
+  if (!isPresent(styleData?.expanding_rows))
+    fields.push({ label: "Expanding Rows", value: "expanding_rows" });
+
+  if (!isPresent(styleData?.slide_show_images))
+    fields.push({ label: "Slide SHow Images", value: "slide_show_images" });
+
+  if (!isPresent(styleData?.slide_show_type))
+    fields.push({ label: "Slide SHow Type (Prompt)", value: "slide_show_type" });
+
+  return fields;
+}
+
+export function getBootstrapOptions() {
+  const bootstrapClasses = getBootStrapClasses();
+  const options          = [];
+
+  bootstrapClasses.forEach(bootstrapClass => {
+    bootstrapClass.values.forEach(value => {
+      const option = dupObject(bootstrapClass);
+      option.label = `${bootstrapClass.label} - ${value}`;
+      option.value = bootstrapClass.prefix + value;
+
+      delete option.values;
+      delete option.prefix;
+
+      options.push(option);
+    });
+  });
+
+  return options;
+}
+
+export function getBootStrapClasses() {
+  return (
+      [
+        {
+          label:  "Width (Percentage)",
+          value:  null,
+          prefix: "w-",
+          regex:  /w\-(\d{1,3}|auto|min|max)/,
+          values: ["none", "25", "50", "75", "100", "auto", "min", "max"]
+        },
+        {
+          label:  "Font Size",
+          value:  null,
+          prefix: "fs-",
+          regex:  /fs\-\d/,
+          values: ["none", "1", "2", "3", "4", "5", "6"]
+        },
+        {
+          label:  "Font Weight",
+          value:  null,
+          prefix: "fs-",
+          regex:  /fw\-(bold|bolder|normal|light|lighter)/,
+          values: ["none", "bold", "bolder", "normal", "light", "lighter"]
+        },
+        {
+          label:  "Opacity (transparency)",
+          value:  null,
+          prefix: "opacity-",
+          regex:  /opacity\-\d{1,3}/,
+          values: ["none", "0", "25", "50", "75", "100"]
+        },
+        {
+          label:  "Text",
+          value:  null,
+          prefix: "text-",
+          regex:  /text\-(primary|secondary|success|danger|warning|info|light|dark|body|muted|white|black\-50|white\-50|start|center|end)/,
+          values: ["none", "primary", "secondary", "success", "danger", "warning", "info", "light", "dark", "body", "muted", "white", "black-50", "white-50", "start", "center", "end"]
+        },
+        {
+          label:  "Justify Content",
+          value:  null,
+          prefix: "justify-content-",
+          regex:  /justify\-content\-(start|center|end|between|around|evenly)/,
+          values: ["none", "start", "center", "end", "between", "around", "evenly"]
+        },
+        {
+          label:       "Borders",
+          value:       null,
+          prefix:      "border-",
+          regex:       /border\-?(\d|top|danger|rounded|rounded\-circle|)/,
+          valuePrefix: "border ",
+          values:      ["none", "0", "1", "2", "3", "4", "5", "top", "rounded", "rounded\\-circle"]
+        },
+        {
+          label:  "Padding Top",
+          value:  null,
+          prefix: "pt-",
+          regex:  /pt\-\d/,
+          values: ["none", "0", "1", "2", "3", "4", "5"]
+        },
+        {
+          label:  "Padding Left",
+          value:  null,
+          regex:  /ps\-\d/,
+          values: ["none", "0", "1", "2", "3", "4", "5"]
+        },
+        {
+          label:  "Padding Bottom",
+          value:  null,
+          prefix: "pb-",
+          regex:  /pb\-\d/,
+          values: ["none", "0", "1", "2", "3", "4", "5"]
+        },
+        {
+          label:  "Padding Right",
+          value:  null,
+          prefix: "pe-",
+          regex:  /pe\-\d/,
+          values: ["none", "0", "1", "2", "3", "4", "5"]
+        },
+      ]
+  );
 }
 
 getDefaultOptions.propTypes = {

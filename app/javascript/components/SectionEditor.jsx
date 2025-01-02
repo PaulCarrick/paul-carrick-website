@@ -1,5 +1,6 @@
 // /app/javascript/components/SectionEditor
-// noinspection JSUnusedLocalSymbols,JSValidateTypes,JSUnresolvedReference
+// noinspection JSUnusedLocalSymbols
+// noinspection JSValidateTypes
 // noinspection RegExpRedundantEscape
 
 // Component to Edit a section Record
@@ -9,13 +10,14 @@ import PropTypes from "prop-types";
 import HtmlEditor from "./HtmlEditor";
 import {backgroundColors} from "./backgroundColors";
 import RenderSection from "./RenderSection";
-import Select from "react-select";
+import StylesEditor from "./StylesEditor";
+import {renderComboBox, renderSelect, renderInput} from "./renderControlFunctions.jsx";
 import {
   isTextOnly,
   isImageOnly,
   hasSplitSections,
   isPresent,
-  getColumWidths
+  getColumWidths, rowStyleOptions, ratioOptions
 } from "./getDefaultOptions";
 
 const SectionEditor = ({
@@ -60,17 +62,19 @@ const SectionEditor = ({
   const [imageMarginBottom, setImagemarginBottom]       = useState(sectionData.image_margin_bottom);
   const [imageMarginRight, setImagemarginRight]         = useState(sectionData.image_margin_right);
   const [imageBackgroundColor, setImageBackgroundColor] = useState(sectionData.image_background_color);
-  const previousRowStyle                                = useRef();
-  const previousDivRatio                                = useRef();
-  const previousImageMode                               = useRef();
-  const lastChange                                      = useRef();
+  const [imageMode, setImageMode]                       = useState("Images");
+  const [formattingMode, setFormattingMode]             = useState("safe");
+  const previousFormatting                              = useRef(formatting);
+  const previousRowStyle                                = useRef(rowStyle);
+  const previousDivRatio                                = useRef(divRatio);
+  const previousImageMode                               = useRef(imageMode);
+  const lastChange                                      = useRef(null);
 
   // Assign select lists
   const [availableContentTypesData, setAvailableContentTypesData] = useState(availableContentTypes);
   const [availableImagesData, setAvailableImagesData]             = useState(availableImages);
   const [availableImageGroupsData, setAvailableImageGroupsData]   = useState(availableImageGroups);
   const [availableVideosData, setAvailableVideosData]             = useState(availableVideos);
-  const [imageMode, setImageMode]                                 = useState("Images");
 
   // Setup setters for change callback to update the values
   const attributeSetters = {
@@ -79,6 +83,7 @@ const SectionEditor = ({
     sectionOrder:         setSectionOrder,
     image:                setImage,
     link:                 setLink,
+    formatting:           setFormatting,
     rowStyle:             setRowStyle,
     divRatio:             setDivRatio,
     description:          setDescription,
@@ -130,11 +135,37 @@ const SectionEditor = ({
   }, [divRatio]);
 
   useEffect(() => {
+    const currentRowStyle = previousFormatting.current.row_style;
+    const newRowStyle     = formatting.row_style;
+    const currentDivRatio = previousFormatting.current.div_ratio;
+    const newDivRatio     = formatting.div_ratio;
+
+    if (currentRowStyle !== newRowStyle) {
+      setRowStyle(newRowStyle);
+      previousFormatting.current.row_style = newRowStyle;
+    }
+
+    if (currentDivRatio !== newDivRatio) {
+      setDivRatio(newDivRatio);
+      previousFormatting.current.div_ratio = newDivRatio;
+    }
+
+    previousFormatting.current = formatting;
+  }, [formatting]);
+
+  useEffect(() => {
     if (previousImageMode.current !== imageMode)
       setImage("");
 
     previousDivRatio.current = imageMode;
   }, [imageMode]);
+
+  const toggleFormatting = () => {
+    if (formattingMode === "safe")
+      setFormattingMode("danger");
+    else
+      setFormattingMode("safe");
+  };
 
   const splitSection = hasSplitSections(rowStyle)
 
@@ -156,6 +187,16 @@ const SectionEditor = ({
   // *** Main method ***/
   return (
       <div>
+        <div className="row mb-2 display-6 center-item text-center">
+          <center>Preview</center>
+        </div>
+        <div className="row mb-2">
+          <div id="sectionAttributes" className="w-100 border border-danger border-width-8">
+            <RenderSection
+                section={sectionData}
+            />
+          </div>
+        </div>
         {renderContentType(contentType, availableContentTypesData, setValue)}
         {renderSectionName(sectionName, setValue)}
         {renderSectionOrder(sectionOrder, setValue)}
@@ -170,32 +211,46 @@ const SectionEditor = ({
           )}
         {renderLink(link, setValue)}
         {renderDescription(description, setValue)}
-        {renderRowStyle(rowStyle, setValue)}
-        {splitSection && renderDivRatio(divRatio, setValue)}
-        {
-          renderAllAttributes(
-              rowStyle,
-              textMarginTop,
-              textMarginLeft,
-              textMarginBottom,
-              textMarginRight,
-              textBackgroundColor,
-              imageMarginTop,
-              imageMarginLeft,
-              imageMarginBottom,
-              imageMarginRight,
-              imageBackgroundColor,
-              setValue
-          )
+        {formattingMode === 'danger' ? (
+            renderFormatting(formatting, setValue)
+        ) : (
+             <>
+               {renderRowStyle(rowStyle, setValue)}
+               {splitSection && renderDivRatio(divRatio, setValue)}
+               {renderAllAttributes(
+                   rowStyle,
+                   textMarginTop,
+                   textMarginLeft,
+                   textMarginBottom,
+                   textMarginRight,
+                   textBackgroundColor,
+                   imageMarginTop,
+                   imageMarginLeft,
+                   imageMarginBottom,
+                   imageMarginRight,
+                   imageBackgroundColor,
+                   setValue
+               )}
+             </>
+         )
         }
-        <div className="row mb-2 display-6 center-item text-center">
-          <center>Preview</center>
-        </div>
-        <div className="row mb-2">
-          <div id="sectionAttributes" className="w-100 border border-danger border-width-8">
-            <RenderSection
-                section={sectionData}
-            />
+        <div className="row align-items-center">
+          <div className="col-2">
+          </div>
+          <div className="col-3">
+            {formattingMode === "danger" ? (
+                <button onClick={toggleFormatting} className="btn btn-primary  ms-3 mb-2">
+                  Switch to Normal Mode
+                </button>
+            ) : (
+                 <button onClick={toggleFormatting} className="btn btn-danger  ms-3 mb-2">
+                   Switch to Formatting Mode **"
+                 </button>
+             )
+            }
+          </div>
+          <div className="col-6">
+            ** Formatting mode should only be used by users who are familiar with CSS
           </div>
         </div>
         <div className="row mb-2">
@@ -208,68 +263,6 @@ const SectionEditor = ({
 }
 
 // *** Render Functions ***/
-
-function renderComboBox(id, value, optionsHash, setValue) {
-  return (
-      <Select
-          inputId={id}
-          value={
-              optionsHash.find((opt) => opt.value === value) ||
-              (value ? { label: value, value } : null)
-          }
-          options={optionsHash}
-          onChange={(newValue, actionMeta) => {
-            setValue(newValue?.value || "", id);
-          }}
-          onInputChange={(newInputValue, actionMeta) => {
-            if (actionMeta.action === "input-change") {
-              setValue(newInputValue, id); // Update the value state with typed input
-            }
-          }}
-          isSearchable
-          isClearable
-          placeholder="Select or type..."
-      />
-  );
-}
-
-function renderSelect(id, value, options, setValue, controlClass = "form-control") {
-  return (
-      <select
-          id={id}
-          value={isPresent(value) ? value : ""}
-          className={controlClass}
-          onChange={(event) => setValue(event.target.value, id)}
-      >
-        <option value="">Select an option</option>
-        {options.map((option, index) => (
-            <option key={index} value={option.value}>
-              {option.label}
-            </option>
-        ))}
-      </select>
-  );
-}
-
-function renderInput(
-    id,
-    value,
-    setValue,
-    placeHolder  = "Please enter a value",
-    type         = "text",
-    controlClass = "form-control"
-) {
-  return (
-      <input
-          type={type}
-          id={id}
-          value={isPresent(value) ? value : ""}
-          placeholder={placeHolder}
-          className={controlClass}
-          onChange={(event) => setValue(event.target.value, id)}
-      />
-  );
-}
 
 function renderContentType(contentType, availableContentTypesData, setValue) {
   const optionsHash = availableContentTypesData.map((item) => ({
@@ -300,6 +293,7 @@ function renderSectionName(sectionName, setValue) {
                   "sectionName",
                   sectionName,
                   setValue,
+                  {},
                   "Enter the name for the section (optional; used for section focus)"
               )
             }
@@ -320,6 +314,7 @@ function renderSectionOrder(sectionOrder, setValue) {
                   "sectionOrder",
                   isPresent(sectionOrder) ? sectionOrder : 1,
                   setValue,
+                  {},
                   "Enter the order of the section (1 is first)",
                   "number"
               )
@@ -405,6 +400,7 @@ function renderLink(link, setValue) {
                   "link",
                   link,
                   setValue,
+                  {},
                   "Enter the URL to be opened when an image is clicked (optional)"
               )
             }
@@ -453,37 +449,6 @@ function renderRowStyle(rowStyle, setValue) {
   );
 }
 
-function rowStyleOptions() {
-  return (
-      [
-        {
-          label: "Only Text",
-          value: "text-single",
-        },
-        {
-          label: "Only Image",
-          value: "image-single",
-        },
-        {
-          label: "Text on the Top",
-          value: "text-top",
-        },
-        {
-          label: "Text on the Left",
-          value: "text-left",
-        },
-        {
-          label: "Text on the Bottom",
-          value: "text-bottom",
-        },
-        {
-          label: "Text on the Right",
-          value: "text-right",
-        },
-      ]
-  );
-}
-
 function renderDivRatio(divRatio, setValue) {
   return (
       <div className="row mb-2">
@@ -494,49 +459,6 @@ function renderDivRatio(divRatio, setValue) {
           </div>
         </div>
       </div>
-  );
-}
-
-function ratioOptions() {
-  return (
-      [
-        {
-          label: "50 percent Text - 50 Percent Image",
-          value: "50:50",
-        },
-        {
-          label: "90 Percent Text - 10 Percent Image",
-          value: "90:10",
-        },
-        {
-          label: "80 Percent Text - 20 Percent Image",
-          value: "80:20",
-        },
-        {
-          label: "70 Percent Text - 30 Percent Image",
-          value: "70:30",
-        },
-        {
-          label: "60 Percent Text - 40 Percent Image",
-          value: "60:40",
-        },
-        {
-          label: "40 Percent Text - 60 Percent Image",
-          value: "40:60",
-        },
-        {
-          label: "30 Percent Text - 70 Percent Image",
-          value: "30:70",
-        },
-        {
-          label: "20 Percent Text - 80 Percent Image",
-          value: "20:80",
-        },
-        {
-          label: "10 Percent Text - 90 Percent Image",
-          value: "10:90",
-        },
-      ]
   );
 }
 
@@ -611,8 +533,7 @@ function renderAttributes(first, prefix, marginTop, marginLeft, marginBottom, ma
             {renderSelect(`${prefix}BackgroundColor`, backgroundColor, backgroundColors, setValue)}
           </div>
         </>
-    )
-        ;
+    );
   }
 }
 
@@ -776,6 +697,19 @@ function renderAllAttributes(
   }
 }
 
+function renderFormatting(formatting, setValue) {
+  return (
+      <div className="row mb-2">
+        <div className="col-2 d-flex align-items-center">Formatting:</div>
+        <div className="col-10">
+          <div id="formattingDiv">
+            <StylesEditor styles={formatting} onChange={setValue}/>
+          </div>
+        </div>
+      </div>
+  );
+}
+
 // *** Utility Functions ***/
 
 function getMarginOptions(marginType) {
@@ -839,7 +773,7 @@ function setFormattingClassElement(sectionData, fieldName, newValue) {
       setFormattingElement(sectionData, fieldName, /me\-(\d+)/, newValue);
       break;
     case /col\-\d{1,2}/.test(newValue):
-      setFormattingElement(sectionData, fieldName, /col\-\w*\-?\d{1,2}/g, newValue);
+      setFormattingElement(sectionData, fieldName, /col\-\d{1,2}/g, newValue);
       break;
   }
 }
@@ -901,8 +835,10 @@ function mapReactValuesToSection(sectionData, attribute, value, extraParameters)
     case "rowStyle":
       [textColumnWidth, imageColumnWidth] = getColumWidths(sectionData.div_ratio, value)
 
-      setFormattingClassElement(sectionData, "textColumnWidth", textColumnWidth);
-      setFormattingClassElement(sectionData, "imageColumnWidth", imageColumnWidth);
+      if (isPresent(textColumnWidth) && isPresent(imageColumnWidth)) {
+        setFormattingClassElement(sectionData, "textColumnWidth", textColumnWidth);
+        setFormattingClassElement(sectionData, "imageColumnWidth", imageColumnWidth);
+      }
 
       sectionData.row_style            = value;
       sectionData.formatting.row_style = value;
@@ -911,8 +847,10 @@ function mapReactValuesToSection(sectionData, attribute, value, extraParameters)
     case "divRatio":
       [textColumnWidth, imageColumnWidth] = getColumWidths(value, sectionData.row_style)
 
-      setFormattingClassElement(sectionData, "textColumnWidth", textColumnWidth);
-      setFormattingClassElement(sectionData, "imageColumnWidth", imageColumnWidth);
+      if (isPresent(textColumnWidth) && isPresent(imageColumnWidth)) {
+        setFormattingClassElement(sectionData, "textColumnWidth", textColumnWidth);
+        setFormattingClassElement(sectionData, "imageColumnWidth", imageColumnWidth);
+      }
 
       sectionData.div_ratio            = value;
       sectionData.formatting.div_ratio = value;
@@ -982,6 +920,8 @@ function convertType(value, attribute) {
     case "image":
       return stringOrValue(value);
     case "link":
+      return value;
+    case "formatting":
       return value;
     case "rowStyle":
       return stringOrValue(value);

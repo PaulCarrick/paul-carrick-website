@@ -2,10 +2,43 @@
 
 // Use Quill (a WYSIWYG Editor) to edit text
 
-import React, {useState, useRef} from "react";
+import React, {useState, useRef, useEffect} from "react";
 import PropTypes from "prop-types";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Quill from "quill";
+
+// Define a custom DivBlot
+const Block = Quill.import("blots/block");
+
+class DivBlot extends Block {
+  static create(value) {
+    let node = super.create();
+    if (value && value.backgroundColor) {
+      node.style.backgroundColor = value.backgroundColor;
+    }
+    return node;
+  }
+
+  static formats(node) {
+    return {
+      backgroundColor: node.style.backgroundColor || null,
+    };
+  }
+
+  format(name, value) {
+    if (name === "backgroundColor" && value) {
+      this.domNode.style.backgroundColor = value;
+    }
+    else {
+      super.format(name, value);
+    }
+  }
+}
+
+DivBlot.blotName = "div";
+DivBlot.tagName  = "div";
+Quill.register(DivBlot);
 
 const HtmlEditor = ({
                       id = "",
@@ -18,7 +51,7 @@ const HtmlEditor = ({
   const [editorContent, setEditorContent] = useState(value || ""); // Store editor content
   const quillRef                          = useRef(null);
 
-  // Toolbar configuration to include color and background options
+  // Toolbar configuration to include color, background, and custom div option
   const toolbarOptions = [
     [{ font: [] }], // Font dropdown
     [{ size: [] }], // Font size dropdown
@@ -30,7 +63,30 @@ const HtmlEditor = ({
     [{ align: [] }], // Text alignment
     ["link", "image", "blockquote", "code-block"], // Additional options
     ["clean"], // Remove formatting
+    ["div"], // Add custom div option
   ];
+
+  useEffect(() => {
+    if (quillRef.current) {
+      const quill = quillRef.current.getEditor();
+
+      // Add handler for background color
+      quill.getModule("toolbar").addHandler("backgroundColor", (value) => {
+        const range = quill.getSelection();
+        if (range) {
+          quill.format("backgroundColor", value);
+        }
+      });
+
+      // Add handler for the 'div' button
+      quill.getModule("toolbar").addHandler("div", () => {
+        const range = quill.getSelection();
+        if (range) {
+          quill.insertEmbed(range.index, "div", { backgroundColor: "white" });
+        }
+      });
+    }
+  }, []);
 
   const toggleView = () => {
     if (isHtmlView) {
@@ -99,9 +155,23 @@ const HtmlEditor = ({
                  placeholder={placeholder}
              />
          )}
-        <button onClick={toggleView} className="btn btn-primary mb-2">
-          {isHtmlView ? "Switch to Editor View" : "Switch to HTML View"}
-        </button>
+        <div className="row align-items-center">
+          <div className="col-3-and-a-half">
+            {isHtmlView ? (
+                <button onClick={toggleView} className="btn btn-primary  ms-3 mb-2">
+                  Switch to Editor View
+                </button>
+            ) : (
+                 <button onClick={toggleView} className="btn btn-danger  ms-3 mb-2">
+                   Switch to HTML View **"
+                 </button>
+             )
+            }
+          </div>
+          <div className="col-8">
+            ** HTML View should only be used by users who are familiar with HTML
+          </div>
+        </div>
       </div>
   );
 };

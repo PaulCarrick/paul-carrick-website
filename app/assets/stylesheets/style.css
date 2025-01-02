@@ -8,6 +8,17 @@
     --page-background-image: none; /* Default background image */
 }
 
+.ql-snow.ql-toolbar button.ql-div::before {
+    content: '<div>';
+    border-radius: 5px;
+}
+
+.ql-snow.ql-toolbar button.ql-backgroundColor::before {
+    content: 'Background';
+    min-width: 20em;
+    border-radius: 5px;
+}
+
 .header-bg {
     background-color: #0d6efd;
     background-color: var(--header-bg);

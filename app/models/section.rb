@@ -34,8 +34,8 @@ class Section < ApplicationRecord
     if ((self.row_style == "text-left") || (self.row_style == "text-right"))
       text_classes = self.formatting['text_classes']
       image_classes = self.formatting['image_classes']
-      text_width = Regexp.last_match(1).to_i if text_classes.present? && text_classes =~ /col\-.*?(\d{1,2})/
-      image_width = Regexp.last_match(1).to_i if image_classes.present? && image_classes =~ /col\-.*?(\d{1,2})/
+      text_width = Regexp.last_match(1).to_i if text_classes.present? && text_classes =~ /col\-(\d{1,2})/
+      image_width = Regexp.last_match(1).to_i if image_classes.present? && image_classes =~ /col\-(\d{1,2})/
 
       if text_width.present? && (text_width > 0) && image_width.present? && (image_width > 0)
         text_percentage = ((text_width.to_f / 12.0) * 100).floor

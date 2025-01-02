@@ -26,6 +26,7 @@ import SectionEditor from "./SectionEditor";
 import HtmlEditor from "./HtmlEditor";
 import RenderControl from "./RenderControl";
 import RenderSection from "./RenderSection";
+import StylesEditor from "./StylesEditor";
 import ErrorBoundary from "./ErrorBoundary";
 
 try {
@@ -49,6 +50,7 @@ try {
                            HtmlEditor,
                            RenderControl,
                            RenderSection,
+                           StylesEditor,
                            ErrorBoundary,
                          });
 }
@@ -59,7 +61,7 @@ catch (error) {
 
 document.addEventListener("turbo:load", () => {
   const root = createRoot(
-    document.body.appendChild(document.createElement("div"))
+      document.body.appendChild(document.createElement("div"))
   );
   root.render(<App/>);
 });
