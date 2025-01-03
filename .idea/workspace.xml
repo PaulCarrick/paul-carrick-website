@@ -5,16 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/StylesEditor.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/javascript/components/renderControlFunctions.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/javascript/components/PersistSection.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/admin/sections/edit.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/javascript/components/HtmlEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/HtmlEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/backgroundColors.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/backgroundColors.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/getDefaultOptions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/getDefaultOptions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/StylesEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/StylesEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +102,7 @@
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
     &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.General&quot;,
     &quot;ts.external.directory.path&quot;: &quot;/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -354,7 +359,8 @@
       <workItem from="1735665636800" duration="41038000" />
       <workItem from="1735744041986" duration="44417000" />
       <workItem from="1735851745124" duration="154000" />
-      <workItem from="1735851905586" duration="7982000" />
+      <workItem from="1735851905586" duration="34318000" />
+      <workItem from="1735932126206" duration="349000" />
     </task>
     <servers />
   </component>
@@ -376,10 +382,10 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/getDefaultOptions.jsx</url>
-          <line>84</line>
+          <url>file://$PROJECT_DIR$/app/javascript/components/RenderSlideShow.jsx</url>
+          <line>14</line>
           <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="42" />
+          <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

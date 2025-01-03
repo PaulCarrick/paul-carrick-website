@@ -19,6 +19,7 @@ import {
   isPresent,
   getColumWidths, rowStyleOptions, ratioOptions
 } from "./getDefaultOptions";
+import axios from "axios";
 
 const SectionEditor = ({
                          section = null,
@@ -64,6 +65,7 @@ const SectionEditor = ({
   const [imageBackgroundColor, setImageBackgroundColor] = useState(sectionData.image_background_color);
   const [imageMode, setImageMode]                       = useState("Images");
   const [formattingMode, setFormattingMode]             = useState("safe");
+  const [error, setError]                               = useState(null);
   const previousFormatting                              = useRef(formatting);
   const previousRowStyle                                = useRef(rowStyle);
   const previousDivRatio                                = useRef(divRatio);
@@ -167,6 +169,54 @@ const SectionEditor = ({
       setFormattingMode("safe");
   };
 
+  const handleSubmit = () => {
+    const data = sectionToPostData(sectionData);
+    let match  = window.location.href.match(/(.+)\/new$/);
+
+    if (!isPresent(match)) match = window.location.href.match(/(.+)\/(\d+)\/edit$/);
+
+    if (isPresent(match[2])) { // We are updating
+      axios.put(`${match[1]}/${match[2]}`, data, {
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
+        }
+      })
+           .then(response => {
+             sessionStorage.setItem('flashMessage', 'Section updated successfully!');
+             window.location.href = match[1];
+           })
+           .catch(error => {
+             setError(`Error updating section: ${error.response || error.message}`);
+           });
+    }
+    else { // We are creating
+      axios.post(match[1], data, {
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+          "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
+        }
+      })
+           .then(response => {
+             sessionStorage.setItem('flashMessage', 'Section created successfully!');
+             window.location.href = match[1];
+           })
+           .catch(error => {
+             setError(`Error creating section: ${error.response || error.message}`);
+           });
+    }
+  };
+
+  const handleCancel = () => {
+    let match = window.location.href.match(/(.+)\/new$/);
+
+    if (!isPresent(match)) match = window.location.href.match(/(.+)\/(\d+)\/edit$/);
+
+    if (isPresent(match[1])) window.location.href = match[1];
+  };
+
   const splitSection = hasSplitSections(rowStyle)
 
   if (isPresent(lastChange) && isPresent(lastChange.current)) {
@@ -187,19 +237,34 @@ const SectionEditor = ({
   // *** Main method ***/
   return (
       <div>
+        {error && (
+            <div className="row">
+              <div className="error-box">
+                {error}
+              </div>
+            </div>
+        )}
         <div className="row mb-2 display-6 center-item text-center">
           <center>Preview</center>
         </div>
         <div className="row mb-2">
           <div id="sectionAttributes" className="w-100 border border-danger border-width-8">
-            <RenderSection
-                section={sectionData}
-            />
+            {!isPresent(image) && !isPresent(description) ? (
+                <center><h1>No Contents</h1></center>
+            ) : (
+                 <RenderSection section={sectionData}/>
+             )}
           </div>
         </div>
-        {renderContentType(contentType, availableContentTypesData, setValue)}
-        {renderSectionName(sectionName, setValue)}
-        {renderSectionOrder(sectionOrder, setValue)}
+        {
+          renderContentType(contentType, availableContentTypesData, setValue)
+        }
+        {
+          renderSectionName(sectionName, setValue)
+        }
+        {
+          renderSectionOrder(sectionOrder, setValue)
+        }
         {
           renderImage(
               image,
@@ -208,49 +273,57 @@ const SectionEditor = ({
               availableImageGroupsData,
               availableVideosData,
               setValue
-          )}
-        {renderLink(link, setValue)}
-        {renderDescription(description, setValue)}
-        {formattingMode === 'danger' ? (
-            renderFormatting(formatting, setValue)
-        ) : (
-             <>
-               {renderRowStyle(rowStyle, setValue)}
-               {splitSection && renderDivRatio(divRatio, setValue)}
-               {renderAllAttributes(
-                   rowStyle,
-                   textMarginTop,
-                   textMarginLeft,
-                   textMarginBottom,
-                   textMarginRight,
-                   textBackgroundColor,
-                   imageMarginTop,
-                   imageMarginLeft,
-                   imageMarginBottom,
-                   imageMarginRight,
-                   imageBackgroundColor,
-                   setValue
-               )}
-             </>
-         )
+          )
+        }
+        {
+          renderLink(link, setValue)
+        }
+        {
+          renderDescription(description, setValue)
+        }
+        {
+          formattingMode === 'danger' ? (
+              renderFormatting(formatting, setValue)
+          ) : (
+              <>
+                {renderRowStyle(rowStyle, setValue)}
+                {splitSection && renderDivRatio(divRatio, setValue)}
+                {renderAllAttributes(
+                    rowStyle,
+                    textMarginTop,
+                    textMarginLeft,
+                    textMarginBottom,
+                    textMarginRight,
+                    textBackgroundColor,
+                    imageMarginTop,
+                    imageMarginLeft,
+                    imageMarginBottom,
+                    imageMarginRight,
+                    imageBackgroundColor,
+                    setValue
+                )}
+              </>
+          )
         }
         <div className="row align-items-center">
           <div className="col-2">
           </div>
-          <div className="col-3">
-            {formattingMode === "danger" ? (
-                <button onClick={toggleFormatting} className="btn btn-primary  ms-3 mb-2">
-                  Switch to Normal Mode
-                </button>
-            ) : (
-                 <button onClick={toggleFormatting} className="btn btn-danger  ms-3 mb-2">
-                   Switch to Formatting Mode **"
-                 </button>
-             )
-            }
-          </div>
-          <div className="col-6">
-            ** Formatting mode should only be used by users who are familiar with CSS
+          <div className="col-10">
+            <div className="flext-container">
+              {formattingMode === "danger" ? (
+                  <button onClick={toggleFormatting} className="btn btn-good mb-2">
+                    Switch to Normal Mode
+                  </button>
+              ) : (
+                   <button onClick={toggleFormatting} className="btn btn-bad mb-2">
+                     Switch to Formatting Mode **"
+                   </button>
+               )
+              }
+              <span className="ms-4">
+                ** Formatting mode should only be used by users who are familiar with CSS
+              </span>
+            </div>
           </div>
         </div>
         <div className="row mb-2">
@@ -258,8 +331,19 @@ const SectionEditor = ({
           <div className="col-10">
           </div>
         </div>
+        <div className="row mb-2">
+          <div className="flex-container">
+            <button type="button" className="btn btn-primary" onClick={handleSubmit}>
+              Save Section
+            </button>
+            <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
+        </div>
       </div>
-  );
+  )
+      ;
 }
 
 // *** Render Functions ***/
@@ -293,7 +377,7 @@ function renderSectionName(sectionName, setValue) {
                   "sectionName",
                   sectionName,
                   setValue,
-                  {},
+                  null,
                   "Enter the name for the section (optional; used for section focus)"
               )
             }
@@ -314,7 +398,7 @@ function renderSectionOrder(sectionOrder, setValue) {
                   "sectionOrder",
                   isPresent(sectionOrder) ? sectionOrder : 1,
                   setValue,
-                  {},
+                  null,
                   "Enter the order of the section (1 is first)",
                   "number"
               )
@@ -400,7 +484,7 @@ function renderLink(link, setValue) {
                   "link",
                   link,
                   setValue,
-                  {},
+                  null,
                   "Enter the URL to be opened when an image is clicked (optional)"
               )
             }
@@ -711,6 +795,20 @@ function renderFormatting(formatting, setValue) {
 }
 
 // *** Utility Functions ***/
+
+function sectionToPostData(sectionData, prefix = "section") {
+  const result         = {};
+  const skipParameters = ["id", "created_at", "updated_at"];
+
+  result[prefix] = {};
+
+  for (const key in sectionData) {
+    if (!skipParameters.includes(key))
+      result[prefix][key] = sectionData[key];
+  }
+
+  return result;
+}
 
 function getMarginOptions(marginType) {
   const prefixes = {

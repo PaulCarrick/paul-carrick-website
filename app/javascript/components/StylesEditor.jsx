@@ -82,7 +82,7 @@ function renderEntry(styleData, styleName, value, onChange) {
     case 'div_ratio':
       return renderSelect(styleName, value, ratioOptions(true), onChange, "mb-2 form-control");
     default:
-      return renderInput(styleName, value, onChange, {}, `Enter a value for ${styleName}`, "text", "mb-2 form-control");
+      return renderInput(styleName, value, onChange, null, `Enter a value for ${styleName}`, "text", "mb-2 form-control");
   }
 }
 

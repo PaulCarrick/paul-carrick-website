@@ -8,7 +8,6 @@ class Section < ApplicationRecord
   include Validation
 
   validate :at_least_one_field_present
-  validate :formatting_is_valid
   validate :description_is_valid
 
   scope :by_content_type, ->(type) { where(content_type: type).order(:section_order) }

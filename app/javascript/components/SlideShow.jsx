@@ -68,7 +68,7 @@ const SlideShow = ({ images = [], slideType = "Topic" }) => {
             {images[currentIndex].caption}
           </p>
         )}
-        <a href={images[currentIndex]} target="_blank" rel="noopener noreferrer">
+        <a href={images[currentIndex].image_url} target="_blank" rel="noopener noreferrer">
           <img
             src={images[currentIndex].image_url}
             alt={`Slide ${currentIndex}`}

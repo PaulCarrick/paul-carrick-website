@@ -26,14 +26,20 @@ class Admin::SectionsController < Admin::AbstractAdminController
       throw "You are not permitted to change #{class_title}." unless @application_user.admin?
 
       set_item(true, get_params)
-
       get_item&.description = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
-
       get_item&.save!
 
-      redirect_to admin_sections_path, notice: "Section created successfully."
+      if request.headers['Content-Type'] === "application/json"
+        render json: { message: 'Section updated successfully' }, status: :ok
+      else
+        redirect_to admin_sections_path, notice: "Section created successfully."
+      end
     rescue => e
-      handle_error(:new, e)
+      if request.headers['Content-Type'] === "application/json"
+        render json: { error: get_record&.errors&.full_messages }, status: :unprocessable_entity
+      else
+        handle_error(:new, e)
+      end
     end
   end
 
@@ -56,9 +62,17 @@ class Admin::SectionsController < Admin::AbstractAdminController
 
       get_record&.update!(get_params)
 
-      redirect_to admin_sections_path, notice: "Section updated successfully."
+      if request.headers['Content-Type'] === "application/json"
+        render json: { message: 'Section updated successfully' }, status: :ok
+      else
+        redirect_to admin_sections_path, notice: "Section updated successfully."
+      end
     rescue => e
-      handle_error(:edit, e)
+      if request.headers['Content-Type'] === "application/json"
+        render json: { error: get_record&.errors&.full_messages }, status: :unprocessable_entity
+      else
+        handle_error(:edit, e)
+      end
     end
   end
 
@@ -69,5 +83,22 @@ class Admin::SectionsController < Admin::AbstractAdminController
     @images = ImageFile.where.not(mime_type: "video/mp4").distinct.order(:name).pluck(:name)
     @groups = ImageFile.distinct.order(:group).pluck(:group)
     @videos = ImageFile.where(mime_type: "video/mp4").distinct.order(:name).pluck(:name)
+  end
+
+  def get_params
+    params.require(:section).permit(
+      :content_type,
+      :section_name,
+      :section_order,
+      :image,
+      :link,
+      :description,
+      :checksum,
+      :row_style,
+      :div_ratio,
+      image_attributes: {},
+      text_attributes: {},
+      formatting: {}
+    )
   end
 end

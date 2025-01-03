@@ -1,27 +1,14 @@
 <!-- app/views/admin/sections/_section_form.erb -->
-<%= javascript_include_tag 'views/admin/sections/edit' %>
 <%= render 'shared/flash_error' %>
-<%= form_with(model: controller.get_item,
-              url: controller.get_item.persisted? ? admin_section_path(controller.get_item) : admin_sections_path,
-              method: controller.get_item.persisted? ? :patch : :post,
-              local: true,
-              html: { onsubmit: 'return validate(this)' }) do |form| %>
-  <%=
-    react_component(
-      "SectionEditor",
-      {
-        section: controller.get_item,
-        availableContentTypes: @content_types,
-        availableImages: @images,
-        availableImageGroups: @groups,
-        availableVideos: @videos
-      }
-    )
-  %>
-  <div class="mb-1">
-    <%= form.submit controller.get_item.persisted? ? "Update Section" : "Create Section",
-                    class: "btn btn-primary me-3",
-                    disabled: !@application_user.admin? %>
-    <%= link_to("Cancel", admin_sections_url, class: "btn btn-secondary") %>
-  </div>
-<% end %>
+<%=
+  react_component(
+    "SectionEditor",
+    {
+      section: controller.get_item,
+      availableContentTypes: @content_types,
+      availableImages: @images,
+      availableImageGroups: @groups,
+      availableVideos: @videos
+    }
+  )
+%>
