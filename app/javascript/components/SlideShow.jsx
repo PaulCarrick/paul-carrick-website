@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {handleVideoImageTag} from "./imageProcessingUtiliries.jsx";
 
 const SlideShow = ({ images = [], slideType = "Topic" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,6 +46,8 @@ const SlideShow = ({ images = [], slideType = "Topic" }) => {
     if (images[index].caption) setDropdownValue(images[index].caption);
   };
 
+ const description = handleVideoImageTag(images[currentIndex].description);
+
   return (
     <div style={{ textAlign: 'left' }}>
       <div
@@ -76,9 +79,9 @@ const SlideShow = ({ images = [], slideType = "Topic" }) => {
           />
         </a>
 
-        {images[currentIndex].description && (
+        {description && (
           <div className="text-start">
-            <div dangerouslySetInnerHTML={{ __html: images[currentIndex].description }} />
+            <div dangerouslySetInnerHTML={{ __html: description }} />
           </div>
         )}
       </div>

@@ -9,8 +9,7 @@ export function handleImageGroup(group, formatting) {
     const newFormatting = addImagesToFormatting(formatting, imageFiles);
 
     return [null, newFormatting];
-  }
-  else {
+  } else {
     return [missingImageUrl(), formatting];
   }
 }
@@ -31,9 +30,24 @@ export function processVideoImages(contents) {
   });
 }
 
+export function handleVideoImageTag(description) {
+  if (isPresent(description)) {
+    const match = description.match(/VideoImage:\s*"(.+)"/);
+
+    if (match) description = processVideoImageTag(description, match[1]);
+  }
+
+  return description;
+}
+
 function replaceVideoImageTag(content, name) {
+  content.description = processVideoImageTag(content.description, name);
+}
+
+export function processVideoImageTag(description, name) {
   const imageFile = imageFileFindByName(name)
-  const imageUrl  = imageFile.image_url;
+  const imageUrl = imageFile.image_url;
+  let results = description;
 
   if (imageUrl) {
     let label = imageFile.caption;
@@ -43,14 +57,16 @@ function replaceVideoImageTag(content, name) {
 
     const videoTag = `<a href="#" onclick="showVideoPlayer('${imageUrl}')">${label}</a>`;
 
-    content.description = content.description.replace(/VideoImage:\s*"(.+)"/, videoTag);
+    results = results.replace(/VideoImage:\s*"(.+)"/, videoTag);
   }
+
+  return results;
 }
 
 export function addImagesToFormatting(formatting, images) {
   formatting.slide_show_images = images.map(image => ({
-    image_url:   image.image_url,
-    caption:     image.caption,
+    image_url: image.image_url,
+    caption: image.caption,
     description: image.description
   }));
 
@@ -77,12 +93,12 @@ export function imageFileFindByName(name) {
 
 export function missingImageFile(name = "Unknown") {
   const imageFile = {
-    name:        "Missing File",
-    caption:     "Missing File",
+    name: "Missing File",
+    caption: "Missing File",
     description: `We could not find an image named: ${name}.`,
-    mime_type:   "image/jpeg",
-    group:       null,
-    image_url:   missingImageUrl(),
+    mime_type: "image/jpeg",
+    group: null,
+    image_url: missingImageUrl(),
   }
 
   return imageFile;
@@ -105,8 +121,7 @@ export function getImageFiles(query) {
       return (JSON.parse(xhr.responseText));
     else
       return [missingImageFile("Unknown")];
-  }
-  catch (err) {
+  } catch (err) {
     return [missingImageFile("Unknown")];
   }
 }
