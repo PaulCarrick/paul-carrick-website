@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_admin_menu.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_admin_menu.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/shared/_page_navigation.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared/_page_navigation.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/show.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -355,6 +354,7 @@
       <workItem from="1735938585409" duration="684000" />
       <workItem from="1736013797568" duration="7408000" />
       <workItem from="1736081487041" duration="16569000" />
+      <workItem from="1736100854895" duration="3967000" />
     </task>
     <servers />
   </component>
@@ -371,36 +371,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
-          <line>178</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
-          <line>203</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
-          <line>207</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="7" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
-          <line>210</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="8" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1735658531825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />

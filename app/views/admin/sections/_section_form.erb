@@ -10,6 +10,7 @@
       availableImageGroups: @groups,
       availableVideos: @videos,
       submitPath: controller.get_item&.persisted? ? admin_section_url(controller.get_item) : admin_sections_url,
+      successPath: controller.get_item&.persisted? ? admin_section_url(controller.get_item) : admin_sections_url,
       cancelPath: admin_sections_url
     }
   )

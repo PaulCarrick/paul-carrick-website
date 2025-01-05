@@ -30,13 +30,13 @@ class Admin::SectionsController < Admin::AbstractAdminController
       get_item&.save!
 
       if request.headers['Content-Type'] === "application/json"
-        render json: { message: 'Section updated successfully' }, status: :ok
+        render json: { message: 'Section created successfully', id: get_item.id }, status: :ok
       else
         redirect_to admin_sections_path, notice: "Section created successfully."
       end
     rescue => e
       if request.headers['Content-Type'] === "application/json"
-        render json: { error: get_record&.errors&.full_messages }, status: :unprocessable_entity
+        render json: { error: get_item&.errors&.full_messages }, status: :unprocessable_entity
       else
         handle_error(:new, e)
       end

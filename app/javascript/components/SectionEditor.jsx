@@ -28,6 +28,7 @@ const SectionEditor = ({
                          availableImageGroups = null,
                          availableVideos = null,
                          submitPath = null,
+                         successPath = null,
                          cancelPath = null,
                        }) => {
   // Assign section Record
@@ -69,6 +70,7 @@ const SectionEditor = ({
   const [formattingMode, setFormattingMode]             = useState("safe");
   const [error, setError]                               = useState(null);
   const [submitUrl, setSubmitUrl]                       = useState(submitPath);
+  const [successUrl, setSuccessUrl]                     = useState(successPath);
   const [cancelUrl, setCancelUrl]                       = useState(cancelPath);
   const previousFormatting                              = useRef(formatting);
   const previousRowStyle                                = useRef(rowStyle);
@@ -186,7 +188,7 @@ const SectionEditor = ({
       })
            .then(response => {
              sessionStorage.setItem('flashMessage', 'Section updated successfully!');
-             window.location.href = cancelUrl;
+             window.location.href = successUrl;
            })
            .catch(error => {
              setError(`Error updating section: ${error.response || error.message}`);
@@ -201,8 +203,10 @@ const SectionEditor = ({
         }
       })
            .then(response => {
+             const url = successUrl.replace("ID", response.data.id);
+
              sessionStorage.setItem('flashMessage', 'Section created successfully!');
-             window.location.href = cancelUrl;
+             window.location.href = url;
            })
            .catch(error => {
              setError(`Error creating section: ${error.response || error.message}`);
@@ -1097,6 +1101,7 @@ SectionEditor.propTypes = {
   availableVideos:
               PropTypes.arrayOf(PropTypes.string),
   submitPath: PropTypes.string.required,
+  successPath: PropTypes.string.required,
   cancelPath: PropTypes.string.required,
 }
 
