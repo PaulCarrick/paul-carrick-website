@@ -8,7 +8,9 @@
       availableContentTypes: @content_types,
       availableImages: @images,
       availableImageGroups: @groups,
-      availableVideos: @videos
+      availableVideos: @videos,
+      submitPath: controller.get_item&.persisted? ? admin_section_url(controller.get_item) : admin_sections_url,
+      cancelPath: admin_sections_url
     }
   )
 %>

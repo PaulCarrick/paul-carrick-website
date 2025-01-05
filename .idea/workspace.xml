@@ -6,8 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SlideShow.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtiliries.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtiliries.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/_admin_menu.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_admin_menu.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/shared/_page_navigation.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared/_page_navigation.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,26 +78,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Debug Chrome JavaScript.executor": "Debug",
-    "JavaScript Debug.Development: rails-website JavaScript.executor": "Debug",
-    "JavaScript Debug.Generic Chrome.executor": "Debug",
-    "Rails.Development: rails-website.executor": "Debug",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/app/javascript/components",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "ts.external.directory.path": "/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Debug Chrome JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Development: rails-website JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Generic Chrome.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Development: rails-website.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/paul/src/paul-carrick-website/app/javascript/components&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -351,6 +354,7 @@
       <workItem from="1735932126206" duration="349000" />
       <workItem from="1735938585409" duration="684000" />
       <workItem from="1736013797568" duration="7408000" />
+      <workItem from="1736081487041" duration="16569000" />
     </task>
     <servers />
   </component>
@@ -367,6 +371,36 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>178</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>203</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>207</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>210</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1735658531825" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />

@@ -15,7 +15,8 @@
                               id: "navbarDropdown-#{index}",
                               role: "button",
                               data: { bs_toggle: "dropdown" },
-                              aria: { expanded: "false" } do %>
+                              aria: { expanded: "false" },
+                              target: "_self" do %>
                     <%= menu_item.label %>
                   <% end %>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown-#{index}">
@@ -23,9 +24,16 @@
                       <li>
                         <% link, method = sub_item[:link]&.split("|") %>
                         <% if method %>
-                          <%= link_to sub_item[:label], link, method: method.to_sym, class: "dropdown-item" %>
+                          <%= link_to sub_item[:label],
+                                      link,
+                                      method: method.to_sym,
+                                      class: "dropdown-item",
+                                      target: "_self"  %>
                         <% else %>
-                          <%= link_to sub_item[:label], sub_item[:link], class: "dropdown-item" %>
+                          <%= link_to sub_item[:label],
+                                      sub_item[:link],
+                                      class: "dropdown-item",
+                                      target: "_self"  %>
                         <% end %>
                       </li>
                     <% end %>
@@ -43,9 +51,16 @@
                 <% else %>
                   <% link, method = menu_item[:link]&.split("|") %>
                   <% if method %>
-                    <%= link_to menu_item[:label], link, method: method.to_sym, class: "nav-link px-lg-3 py-2 text-uppercase" %>
+                    <%= link_to menu_item[:label],
+                                link,
+                                method: method.to_sym,
+                                class: "nav-link px-lg-3 py-2 text-uppercase",
+                                target: "_self"  %>
                   <% else %>
-                    <%= link_to menu_item[:label], menu_item[:link], class: "nav-link px-lg-3 py-2 text-uppercase" %>
+                    <%= link_to menu_item[:label],
+                                menu_item[:link],
+                                class: "nav-link px-lg-3 py-2 text-uppercase",
+                                target: "_self"  %>
                   <% end %>
                 <% end %>
               <% end %>

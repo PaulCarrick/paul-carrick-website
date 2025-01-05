@@ -2,17 +2,11 @@
 <%= render layout: "layouts/admin_page" do %>
   <div class="auto-size p-2 border-bottom border-dark ">
     <% controller.get_items.each do |section| %>
-      <div class="row">
-        <h4>Section</h4>
-      </div>
-      <div class="row">
-        <div class="col-2 ms-4">
-          <%= sortable_column('Content Type:', 'content_type', "sections") %>
+      <div class="row align-content-bottom"  style="height: 3em;">
+        <div class="col-2 m-0 p-0">
+          <h2>Section</h2>
         </div>
-        <div class="col-7">
-          <%= section.content_type %>
-        </div>
-        <div class="col-2" style="min-height: 1em;">
+        <div class="col-5 mt-2" style="min-height: 1em;">
           <% delete_path = admin_section_path(section).to_s + "/delete" %>
           <%= link_to 'Clear Sort', admin_sections_path(clear_sort: true), class: "action-links" %>
           <%= action_links(section,
@@ -20,61 +14,47 @@
                            edit_admin_section_path(section),
                            delete_path) %>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-2 ms-4">
-          <%= sortable_column('Section Name:', 'section_name', "sections") %>
-        </div>
-        <div class="col-9">
-          <%= section.section_name %>
+        <div class="col-5 justify-content-end">
+          <%= render 'shared/page_navigation' %>
         </div>
       </div>
-      <div class="row">
-        <div class="col-2 ms-4">
-          <%= sortable_column('Section Order:', 'section_order', "sections") %>
-        </div>
-        <div class="col-9">
-          <%= section.section_order %>
+      <div class="row mb-3">
+        <div class="col-12">
+          <%= react_component("RenderSection", { section: section }, { key: section.id }) %>
         </div>
       </div>
       <div class="row">
-        <div class="col-2 ms-4">
+        <div class="col-2">
+          <%= sortable_column('Type', 'content_type', "sections") %>
+        </div>
+        <div class="col-2">
+          <%= sortable_column('Name', 'section_name', "sections") %>
+        </div>
+        <div class="col-2">
+          <%= sortable_column('Order:', 'section_order', "sections") %>
+        </div>
+        <div class="col-4">
           <%= sortable_column('Image:', 'image', "sections") %>
         </div>
-        <div class="col-9">
-          <%= section.image %>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-2 ms-4">
+        <div class="col-2">
           <%= sortable_column('URL:', 'link', "sections") %>
         </div>
-        <div class="col-9">
-          <%= section.link %>
-        </div>
       </div>
       <div class="row">
-        <div class="col-2 ms-4">
-          Description:
-        </div>
-        <div class="col-9">
-          <div class=" reset-styles">
-            <%= raw(section.description) %>
-          </div>
+        <div class="col-2">
+          <%= section.content_type %>
         </div>
         <div class="col-2">
-        </div>
-      </div>
-      <div class="row pb-5">
-        <div class="col-2 ms-4">
-          Formatting:
-        </div>
-        <div class="col-9">
-          <%=
-            section.formatting
-          %>
+          <%= section.section_name %>
         </div>
         <div class="col-2">
+          <%= section.section_order %>
+        </div>
+        <div class="col-4">
+          <%= section.image %>
+        </div>
+        <div class="col-2">
+          <%= section.link %>
         </div>
       </div>
     <% end %>

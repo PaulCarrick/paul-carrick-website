@@ -26,7 +26,9 @@ const SectionEditor = ({
                          availableContentTypes = null,
                          availableImages = null,
                          availableImageGroups = null,
-                         availableVideos = null
+                         availableVideos = null,
+                         submitPath = null,
+                         cancelPath = null,
                        }) => {
   // Assign section Record
   const [sectionData, setSectionData] = useState(section);
@@ -66,6 +68,8 @@ const SectionEditor = ({
   const [imageMode, setImageMode]                       = useState("Images");
   const [formattingMode, setFormattingMode]             = useState("safe");
   const [error, setError]                               = useState(null);
+  const [submitUrl, setSubmitUrl]                       = useState(submitPath);
+  const [cancelUrl, setCancelUrl]                       = useState(cancelPath);
   const previousFormatting                              = useRef(formatting);
   const previousRowStyle                                = useRef(rowStyle);
   const previousDivRatio                                = useRef(divRatio);
@@ -171,37 +175,34 @@ const SectionEditor = ({
 
   const handleSubmit = () => {
     const data = sectionToPostData(sectionData);
-    let match  = window.location.href.match(/(.+)\/new$/);
 
-    if (!isPresent(match)) match = window.location.href.match(/(.+)\/(\d+)\/edit$/);
-
-    if (isPresent(match[2])) { // We are updating
-      axios.put(`${match[1]}/${match[2]}`, data, {
+    if (isPresent(sectionData?.id) && (sectionData?.id != 0)) { // We are updating
+      axios.put(submitUrl, data, {
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          "Accept":       "application/json",
           "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
         }
       })
            .then(response => {
              sessionStorage.setItem('flashMessage', 'Section updated successfully!');
-             window.location.href = match[1];
+             window.location.href = cancelUrl;
            })
            .catch(error => {
              setError(`Error updating section: ${error.response || error.message}`);
            });
     }
     else { // We are creating
-      axios.post(match[1], data, {
+      axios.post(submitUrl, data, {
         headers: {
           "Content-Type": "application/json",
-          "Accept": "application/json",
+          "Accept":       "application/json",
           "X-CSRF-Token": document.querySelector('[name="csrf-token"]').content,
         }
       })
            .then(response => {
              sessionStorage.setItem('flashMessage', 'Section created successfully!');
-             window.location.href = match[1];
+             window.location.href = cancelUrl;
            })
            .catch(error => {
              setError(`Error creating section: ${error.response || error.message}`);
@@ -210,11 +211,7 @@ const SectionEditor = ({
   };
 
   const handleCancel = () => {
-    let match = window.location.href.match(/(.+)\/new$/);
-
-    if (!isPresent(match)) match = window.location.href.match(/(.+)\/(\d+)\/edit$/);
-
-    if (isPresent(match[1])) window.location.href = match[1];
+    window.location.href = cancelUrl;
   };
 
   const splitSection = hasSplitSections(rowStyle)
@@ -1068,37 +1065,39 @@ function arrayToOptions(stringArray) {
 }
 
 SectionEditor.propTypes = {
-  section: PropTypes.shape({
-                             content_type:     PropTypes.string,
-                             section_name:     PropTypes.string,
-                             section_order:    PropTypes.number,
-                             image:            PropTypes.string,
-                             link:             PropTypes.string,
-                             description:      PropTypes.string,
-                             row_style:        PropTypes.string,
-                             text_attributes:  PropTypes.shape({
-                                                                 margin_top:       PropTypes.string,
-                                                                 margin_left:      PropTypes.string,
-                                                                 margin_right:     PropTypes.string,
-                                                                 margin_bottom:    PropTypes.string,
-                                                                 background_color: PropTypes.string,
-                                                               }),
-                             image_attributes: PropTypes.shape({
-                                                                 margin_top:       PropTypes.string,
-                                                                 margin_left:      PropTypes.string,
-                                                                 margin_right:     PropTypes.string,
-                                                                 margin_bottom:    PropTypes.string,
-                                                                 background_color: PropTypes.string,
-                                                               }),
-                           }),
+  section:    PropTypes.shape({
+                                content_type:     PropTypes.string,
+                                section_name:     PropTypes.string,
+                                section_order:    PropTypes.number,
+                                image:            PropTypes.string,
+                                link:             PropTypes.string,
+                                description:      PropTypes.string,
+                                row_style:        PropTypes.string,
+                                text_attributes:  PropTypes.shape({
+                                                                    margin_top:       PropTypes.string,
+                                                                    margin_left:      PropTypes.string,
+                                                                    margin_right:     PropTypes.string,
+                                                                    margin_bottom:    PropTypes.string,
+                                                                    background_color: PropTypes.string,
+                                                                  }),
+                                image_attributes: PropTypes.shape({
+                                                                    margin_top:       PropTypes.string,
+                                                                    margin_left:      PropTypes.string,
+                                                                    margin_right:     PropTypes.string,
+                                                                    margin_bottom:    PropTypes.string,
+                                                                    background_color: PropTypes.string,
+                                                                  }),
+                              }),
   availableContentTypes:
-           PropTypes.arrayOf(PropTypes.string),
+              PropTypes.arrayOf(PropTypes.string),
   availableImages:
-           PropTypes.arrayOf(PropTypes.string),
+              PropTypes.arrayOf(PropTypes.string),
   availableImageGroups:
-           PropTypes.arrayOf(PropTypes.string),
+              PropTypes.arrayOf(PropTypes.string),
   availableVideos:
-           PropTypes.arrayOf(PropTypes.string),
+              PropTypes.arrayOf(PropTypes.string),
+  submitPath: PropTypes.string.required,
+  cancelPath: PropTypes.string.required,
 }
 
 export default SectionEditor;
