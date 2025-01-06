@@ -30,6 +30,7 @@ const SectionEditor = ({
                          submitPath = null,
                          successPath = null,
                          cancelPath = null,
+                         readOnlyContentType = false,
                        }) => {
   // Assign section Record
   const [sectionData, setSectionData] = useState(section);
@@ -258,7 +259,7 @@ const SectionEditor = ({
           </div>
         </div>
         {
-          renderContentType(contentType, availableContentTypesData, setValue)
+          renderContentType(contentType, availableContentTypesData, setValue, readOnlyContentType)
         }
         {
           renderSectionName(sectionName, setValue)
@@ -349,7 +350,7 @@ const SectionEditor = ({
 
 // *** Render Functions ***/
 
-function renderContentType(contentType, availableContentTypesData, setValue) {
+function renderContentType(contentType, availableContentTypesData, setValue, readOnlyContentType) {
   const optionsHash = availableContentTypesData.map((item) => ({
     label: item,
     value: item,
@@ -360,7 +361,7 @@ function renderContentType(contentType, availableContentTypesData, setValue) {
         <div className="col-2 d-flex align-items-center">Content Type:</div>
         <div className="col-10">
           <div id="contentTypeDiv">
-            {renderComboBox("contentType", contentType, optionsHash, setValue)}
+            {renderComboBox("contentType", contentType, optionsHash, setValue, readOnlyContentType)}
           </div>
         </div>
       </div>
@@ -1103,6 +1104,7 @@ SectionEditor.propTypes = {
   submitPath: PropTypes.string.required,
   successPath: PropTypes.string.required,
   cancelPath: PropTypes.string.required,
+  readOnlyContentType: PropTypes.bool,
 }
 
 export default SectionEditor;

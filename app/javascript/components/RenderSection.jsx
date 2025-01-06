@@ -16,6 +16,7 @@ import {
 
 const RenderSection = ({
                          section = null,
+                         noBorder = false,
                        }) => {
   const sectionData = dupObject(section);
   const contents    = buildContents(sectionData);
@@ -24,7 +25,7 @@ const RenderSection = ({
   processVideoImages(contents);
 
   contents.forEach(content => {
-    sections.push(renderSection(content))
+    sections.push(renderSection(content, noBorder));
   });
 
   return (sections);
@@ -32,10 +33,14 @@ const RenderSection = ({
 
 // Utility Functions
 
-function renderSection(content) {
+function renderSection(content, noBorder = false) {
+  let divClass = "w-100 border border-danger border-width-8";
+
+  if (noBorder) divClass = "w-100 m-0 p-3";
+
   return (
       <div className="row mb-2">
-        <div id="sectionAttributes" className="w-100 border border-danger border-width-8">
+        <div id="sectionAttributes" className={divClass}>
           <DisplayContent
               content={content.description}
               image={content.image}
@@ -209,7 +214,8 @@ RenderSection.propTypes = {
                              image_margin_right:     PropTypes.string,
                              image_margin_bottom:    PropTypes.string,
                              image_background_color: PropTypes.string,
-                           }).isRequired, // Use `.isRequired` here
+                           }).isRequired, // Use `.isRequired` here,
+  noBorder: PropTypes.bool,
 };
 
 export default RenderSection;

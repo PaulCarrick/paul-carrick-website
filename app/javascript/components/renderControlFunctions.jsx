@@ -4,7 +4,7 @@ import React from "react";
 import Select from "react-select";
 import {isPresent} from "./getDefaultOptions.jsx";
 
-export function renderComboBox(id, value, optionsHash, setValue, dataOptions = {}) {
+export function renderComboBox(id, value, optionsHash, setValue, readOnly = false, dataOptions = {}) {
   return (
       <Select
           inputId={id}
@@ -13,17 +13,22 @@ export function renderComboBox(id, value, optionsHash, setValue, dataOptions = {
               (value ? { label: value, value } : null)
           }
           options={optionsHash}
+          disabled={readOnly}
           data-options={dataOptions}
           onChange={(newValue, actionMeta) => {
+            if (readOnly) return;
+
             setValue(newValue?.value || "", id);
           }}
           onInputChange={(newInputValue, actionMeta) => {
+            if (readOnly) return;
+
             if (actionMeta.action === "input-change") {
               setValue(newInputValue, id); // Update the value state with typed input
             }
           }}
-          isSearchable
-          isClearable
+          isSearchable={!readOnly}
+          isClearable={!readOnly}
           placeholder="Select or type..."
       />
   );

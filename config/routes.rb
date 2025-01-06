@@ -34,6 +34,8 @@ Rails.application.routes.draw do
     resources :pages, except: [ :destroy ]
     delete "/pages/:id", to: "pages#destroy", as: "delete_page"
     get "/pages/:id/delete", to: "pages#destroy", as: "destroy_page"
+    get "/page/new_section/:id", to: "pages#add_section_to_page", as: "add_section_to_existing_page"
+    get "/page/new_section", to: "pages#add_section_to_page", as: "add_section_to_new_page"
     resources :users, except: [ :destroy ]
     delete "/users/:id", to: "users#destroy", as: "delete_user"
     get "/users/:id/delete", to: "users#destroy", as: "destroy_user"
