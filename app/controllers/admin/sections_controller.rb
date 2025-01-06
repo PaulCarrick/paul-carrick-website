@@ -25,6 +25,7 @@ class Admin::SectionsController < Admin::AbstractAdminController
     @return_url             = params[:return_url].present? ? params[:return_url] : admin_sections_url
     @cancel_url             = params[:cancel_url].present? ? params[:cancel_url] : admin_sections_url
     @read_only_content_type = params[:read_only_content_type].present? ? params[:read_only_content_type] : false
+    @new_section            = params[:new_section].present? ? params[:new_section] : false
   end
 
   def create
@@ -52,10 +53,21 @@ class Admin::SectionsController < Admin::AbstractAdminController
   def edit
     super
 
-    @return_url             = params[:return_url].present? ? params[:return_url] : admin_section_url(get_item)
-    @cancel_url             = URI(params[:cancel_url].present? ? params[:cancel_url] : admin_sections_url)
-    @cancel_url.query       = URI.encode_www_form({ canceled: true, section_id: get_item.id })
+    @return_url = params[:return_url].present? ? params[:return_url] : admin_section_url(get_item)
+    @cancel_url = URI(params[:cancel_url].present? ? params[:cancel_url] : admin_sections_url)
+
+    if params[:new_section].present?
+      @cancel_url.query = URI.encode_www_form({
+                                                canceled:   true,
+                                                section_id: get_item.id,
+                                                new_section: params[:new_section]
+                                              })
+    else
+      @cancel_url.query = URI.encode_www_form({ canceled: true, section_id: get_item.id })
+    end
+
     @read_only_content_type = params[:read_only_content_type].present? ? params[:read_only_content_type] : false
+    @new_section            = params[:new_section].present? ? params[:new_section] : false
     @cancel_url             = @cancel_url.to_s
     get_item&.description   = Utilities.pretty_print_html(get_item&.description) if get_item&.description.present?
 
@@ -97,6 +109,7 @@ class Admin::SectionsController < Admin::AbstractAdminController
 
     super
   end
+
   def destroy
     begin
       throw "You are not permitted to change #{class_title}." unless @application_user.admin?

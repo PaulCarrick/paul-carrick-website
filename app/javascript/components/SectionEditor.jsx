@@ -31,6 +31,7 @@ const SectionEditor = ({
                          successPath = null,
                          cancelPath = null,
                          readOnlyContentType = false,
+                         newSection = false,
                        }) => {
   // Assign section Record
   const [sectionData, setSectionData] = useState(section);
@@ -1070,41 +1071,42 @@ function arrayToOptions(stringArray) {
 }
 
 SectionEditor.propTypes = {
-  section:    PropTypes.shape({
-                                content_type:     PropTypes.string,
-                                section_name:     PropTypes.string,
-                                section_order:    PropTypes.number,
-                                image:            PropTypes.string,
-                                link:             PropTypes.string,
-                                description:      PropTypes.string,
-                                row_style:        PropTypes.string,
-                                text_attributes:  PropTypes.shape({
-                                                                    margin_top:       PropTypes.string,
-                                                                    margin_left:      PropTypes.string,
-                                                                    margin_right:     PropTypes.string,
-                                                                    margin_bottom:    PropTypes.string,
-                                                                    background_color: PropTypes.string,
-                                                                  }),
-                                image_attributes: PropTypes.shape({
-                                                                    margin_top:       PropTypes.string,
-                                                                    margin_left:      PropTypes.string,
-                                                                    margin_right:     PropTypes.string,
-                                                                    margin_bottom:    PropTypes.string,
-                                                                    background_color: PropTypes.string,
-                                                                  }),
-                              }),
+  section:             PropTypes.shape({
+                                         content_type:     PropTypes.string,
+                                         section_name:     PropTypes.string,
+                                         section_order:    PropTypes.number,
+                                         image:            PropTypes.string,
+                                         link:             PropTypes.string,
+                                         description:      PropTypes.string,
+                                         row_style:        PropTypes.string,
+                                         text_attributes:  PropTypes.shape({
+                                                                             margin_top:       PropTypes.string,
+                                                                             margin_left:      PropTypes.string,
+                                                                             margin_right:     PropTypes.string,
+                                                                             margin_bottom:    PropTypes.string,
+                                                                             background_color: PropTypes.string,
+                                                                           }),
+                                         image_attributes: PropTypes.shape({
+                                                                             margin_top:       PropTypes.string,
+                                                                             margin_left:      PropTypes.string,
+                                                                             margin_right:     PropTypes.string,
+                                                                             margin_bottom:    PropTypes.string,
+                                                                             background_color: PropTypes.string,
+                                                                           }),
+                                       }),
   availableContentTypes:
-              PropTypes.arrayOf(PropTypes.string),
+                       PropTypes.arrayOf(PropTypes.string),
   availableImages:
-              PropTypes.arrayOf(PropTypes.string),
+                       PropTypes.arrayOf(PropTypes.string),
   availableImageGroups:
-              PropTypes.arrayOf(PropTypes.string),
+                       PropTypes.arrayOf(PropTypes.string),
   availableVideos:
-              PropTypes.arrayOf(PropTypes.string),
-  submitPath: PropTypes.string.required,
-  successPath: PropTypes.string.required,
-  cancelPath: PropTypes.string.required,
+                       PropTypes.arrayOf(PropTypes.string),
+  submitPath:          PropTypes.string.required,
+  successPath:         PropTypes.string.required,
+  cancelPath:          PropTypes.string.required,
   readOnlyContentType: PropTypes.bool,
+  newSection:          PropTypes.bool,
 }
 
 export default SectionEditor;
