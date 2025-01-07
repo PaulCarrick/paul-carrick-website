@@ -1,6 +1,15 @@
 // /app/assets/javascripts/views/shared/utilities
 var editorMode = "rtf";
 
+function handleEditorChange(content, id) {
+    if (!content || !id) return;
+
+    const hiddenFieldName = id.replace(/-/g, "_");
+    const hiddenField     = document.getElementById(hiddenFieldName);
+
+    if (hiddenField) hiddenField.value = content;
+}
+
 function reloadPage(delay) {
     setTimeout(() => {
         window.location.reload();

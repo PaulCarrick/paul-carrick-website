@@ -14,7 +14,8 @@ async function fetchGroups() {
     populateGroupSelect(data);
 
     groupSelectContainer.style.display = 'block';
-  } catch (error) {
+  }
+  catch (error) {
     console.error("Error fetching groups:", error);
   }
 }
@@ -25,34 +26,44 @@ function populateGroupSelect(groups) {
 
   groupSelect.innerHTML = ""; // Clear existing options
 
-  const blankOption = document.createElement("option");
-  blankOption.value = "";
+  const blankOption                 = document.createElement("option");
+  blankOption.value                 = "";
   blankOption.dataset.maxSlideOrder = null;
-  blankOption.textContent = "";
+  blankOption.textContent           = "";
   groupSelect.appendChild(blankOption);
 
   for (const [group, maxSlideOrder] of Object.entries(groups)) {
-    const option = document.createElement("option");
-    option.value = group;
+    const option                 = document.createElement("option");
+    option.value                 = group;
     option.dataset.maxSlideOrder = maxSlideOrder; // Store max slide order as a data attribute
-    option.textContent = `${group} (Max Slide Order: ${maxSlideOrder})`;
+    option.textContent           = `${group} (Max Slide Order: ${maxSlideOrder})`;
     groupSelect.appendChild(option);
   }
 }
 
 function groupChanged() {
-  const groupSelect = document.getElementById("group-select");
-  const selectedOption = groupSelect.options[groupSelect.selectedIndex];
-  const selectedGroup = selectedOption.value;
-  const maxSlideOrder = parseInt(selectedOption.dataset.maxSlideOrder, 10);
-  const groupField = document.getElementById("group-field");
+  const groupSelect     = document.getElementById("group-select");
+  const selectedOption  = groupSelect.options[groupSelect.selectedIndex];
+  const selectedGroup   = selectedOption.value;
+  const maxSlideOrder   = parseInt(selectedOption.dataset.maxSlideOrder, 10);
+  const groupField      = document.getElementById("group-field");
   const slideOrderField = document.getElementById("slide-order-field");
 
   // Set the group field and slide order field
-  groupField.value = selectedGroup;
+  groupField.value      = selectedGroup;
   slideOrderField.value = maxSlideOrder + 1;
 }
 
 function validate(form) {
-  return validateEditor('rtf-description', 'raw-description');
+  const descriptionField = document.getElementById("image_file_description");
+  const captionField     = document.getElementById("image_file_caption");
+  let isValid            = false;
+
+  if (!descriptionField || !captionField) return isValid;
+
+  isValid = checkHtml(descriptionField);
+
+  if (isValid) isValid = checkHtml(captionField);
+
+  return isValid;
 }

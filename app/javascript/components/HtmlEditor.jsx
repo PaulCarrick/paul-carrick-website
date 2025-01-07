@@ -46,6 +46,7 @@ const HtmlEditor = ({
                       placeholder = "Enter text here...",
                       onChange = null,
                       onBlur = null,
+                      noSwitchButton = false,
                     }) => {
   const [isHtmlView, setIsHtmlView]       = useState(false); // Toggle for raw HTML view
   const [editorContent, setEditorContent] = useState(value || ""); // Store editor content
@@ -133,7 +134,7 @@ const HtmlEditor = ({
 
   return (
       <div>
-        {isHtmlView ? (
+        {isHtmlView && !noSwitchButton ? (
             <textarea
                 value={editorContent}
                 onChange={(e) => setEditorContent(e.target.value)}
@@ -155,33 +156,36 @@ const HtmlEditor = ({
                  placeholder={placeholder}
              />
          )}
-        <div className="row align-items-center">
-          <div className="flex-container">
-            {isHtmlView ? (
-                <button onClick={toggleView} className="btn btn-good mb-2">
-                  Switch to Editor View
-                </button>
-            ) : (
-                 <button onClick={toggleView} className="btn btn-bad mb-2">
-                   Switch to HTML View **"
-                 </button>
-             )
-            }
-            <span className="ms-4">
-              ** HTML View should only be used by users who are familiar with HTML
-            </span>
-          </div>
-        </div>
+        {!noSwitchButton && (
+            <div className="row align-items-center">
+              <div className="flex-container">
+                {isHtmlView ? (
+                    <button onClick={toggleView} className="btn btn-good mb-2">
+                      Switch to Editor View
+                    </button>
+                ) : (
+                     <button onClick={toggleView} className="btn btn-bad mb-2">
+                       Switch to HTML View **"
+                     </button>
+                 )
+                }
+                <span className="ms-4">
+                ** HTML View should only be used by users who are familiar with HTML
+              </span>
+              </div>
+            </div>
+        )}
       </div>
   );
 };
 
 HtmlEditor.propTypes = {
-  id:          PropTypes.string.isRequired,
-  value:       PropTypes.string,
-  placeholder: PropTypes.string,
-  onChange:    PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-  onBlur:      PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  id:             PropTypes.string.isRequired,
+  value:          PropTypes.string,
+  placeholder:    PropTypes.string,
+  onChange:       PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  onBlur:         PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+  noSwitchButton: PropTypes.bool
 };
 
 export default HtmlEditor;

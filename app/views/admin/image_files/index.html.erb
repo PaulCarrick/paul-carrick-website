@@ -19,7 +19,7 @@
           <div class="col-2">
             <% if image_file.image.attached? %>
               <% if image_file.mime_type === "video/mp4" %>
-                <%= link_to(image_file.caption,
+                <%= link_to(raw(image_file.caption),
                             '#',
                             onclick: "showVideoPlayer(event, #{image_file.image_url}')")
                 %>
@@ -46,8 +46,12 @@
           <div class="col-1" style="font-size: 8pt"><%= image_file.name %></div>
           <div class="col-1" style="font-size: 8pt"><%= image_file.group %></div>
           <div class="col-1" style="font-size: 8pt"><%= image_file.slide_order %></div>
-          <div class="col-2" style="font-size: 8pt"><%= image_file.caption %></div>
-          <div class="col-2" style="font-size: 8pt"><%= image_file.description.truncate(75) %></div>
+          <div class="col-2" style="font-size: 8pt">
+            <%= raw(image_file.caption) %>
+          </div>
+          <div class="col-2" style="font-size: 8pt">
+            <%= raw(Utilities.truncate_html(image_file.description, 768)) %>
+          </div>
           <div class="col-3" style="min-height: 2em;">
             <% delete_path = admin_image_file_path(image_file).to_s + "/delete" %>
             <button class="btn btn-link action-links" onclick="addToGroup(<%= image_file.id %>)">
