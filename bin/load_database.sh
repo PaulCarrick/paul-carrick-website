@@ -62,7 +62,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-pg_restore -U "${USER}" -d  "${DATABASE}" "${HOME}/${LOCAL_DUMP_NAME}"
+pg_restore -U "${USER}" -d  "${DATABASE}" "${HOME}/${REMOTE_DUMP_NAME}"
 
 if [ $? -ne 0 ]; then
   echo "Error: Failed to restore ${HOME}/${LOCAL_DUMP_NAME}"

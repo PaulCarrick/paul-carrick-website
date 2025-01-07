@@ -1,5 +1,4 @@
 // /app/assets/javascripts/views/shared/utilities
-var editorMode = "rtf";
 
 function handleEditorChange(content, id) {
     if (!content || !id) return;
@@ -14,14 +13,6 @@ function reloadPage(delay) {
     setTimeout(() => {
         window.location.reload();
     }, delay);
-}
-
-function setEditorModeFlag(flag) {
-    editorMode = flag;
-}
-
-function getEditorModeFlag() {
-    return editorMode;
 }
 
 function setError(errorMessage) {
@@ -121,57 +112,6 @@ function closeVideoPlayer() {
 
     videoElement.src = '';
     videoPlayer.style.display = 'none';
-}
-
-function copyEditorData(rtfEditorId, rawEditorId) {
-    const rtfEditor = document.getElementById(rtfEditorId);
-    const rawEditor = document.getElementById(rawEditorId);
-    let result = false;
-
-    if (rtfEditor && rawEditor) {
-        if (getEditorModeFlag() === 'rtf')
-            rawEditor.value = rtfEditor.value;
-        else
-            rtfEditor.value = rawEditor.value;
-
-        result = true;
-    }
-
-    return result;
-}
-
-function toggleEditor(button, rtfEditorContainerId, rtfEditorId, rawEditorContainerId, rawEditorId) {
-    const rtfEditorContainer = document.getElementById(rtfEditorContainerId);
-    const rawEditorContainer = document.getElementById(rawEditorContainerId);
-    let result = copyEditorData(rtfEditorId, rawEditorId);
-
-    if (getEditorModeFlag() === 'rtf') { // We are in RTF switching to raw
-        rtfEditorContainer.style.display = "none";
-        rawEditorContainer.style.display = "block";
-        button.textContent = "RTF Editor";
-
-        setEditorModeFlag('raw');
-    } else {// We are in Raw switching to RTF
-        rtfEditorContainer.style.display = "block";
-        rawEditorContainer.style.display = "none";
-        button.textContent = "Raw HTML";
-
-        setEditorModeFlag('rtf');
-    }
-
-    return result;
-}
-
-function validateEditor(rtfEditorId, rawEditorId) {
-    let isValid = copyEditorData(rtfEditorId, rawEditorId);
-
-    if (isValid) {
-        const editorField = document.getElementById(rtfEditorId);
-
-        isValid = checkHtml(editorField);
-    }
-
-    return isValid;
 }
 
 function clearSort() {

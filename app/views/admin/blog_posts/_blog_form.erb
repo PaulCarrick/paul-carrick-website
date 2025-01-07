@@ -6,6 +6,8 @@
               local:  true,
               html:   { onsubmit: 'return validate(this)' }) do |form|
 %>
+  <%= form.hidden_field :content, id: "blog_post_content", name: "blog_post[content]" %>
+  <%= form.hidden_field :posted, value: controller.get_item&.posted.present? ? controller.get_item.posted : DateTime.now %>
 
   <h1>
     <% if controller.get_item&.persisted? %>
@@ -14,10 +16,6 @@
       New <%= controller.model_title %>
     <% end %>
   </h1>
-
-  <%= form.hidden_field :posted,
-                        value: controller.get_item&.posted.present? ? controller.get_item.posted : DateTime.now
-  %>
 
   <div class="mb-3">
     <%= form.label :author, "Author*", class: "form-label" %>
@@ -51,30 +49,17 @@
   </div>
 
   <div class="mb-3">
-    <div>
-      <%= form.label :content, "Post*", class: "form-label" %>
-      <button type="button"
-              id="toggle-editor"
-              class="btn btn-link form-label pt-1"
-              style="max-width: 8em"
-              onclick="toggleEditor(this, 'rtf-editor', 'blog_post_content', 'raw-editor', 'blog_post_raw_content')">Raw
-        HTML
-      </button>
-      <!-- Raw Text Editor -->
-      <div id="raw-editor" style="display: none;">
-        <%= form.text_area :raw_content,
-                           class:  "form-control",
-                           rows:   9,
-                           onblur: "checkHtml(this);" %>
-      </div>
-    </div>
-
-    <!-- RTF Editor -->
-    <div id="rtf-editor">
-      <%= form.rich_text_area :content,
-                              class:  "form-control rtf-text-area",
-                              onblur: "checkHtml(this);" %>
-    </div>
+    <%= form.label :content, "Post*", class: "form-label" %>
+    <%= react_component(
+          "HtmlEditor",
+          {
+            id:          "blog-post-content",
+            value:       form.object.content || "",
+            placeholder: "Enter the content for the post...",
+            onChange:    "handleEditorChange(editorContent, id);",
+            onBlur:      "handleEditorChange(editorContent, id);"
+          }
+        ) %>
   </div>
 
   <div class="pb-3">
@@ -82,7 +67,7 @@
   </div>
   <div class="mb-3">
     <%= form.submit "Save #{controller.model_title}",
-                    class: "btn btn-primary me-3",
+                    class:    "btn btn-primary me-3",
                     disabled: !@application_user.admin?
     %>
 
