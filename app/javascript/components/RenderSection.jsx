@@ -12,7 +12,7 @@ import {
   processVideoImages,
   imageFileFindByName,
   missingImageUrl,
-} from "./imageProcessingUtiliries"
+} from "./imageProcessingUtilities.jsx"
 
 const RenderSection = ({
                          section = null,
@@ -68,6 +68,7 @@ function processSection(section) {
     return [section];
 
   const imageGroupRegex   = /^\s*ImageGroup:\s*(.+)\s*$/;
+  const videoRegex        = /^\s*VideoImage:"\s*(.+)\s*"$/;
   const imageFileRegex    = /^\s*ImageFile:\s*(.+)\s*$/;
   const imageSectionRegex = /^\s*ImageSection:\s*(.+)\s*$/;
   const imageArrayRegex   = /^\s*\[\s*(.+?)\s*\]\s*$/m;
@@ -83,6 +84,10 @@ function processSection(section) {
     case imageGroupRegex.test(newImages):
       match                      = newImages.match(imageGroupRegex);
       [newImages, newFormatting] = handleImageGroup(match[1], section.formatting);
+      break;
+    case videoRegex.test(newImages):
+      match     = newImages.match(videoRegex);
+      newImages = handleVideoFile(section, match[1]);
       break;
     case imageFileRegex.test(newImages):
       match     = newImages.match(imageFileRegex);
@@ -117,6 +122,15 @@ function processSection(section) {
   }
 }
 
+function handleVideoFile(section, name) {
+  const imageFile = imageFileFindByName(name);
+  const results   = imageFile.image_url
+
+  section.link    = results;
+
+  return results;
+}
+
 function handleSingleImageFile(section, name) {
   const imageFile = imageFileFindByName(name);
   const results   = imageFile.image_url
@@ -130,10 +144,16 @@ function handleImageSection(section, name, formatting) {
   const imageFile = imageFileFindByName(name);
 
   if (imageFile.image_url) {
-    const description = `<div class='display-4 fw-bold mb-1 text-dark'>${imageFile.caption}</div>`;
+    let description                 = "";
+    const caption                   = imageFile.caption;
+    const containsOnlyPTagsOrNoHTML = /^(\s*<p>.*?<\/p>\s*)*$/i.test(caption);
 
-    section.link = imageFile.image_url;
+    if (containsOnlyPTagsOrNoHTML)
+      description = `<div class='display-4 fw-bold mb-1 text-dark'>${caption}</div>`;
+    else
+      description = caption;
 
+    section.link                          = imageFile.image_url;
     const [subsection, updatedFormatting] = buildSubsection(section, imageFile, formatting);
 
     return [imageFile.image_url, description, subsection, updatedFormatting];
@@ -195,26 +215,26 @@ function flipFormattingSide(formatting) {
 import PropTypes from 'prop-types';
 
 RenderSection.propTypes = {
-  section: PropTypes.shape({
-                             content_type:           PropTypes.string,
-                             section_name:           PropTypes.string,
-                             section_order:          PropTypes.number,
-                             image:                  PropTypes.string,
-                             link:                   PropTypes.string,
-                             formatting:             PropTypes.any,
-                             description:            PropTypes.string,
-                             row_style:              PropTypes.string,
-                             text_margin_top:        PropTypes.string,
-                             text_margin_left:       PropTypes.string,
-                             text_margin_right:      PropTypes.string,
-                             text_margin_bottom:     PropTypes.string,
-                             text_background_color:  PropTypes.string,
-                             image_margin_top:       PropTypes.string,
-                             image_margin_left:      PropTypes.string,
-                             image_margin_right:     PropTypes.string,
-                             image_margin_bottom:    PropTypes.string,
-                             image_background_color: PropTypes.string,
-                           }).isRequired, // Use `.isRequired` here,
+  section:  PropTypes.shape({
+                              content_type:           PropTypes.string,
+                              section_name:           PropTypes.string,
+                              section_order:          PropTypes.number,
+                              image:                  PropTypes.string,
+                              link:                   PropTypes.string,
+                              formatting:             PropTypes.any,
+                              description:            PropTypes.string,
+                              row_style:              PropTypes.string,
+                              text_margin_top:        PropTypes.string,
+                              text_margin_left:       PropTypes.string,
+                              text_margin_right:      PropTypes.string,
+                              text_margin_bottom:     PropTypes.string,
+                              text_background_color:  PropTypes.string,
+                              image_margin_top:       PropTypes.string,
+                              image_margin_left:      PropTypes.string,
+                              image_margin_right:     PropTypes.string,
+                              image_margin_bottom:    PropTypes.string,
+                              image_background_color: PropTypes.string,
+                            }).isRequired, // Use `.isRequired` here,
   noBorder: PropTypes.bool,
 };
 

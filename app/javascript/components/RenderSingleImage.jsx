@@ -4,6 +4,7 @@
 
 import React from "react";
 import PropTypes from 'prop-types';
+import {isPresent} from "./getDefaultOptions"
 
 const RenderSingleImage = ({
                              image = "",
@@ -11,19 +12,36 @@ const RenderSingleImage = ({
                              options = {}
                            }) => {
   const renderImage = () => {
-    if (link) {
-      return (
-          <a href={link} target="_blank" rel="noopener noreferrer">
-            <img src={image} alt={image} className="img-fluid"
-                 style={options.image_styles}/>
-          </a>
-      );
-    }
-    else {
-      return (
-          <img src={image} alt={image} className="img-fluid"
-               style={options.image_styles}/>
-      );
+    if (isPresent(image)) {
+      if (link) {
+        if (image.includes('.mp4'))  // This is a video
+          return (
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                Click to play video.
+              </a>
+          )
+        else
+          return (
+              <a href={link} target="_blank" rel="noopener noreferrer">
+                <img src={image} alt={image} className="img-fluid"
+                     style={options.image_styles}/>
+              </a>
+          );
+      }
+      else {
+        if (image.includes('.mp4'))  // This is a video
+          return (
+              <video id="videoElement"
+                     controls style="width: 100%;"
+                     src={image}>
+              </video>
+          )
+        else
+          return (
+              <img src={image} alt={image} className="img-fluid"
+                   style={options.image_styles}/>
+          );
+      }
     }
   };
 

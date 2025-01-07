@@ -80,7 +80,7 @@ class PagesController < ApplicationController
       images = get_image_path(images)
     end
 
-    [images, description, formatting, subsection]
+    [ images, description, formatting, subsection ]
   end
 
   def handle_image_group(group_name, formatting)
@@ -89,9 +89,9 @@ class PagesController < ApplicationController
     if image_files.present?
       formatting = add_images_to_formatting(formatting, image_files)
 
-      [nil, "", formatting]
+      [ nil, "", formatting ]
     else
-      [@missing_image, "", formatting]
+      [ @missing_image, "", formatting ]
     end
   end
 
@@ -132,13 +132,21 @@ class PagesController < ApplicationController
     image_url  = get_image_url(image_file)
 
     if image_url.present?
-      section.link           = image_url
-      description            = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{image_file.caption}</div>")
+      section.link = image_url
+      caption      = image_file.caption.to_s
+
+      # Check if caption contains only <p> tags or no HTML
+      if caption.match?(/\A(\s*<p>.*?<\/p>\s*)*\z/i)
+        description = sanitize_html("<div class='display-4 fw-bold mb-1 text-dark'>#{caption}</div>")
+      else
+        description = caption
+      end
+
       subsection, formatting = build_subsection(section, image_file, formatting)
 
-      [image_url, description, subsection, formatting]
+      [ image_url, description, subsection, formatting ]
     else
-      [@missing_image, "", nil, nil]
+      [ @missing_image, "", nil, nil ]
     end
   end
 
@@ -153,12 +161,12 @@ class PagesController < ApplicationController
       formatting.delete("expanding_rows")
     end
 
-    [subsection, formatting]
+    [ subsection, formatting ]
   end
 
   def handle_image_array(image_list, formatting)
     images = image_list.split(",").map { |image_name| ImageFile.find_by_name(image_name) }
-    [nil, add_images_to_formatting(formatting, images)]
+    [ nil, add_images_to_formatting(formatting, images) ]
   end
 
   def process_video_images

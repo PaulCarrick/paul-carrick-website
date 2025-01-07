@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {handleVideoImageTag} from "./imageProcessingUtiliries.jsx";
+import {handleVideoImageTag} from "./imageProcessingUtilities.jsx";
 
 const SlideShow = ({ images = [], slideType = "Topic" }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
