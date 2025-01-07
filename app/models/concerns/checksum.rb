@@ -11,7 +11,21 @@ module Checksum
   private
 
   def populate_checksum
-    if self.kind_of?(Section) || self.kind_of?(ImageFile)
+    if self.kind_of?(ImageFile)
+      value = self.description if self.description.present?
+
+      if self.caption.present?
+        if value.present?
+          value += self.caption
+        else
+          value = self.caption
+        end
+      end
+
+      if value.present?
+        self.checksum = generate_checksum(value)
+      end
+    elsif self.kind_of?(Section)
       if description.present?
         self.checksum = generate_checksum(description)
       end

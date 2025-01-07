@@ -6,11 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/admin/pages_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/pages_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/pages/_page_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/pages/_page_form.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/_section_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/concerns/checksum.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/concerns/checksum.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/image_file.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/image_file.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/tasks/html.rake" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tasks/html.rake" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,7 +361,8 @@
       <workItem from="1736081487041" duration="16569000" />
       <workItem from="1736100854895" duration="3967000" />
       <workItem from="1736195414184" duration="3137000" />
-      <workItem from="1736198783555" duration="1487000" />
+      <workItem from="1736198783555" duration="2089000" />
+      <workItem from="1736256231413" duration="2191000" />
     </task>
     <servers />
   </component>

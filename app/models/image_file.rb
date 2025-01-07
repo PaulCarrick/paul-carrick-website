@@ -33,9 +33,19 @@ class ImageFile < ApplicationRecord
   private
 
   def verify_checksum
-    return unless description.present?
+    return unless description.present? || caption.present?
 
-    expected_checksum = generate_checksum(description)
+    value = description
+
+    if caption.present?
+      if value.present?
+        value += caption
+      else
+        value = caption
+      end
+    end
+
+    expected_checksum = generate_checksum(value)
 
     unless checksum == expected_checksum
       Rails.logger.error "Checksum mismatch for record ##{id}"

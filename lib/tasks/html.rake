@@ -99,6 +99,8 @@ namespace :html do
     args.with_defaults(interactive: false)
     puts "Cleaning Image Files with interactive mode: #{args[:interactive]}"
 
+    ImageFile.skip_callback(:find, :after, :verify_checksum)
+
     ImageFile.find_each(batch_size: 1000) do |image_file|
       begin
         if image_file.description.present?
@@ -114,5 +116,7 @@ namespace :html do
         prompt if args[:interactive]
       end
     end
+
+    ImageFile.set_callback(:find, :after, :verify_checksum)
   end
 end
