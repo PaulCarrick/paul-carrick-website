@@ -4,38 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bin/clear_error_images.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/rm_tool.rb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/tasks/duplicate_database.rake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.byebug_history" beforeDir="false" afterPath="$PROJECT_DIR$/.byebug_history" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/blog_post.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/blog_post.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/admin/blog_posts/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubymine-settings.zip" beforeDir="false" afterPath="$PROJECT_DIR$/rubymine-settings.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/controllers/admin/sections_controller_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/controllers/admin/sections_controller_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/factories/image_files.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/factories/image_files.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/factories/sections.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/factories/sections.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/factories/site_setup.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/factories/site_setup.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/models/section_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/models/section_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/rails_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/rails_helper.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/support/trix_editor_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/editor_helper.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_blog_posts_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_blog_posts_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_footer_items_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_footer_items_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_images_file_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_images_file_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_menu_items_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_menu_items_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_pages_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_pages_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_site_setups_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_site_setups_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/admin_users_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_users_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/contacts_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/contacts_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/pages_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/pages_spec.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/search_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/search_spec.rb" afterDir="false" />
-    </list>
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -392,7 +361,7 @@
       <workItem from="1736256231413" duration="18372000" />
       <workItem from="1736275137245" duration="12250000" />
       <workItem from="1736288263239" duration="2289000" />
-      <workItem from="1736340147439" duration="40206000" />
+      <workItem from="1736340147439" duration="40336000" />
     </task>
     <servers />
   </component>
