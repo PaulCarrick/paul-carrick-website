@@ -1,23 +1,23 @@
 require 'rails_helper'
 
 RSpec.describe "Search Page", type: :system do
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:test_page) { create(:page, name: "coding", section: "coding", title: "Discussions on coding") }
   let!(:matching_page) {
     create(:section,
            content_type:  "coding",
-           description:   "A matching description about Ruby",
+           description:   "A matching description about Purple People Eater",
            section_order: 1)
   }
   let!(:non_matching_page) {
     create(:section,
            content_type:  "coding",
-           description:   "Python is popular",
+           description:   "Pythons are popular",
            section_order: 2)
   }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -28,7 +28,7 @@ RSpec.describe "Search Page", type: :system do
     before { visit new_search_path }
 
     it "displays the correct page title" do
-      expect(page).to have_title("Test - Search")
+      expect(page).to have_title("#{site_setup.site_name} - Search")
     end
 
     it "displays the search form" do
@@ -43,19 +43,19 @@ RSpec.describe "Search Page", type: :system do
 
     context "when a matching description is found" do
       it "displays the results" do
-        fill_in "Search site pages for", with: "Ruby"
+        fill_in "Search site pages for", with: "Purple People Eater"
         click_button "Search Site Pages"
-        expect(page).to have_content("A matching description about Ruby")
-        expect(page).not_to have_content("Python is popular")
+        expect(page).to have_content("A matching description about Purple People Eater")
+        expect(page).not_to have_content("Pythons are popular")
       end
     end
 
     context "when no matching description is found" do
       it "displays no results" do
-        fill_in "Search site pages for", with: "Python"
+        fill_in "Search site pages for", with: "Pythons"
         click_button "Search Site Pages"
 
-        expect(page).not_to have_content("A matching description about Ruby")
+        expect(page).not_to have_content("A matching description about Purple People Eater")
       end
     end
   end

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Admin Sections", type: :system do
   let(:admin_user) { create(:user, access: "super") }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:section) do
     create(:section,
            content_type:  "Test Content Type",
@@ -15,7 +15,7 @@ RSpec.describe "Admin Sections", type: :system do
   end
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)

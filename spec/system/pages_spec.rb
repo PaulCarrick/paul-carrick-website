@@ -2,7 +2,7 @@ require 'rails_helper'
 
 # This tests the React Code
 RSpec.describe "Pages", type: :system do
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:text_page) { create(:page, name: "text_page", section: "text_page", title: "Text Page") }
   let!(:html_page) { create(:page, name: "html_page", section: "html_page", title: "HTML Page") }
   let!(:text_left) { create(:page, name: "text_left_page", section: "text_left", title: "Text Left Page") }
@@ -21,9 +21,9 @@ RSpec.describe "Pages", type: :system do
   let!(:image_section_section) { create(:section, :image_section) }
   let!(:image_group_section) { create(:section, :image_group) }
   let!(:video_image_section) { create(:section, :video_image, description: 'VideoImage:"pact_video"') }
-  let!(:paul_transparent) { create(:image_file, :paul_transparent) }
-  let!(:lori) { create(:image_file, :lori) }
-  let!(:paul_virginia) { create(:image_file, :paul_virginia) }
+  let!(:test_photo) { create(:image_file, :test_photo) }
+  let!(:test_photo_2) { create(:image_file, :test_photo_2) }
+  let!(:test_photo_3) { create(:image_file, :test_photo_3) }
   let!(:virginia) { create(:image_file, :virginia) }
   let!(:backyard) { create(:image_file, :backyard) }
   let!(:pact_video) { create(:image_file, :pact_video) }
@@ -31,7 +31,7 @@ RSpec.describe "Pages", type: :system do
   before do
     ENV['IMAGE_HACK'] = true.to_s
 
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -51,7 +51,7 @@ RSpec.describe "Pages", type: :system do
 
     it "displays the html page correctly" do
       rendered_html            = page.evaluate_script('document.querySelector(".col-12").innerHTML').strip
-      expected_html            = "<div>#{html_section.description.strip}</div>"
+      expected_html            = "<div><div>#{html_section.description.strip}</div></div>"
       rendered_html_normalized = Nokogiri::HTML.fragment(rendered_html).to_html
       expected_html_normalized = Nokogiri::HTML.fragment(expected_html).to_html
 
@@ -64,7 +64,7 @@ RSpec.describe "Pages", type: :system do
 
     it "displays the text left page correctly" do
       rendered_html            = page.evaluate_script('document.querySelector(".col-8").innerHTML').strip
-      expected_html            = "<div>#{text_left_section.description.strip}</div>"
+      expected_html            = "<div><div>#{text_left_section.description.strip}</div></div>"
       rendered_html_normalized = Nokogiri::HTML.fragment(rendered_html).to_html
       expected_html_normalized = Nokogiri::HTML.fragment(expected_html).to_html
       expect(rendered_html_normalized).to eq(expected_html_normalized)

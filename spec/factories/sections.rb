@@ -23,7 +23,7 @@ FactoryBot.define do
     section_order { 1 }
     image { "ImageFile:test" }
     link { "/images/test.jpg" }
-    formatting { '{ "row_style": "text-left" }' }
+    formatting { { "row_style": "text-left" } }
     description { "This is a test." }
 
     # Traits
@@ -33,7 +33,7 @@ FactoryBot.define do
       section_order { nil }
       image         { nil }
       link          { nil }
-      formatting    { nil }
+      formatting    { {} }
       description   { Faker::Lorem.paragraphs(number: 5).join(". ") }
     end
 
@@ -43,7 +43,7 @@ FactoryBot.define do
       section_order { nil }
       image         { nil }
       link          { nil }
-      formatting    { '{ "row_classes": "col-12" }' }
+      formatting    { { "row_classes": "col-12" } }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -54,9 +54,9 @@ FactoryBot.define do
       content_type  { "text_left" }
       section_name  { 'text_left' }
       section_order { nil }
-      image         { "ImageFile:paul-transparent" }
+      image         { "ImageFile:test-photo" }
       link          { nil }
-      formatting    { '{ "row_style": "text-left", "image_classes": "col-4 mb-3", "text_classes": "col-8" }' }
+      formatting    { { "row_style": "text-left", "image_classes": "col-4 mb-3", "text_classes": "col-8" } }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -67,9 +67,9 @@ FactoryBot.define do
       content_type  { "text_right" }
       section_name  { 'text_right' }
       section_order { nil }
-      image         { "ImageFile:paul-transparent" }
+      image         { "ImageFile:test-photo" }
       link          { nil }
-      formatting    { '{ "row_style": "text-right", "image_classes": "col-4 mb-3", "text_classes": "col-8" }' }
+      formatting    { { "row_style": "text-right", "image_classes": "col-4 mb-3", "text_classes": "col-8" } }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -80,9 +80,9 @@ FactoryBot.define do
       content_type  { "text_top" }
       section_name  { 'text_top' }
       section_order { nil }
-      image         { "ImageFile:paul-transparent" }
+      image         { "ImageFile:test-photo" }
       link          { nil }
-      formatting    { '{ "row_style": "text-top", "row_classes": "col-12" }' }
+      formatting    { { "row_style": "text-top", "row_classes": "col-12" } }
 
       after(:build) do |section, evaluator|
         section.description = build_html_paragraphs(9)
@@ -93,9 +93,9 @@ FactoryBot.define do
       content_type  { "text_bottom" }
       section_name  { 'text_bottom' }
       section_order { nil }
-      image         { "ImageFile:paul-transparent" }
+      image         { "ImageFile:test-photo" }
       link          { nil }
-      formatting    { '{ "row_style": "text-bottom", "row_classes": "col-12"  }' }
+      formatting    { { "row_style": "text-bottom", "row_classes": "col-12"  } }
       description   { Faker::Lorem.paragraphs(number: 5).join(". ") }
 
       after(:build) do |section, evaluator|
@@ -107,9 +107,9 @@ FactoryBot.define do
       content_type  { "image_section" }
       section_name  { 'image_section' }
       section_order { nil }
-      image         { "ImageSection:paul-transparent" }
+      image         { "ImageSection:test-photo" }
       link          { nil }
-      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+      formatting    { { "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" } }
     end
 
     trait :image_group do
@@ -118,7 +118,7 @@ FactoryBot.define do
       section_order { nil }
       image         { "ImageGroup:test-group" }
       link          { nil }
-      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+      formatting    { { "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" } }
     end
 
     trait :video_image do
@@ -127,7 +127,7 @@ FactoryBot.define do
       section_order { nil }
       image         { nil }
       link          { nil }
-      formatting    { '{ "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" }' }
+      formatting    { { "row_style": "text-left", "text_classes ": "col-lg-4", "image_classes": "col-lg-8" } }
     end
   end
 end

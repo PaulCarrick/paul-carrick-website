@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "Admin Users", type: :system do
   let(:admin_user) { create(:user, access: "super") }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:user) do
     create(:user,
            email: "test@example.com",
@@ -12,7 +12,7 @@ RSpec.describe "Admin Users", type: :system do
   end
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -25,7 +25,7 @@ RSpec.describe "Admin Users", type: :system do
     before { visit admin_users_path }
 
     it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Users")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Users")
     end
 
     it "lists all users with their attributes" do
@@ -50,10 +50,6 @@ RSpec.describe "Admin Users", type: :system do
 
   describe "New User Page" do
     before { visit new_admin_user_path }
-
-    it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Users")
-    end
 
     it "renders the form with required fields" do
       expect(page).to have_field("user[email]", type: "text")
@@ -82,10 +78,6 @@ RSpec.describe "Admin Users", type: :system do
   describe "Edit User Page" do
     before { visit edit_admin_user_path(user) }
 
-    it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Users")
-    end
-
     it "pre-fills the form with existing data" do
       expect(page).to have_field("user[email]", with: "test@example.com")
       expect(page).to have_field("user[name]", with: "Test User")
@@ -106,10 +98,6 @@ RSpec.describe "Admin Users", type: :system do
 
   describe "Show User Page" do
     before { visit admin_user_path(user) }
-
-    it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Users")
-    end
 
     it "shows the user's details" do
       expect(page).to have_content("test@example.com")

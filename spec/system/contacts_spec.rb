@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "Contact Form", type: :system do
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -14,8 +14,8 @@ RSpec.describe "Contact Form", type: :system do
   describe "Contact Form Page" do
     before { visit new_contact_path }
 
-    it "displays the correct page title" do
-      expect(page).to have_title("Test - Contact")
+    it "displays the correct title" do
+      expect(page).to have_title("#{site_setup.site_name} - Contact")
     end
 
     it "displays the contact form" do
@@ -39,7 +39,7 @@ RSpec.describe "Contact Form", type: :system do
         click_button "Send Message"
         sleep 5
         expect(page).to have_content("The contact information was successfully sent.")
-        expect(page).to have_title("Test - Contact")
+        expect(page).to have_title("#{site_setup.site_name} - Contact")
       end
     end
   end

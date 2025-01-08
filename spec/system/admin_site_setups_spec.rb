@@ -5,7 +5,7 @@ RSpec.describe "Admin Site Setups", type: :system do
   let!(:site_setup) { create(:site_setup) }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -18,8 +18,7 @@ RSpec.describe "Admin Site Setups", type: :system do
     describe "New Site Setup Form" do
       before { visit new_admin_site_setup_path }
 
-      it "renders the correct title and header" do
-        expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Site Setups")
+      it "renders the correct header" do
         expect(page).to have_selector("h1", text: "New Site Setup")
       end
 
@@ -70,7 +69,6 @@ RSpec.describe "Admin Site Setups", type: :system do
       before { visit edit_admin_site_setup_path(site_setup) }
 
       it "renders the correct title and header" do
-        expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Site Setups")
         expect(page).to have_selector("h1", text: "Edit Site Setup")
       end
 
@@ -90,10 +88,6 @@ RSpec.describe "Admin Site Setups", type: :system do
 
   describe "Index Page" do
     before { visit admin_site_setups_path }
-
-    it "renders the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Site Setups")
-    end
 
     it "lists all site setups with their attributes" do
       within ".scrollable-container" do

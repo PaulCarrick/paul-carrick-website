@@ -1,8 +1,23 @@
+require 'nokogiri'
 require 'rails_helper'
 
 RSpec.describe "Admin Pages", type: :system do
+  def search_pages(name)
+    page_records = Page.by_page_name(name)
+
+    expect(page_records.length).to eq(1)
+
+    page_record = page_records[0]
+
+    visit admin_pages_path
+
+    expect(page).to have_link("View", href: admin_page_path(page_record))
+
+    page_record
+  end
+
   let(:admin_user) { create(:user, access: "super") }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:page_record) do
     create(:page,
            name: "Test Page",
@@ -10,9 +25,19 @@ RSpec.describe "Admin Pages", type: :system do
            title: "Test Title",
            access: "Public")
   end
+  let!(:section) do
+    create(:section,
+           content_type:  "Test Section",
+           section_name:  "Test Section Name",
+           section_order: 1,
+           image:         "test_image.jpg",
+           link:          "https://example.com",
+           formatting:    "{ \"row_class\": \"text-left\" }",
+           description:   "<p>Test Description</p>")
+  end
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -25,7 +50,7 @@ RSpec.describe "Admin Pages", type: :system do
     before { visit admin_pages_path }
 
     it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Pages")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Pages")
     end
 
     it "lists all pages with their attributes" do
@@ -52,7 +77,7 @@ RSpec.describe "Admin Pages", type: :system do
     before { visit new_admin_page_path }
 
     it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Pages")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Pages")
     end
 
     it "renders the form with required fields" do
@@ -79,7 +104,7 @@ RSpec.describe "Admin Pages", type: :system do
     before { visit edit_admin_page_path(page_record) }
 
     it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Pages")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Pages")
     end
 
     it "pre-fills the form with existing data" do
@@ -99,17 +124,15 @@ RSpec.describe "Admin Pages", type: :system do
   end
 
   describe "Show Page" do
-    before { visit admin_page_path(page_record) }
-
-    it "displays the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Pages")
-    end
-
     it "shows the page details" do
-      expect(page).to have_content("Test Page")
-      expect(page).to have_content("Test Section")
-      expect(page).to have_content("Test Title")
-      expect(page).to have_content("Public")
+      home_page = search_pages("home")
+
+      expect(page).to have_link("View", href: admin_page_path(page_record))
+      find(:xpath, "//a[text()='View' and @href='#{admin_page_path(page_record)}']").click
+
+      stripped_text = Nokogiri::HTML(page_record&.sections&.first&.description).text.strip
+
+      expect(page).to have_content(stripped_text)
     end
   end
 

@@ -1,5 +1,7 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'rake'
+
 ENV['RAILS_ENV'] = 'test'
 require_relative '../config/environment'
 
@@ -78,9 +80,45 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include FactoryBot::Syntax::Methods
   config.include LoginHelper
-  config.include TrixEditorHelper, type: :system
+  config.include EditorHelper, type: :system
   config.include HtmlTools, type: :system
   config.include Utilities, type: :system
+
+  config.order = :defined
+
+  config.before(:suite) do
+    if RSpec.world.example_groups.any? { |group| group.metadata[:type] == :system }
+      Rails.application.load_tasks unless Rake::Task.task_defined?('db:replicate')
+
+      # Invoke your Rake task
+
+      begin
+        puts "Running Rake task: db:replicate for system tests"
+        Rake::Task['db:replicate'].invoke
+      rescue StandardError => e
+        puts "Error: Rake task failed - #{e.message}"
+        raise e
+      end
+    end
+  end
+
+  if ENV["DEBUG"] || ENV['DEBUG_RSPEC']
+    RSpec.configure do |config|
+      config.around(:example) do |example|
+        begin
+          example.run
+
+          if example.exception
+            puts "Example #{example.full_description} failed with error: #{e.message}"
+            debugger
+          end
+        rescue => e
+          puts "Example #{example.full_description} failed with error: #{e.message}"
+          debugger
+        end
+      end
+    end
+  end
 end
 
 Shoulda::Matchers.configure do |config|

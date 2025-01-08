@@ -10,17 +10,6 @@ RSpec.describe Section, type: :model do
       expect(section.errors[:base]).to include("At least one of image, link, or description must be present.")
     end
 
-    it "validates formatting JSON" do
-      section = Section.new(formatting: "{invalid_json}")
-      expect(section.valid?).to be false
-      expect(section.errors[:base]).to include(/Invalid JSON/)
-    end
-
-    it "does not add an error for valid formatting JSON" do
-      section = Section.new(description: "Test Section", formatting: '{"key": "value"}')
-      expect(section.valid?).to be true
-    end
-
     it "adds an error for invalid HTML in description" do
       section = Section.new(description: "<html><body><p>Invalid HTML")
       section.valid?
@@ -47,6 +36,7 @@ RSpec.describe Section, type: :model do
         expect { section.reload }.not_to raise_error
       end
     end
+  end
 
   describe "scopes" do
     let!(:section_1) { Section.create!(content_type: "type1", description: "Section 1", section_order: 1) }
@@ -58,34 +48,6 @@ RSpec.describe Section, type: :model do
         result = Section.by_content_type("type1")
         expect(result).to eq([ section_1, section_2 ])
         expect(result).not_to include(section_3)
-      end
-    end
-  end
-
-  describe "instance methods" do
-    describe "#formatting_to_text" do
-      it "converts valid formatting JSON to text" do
-        section = Section.new(formatting: '{"key":"value"}')
-        expect(section.formatting_to_text).to eq("key: value")
-      end
-
-      it "returns nil for invalid formatting JSON" do
-        section = Section.new(content_type: "Test", formatting: "{invalid_json}")
-        expect { section.formatting_to_text }.to raise_error(JSON::ParserError)
-      end
-    end
-
-    describe "#text_to_formatting" do
-      it "converts text to valid formatting JSON" do
-        section = Section.new
-        section.text_to_formatting("key: value")
-        expect(section.formatting).to eq("{\n    \"key\": \"value\"\n}")
-      end
-
-      it "does not set formatting for invalid text" do
-        section = Section.new
-        section.text_to_formatting("invalid_text")
-        expect(section.formatting).to eq("{\n\n}")
       end
     end
   end

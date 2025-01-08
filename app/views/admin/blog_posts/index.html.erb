@@ -62,7 +62,14 @@
     </div>
     <div class="row mt-2 mb-2">
       <div class="col-2"><%= form.label :posted_cont, "Posted", class: "form-label" %></div>
-      <div class="col-3"><%= form.search_field :posted_cont %></div>
+      <div class="col-3">
+        <%= form.text_field :posted_date_eq,
+                            placeholder: "YYYY-DD-MM",
+                            class:       "form-control",
+                            pattern:     "\\d{4}-\\d{2}-\\d{2}",
+                            title:       "Please enter the date in the format YYYY-DD-MM."
+        %>
+      </div>
       <div class="col-1"></div>
       <div class="col-2"><%= form.label :content_cont, "Contents", class: "form-label" %></div>
       <div class="col-3"><%= form.search_field :content_cont %></div>

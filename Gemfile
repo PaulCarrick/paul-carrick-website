@@ -58,6 +58,7 @@ gem 'active_model_serializers'
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
+  gem 'byebug'
   gem 'debug', platforms: [ :mri ]
   gem "brakeman", require: false
   gem 'rspec-rails'

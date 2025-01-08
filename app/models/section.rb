@@ -25,20 +25,23 @@ class Section < ApplicationRecord
   def setup_formatting
     return unless self.formatting.present?
 
-    row_style = self.formatting['row_style']
+    row_style      = self.formatting['row_style']
     self.row_style = row_style.gsub(/\A"|"\z/, '') if row_style.present? && !self.row_style.present?
 
     return if self.div_ratio.present?
 
-    if ((self.row_style == "text-left") || (self.row_style == "text-right"))
-      text_classes = self.formatting['text_classes']
+    if (self.row_style == "text-left") || (self.row_style == "text-right")
+      text_classes  = self.formatting['text_classes']
       image_classes = self.formatting['image_classes']
-      text_width = Regexp.last_match(1).to_i if text_classes.present? && text_classes =~ /col\-(\d{1,2})/
-      image_width = Regexp.last_match(1).to_i if image_classes.present? && image_classes =~ /col\-(\d{1,2})/
+      text_width    = Regexp.last_match(1).to_i if text_classes.present? && text_classes =~ /col\-(\d{1,2})/
+      image_width   = Regexp.last_match(1).to_i if image_classes.present? && image_classes =~ /col\-(\d{1,2})/
 
       if text_width.present? && (text_width > 0) && image_width.present? && (image_width > 0)
-        text_percentage = ((text_width.to_f / 12.0) * 100).floor
-        image_percentage = ((image_width.to_f/ 12.0) * 100).floor
+        original_text_percentage  = ((text_width.to_f / 12.0) * 100).floor if text_width.present?
+        original_image_percentage = 100 - original_text_percentage if original_text_percentage.present?
+        original_ratio            = "#{original_text_percentage}:#{original_image_percentage}"
+        text_percentage           = ((text_width.to_f / 12.0) * 100).floor
+        image_percentage          = ((image_width.to_f / 12.0) * 100).floor
 
         ratios = {
           90 => "90:10",
@@ -52,7 +55,7 @@ class Section < ApplicationRecord
           10 => "10:90"
         }
 
-        closest_text_ratio = ratios.keys.min_by { |key| (text_percentage - key).abs }
+        closest_text_ratio  = ratios.keys.min_by { |key| (text_percentage - key).abs }
         closest_image_ratio = ratios.keys.min_by { |key| (image_percentage - key).abs }
 
         if (closest_text_ratio + closest_image_ratio) === 100
@@ -61,7 +64,7 @@ class Section < ApplicationRecord
       end
     end
 
-    self.div_ratio = div_ratio
+    self.div_ratio = div_ratio unless div_ratio != original_ratio
   end
 
   def verify_checksum

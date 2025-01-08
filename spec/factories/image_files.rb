@@ -15,8 +15,8 @@ FactoryBot.define do
       )
     end
 
-    trait :paul_transparent do
-      name { "paul-transparent" }
+    trait :test_photo do
+      name { "test-photo" }
       caption { "This is Paul Carrick" }
       description { "<p>He is the <b>author</b> of this code.</p>" }
       group { "test-group" }
@@ -31,8 +31,8 @@ FactoryBot.define do
       end
     end
 
-    trait :lori do
-      name { "lori" }
+    trait :test_photo_2 do
+      name { "test_photo_2" }
       caption { "This is Lori" }
       description { "<p>She is a friend of Paul.</p>" }
       group { "test-group" }
@@ -47,8 +47,8 @@ FactoryBot.define do
       end
     end
 
-    trait :paul_virginia do
-      name { "paul_virginia" }
+    trait :test_photo_3 do
+      name { "test_photo_3" }
       caption { "This is Paul and Virginia" }
       description { "<p>Virginia is Paul's wife.</p>" }
       group { "test-group" }

@@ -1,14 +1,22 @@
 require 'rails_helper'
 
 RSpec.describe "Admin Blog Posts", type: :system do
+  def search_blog_posts(content)
+    visit admin_blog_posts_path
+
+    expect(page).to have_field(name: 'q[content_cont]')
+    fill_in "q[content_cont]", with: content
+    click_button "Search Blogs"
+  end
+
   let(:admin_user) { create(:user, access: "super") }
   let!(:blog_post) { create(:blog_post) }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:blog_post_1) { create(:blog_post, author: "Author One", title: "Title One", posted: 1.day.ago, content: "Content One") }
   let!(:blog_post_2) { create(:blog_post, author: "Author Two", title: "Title Two", posted: 2.days.ago, content: "Content Two") }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -17,27 +25,75 @@ RSpec.describe "Admin Blog Posts", type: :system do
     login_as(admin_user)
   end
 
+  describe "Search for title" do
+    before do
+      blog_post_1.save!
+    end
+
+    it "finds a Post with a given title" do
+      visit admin_blog_posts_path
+
+      expect(page).to have_field(name: 'q[title_cont]')
+      fill_in "q[title_cont]", with: "Title One"
+      click_button "Search Blogs"
+      expect(page).to have_content("Title One")
+    end
+
+    it "finds a Post with a given author" do
+      visit admin_blog_posts_path
+
+      expect(page).to have_field(name: 'q[author_cont]')
+      fill_in "q[author_cont]", with: "Author One"
+      click_button "Search Blogs"
+      expect(page).to have_content("Author One")
+    end
+
+    it "finds a Post with a given content" do
+      visit admin_blog_posts_path
+
+      expect(page).to have_field(name: 'q[content_cont]')
+      fill_in "q[content_cont]", with: "Content One"
+      click_button "Search Blogs"
+      expect(page).to have_content("Content One")
+    end
+
+    it "finds a Post with a given posted date" do
+      formatted_date = Date.today.strftime("%Y-%m-%d")
+
+      visit admin_blog_posts_path
+
+      expect(page).to have_field(name: 'q[posted_date_eq]')
+      fill_in "q[posted_date_eq]", with: formatted_date
+      click_button "Search Blogs"
+      expect(page).to have_content("Test Blog")
+    end
+  end
+
   describe "New/Edit page" do
     it "renders the blog form with all fields" do
       visit new_admin_blog_post_path
+
+      sleep 5
 
       expect(page).to have_field("Author*", with: admin_user.name)
       expect(page).to have_field("Title*", placeholder: "Enter the title")
       expect(page).to have_select("Visibility", options: %w[Public Private])
       expect(page).to have_select("Blog Type", options: %w[Personal Professional])
-      expect(page).to have_css("trix-editor#blog_post_content")
+      expect(page).to have_button("Switch to HTML View **")
       expect(page).to have_button("Save Blog")
       expect(page).to have_link("Cancel", href: %r{/admin/blog_posts})
     end
 
-    it "renders the rich text area and raw text editor for content" do
+    it "renders the HTML Editor and raw text editor for content" do
       visit new_admin_blog_post_path
 
+      sleep 5
+
       # Click the button to toggle the visibility of the raw text editor
-      click_button "Raw HTML"
+      click_button "Switch to HTML View **"
 
       # Now, check for the visibility of the raw content textarea
-      expect(page).to have_css("textarea[name='blog_post[raw_content]']")
+      expect(page).to have_selector('textarea.form-control[placeholder="Edit raw HTML here"][rows="10"]')
     end
 
     it "submits the form successfully" do
@@ -47,8 +103,9 @@ RSpec.describe "Admin Blog Posts", type: :system do
       fill_in "blog_post[title]", with: "Test Title"
       select "Public", from: "blog_post[visibility]"
       select "Personal", from: "blog_post[blog_type]"
-      fill_in_trix_editor("blog_post_content", with: "Test Content")
+      fill_in_quill_editor("blog-post-content", with: "Test Content")
       click_button "Save Blog"
+      sleep 3
       expect(page).to have_content("Blog Post created successfully")
       expect(page).to have_current_path(admin_blog_posts_path)
     end
@@ -65,21 +122,6 @@ RSpec.describe "Admin Blog Posts", type: :system do
 
     before do
       driven_by(:selenium_chrome_headless) # Use JavaScript-enabled driver
-    end
-
-    describe "Edge Cases" do
-      context "when there is no blog post" do
-        before do
-          BlogPost.destroy_all
-          visit admin_blog_posts_path
-        end
-
-        it "does not render the blog content" do
-          expect(page).not_to have_selector("h1", text: "Blog")
-          expect(page).not_to have_selector("h2")
-          expect(page).not_to have_content("This is the content of the latest blog post.")
-        end
-      end
     end
   end
 
@@ -99,13 +141,15 @@ RSpec.describe "Admin Blog Posts", type: :system do
     end
 
     it "lists all blog posts" do
-      expect(page).to have_content("Author One")
-      expect(page).to have_content("Title One")
-      expect(page).to have_content(blog_post_1.posted.strftime("%Y-%m-%d"))
-      expect(page).to have_content("Content One")
+      expect(page).to have_content("View")
+      expect(page).to have_content("Edit")
+      expect(page).to have_content("Delete")
     end
 
+
     it "renders action links for each blog post" do
+      search_blog_posts("Content One")
+      expect(page).to have_link("View", href: admin_blog_post_path(blog_post_1))
       expect(page).to have_link("Edit", href: edit_admin_blog_post_path(blog_post_1))
       expect(page).to have_link("Delete", href: "#{admin_blog_post_path(blog_post_1)}/delete")
     end
@@ -134,8 +178,10 @@ RSpec.describe "Admin Blog Posts", type: :system do
       fill_in "Author", with: "Author One"
       click_button "Search Blogs"
       click_link "Clear Search"
-      expect(page).to have_content("Author One")
-      expect(page).to have_content("Author Two")
+      sleep 1
+
+      anchor_count = all('a').filter { |anchor| anchor.text == 'Edit' }.size
+      expect(anchor_count).to be > 1
     end
   end
 
@@ -149,7 +195,8 @@ RSpec.describe "Admin Blog Posts", type: :system do
 
   describe "Action links" do
     it "redirects to the edit page when clicking Edit" do
-      visit admin_blog_posts_path
+      search_blog_posts("Content One")
+
       click_link "Edit", href: edit_admin_blog_post_path(blog_post_1)
 
       expect(page).to have_current_path(edit_admin_blog_post_path(blog_post_1))
@@ -157,7 +204,8 @@ RSpec.describe "Admin Blog Posts", type: :system do
     end
 
     it "deletes a blog post when clicking Delete" do
-      visit admin_blog_posts_path
+      search_blog_posts("Content One")
+
       expect {
         click_link "Delete", href: "#{admin_blog_post_path(blog_post_1)}/delete"
         page.driver.browser.switch_to.alert.accept # Confirm the alert

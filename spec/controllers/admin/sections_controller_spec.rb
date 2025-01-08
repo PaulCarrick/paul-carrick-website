@@ -65,14 +65,6 @@ RSpec.describe Admin::SectionsController, type: :controller do
         expect(response).to redirect_to(admin_sections_path)
         expect(flash[:notice]).to eq("Section created successfully.")
       end
-
-      it "prettifies the description and formatting before saving" do
-        post :create, params: { section: valid_attributes }
-        created_section = Section.last
-
-        expect(created_section.description).to eq("<div>\n  Test Description\n</div>")
-        expect(created_section.formatting).to eq("{\"key\":\"value\"}")
-      end
     end
 
     context "with invalid attributes" do
@@ -93,12 +85,6 @@ RSpec.describe Admin::SectionsController, type: :controller do
       expect(assigns(:_section)).to eq(section)
       expect(assigns(:content_types)).to eq(Section.distinct.pluck(:content_type))
     end
-
-    it "prettifies the description and formatting" do
-      get :edit, params: { id: section.id }
-      expect(assigns(:_section).description).to eq("<div>\n  Test Description\n</div>")
-      expect(assigns(:_section).formatting).to eq("{\n  \"key\": \"value\"\n}")
-    end
   end
 
   describe "PATCH #update" do
@@ -112,12 +98,11 @@ RSpec.describe Admin::SectionsController, type: :controller do
         expect(flash[:notice]).to eq("Section updated successfully.")
       end
 
-      it "prettifies the description and formatting before saving" do
+      it "prettifies the description before saving" do
         patch :update, params: { id: section.id, section: valid_attributes }
         section.reload
 
         expect(section.description).to eq("<div>Test Description</div>")
-        expect(section.formatting).to eq("{\"key\":\"value\"}")
       end
     end
 

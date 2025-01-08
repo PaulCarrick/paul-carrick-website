@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Admin Footer Items", type: :system do
   let(:admin_user) { create(:user, access: "super") }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:footer_item_1) { create(:footer_item, label: "Item 1", footer_order: 1, link: "https://example.com/item1") }
   let!(:footer_item_2) { create(:footer_item, label: "Item 2", footer_order: 2, link: "https://example.com/item2") }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -72,7 +72,7 @@ RSpec.describe "Admin Footer Items", type: :system do
     before { visit admin_footer_items_path }
 
     it "renders the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Footer Items")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Footer Items")
     end
 
     it "lists all footer items with their attributes" do

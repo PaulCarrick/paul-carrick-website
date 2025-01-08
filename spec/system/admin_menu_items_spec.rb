@@ -2,12 +2,12 @@ require 'rails_helper'
 
 RSpec.describe "Admin Menu Items", type: :system do
   let(:admin_user) { create(:user, access: "super") }
-  let!(:site_setup) { create(:site_setup) }
+  let!(:site_setup) { SiteSetup.find_by(configuration_name: 'default') }
   let!(:menu_item_1) { create(:menu_item, label: "Item 1", menu_order: 1, link: "https://example.com/item1") }
   let!(:menu_item_2) { create(:menu_item, label: "Item 2", menu_order: 2, link: "https://example.com/item2") }
 
   before do
-    if ENV["DEBUG"].present?
+    if ENV["DEBUG"].present? || ENV["RSPEC_DEBUG"].present?
       driven_by(:selenium_chrome)
     else
       driven_by(:selenium_chrome_headless)
@@ -72,7 +72,7 @@ RSpec.describe "Admin Menu Items", type: :system do
     before { visit admin_menu_items_path }
 
     it "renders the correct title" do
-      expect(page).to have_title("Test - Admin Dashboard: Menu Items")
+      expect(page).to have_title("#{site_setup.site_name} - Admin Dashboard: Menu Items")
     end
 
     it "lists all menu items with their attributes" do
