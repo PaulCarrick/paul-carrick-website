@@ -314,11 +314,11 @@ const SectionEditor = ({
           <div className="col-10">
             <div className="flext-container">
               {formattingMode === "danger" ? (
-                  <button onClick={toggleFormatting} className="btn btn-good mb-2">
+                  <button type="button" onClick={toggleFormatting} className="btn btn-good mb-2">
                     Switch to Normal Mode
                   </button>
               ) : (
-                   <button onClick={toggleFormatting} className="btn btn-bad mb-2">
+                   <button type="button" onClick={toggleFormatting} className="btn btn-bad mb-2">
                      Switch to Formatting Mode **"
                    </button>
                )

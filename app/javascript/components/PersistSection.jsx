@@ -18,11 +18,9 @@ function createSection() {
   })
        .then(response => {
          console.log("Section created successfully:", response.data);
-         alert("Section created successfully!");
        })
        .catch(error => {
          console.error("Error creating section:", error.response || error.message);
-         alert("Failed to create section.");
        });
 }
 

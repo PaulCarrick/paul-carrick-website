@@ -160,14 +160,14 @@ const HtmlEditor = ({
             <div className="row align-items-center">
               <div className="flex-container">
                 {isHtmlView ? (
-                    <button onClick={toggleView} className="btn btn-good mb-2">
+                    <button type="button" onClick={toggleView} className="btn btn-good mb-2">
                       Switch to Editor View
                     </button>
                 ) : (
-                     <button onClick={toggleView} className="btn btn-bad mb-2">
-                       Switch to HTML View **"
-                     </button>
-                 )
+                    <button type="button" onClick={toggleView} className="btn btn-bad mb-2">
+                      Switch to HTML View **
+                    </button>
+                )
                 }
                 <span className="ms-4">
                 ** HTML View should only be used by users who are familiar with HTML

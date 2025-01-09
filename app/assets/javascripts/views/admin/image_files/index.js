@@ -35,6 +35,6 @@ async function addToGroup(imageFileId) {
       location.reload();
     }
   } catch (error) {
-    alert("An error occurred: " + error.message);
+    console.log("An error occurred: " + error.message);
   }
 }
