@@ -79,7 +79,10 @@ const getDefaultOptions = (
     }
   }
 
-  if (hasSplitSections(options.row_style)) {
+  const hasExistingColumnDefinitions = /col\-\d{1,2}/.test(options.text_classes) ||
+                                       /col\-\d{1,2}/.test(options.image_classes)
+
+  if (!hasExistingColumnDefinitions && hasSplitSections(options.row_style)) {
     const [textColumnWidth, imageColumnWidth] = getColumWidths(options.div_ratio, options.row_style);
 
     if (isPresent(textColumnWidth) && isPresent(imageColumnWidth)) {

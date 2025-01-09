@@ -18,6 +18,8 @@ const RenderSection = ({
                          section = null,
                          noBorder = false,
                        }) => {
+  if (section === null) return; // We can't render what we don't have
+
   const sectionData = dupObject(section);
   const contents    = buildContents(sectionData);
   const sections    = [];
