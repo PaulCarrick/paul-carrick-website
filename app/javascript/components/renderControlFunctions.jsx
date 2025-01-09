@@ -64,7 +64,7 @@ export function renderInput(id, value, onChange, onBlur, placeHolder  = "Please 
           className={controlClass}
           data-options={dataOptions}
           onChange={(event) => onChange(event.target.value, id, event.target.dataset.options)}
-          onBlur={(event) => onBlur(event.target.value, id, event.target.dataset.options)}
+          onBlur={(onBlur !== null) && ((event) => onBlur(event.target.value, id, event.target.dataset.options))}
       />
   );
 }

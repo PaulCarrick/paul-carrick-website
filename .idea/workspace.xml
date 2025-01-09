@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/system/pages_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/pages_spec.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/RenderControl.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/RenderControl.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/renderControlFunctions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/renderControlFunctions.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/support/editor_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/editor_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +130,7 @@
       <recent name="$PROJECT_DIR$/public/images" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Debug Chrome">
+  <component name="RunManager" selected="Rails.Debug Rails and Javascript">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -365,7 +368,10 @@
       <workItem from="1736275137245" duration="12250000" />
       <workItem from="1736288263239" duration="2289000" />
       <workItem from="1736340147439" duration="40336000" />
-      <workItem from="1736432987356" duration="3426000" />
+      <workItem from="1736432987356" duration="10448000" />
+      <workItem from="1736445275344" duration="1384000" />
+      <workItem from="1736446851471" duration="4287000" />
+      <workItem from="1736454419829" duration="5748000" />
     </task>
     <servers />
   </component>
@@ -403,6 +409,6 @@
     <SUITE FILE_PATH="coverage/paul_carrick_website@.rcov" NAME=" Coverage Results" MODIFIED="1735690448329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1736177807661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_an_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736191482406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
-    <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_and_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736273396042" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
+    <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_and_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736442477520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
   </component>
 </project>

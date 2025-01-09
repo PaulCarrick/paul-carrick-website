@@ -61,7 +61,7 @@ function renderTextField(options, handleChange, handleBlur) {
           placeholder={options.placeholder}
           className={options.class}
           onChange={(e) => handleChange(e.target.value)}
-          onBlur={(e) => handleBlur(e.target.value)}
+          onBlur={(handleBlur !== null) && ((e) => handleBlur(e.target.value))}
           minLength={options.minLength}
           maxLength={options.maxLength}
           pattern={options.pattern}

@@ -1,12 +1,18 @@
 module EditorHelper
   def fill_in_quill_editor(id, with:)
-    # Locate the specific div by ID
     begin
       container = find("div[data-react-props*=\"#{id}\"]")
 
       editor = container.find('div[contenteditable="true"]')
     rescue
-      editor = find(".ql-editor")
+      begin
+        container = find("#{id}")
+
+        # Find the contenteditable element within the container
+        editor = container.find('div[contenteditable="true"]')
+      rescue
+        editor = find(".ql-editor")
+      end
     end
 
     # Set the desired text
