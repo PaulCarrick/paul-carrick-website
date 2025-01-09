@@ -64,7 +64,7 @@ RSpec.describe "Pages", type: :system do
 
     it "displays the text left page correctly" do
       rendered_html            = page.evaluate_script('document.querySelector(".col-8").innerHTML').strip
-      expected_html            = "<div><div>#{text_left_section.description.strip}</div></div>"
+      expected_html            = "<div>#{text_left_section.description.strip}</div>"
       rendered_html_normalized = Nokogiri::HTML.fragment(rendered_html).to_html
       expected_html_normalized = Nokogiri::HTML.fragment(expected_html).to_html
       expect(rendered_html_normalized).to eq(expected_html_normalized)
@@ -93,7 +93,7 @@ RSpec.describe "Pages", type: :system do
 
       within(first_row) do
         rendered_html            = page.evaluate_script('document.querySelector(".col-12").innerHTML').strip
-        expected_html            = "<div>#{text_top_section.description.strip}</div>"
+        expected_html            = "<div><div>#{text_top_section.description.strip}</div></div>"
         rendered_html_normalized = Nokogiri::HTML.fragment(rendered_html).to_html
         expected_html_normalized = Nokogiri::HTML.fragment(expected_html).to_html
         expect(rendered_html_normalized).to eq(expected_html_normalized)
