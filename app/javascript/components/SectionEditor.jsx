@@ -528,7 +528,7 @@ function renderRowStyle(rowStyle, setValue) {
       <div className="row mb-2">
         <div className="col-2 d-flex align-items-center">Row Style:</div>
         <div className="col-10">
-          <div id="rowStyle">
+          <div id="rowStyleDiv">
             {renderSelect("rowStyle", rowStyle, rowStyleOptions(), setValue)}
           </div>
         </div>

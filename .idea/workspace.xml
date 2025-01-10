@@ -6,9 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/RenderControl.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/RenderControl.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/renderControlFunctions.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/renderControlFunctions.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/support/editor_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/editor_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -372,6 +370,7 @@
       <workItem from="1736445275344" duration="1384000" />
       <workItem from="1736446851471" duration="4287000" />
       <workItem from="1736454419829" duration="5748000" />
+      <workItem from="1736460261712" duration="7986000" />
     </task>
     <servers />
   </component>
