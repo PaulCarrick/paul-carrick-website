@@ -76,6 +76,8 @@ RSpec.describe "Admin Sections", type: :system do
     before { visit new_admin_section_path }
 
     it "Has a CSRF Token", js: true do
+      pretty_print_html(page.html)
+      debugger
       expect(page).to have_selector("meta[name='csrf-token']", visible: false)
     end
 

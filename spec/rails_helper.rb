@@ -102,20 +102,22 @@ RSpec.configure do |config|
     end
   end
 
-  if ENV["DEBUG"] || ENV['DEBUG_RSPEC']
-    RSpec.configure do |config|
-      config.around(:example) do |example|
-        begin
-          example.run
+  config.before(:each, type: :system) do
+    allow_any_instance_of(ActionController::Base).to receive(:protect_against_forgery?).and_return(true)
+  end
 
-          if example.exception
-            puts "Example #{example.full_description} failed with error: #{e.message}"
-            debugger
-          end
-        rescue => e
+  if ENV["DEBUG"] || ENV['DEBUG_RSPEC']
+    config.around(:example) do |example|
+      begin
+        example.run
+
+        if example.exception
           puts "Example #{example.full_description} failed with error: #{e.message}"
           debugger
         end
+      rescue => e
+        puts "Example #{example.full_description} failed with error: #{e.message}"
+        debugger
       end
     end
   end
