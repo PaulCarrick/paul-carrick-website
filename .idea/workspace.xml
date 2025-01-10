@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/bin/display_images.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spec/rails_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/rails_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rubymine-settings.zip" beforeDir="false" afterPath="$PROJECT_DIR$/rubymine-settings.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/support/utilities.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/utilities.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,6 +37,7 @@
     <option name="VCS_SHOW_CONFIRMATION" value="true" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -75,32 +78,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;JavaScript Debug.Debug Chrome JavaScript.executor&quot;: &quot;Debug&quot;,
-    &quot;JavaScript Debug.Debug Chrome.executor&quot;: &quot;Debug&quot;,
-    &quot;JavaScript Debug.Debug Rails an Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
-    &quot;JavaScript Debug.Debug Rails and Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
-    &quot;JavaScript Debug.Development: rails-website JavaScript.executor&quot;: &quot;Debug&quot;,
-    &quot;JavaScript Debug.Generic Chrome.executor&quot;: &quot;Debug&quot;,
-    &quot;Rails.Debug Rails an Javascript.executor&quot;: &quot;Debug&quot;,
-    &quot;Rails.Debug Rails and Javascript.executor&quot;: &quot;Debug&quot;,
-    &quot;Rails.Development: rails-website.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/paul/src/paul-carrick-website/app/views/shared&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Ruby&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "JavaScript Debug.Debug Chrome JavaScript.executor": "Debug",
+    "JavaScript Debug.Debug Chrome.executor": "Debug",
+    "JavaScript Debug.Debug Rails an Javascript JavaScript.executor": "Debug",
+    "JavaScript Debug.Debug Rails and Javascript JavaScript.executor": "Debug",
+    "JavaScript Debug.Development: rails-website JavaScript.executor": "Debug",
+    "JavaScript Debug.Generic Chrome.executor": "Debug",
+    "Rails.Debug Rails an Javascript.executor": "Debug",
+    "Rails.Debug Rails and Javascript.executor": "Debug",
+    "Rails.Development: rails-website.executor": "Debug",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/bin",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "ruby.structure.view.model.defaults.configured": "true",
+    "settings.editor.selected.configurable": "preferences.customizations",
+    "ts.external.directory.path": "/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -114,11 +117,11 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/app/views/shared" />
       <recent name="$PROJECT_DIR$/app/javascript/components" />
       <recent name="$APPLICATION_CONFIG_DIR$/scratches" />
       <recent name="$PROJECT_DIR$/app/assets/quill" />
-      <recent name="$PROJECT_DIR$/public/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/public/assets" />
@@ -371,7 +374,10 @@
       <workItem from="1736446851471" duration="4287000" />
       <workItem from="1736454419829" duration="5748000" />
       <workItem from="1736460261712" duration="8189000" />
-      <workItem from="1736520743357" duration="1001000" />
+      <workItem from="1736520743357" duration="12473000" />
+      <workItem from="1736533250369" duration="2137000" />
+      <workItem from="1736535397113" duration="401000" />
+      <workItem from="1736535809128" duration="4188000" />
     </task>
     <servers />
   </component>
@@ -409,6 +415,6 @@
     <SUITE FILE_PATH="coverage/paul_carrick_website@.rcov" NAME=" Coverage Results" MODIFIED="1735690448329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1736177807661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_an_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736191482406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
-    <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_and_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736468448988" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
+    <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_and_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736539668925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
   </component>
 </project>
