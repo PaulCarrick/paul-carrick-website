@@ -4,10 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/bin/display_images.sh" afterDir="false" />
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="IDE Changes and WIP">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/section.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/section.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/rubymine-settings.zip" beforeDir="false" afterPath="$PROJECT_DIR$/rubymine-settings.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/support/editor_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/editor_helper.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/support/utilities.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/support/utilities.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
     </list>
@@ -40,6 +42,12 @@
     <option name="PUSH_AUTO_UPDATE" value="true" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "PaulCarrick"
+  }
+}]]></component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
       <filtered-out-file-type name="LOCAL_BRANCH" />
@@ -48,6 +56,12 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "git@github.com:PaulCarrick/paul-carrick-website.git",
+    "accountId": "4a1c3f12-e7c2-452f-ba4f-5478a5c32da7"
+  }
+}]]></component>
   <component name="JsBowerSettings">
     <bower-package value="" />
     <bower.json value="" />
@@ -78,32 +92,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Debug Chrome JavaScript.executor": "Debug",
-    "JavaScript Debug.Debug Chrome.executor": "Debug",
-    "JavaScript Debug.Debug Rails an Javascript JavaScript.executor": "Debug",
-    "JavaScript Debug.Debug Rails and Javascript JavaScript.executor": "Debug",
-    "JavaScript Debug.Development: rails-website JavaScript.executor": "Debug",
-    "JavaScript Debug.Generic Chrome.executor": "Debug",
-    "Rails.Debug Rails an Javascript.executor": "Debug",
-    "Rails.Debug Rails and Javascript.executor": "Debug",
-    "Rails.Development: rails-website.executor": "Debug",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/bin",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "preferences.customizations",
-    "ts.external.directory.path": "/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Debug Chrome JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Chrome.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Rails an Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Rails and Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Development: rails-website JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Generic Chrome.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Debug Rails an Javascript.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Debug Rails and Javascript.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Development: rails-website.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/paul/src/paul-carrick-website/bin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;terminal&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -131,7 +145,7 @@
       <recent name="$PROJECT_DIR$/public/images" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Debug Rails and Javascript">
+  <component name="RunManager" selected="JavaScript Debug.Generic Chrome">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -377,9 +391,24 @@
       <workItem from="1736520743357" duration="12473000" />
       <workItem from="1736533250369" duration="2137000" />
       <workItem from="1736535397113" duration="401000" />
-      <workItem from="1736535809128" duration="4188000" />
+      <workItem from="1736535809128" duration="15120000" />
+      <workItem from="1736550961231" duration="2250000" />
     </task>
+    <task id="LOCAL-00001" summary="IDE Changes and WIP">
+      <option name="closed" value="true" />
+      <created>1736540062742</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1736540062742</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TerminalProjectNonSharedOptionsProvider">
+    <envs>
+      <env key="PATH" value="$PROJECT_DIR$/bin:$PATH " />
+    </envs>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
@@ -395,17 +424,36 @@
       </map>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="IDE Changes and WIP" />
+    <option name="LAST_COMMIT_MESSAGE" value="IDE Changes and WIP" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint type="javascript">
-          <url>file://$PROJECT_DIR$/app/javascript/components/RenderSection.jsx</url>
-          <line>22</line>
-          <option name="timeStamp" value="12" />
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>51</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>552</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
+          <line>240</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
+      <configuration name="JavascriptDebugType">
+        <watch expression="format" />
+      </configuration>
       <configuration name="RailsRunConfigurationType">
         <watch expression="request.url" language="ruby" />
       </configuration>

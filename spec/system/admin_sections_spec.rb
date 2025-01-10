@@ -39,7 +39,7 @@ RSpec.describe "Admin Sections", type: :system do
            image: "ImageFile:1-test-image",
            link: "https://example.com",
            description: "<p>Test Description</p>",
-           row_style: "text-bottom",
+           row_style: "text-single",
            image_attributes: {},
            text_attributes: {
              margin_top: "mt-5",
@@ -164,10 +164,11 @@ RSpec.describe "Admin Sections", type: :system do
     it "pre-fills the form with existing data" do
       expect(find('#sectionName').value).to eq("Test Section Name")
       expect(find('#sectionOrder').value).to eq("1")
-      expect(find('#image').value).to eq("ImageFile:1-test-image")
+      expect(get_react_select_value("#imageDiv")).to eq("ImageFile:1-test-image")
       expect(find('#link').value).to eq("https://example.com")
       check_quill_editor_text("description", text: "Test Description")
-      expect(find('#rowStyle').value).to eq("text-bottom")
+      expect(find('#rowStyle').value).to eq("text-single")
+      debugger
       expect(find('#textMarginTop').value).to eq("mt-5")
       expect(find('#textMarginLeft').value).to eq("ms-5")
       expect(find('#textMarginBottom').value).to eq("mb-5")
