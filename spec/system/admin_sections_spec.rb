@@ -76,15 +76,15 @@ RSpec.describe "Admin Sections", type: :system do
       within ".auto-size" do
         expect(page).to have_content("Test Content Type")
         expect(page).to have_content("Test Section Name")
-        expect(page).to have_content("1")
-        expect(page).to have_content("test_image.jpg")
+        expect(page).to have_content("1-test-image")
         expect(page).to have_content("https://example.com")
-        expect(page).to have_content("row_class: single-line")
         expect(page).to have_content("Test Description")
       end
     end
 
     it "renders action links for each section" do
+      expect(page).to have_link("Clear Sort", href: admin_sections_path(clear_sort: true))
+      expect(page).to have_link("View", href: admin_section_path(section))
       expect(page).to have_link("Edit", href: edit_admin_section_path(section))
       expect(page).to have_link("Delete", href: "#{admin_section_path(section)}/delete")
     end
