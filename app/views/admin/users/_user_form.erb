@@ -57,6 +57,6 @@
 
   <div class="mb-3">
     <%= form.submit "Save User", class: "btn btn-primary me-3", disabled: !@application_user.admin? %>
-    <%= link_to("Cancel", admin_users_url, class: "btn btn-primary") %>
+    <%= link_to("Cancel", admin_users_url, class: "btn btn-primary", target: "_self") %>
   </div>
 <% end %>

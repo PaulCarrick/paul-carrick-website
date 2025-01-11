@@ -71,6 +71,6 @@
                     disabled: !@application_user.admin?
     %>
 
-    <%= link_to("Cancel", admin_blog_posts_url, class: "btn btn-primary") %>
+    <%= link_to("Cancel", admin_blog_posts_url, class: "btn btn-primary", target: "_self") %>
   </div>
 <% end %>

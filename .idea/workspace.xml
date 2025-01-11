@@ -4,20 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Changed UI for index slightly.">
-      <change afterPath="$PROJECT_DIR$/bin/rebuild_javascript.sh" afterDir="false" />
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Lost reload logic. Reinstalled.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/javascripts/views/shared/utilities.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/javascripts/views/shared/utilities.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/abstract_admin_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/abstract_admin_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/blog_posts_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/blog_posts_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/image_files_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/image_files_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/admin/sections_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/concerns/persistence.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/concerns/persistence.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/image_files_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/image_files_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/blog_posts/_blog_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/_blog_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/blog_posts/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/blog_posts/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/footer_items/_footer_item_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/footer_items/_footer_item_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/footer_items/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/footer_items/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/image_files/_image_file_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/image_files/_image_file_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/image_files/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/menu_items/_menu_item_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/menu_items/_menu_item_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/menu_items/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/menu_items/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/pages/_page_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/pages/_page_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/pages/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/pages/index.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/sections/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_page_contents.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/brakeman" beforeDir="false" afterPath="$PROJECT_DIR$/bin/brakeman" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/dev" beforeDir="false" afterPath="$PROJECT_DIR$/bin/dev" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/rails" beforeDir="false" afterPath="$PROJECT_DIR$/bin/rails" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/rake" beforeDir="false" afterPath="$PROJECT_DIR$/bin/rake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/rubocop" beforeDir="false" afterPath="$PROJECT_DIR$/bin/rubocop" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/setup" beforeDir="false" afterPath="$PROJECT_DIR$/bin/setup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/thrust" beforeDir="false" afterPath="$PROJECT_DIR$/bin/thrust" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/site_setups/_site_setup_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/site_setups/_site_setup_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/site_setups/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/site_setups/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/users/_user_form.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/users/_user_form.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/admin/users/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/admin/users/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/image_files/picture_of_the_day.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/image_files/picture_of_the_day.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/_header.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spec/system/admin_blog_posts_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_blog_posts_spec.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" beforeDir="false" afterPath="$PROJECT_DIR$/spec/system/admin_sections_spec.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -152,7 +165,7 @@
       <recent name="$PROJECT_DIR$/public/images" />
     </key>
   </component>
-  <component name="RunManager" selected="JavaScript Debug.Generic Chrome">
+  <component name="RunManager" selected="Rails.Development: rails-website">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -400,7 +413,7 @@
       <workItem from="1736535397113" duration="401000" />
       <workItem from="1736535809128" duration="15120000" />
       <workItem from="1736550961231" duration="6399000" />
-      <workItem from="1736602613870" duration="14257000" />
+      <workItem from="1736602613870" duration="23710000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
@@ -426,7 +439,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736557280815</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Lost reload logic. Reinstalled.">
+      <option name="closed" value="true" />
+      <created>1736623068810</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1736623068810</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -452,7 +473,8 @@
     <MESSAGE value="IDE Changes and WIP" />
     <MESSAGE value="Fixed a bug is setting margins." />
     <MESSAGE value="Changed UI for index slightly." />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed UI for index slightly." />
+    <MESSAGE value="Lost reload logic. Reinstalled." />
+    <option name="LAST_COMMIT_MESSAGE" value="Lost reload logic. Reinstalled." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -480,7 +502,7 @@
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/paul_carrick_website@.rcov" NAME=" Coverage Results" MODIFIED="1735690448329" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" MODULE_NAME="rails-website" />
-    <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1736177807661" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
+    <SUITE FILE_PATH="coverage/paul_carrick_website@Development__rails_website.rcov" NAME="Development: rails-website Coverage Results" MODIFIED="1736624646962" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_an_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736191482406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
     <SUITE FILE_PATH="coverage/paul_carrick_website@Debug_Rails_and_Javascript.rcov" NAME="Debug Rails and Javascript Coverage Results" MODIFIED="1736539668925" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="rails-website" />
   </component>

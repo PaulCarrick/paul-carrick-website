@@ -5,8 +5,14 @@ class ImageFilesController < ApplicationController
   def show
     if params[:id] == "picture-of-the-day"
       image_files = ImageFile.jpegs_with_captions_in_an_image_group
-      random_number = rand(image_files.length)
-      @image_file = image_files[random_number]
+      pod_number  = session[:pod_number]
+
+      unless pod_number.present?
+        pod_number           = rand(image_files.length)
+        session[:pod_number] = pod_number
+      end
+
+      @image_file = image_files[pod_number]
 
       render "picture_of_the_day"
 

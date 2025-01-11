@@ -22,7 +22,7 @@ module Persistence
     @q = model_class.ransack(parameters[:q])
   end
 
-  def set_sorting(default_column, parameters = params.dup)
+  def set_sorting(default_column, default_direction, parameters = params.dup)
     @sort_column = nil
     @sort_direction = nil
     model_class = controller_name.classify.constantize
@@ -56,11 +56,11 @@ module Persistence
 
         # Set default sort column and direction
         @sort_column = parameters[:sort].presence || default_column
-        @sort_direction = parameters[:direction].presence || "asc"
+        @sort_direction = parameters[:direction].presence || default_direction
 
         # Safeguard against invalid columns and directions
         @sort_column = model_class.column_names.include?(@sort_column) ? @sort_column : default_column
-        @sort_direction = %w[asc desc].include?(@sort_direction) ? @sort_direction : "asc"
+        @sort_direction = %w[asc desc].include?(@sort_direction) ? @sort_direction : default_direction
       end
     end
 

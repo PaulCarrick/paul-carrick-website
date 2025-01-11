@@ -13,18 +13,19 @@ class Admin::AbstractAdminController < ApplicationController
 
     super
 
-    @page_limit = nil
-    @default_column = nil
-    @has_query = false
-    @has_sort = false
-    @sort_column = nil
-    @sort_direction = nil
-    @results = nil
-    @model_class = controller_name.classify.constantize
-    @fields = @model_class.column_names
-                          .map(&:to_sym)
-                          .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
-    @title = "#{get_site_information.site_name} - Admin Dashboard: #{controller_name.titleize}"
+    @page_limit        = nil
+    @default_column    = nil
+    @default_direction = 'asc'
+    @has_query         = false
+    @has_sort          = false
+    @sort_column       = nil
+    @sort_direction    = nil
+    @results           = nil
+    @model_class       = controller_name.classify.constantize
+    @fields            = @model_class.column_names
+                                     .map(&:to_sym)
+                                     .reject { |column| [:id, :created_at, :updated_at].include?(column) }
+    @title             = "#{get_site_information.site_name} - Admin Dashboard: #{controller_name.titleize}"
 
     set_title(@title)
   end
@@ -159,7 +160,7 @@ class Admin::AbstractAdminController < ApplicationController
     @error_message = e&.message unless @error_message.present?
     @error_message = "An error occurred." unless @error_message.present?
     @error_message = "There was an error with the #{@model_class}: #{@error_message}"
-    flash[:error] = @error_message
+    flash[:error]  = @error_message
 
     redirect_to action: action
   end
@@ -175,9 +176,9 @@ class Admin::AbstractAdminController < ApplicationController
   end
 
   def set_items
-    @results = []
-    @sort_column, @sort_direction = set_sorting(@default_column, params.deep_dup)
-    @q = set_search(params.deep_dup)
+    @results                      = []
+    @sort_column, @sort_direction = set_sorting(@default_column, @default_direction, params.deep_dup)
+    @q                            = set_search(params.deep_dup)
 
     if @has_query && @q.present?
       if @has_sort && @sort_column.present? && @sort_direction.present?

@@ -15,7 +15,7 @@ module ApplicationHelper
     path        = send(path_helper, sort: column, direction: current_direction)
 
     # Generate the sortable link with the arrow
-    link_to "#{display_name} #{arrow}".html_safe, path, class: custom_class
+    link_to "#{display_name} #{arrow}".html_safe, path, class: custom_class, target: "_self"
   end
 
   def action_links(resource, show_path, edit_path, delete_path = nil)

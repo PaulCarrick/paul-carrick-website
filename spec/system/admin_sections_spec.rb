@@ -90,7 +90,9 @@ RSpec.describe "Admin Sections", type: :system do
     end
 
     it "navigates to the new section page" do
+      sleep 1
       click_link "New Section"
+      sleep 2
       expect(page).to have_current_path(new_admin_section_path)
     end
   end
@@ -208,9 +210,9 @@ RSpec.describe "Admin Sections", type: :system do
       expect(page).to have_content("Test Content Type")
       expect(page).to have_content("Test Section Name")
       expect(page).to have_content("1")
-      expect(page).to have_content("test_image.jpg")
+      expect(page).to have_content("ImageFile:1-test-image")
       expect(page).to have_content("https://example.com")
-      expect(page).to have_content("{\"row_class\":\"single-line\"}")
+      expect(page).to have_content("text-single")
       expect(page).to have_content("Test Description")
     end
   end

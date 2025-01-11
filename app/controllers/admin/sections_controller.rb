@@ -6,15 +6,16 @@ class Admin::SectionsController < Admin::AbstractAdminController
   def initialize
     super
 
-    @page_limit     = 1
-    @default_column = 'content_type'
-    @has_query      = true
-    @has_sort       = true
-    @model_class    = Section
-    @content_types  = []
-    @images         = []
-    @groups         = []
-    @videos         = []
+    @page_limit        = 1
+    @default_column    = 'id'
+    @default_direction = 'desc'
+    @has_query         = true
+    @has_sort          = true
+    @model_class       = Section
+    @content_types     = []
+    @images            = []
+    @groups            = []
+    @videos            = []
   end
 
   def new
@@ -58,8 +59,8 @@ class Admin::SectionsController < Admin::AbstractAdminController
 
     if params[:new_section].present?
       @cancel_url.query = URI.encode_www_form({
-                                                canceled:   true,
-                                                section_id: get_item.id,
+                                                canceled:    true,
+                                                section_id:  get_item.id,
                                                 new_section: params[:new_section]
                                               })
     else

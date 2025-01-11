@@ -98,14 +98,15 @@ RSpec.describe "Admin Blog Posts", type: :system do
 
     it "submits the form successfully" do
       visit new_admin_blog_post_path
-
+      sleep 2
       fill_in "blog_post[author]", with: "Test Author"
       fill_in "blog_post[title]", with: "Test Title"
       select "Public", from: "blog_post[visibility]"
       select "Personal", from: "blog_post[blog_type]"
       fill_in_quill_editor("blog-post-content", with: "Test Content")
+      sleep 1
       click_button "Save Blog"
-      sleep 3
+      sleep 2
       expect(page).to have_content("Blog Post created successfully")
       expect(page).to have_current_path(admin_blog_posts_path)
     end
@@ -162,7 +163,9 @@ RSpec.describe "Admin Blog Posts", type: :system do
     end
 
     it "navigates to the new blog page" do
+      sleep 1
       click_link "New Blog"
+      sleep 2
       expect(page).to have_current_path(new_admin_blog_post_path)
     end
 
@@ -196,9 +199,9 @@ RSpec.describe "Admin Blog Posts", type: :system do
   describe "Action links" do
     it "redirects to the edit page when clicking Edit" do
       search_blog_posts("Content One")
-
+      sleep 1
       click_link "Edit", href: edit_admin_blog_post_path(blog_post_1)
-
+      sleep 2
       expect(page).to have_current_path(edit_admin_blog_post_path(blog_post_1))
       expect(page).to have_content("Edit Blog Post")
     end
@@ -207,7 +210,9 @@ RSpec.describe "Admin Blog Posts", type: :system do
       search_blog_posts("Content One")
 
       expect {
+        sleep 1
         click_link "Delete", href: "#{admin_blog_post_path(blog_post_1)}/delete"
+        sleep 2
         page.driver.browser.switch_to.alert.accept # Confirm the alert
       }.not_to raise_error
       expect(page).to have_content("Blog Post deleted successfully.")

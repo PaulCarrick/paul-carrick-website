@@ -2,8 +2,8 @@
 <% if @image_file.present? %>
   <container>
     <h1>Picture of the Day</h1>
-    <div class="ps-3">
-      <h2><%= @image_file.caption %></h2>
+    <div class="ps-5">
+      <%= raw(@image_file.caption) %>
     </div>
     <div class="ps-5">
       <%= link_to @image_file.image_url, target: "_blank" do %>

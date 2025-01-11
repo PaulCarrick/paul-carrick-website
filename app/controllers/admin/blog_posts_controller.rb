@@ -5,7 +5,8 @@ class Admin::BlogPostsController < Admin::AbstractAdminController
     super
 
     @page_limit = 3
-    @default_column = 'title'
+    @default_column = 'posted'
+    @default_direction = 'desc'
     @has_query = true
     @has_sort = true
     @model_class = BlogPost

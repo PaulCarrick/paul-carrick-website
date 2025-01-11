@@ -42,7 +42,7 @@
   </div>
   <div class="row">
     <div class="col-2">
-      <%= link_to("New Blog", new_admin_blog_post_path, class: "btn btn-primary") %>
+      <%= link_to("New Blog", new_admin_blog_post_path, class: "btn btn-primary", target: "_self" ) %>
     </div>
     <div class="col-10 justify-content-end">
       <%= render 'shared/page_navigation' %>
@@ -52,7 +52,7 @@
                       url:    admin_blog_posts_path,
                       class:  "mt-3 p-2 rounded-box",
                       method: :get,
-                      local:  true do |form| %>
+                      html: { target: "_self", "data-turbo": "false", "data-turbolinks": "false" } do |form| %>
     <div class="row mt-2 mb-2">
       <div class="col-2"><%= form.label :author_cont, "Author", class: "form-label" %></div>
       <div class="col-3"><%= form.search_field :author_cont %></div>
@@ -76,7 +76,7 @@
     </div>
     <div>
       <%= form.submit "Search Blogs", class: "btn btn-primary" %>
-      <%= link_to 'Clear Search', admin_blog_posts_path(clear_search: true), class: "btn btn-secondary" %>
+      <%= link_to 'Clear Search', admin_blog_posts_path(clear_search: true), class: "btn btn-secondary", target: "_self" %>
     </div>
   <% end %>
 <% end %>

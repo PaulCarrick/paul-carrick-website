@@ -105,7 +105,7 @@
 
     <div class="mb-3 pt-3">
       <%= form.submit "Save Image", class: "btn btn-primary me-3", disabled: !@application_user.admin? %>
-      <%= link_to("Cancel", admin_image_files_url, class: "btn btn-secondary") %>
+      <%= link_to("Cancel", admin_image_files_url, class: "btn btn-secondary", target: "_self") %>
     </div>
   <% end %>
 <% end %>
