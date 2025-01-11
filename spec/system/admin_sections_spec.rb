@@ -35,7 +35,7 @@ RSpec.describe "Admin Sections", type: :system do
     create(:section,
            content_type: "Test Content Type",
            section_name: "Test Section Name",
-           section_order: 1,
+           section_order: nil,
            image: "ImageFile:1-test-image",
            link: "https://example.com",
            description: "<p>Test Description</p>",
@@ -163,12 +163,11 @@ RSpec.describe "Admin Sections", type: :system do
 
     it "pre-fills the form with existing data" do
       expect(find('#sectionName').value).to eq("Test Section Name")
-      expect(find('#sectionOrder').value).to eq("1")
+      expect(find('#sectionOrder').value).to eq("")
       expect(get_react_select_value("#imageDiv")).to eq("ImageFile:1-test-image")
       expect(find('#link').value).to eq("https://example.com")
       check_quill_editor_text("description", text: "Test Description")
       expect(find('#rowStyle').value).to eq("text-single")
-      debugger
       expect(find('#textMarginTop').value).to eq("mt-5")
       expect(find('#textMarginLeft').value).to eq("ms-5")
       expect(find('#textMarginBottom').value).to eq("mb-5")
@@ -190,6 +189,11 @@ RSpec.describe "Admin Sections", type: :system do
       find('#textBackgroundColor').find('option[value="blue"]').select_option
       click_button "Save Section"
       expect(page).to have_current_path(admin_section_path(section))
+      expect(page).to have_content("Test Content Type")
+      expect(page).to have_content("Updated Section Name")
+      expect(page).to have_content("2-test-image")
+      expect(page).to have_content("http://new-example.com")
+      expect(page).to have_content("This is a new description.")
     end
   end
 

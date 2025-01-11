@@ -399,7 +399,7 @@ function renderSectionOrder(sectionOrder, setValue) {
             {
               renderInput(
                   "sectionOrder",
-                  isPresent(sectionOrder) ? sectionOrder : 1,
+                  sectionOrder,
                   setValue,
                   null,
                   "Enter the order of the section (1 is first)",
