@@ -568,7 +568,7 @@ function renderAttributes(first, prefix, marginTop, marginLeft, marginBottom, ma
           </div>
           <div className="row">
             <div className="col-2 d-flex align-items-center">
-              MarginLeft:
+              Margin Left:
             </div>
             <div className="col-10">
               {renderSelect(`${prefix}MarginLeft`, marginLeft, marginLeftOptions, setValue)}

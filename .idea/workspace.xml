@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="ESLint is green now as well.">
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Fix typo in achor link.">
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtilities.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtilities.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -391,7 +393,7 @@
       <workItem from="1736602613870" duration="23745000" />
       <workItem from="1736690818102" duration="36000" />
       <workItem from="1736690862783" duration="15113000" />
-      <workItem from="1736706878060" duration="966000" />
+      <workItem from="1736706878060" duration="5317000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
@@ -457,7 +459,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736705951169</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Fix typo in achor link.">
+      <option name="closed" value="true" />
+      <created>1736707919168</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1736707919168</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -488,7 +498,8 @@
     <MESSAGE value="Repec is all green now!" />
     <MESSAGE value="Rubocop is green now as well." />
     <MESSAGE value="ESLint is green now as well." />
-    <option name="LAST_COMMIT_MESSAGE" value="ESLint is green now as well." />
+    <MESSAGE value="Fix typo in achor link." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix typo in achor link." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
