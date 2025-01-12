@@ -1,3 +1,6 @@
+// /app/javascript/components/backgroundColors.jsx
+import React from "react";
+
 export const backgroundColors = [
   { label: "Default", value: "#0d6efd" },
   { label: "Black", value: "black" },

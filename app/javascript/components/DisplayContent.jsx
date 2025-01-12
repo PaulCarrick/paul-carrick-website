@@ -70,14 +70,14 @@ DisplayContent.propTypes = {
                              slide_show_type:   PropTypes.string,
                            }),
   sectionId: PropTypes.string,
-  text_attributes:  PropTypes.shape({
+  textAttributes:  PropTypes.shape({
                                       margin_top:       PropTypes.string,
                                       margin_left:      PropTypes.string,
                                       margin_right:     PropTypes.string,
                                       margin_bottom:    PropTypes.string,
                                       background_color: PropTypes.string,
                                     }),
-  image_attributes: PropTypes.shape({
+  imageAttributes: PropTypes.shape({
                                       margin_top:       PropTypes.string,
                                       margin_left:      PropTypes.string,
                                       margin_right:     PropTypes.string,

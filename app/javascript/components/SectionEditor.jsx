@@ -318,8 +318,8 @@ const SectionEditor = ({
                     Switch to Normal Mode
                   </button>
               ) : (
-                   <button type="button" onClick={toggleFormatting} className="btn btn-bad mb-2">
-                     Switch to Formatting Mode **"
+                   <button type="button" className="btn btn-bad mb-2 mt-2" onClick={toggleFormatting} >
+                     Switch to Formatting Mode **
                    </button>
                )
               }

@@ -103,6 +103,7 @@ CommentEditor.propTypes = {
                              posted: PropTypes.string.isRequired,
                            }).isRequired,
   closeEditor: PropTypes.func.isRequired,
+  blog_type: PropTypes.string,
 };
 
 export default CommentEditor;

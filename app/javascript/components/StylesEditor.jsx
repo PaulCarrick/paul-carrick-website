@@ -3,6 +3,7 @@
 import React, {useState, useEffect} from 'react';
 import {isPresent, rowStyleOptions, ratioOptions, formattingOptions} from "./getDefaultOptions";
 import {renderInput, renderSelect} from "./renderControlFunctions.jsx";
+import PropTypes from "prop-types";
 
 const StylesEditor = ({ styles, onChange }) => {
   const [styleData, setStyleData] = useState(styles);
@@ -94,8 +95,12 @@ function renderFieldSelect(styleData, handleChange) {
           {renderSelect("formattingField", null, formattingOptions(styleData), handleChange, "form-control")}
         </div>
       </>
-  )
-      ;
+  );
 }
+
+StylesEditor.propTypes = {
+  styles: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
+};
 
 export default StylesEditor;
