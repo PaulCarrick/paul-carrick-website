@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::SectionsController, type: :controller do
   include_context "debug setup"
 
+  Section.delete_all
+
   let!(:admin_user) { create_admin_user }
   let(:valid_attributes) {
     {
@@ -40,7 +42,7 @@ RSpec.describe Admin::SectionsController, type: :controller do
     it "sets the correct default attributes" do
       get :index
       expect(controller.instance_variable_get(:@page_limit)).to eq(1)
-      expect(controller.instance_variable_get(:@default_column)).to eq('content_type')
+      expect(controller.instance_variable_get(:@default_column)).to eq('id')
       expect(controller.instance_variable_get(:@has_query)).to be(true)
       expect(controller.instance_variable_get(:@has_sort)).to be(true)
       expect(controller.instance_variable_get(:@model_class)).to eq(Section)
@@ -74,7 +76,7 @@ RSpec.describe Admin::SectionsController, type: :controller do
         }.not_to change(Section, :count)
 
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :new)
+        expect(response).to redirect_to(action: :new, turbo: false)
       end
     end
   end
@@ -111,7 +113,7 @@ RSpec.describe Admin::SectionsController, type: :controller do
         patch :update, params: { id: section.id, section: invalid_attributes }
         expect(section.section_name).to eq("Test Section")
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :edit)
+        expect(response).to redirect_to(action: :edit, turbo: false)
       end
     end
   end

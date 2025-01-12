@@ -90,7 +90,7 @@ RSpec.describe BlogPost, type: :model do
 
   describe ".ransackable_attributes" do
     it "returns only ransackable attributes" do
-      expect(BlogPost.ransackable_attributes).to eq([ "author", "title", "posted", "content" ])
+      expect(BlogPost.ransackable_attributes).to eq([ "author", "title", "posted", "posted_date", "content" ])
     end
   end
 

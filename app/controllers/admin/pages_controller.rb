@@ -33,7 +33,7 @@ class Admin::PagesController < Admin::AbstractAdminController
       @error_message = "You cannot add a section until Name is set."
       flash[:error]  = @error_message
 
-      redirect_to action: new
+      redirect_to action: new, turbo: false
 
       return
     end
@@ -42,7 +42,7 @@ class Admin::PagesController < Admin::AbstractAdminController
       @error_message = "You cannot add a section until Section is set."
       flash[:error]  = @error_message
 
-      redirect_to action: new
+      redirect_to action: new, turbo: false
 
       return
     end
@@ -57,7 +57,8 @@ class Admin::PagesController < Admin::AbstractAdminController
                                         read_only_content_type: @read_only_content_type,
                                         new_section:            @new_section,
                                         return_url:             edit_admin_page_path(page),
-                                        cancel_url:             edit_admin_page_path(page, new_section: true))
+                                        cancel_url:             edit_admin_page_path(page, new_section: true),
+                                        turbo: false)
   end
 
   private

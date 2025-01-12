@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::PagesController, type: :controller do
   include_context "debug setup"
 
+  Page.delete_all
+
   let!(:admin_user) { create_admin_user }
   let(:valid_attributes) { { name: "Test Page", title: "Test Page", section: "test" } }
   let(:invalid_attributes) { { name: nil, title: nil, section: nil } }
@@ -61,7 +63,7 @@ RSpec.describe Admin::PagesController, type: :controller do
         expect {
           post :create, params: { page: valid_attributes }
         }.to change(Page, :count).by(1)
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Page created successfully.")
       end
     end
@@ -73,7 +75,7 @@ RSpec.describe Admin::PagesController, type: :controller do
         }.to change(ImageFile, :count).by(0)
 
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :new)
+        expect(response).to redirect_to(action: :new, turbo: false)
       end
     end
   end
@@ -91,7 +93,7 @@ RSpec.describe Admin::PagesController, type: :controller do
         patch :update, params: { id: page.id, page: { name: "Updated Page" } }
         page.reload
         expect(page.name).to eq("Updated Page")
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Page updated successfully.")
       end
     end
@@ -101,7 +103,7 @@ RSpec.describe Admin::PagesController, type: :controller do
         patch :update, params: { id: page.id, page: invalid_attributes }
         expect(page.name).to eq("Test Page")
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :edit)
+        expect(response).to redirect_to(action: :edit, turbo: false)
       end
     end
   end
@@ -119,7 +121,7 @@ RSpec.describe Admin::PagesController, type: :controller do
         delete :destroy, params: { id: page.id }
       }.to change(Page, :count).by(-1)
 
-      expect(response).to redirect_to(action: :index)
+      expect(response).to redirect_to(action: :index, turbo: false)
       expect(flash[:notice]).to eq("Page deleted successfully.")
     end
   end

@@ -3,6 +3,6 @@
 
 class HomeController < ApplicationController
   def index
-    redirect_to page_path("home")
+    redirect_to page_path("home"), turbo: false
   end
 end

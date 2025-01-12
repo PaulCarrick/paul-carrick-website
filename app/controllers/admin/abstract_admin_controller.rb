@@ -54,7 +54,7 @@ class Admin::AbstractAdminController < ApplicationController
 
       if result.persisted?
         flash[:notice] = "#{controller_name.singularize.titleize} created successfully."
-        redirect_to action: :index
+        redirect_to action: :index, turbo: false
       else
         raise("Could not create #{controller_name.singularize.titleize}.")
       end
@@ -71,7 +71,7 @@ class Admin::AbstractAdminController < ApplicationController
 
       if get_record&.update(get_params)
         flash[:notice] = "#{controller_name.singularize.titleize} updated successfully."
-        redirect_to action: :index
+        redirect_to action: :index, turbo: false
       else
         raise("Could not update #{controller_name.singularize.titleize}, ID: #{params[:id]}.")
       end
@@ -106,7 +106,7 @@ class Admin::AbstractAdminController < ApplicationController
 
       if result.destroyed?
         flash[:notice] = "#{controller_name.singularize.titleize} deleted successfully."
-        redirect_to action: :index
+        redirect_to action: :index, turbo: false
       else
         raise("Could not delete #{controller_name.singularize.titleize}, ID: #{params[:id]}.")
       end
@@ -162,7 +162,7 @@ class Admin::AbstractAdminController < ApplicationController
     @error_message = "There was an error with the #{@model_class}: #{@error_message}"
     flash[:error]  = @error_message
 
-    redirect_to action: action
+    redirect_to action: action, turbo: false
   end
 
   def set_item(create = false, create_params = {})

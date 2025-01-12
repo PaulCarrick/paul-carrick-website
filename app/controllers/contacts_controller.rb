@@ -28,7 +28,7 @@ class ContactsController < ApplicationController
 
       flash[:info] = @contact.submit_information
 
-      redirect_to contact_path(@contact)
+      redirect_to contact_path(@contact), turbo: false
     rescue ActiveRecord::RecordNotUnique => e
       @error_message = "You cannot submit the form twice with the exact same information. Please at least change the message."
       flash[:error]  = @error_message
@@ -38,7 +38,7 @@ class ContactsController < ApplicationController
         @contact.save
       end
 
-      redirect_to action: :new, notice: "There are error in the form. Please try again."
+      redirect_to action: :new, turbo: false, notice: "There are error in the form. Please try again."
     rescue => e
       debugger if Rails.env == 'development' && ENV["PAUSE_ERRORS"]
 
@@ -51,7 +51,7 @@ class ContactsController < ApplicationController
         @contact.save
       end
 
-      redirect_to action: :new, notice: "There are error in the form. Please try again."
+      redirect_to action: :new, turbo: false, notice: "There are error in the form. Please try again."
     end
   end
 

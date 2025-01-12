@@ -73,7 +73,7 @@ RSpec.describe "Admin Blog Posts", type: :system do
     it "renders the blog form with all fields" do
       visit new_admin_blog_post_path
 
-      sleep 5
+      sleep 3
 
       expect(page).to have_field("Author*", with: admin_user.name)
       expect(page).to have_field("Title*", placeholder: "Enter the title")
@@ -87,7 +87,7 @@ RSpec.describe "Admin Blog Posts", type: :system do
     it "renders the HTML Editor and raw text editor for content" do
       visit new_admin_blog_post_path
 
-      sleep 5
+      sleep 3
 
       # Click the button to toggle the visibility of the raw text editor
       click_button "Switch to HTML View **"
@@ -108,7 +108,7 @@ RSpec.describe "Admin Blog Posts", type: :system do
       click_button "Save Blog"
       sleep 2
       expect(page).to have_content("Blog Post created successfully")
-      expect(page).to have_current_path(admin_blog_posts_path)
+      expect(page).to have_current_path(admin_blog_posts_path(turbo: false))
     end
   end
 

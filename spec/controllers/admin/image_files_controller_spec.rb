@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::ImageFilesController, type: :controller do
   include_context "debug setup"
 
+  ImageFile.delete_all
+
   let!(:admin_user) { create_admin_user }
   let(:valid_attributes) {
     {
@@ -37,7 +39,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
     it "sets the correct default attributes" do
       get :index
       expect(controller.instance_variable_get(:@page_limit)).to eq(4)
-      expect(controller.instance_variable_get(:@default_column)).to eq('name')
+      expect(controller.instance_variable_get(:@default_column)).to eq('id')
       expect(controller.instance_variable_get(:@has_query)).to be(true)
       expect(controller.instance_variable_get(:@has_sort)).to be(true)
       expect(controller.instance_variable_get(:@model_class)).to eq(ImageFile)
@@ -88,7 +90,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
                }
         }.to change(ImageFile, :count).by(1)
 
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Image File created successfully.")
       end
     end
@@ -100,7 +102,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         }.not_to change(ImageFile, :count)
 
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :new)
+        expect(response).to redirect_to(action: :new, turbo: false)
       end
     end
   end
@@ -118,7 +120,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         patch :update, params: { id: image_file.id, image_file: { name: "Updated Image" } }
         image_file.reload
         expect(image_file.name).to eq("Updated Image")
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Image File updated successfully.")
       end
     end
@@ -128,7 +130,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         patch :update, params: { id: image_file.id, image_file: invalid_attributes }
         expect(image_file.name).to eq("Test Image")
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :edit)
+        expect(response).to redirect_to(action: :edit, turbo: false)
       end
     end
   end
@@ -146,7 +148,7 @@ RSpec.describe Admin::ImageFilesController, type: :controller do
         delete :destroy, params: { id: image_file.id }
       }.to change(ImageFile, :count).by(-1)
 
-      expect(response).to redirect_to(action: :index)
+      expect(response).to redirect_to(action: :index, turbo: false)
       expect(flash[:notice]).to eq("Image File deleted successfully.")
     end
   end

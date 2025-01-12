@@ -40,7 +40,7 @@ class Admin::SectionsController < Admin::AbstractAdminController
       if request.headers['Content-Type'] === "application/json"
         render json: { message: 'Section created successfully', id: get_item.id }, status: :ok
       else
-        redirect_to admin_sections_path, notice: "Section created successfully."
+        redirect_to admin_sections_path, turbo: false, notice: "Section created successfully."
       end
     rescue => e
       if request.headers['Content-Type'] === "application/json"
@@ -90,7 +90,7 @@ class Admin::SectionsController < Admin::AbstractAdminController
       if request.headers['Content-Type'] === "application/json"
         render json: { message: 'Section updated successfully' }, status: :ok
       else
-        redirect_to admin_sections_path, notice: "Section updated successfully."
+        redirect_to admin_sections_path, turbo: false, notice: "Section updated successfully."
       end
     rescue => e
       if request.headers['Content-Type'] === "application/json"
@@ -123,9 +123,9 @@ class Admin::SectionsController < Admin::AbstractAdminController
         flash[:notice] = "#{controller_name.singularize.titleize} deleted successfully."
 
         if params[:return_url].present?
-          redirect_to params[:return_url], target: "_self"
+          redirect_to params[:return_url], turbo: false, target: "_self"
         else
-          redirect_to action: :index
+          redirect_to action: :index, turbo: false
         end
       else
         raise("Could not delete #{controller_name.singularize.titleize}, ID: #{params[:id]}.")

@@ -34,10 +34,13 @@ RSpec.describe "Admin Footer Items", type: :system do
 
       it "creates a new footer item successfully" do
         fill_in "footer_item[label]", with: "New Footer"
+        fill_in "footer_item[link]", with: "./test"
         fill_in "footer_item[footer_order]", with: 2
+        sleep 1
         click_button "Save Footer Item"
+        sleep 3
 
-        expect(page).to have_current_path(admin_footer_items_path)
+        expect(page).to have_current_path(admin_footer_items_path(turbo: false))
         expect(page).to have_content("Footer Item created successfully.")
       end
     end
@@ -59,9 +62,11 @@ RSpec.describe "Admin Footer Items", type: :system do
 
       it "updates the footer item successfully" do
         fill_in "footer_item[label]", with: "Updated Footer"
+        sleep 1
         click_button "Save Footer Item"
+        sleep 2
 
-        expect(page).to have_current_path(admin_footer_items_path)
+        expect(page).to have_current_path(admin_footer_items_path(turbo: false))
         expect(page).to have_content("Footer Item updated successfully.")
         expect(existing_footer_item.reload.label).to eq("Updated Footer")
       end
@@ -83,7 +88,9 @@ RSpec.describe "Admin Footer Items", type: :system do
     end
 
     it "navigates to the new footer item page" do
+      sleep 1
       click_link "New Footer Item"
+      sleep 2
       expect(page).to have_current_path(new_admin_footer_item_path)
     end
 

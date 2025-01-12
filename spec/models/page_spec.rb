@@ -16,8 +16,8 @@ RSpec.describe Page, type: :model do
   describe "scopes" do
     let!(:page_1) { Page.create!(name: "Page 1", section: "Section 1") }
     let!(:page_2) { Page.create!(name: "Page 2", section: "Section 2") }
-    let!(:section_1) { Section.create!(content_type: "Section 1", section_order: 1, description: "THis is a test page.") }
-    let!(:section_2) { Section.create!(content_type: "Section 1", section_order: 2, description: "THis is a test page.") }
+    let!(:section_1) { Section.create!(content_type: "Section 1", section_order: 1, description: "This is a test page.") }
+    let!(:section_2) { Section.create!(content_type: "Section 1", section_order: 2, description: "This is a test page.") }
 
     describe ".by_page_name" do
       it "returns pages by name with associated sections ordered by section_order" do

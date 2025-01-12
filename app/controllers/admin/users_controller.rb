@@ -16,9 +16,9 @@ class Admin::UsersController < ApplicationController
 
   def check_admin
     if @application_user
-      redirect_to root_path, alert: "Access denied." unless @application_user.admin?
+      redirect_to root_path, turbo: false, alert: "Access denied." unless @application_user.admin?
     else
-      redirect_to root_path, alert: "Access denied." unless current_user.admin?
+      redirect_to root_path, turbo: false, alert: "Access denied." unless current_user.admin?
     end
   end
 
@@ -56,7 +56,7 @@ class Admin::UsersController < ApplicationController
 
       @user.save!
 
-      redirect_to admin_users_path, notice: "User created successfully."
+      redirect_to admin_users_path, turbo: false, notice: "User created successfully."
     rescue => e
       handle_error(:new, e)
     end
@@ -71,7 +71,7 @@ class Admin::UsersController < ApplicationController
       throw "You are not permitted to change #{class_title}." unless @application_user.admin?
 
       @user.update!(user_params)
-      redirect_to admin_users_path, notice: "User updated successfully"
+      redirect_to admin_users_path, turbo: false, notice: "User updated successfully"
     rescue => e
       handle_error(:edit, e)
     end
@@ -85,7 +85,7 @@ class Admin::UsersController < ApplicationController
 
       @user.destroy!
 
-      redirect_to admin_users_path, notice: "User deleted successfully."
+      redirect_to admin_users_path, turbo: false, notice: "User deleted successfully."
     rescue => e
       handle_error(:index, e)
     end
@@ -102,7 +102,7 @@ class Admin::UsersController < ApplicationController
     @error_message = "There was an error with the User: #{@error_message}"
     flash[:error]  = @error_message
 
-    redirect_to action: action
+    redirect_to action: action, turbo: false
   end
 
   def set_user

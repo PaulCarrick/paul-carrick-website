@@ -86,19 +86,16 @@ RSpec.configure do |config|
 
   config.order = :defined
 
-  config.before(:suite) do
-    if RSpec.world.example_groups.any? { |group| group.metadata[:type] == :system }
-      Rails.application.load_tasks unless Rake::Task.task_defined?('db:replicate')
+  config.before(:each, type: :system) do
+    Rails.application.load_tasks unless Rake::Task.task_defined?('db:replicate')
 
-      # Invoke your Rake task
-
-      begin
-        puts "Running Rake task: db:replicate for system tests"
-        Rake::Task['db:replicate'].invoke
-      rescue StandardError => e
-        puts "Error: Rake task failed - #{e.message}"
-        raise e
-      end
+    # Invoke your Rake task
+    begin
+      puts "Running Rake task: db:replicate for system tests"
+      Rake::Task['db:replicate'].invoke
+    rescue StandardError => e
+      puts "Error: Rake task failed - #{e.message}"
+      raise e
     end
   end
 

@@ -11,7 +11,7 @@ class Admin::DashboardController < ApplicationController
 
   def require_admin
     unless @application_user.admin? || @application_user.read_only?
-      redirect_to root_path, alert: "You are not authorized to access this page."
+      redirect_to root_path, turbo: false, alert: "You are not authorized to access this page."
     end
   end
 end

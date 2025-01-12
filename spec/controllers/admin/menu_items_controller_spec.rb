@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Admin::MenuItemsController, type: :controller do
   include_context "debug setup"
 
+  MenuItem.delete_all
+
   let!(:admin_user) { create_admin_user }
   let(:valid_attributes) {
     {
@@ -74,7 +76,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
           post :create, params: { menu_item: valid_attributes }
         }.to change(MenuItem, :count).by(1)
 
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Menu Item created successfully.")
       end
     end
@@ -86,7 +88,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         }.not_to change(MenuItem, :count)
 
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :new)
+        expect(response).to redirect_to(action: :new, turbo: false)
       end
     end
   end
@@ -104,7 +106,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         patch :update, params: { id: menu_item.id, menu_item: { label: "Updated Menu Item" } }
         menu_item.reload
         expect(menu_item.label).to eq("Updated Menu Item")
-        expect(response).to redirect_to(action: :index)
+        expect(response).to redirect_to(action: :index, turbo: false)
         expect(flash[:notice]).to eq("Menu Item updated successfully.")
       end
     end
@@ -114,7 +116,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         patch :update, params: { id: menu_item.id, menu_item: invalid_attributes }
         expect(menu_item.label).to eq("Test Menu Item")
         expect(flash[:error]).to be_present
-        expect(response).to redirect_to(action: :edit)
+        expect(response).to redirect_to(action: :edit, turbo: false)
       end
     end
   end
@@ -132,7 +134,7 @@ RSpec.describe Admin::MenuItemsController, type: :controller do
         delete :destroy, params: { id: menu_item.id }
       }.to change(MenuItem, :count).by(-1)
 
-      expect(response).to redirect_to(action: :index)
+      expect(response).to redirect_to(action: :index, turbo: false)
       expect(flash[:notice]).to eq("Menu Item deleted successfully.")
     end
   end

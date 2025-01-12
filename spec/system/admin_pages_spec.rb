@@ -94,7 +94,7 @@ RSpec.describe "Admin Pages", type: :system do
       fill_in "Access", with: "Private"
       click_button "Save Page"
 
-      expect(page).to have_current_path(admin_pages_path)
+      expect(page).to have_current_path(admin_pages_path(turbo: false))
       expect(page).to have_content("New Page")
       expect(page).to have_content("Private")
     end
@@ -118,7 +118,7 @@ RSpec.describe "Admin Pages", type: :system do
       fill_in "Title", with: "Updated Title"
       click_button "Save Page"
 
-      expect(page).to have_current_path(admin_pages_path)
+      expect(page).to have_current_path(admin_pages_path(turbo: false))
       expect(page).to have_content("Updated Title")
     end
   end
