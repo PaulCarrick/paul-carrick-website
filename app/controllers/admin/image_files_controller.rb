@@ -12,6 +12,6 @@ class Admin::ImageFilesController < Admin::AbstractAdminController
     @model_class       = ImageFile
     @fields            = %i[ image ] + ImageFile.column_names
                                                 .map(&:to_sym)
-                                                .reject { |column| [:id, :created_at, :updated_at].include?(column) }
+                                                .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
   end
 end

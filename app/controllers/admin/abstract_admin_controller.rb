@@ -24,7 +24,7 @@ class Admin::AbstractAdminController < ApplicationController
     @model_class       = controller_name.classify.constantize
     @fields            = @model_class.column_names
                                      .map(&:to_sym)
-                                     .reject { |column| [:id, :created_at, :updated_at].include?(column) }
+                                     .reject { |column| [ :id, :created_at, :updated_at ].include?(column) }
     @title             = "#{get_site_information.site_name} - Admin Dashboard: #{controller_name.titleize}"
 
     set_title(@title)

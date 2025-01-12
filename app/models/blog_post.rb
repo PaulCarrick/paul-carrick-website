@@ -10,7 +10,7 @@ class BlogPost < ApplicationRecord
   validate :content_is_valid
 
   ransacker :posted_date, formatter: proc { |v| v.to_date.iso8601 } do |parent|
-    Arel::Nodes::NamedFunction.new('DATE', [parent.table[:posted]])
+    Arel::Nodes::NamedFunction.new('DATE', [ parent.table[:posted] ])
   end
 
   def self.ransackable_attributes(auth_object = nil)

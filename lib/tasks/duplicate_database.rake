@@ -1,7 +1,7 @@
 # lib/tasks/duplicate_database.rake
 namespace :db do
   desc "Replicate a database"
-  task :replicate, [:interactive] => :environment do |t, args|
+  task :replicate, [ :interactive ] => :environment do |t, args|
     args.with_defaults(interactive: false)
 
     # Invoke subtasks with the interactive argument
@@ -29,7 +29,7 @@ end
 
 namespace :db do
   desc "Duplicate database to another database"
-  task :duplicate, [:interactive] => :environment do |t, args|
+  task :duplicate, [ :interactive ] => :environment do |t, args|
     source_db      = ENV["SOURCE_DATABASE"] || "paul-carrick"
     destination_db = ENV["DESTINATION_DATABASE"] || "paul-carrick-test"
     db_user        = ENV["DATABASE_USER"] || "paul"
@@ -57,7 +57,7 @@ end
 
 namespace :fs do
   desc "Duplicate the contents of one directory to another"
-  task :duplicate, [:interactive] => :environment do |t, args|
+  task :duplicate, [ :interactive ] => :environment do |t, args|
     source_directory      = ENV["SOURCE_DIRECTORY"] || Rails.root.join("storage")
     destination_directory = ENV["DESTINATION_DIRECTORY"] || Rails.root.join("tmp/storage")
 
