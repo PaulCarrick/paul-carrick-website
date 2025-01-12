@@ -55,7 +55,7 @@ export function processVideoImageTag(description, name) {
     if (!label)
       label = imageFile.name;
 
-    const videoTag = ` < a href="#" onclick="showVideoPlayer('${imageUrl}')">${label}</a>`;
+    const videoTag = `<a href="#" onclick="showVideoPlayer('${imageUrl}')">${label}</a>`;
 
     results = results.replace(/VideoImage:\s*"(.+)"/, videoTag);
   }

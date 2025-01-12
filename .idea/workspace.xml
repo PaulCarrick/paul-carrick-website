@@ -4,19 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Rubocop is green now as well.">
-      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
+    <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="ESLint is green now as well.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/CommentEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/DisplayContent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/ErrorBoundary.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/ErrorBoundary.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/PersistSection.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/PersistSection.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/StylesEditor.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/StylesEditor.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/backgroundColors.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/backgroundColors.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/javascript/components/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/eslint.config.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/eslint.config.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rubymine-settings.zip" beforeDir="false" afterPath="$PROJECT_DIR$/rubymine-settings.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtilities.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/javascript/components/imageProcessingUtilities.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,32 +87,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaScript Debug.Debug Chrome JavaScript.executor": "Debug",
-    "JavaScript Debug.Debug Chrome.executor": "Debug",
-    "JavaScript Debug.Debug Rails an Javascript JavaScript.executor": "Debug",
-    "JavaScript Debug.Debug Rails and Javascript JavaScript.executor": "Debug",
-    "JavaScript Debug.Development: rails-website JavaScript.executor": "Debug",
-    "JavaScript Debug.Generic Chrome.executor": "Debug",
-    "Rails.Debug Rails an Javascript.executor": "Debug",
-    "Rails.Debug Rails and Javascript.executor": "Debug",
-    "Rails.Development: rails-website.executor": "Debug",
-    "RunOnceActivity.git.unshallow": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/bin",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "ruby.structure.view.model.defaults.configured": "true",
-    "settings.editor.selected.configurable": "preferences.customizations",
-    "ts.external.directory.path": "/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaScript Debug.Debug Chrome JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Chrome.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Rails an Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Debug Rails and Javascript JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Development: rails-website JavaScript.executor&quot;: &quot;Debug&quot;,
+    &quot;JavaScript Debug.Generic Chrome.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Debug Rails an Javascript.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Debug Rails and Javascript.executor&quot;: &quot;Debug&quot;,
+    &quot;Rails.Development: rails-website.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/paul/src/paul-carrick-website/bin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;ruby.structure.view.model.defaults.configured&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.customizations&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Applications/RubyMine.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactDesignerToolWindowState">
     <option name="myId2Visible">
       <map>
@@ -150,7 +140,7 @@
       <recent name="$PROJECT_DIR$/public/images" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.Development: rails-website">
+  <component name="RunManager" selected="JavaScript Debug.Generic Chrome">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -400,7 +390,8 @@
       <workItem from="1736550961231" duration="6399000" />
       <workItem from="1736602613870" duration="23745000" />
       <workItem from="1736690818102" duration="36000" />
-      <workItem from="1736690862783" duration="15041000" />
+      <workItem from="1736690862783" duration="15113000" />
+      <workItem from="1736706878060" duration="966000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
@@ -458,7 +449,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736701560829</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="ESLint is green now as well.">
+      <option name="closed" value="true" />
+      <created>1736705951169</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1736705951169</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TerminalProjectNonSharedOptionsProvider">
@@ -488,7 +487,8 @@
     <MESSAGE value="WIP" />
     <MESSAGE value="Repec is all green now!" />
     <MESSAGE value="Rubocop is green now as well." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rubocop is green now as well." />
+    <MESSAGE value="ESLint is green now as well." />
+    <option name="LAST_COMMIT_MESSAGE" value="ESLint is green now as well." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -502,6 +502,12 @@
           <url>file://$PROJECT_DIR$/app/javascript/components/SectionEditor.jsx</url>
           <line>812</line>
           <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/javascript/components/SlideShow.jsx</url>
+          <line>83</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
