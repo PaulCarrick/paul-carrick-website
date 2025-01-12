@@ -16,7 +16,8 @@ done
 DATE_STRING=`date +"%m-%d-%Y"`
 USER="paul"
 DATABASE="paul-carrick"
-REMOTE_DUMP_NAME="paul@paul-carrick.com:${DATABASE}_database_${DATE_STRING}.dump"
+DUMP_NAME="${DATABASE}_database_${DATE_STRING}.dump"
+REMOTE_DUMP_NAME="paul@paul-carrick.com:${DUMP_NAME}"
 LOCAL_DUMP_NAME="${DATABASE}_local_database_${DATE_STRING}.dump"
 REMOTE_STORAGE_NAME="paul@paul-carrick.com:${DATABASE}_images_${DATE_STRING}.tar.gz"
 LOCAL_STORAGE_NAME="${DATABASE}_images_${DATE_STRING}.tar.gz"
@@ -62,7 +63,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-pg_restore -U "${USER}" -d  "${DATABASE}" "${HOME}/${REMOTE_DUMP_NAME}"
+pg_restore -U "${USER}" -d  "${DATABASE}" "${HOME}/${DUMP_NAME}"
 
 if [ $? -ne 0 ]; then
   echo "Error: Failed to restore ${HOME}/${LOCAL_DUMP_NAME}"

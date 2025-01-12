@@ -39,3 +39,8 @@
 /node_modules
 
 /config/credentials/environment.key
+config/ssl/cert.pem
+config/ssl/chain.pem
+config/ssl/fullchain.pem
+config/ssl/privkey.pem
+config/ssl/README
