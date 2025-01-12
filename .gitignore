@@ -38,6 +38,9 @@
 
 /node_modules
 
+/.db_username.txt
+/.db_password.txt
+
 /config/credentials/environment.key
 config/ssl/cert.pem
 config/ssl/chain.pem

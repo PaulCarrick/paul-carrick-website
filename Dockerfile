@@ -1,3 +1,5 @@
+# DockerFile
+
 # syntax=docker/dockerfile:1
 # check=error=true
 
@@ -57,6 +59,13 @@ COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
 
 # Copy application code and precompile assets
+
+# Define build arguments
+ARG DB_PASSWORD
+
+# Set environment variables from build arguments
+ENV DB_PASSWORD=$DB_PASSWORD
+
 COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
@@ -76,8 +85,8 @@ RUN groupadd --system --gid 1000 rails && \
 USER 1000:1000
 
 # Expose HTTPS port
-EXPOSE 443
+EXPOSE 80
 
 # Entrypoint and default command
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "443"]
+CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]

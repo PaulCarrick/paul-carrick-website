@@ -1,3 +1,5 @@
+# docker-compose.yml
+
 version: "3.9"
 services:
   app:
@@ -5,11 +7,18 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      RAILS_ENV: production
-      DATABASE_URL: postgres://postgres:yourpassword@db:5432/yourdatabase
-      RAILS_MASTER_KEY: your-master-key
+      RACK_ENV: ${RACK_ENV}
+      RAILS_ENV: ${RAILS_ENV}
+      RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_DATABASE: ${DB_DATABASE}
+      DB_URL: ${DB_URL}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
     ports:
-      - "443:443"
+      - "3000:3000"
     volumes:
       - ./log:/rails/log
       - ./tmp:/rails/tmp
@@ -22,9 +31,9 @@ services:
   db:
     image: postgres:15
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: yourpassword
-      POSTGRES_DB: yourdatabase
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
