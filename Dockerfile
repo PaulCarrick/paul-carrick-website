@@ -37,6 +37,7 @@ RUN apt-get update -qq && \
     postgresql-client \
     openssl \
     build-essential \
+    procps \
     libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
@@ -162,5 +163,5 @@ ENV EXTERNAL_PORT=${EXTERNAL_PORT}
 EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
 
 # Start Rails server (and optionally SSH Server)
-CMD ["/bin/bash", "-c", \
-    "[ -n \"$SSH_PORT\" ] && service ssh start; ./bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]
+ENTRYPOINT ["/rails/bin/entrypoint.sh"]
+CMD [ "./bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}" ]
