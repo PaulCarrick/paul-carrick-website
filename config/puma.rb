@@ -42,11 +42,21 @@ plugin :solid_queue if ENV["SOLID_QUEUE_IN_PUMA"]
 # In other environments, only set the PID file if requested.
 pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 
-if ENV["DOCKERIZED"] && (ENV['SERVER_MODE'] == 'HTTPS')
-  ssl_bind '0.0.0.0', ENV.fetch('INTERNAL_PORT', '443'), {
-    key: ENV.fetch('SSL_KEY_PATH', '/etc/ssl/private/ssl.key'),
-    cert: ENV.fetch('SSL_CERT_PATH', '/etc/ssl/certs/ssl.crt')
-  }
+if ENV["DOCKERIZED"] # Running is a docker container
+  if (ENV['SERVER_MODE'] == 'HTTPS') # HTTPS
+    ssl_bind '0.0.0.0', ENV.fetch('INTERNAL_PORT', '443'), {
+      key:  ENV.fetch('SSL_KEY_PATH', '/etc/ssl/private/ssl.key'),
+      cert: ENV.fetch('SSL_CERT_PATH', '/etc/ssl/certs/ssl.crt')
+    }
+  else
+    bind 'tcp://0.0.0.0:80'
+  end
+elsif Rails.env.production?
+  # NGINX is used to forward 443 to 8443 and provide certification and SSL.
+  bind 'tcp://0.0.0.0:8443'
+else
+  # Dev mode
+  bind 'tcp://0.0.0.0:3000'
 end
 
 workers 0
