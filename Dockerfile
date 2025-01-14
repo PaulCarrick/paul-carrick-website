@@ -10,6 +10,18 @@ FROM ruby:$RUBY_VERSION-slim AS base
 # Set working directory
 WORKDIR /rails
 
+# Accept SSL key and certificate paths as build arguments
+ARG SSL_KEY_PATH=""
+ARG SSL_CERT_PATH=""
+
+# Set environment variables to use these paths at runtime
+ENV SSL_KEY_PATH=${SSL_KEY_PATH}
+ENV SSL_CERT_PATH=${SSL_CERT_PATH}
+
+# Allow conditional SSH setup
+ARG SSH_PORT=""
+ENV SSH_PORT=${SSH_PORT}
+
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -21,11 +33,35 @@ RUN apt-get update -qq && \
     build-essential && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+RUN if [ -n "$SSH_PORT" ]; then \
+      apt-get install --no-install-recommends -y \
+      openssh-server && \
+      rm -rf /var/lib/apt/lists /var/cache/apt/archives
+    fi
+
 # Set production environment variables
 ENV RAILS_ENV="production" \
     BUNDLE_DEPLOYMENT="1" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development test"
+
+# Copy SSL key and certificate files if provided
+RUN if [ -n "$SSL_KEY_PATH" ] && [ -n "$SSL_CERT_PATH" ]; then \
+      mkdir -p /etc/ssl/private && \
+      mkdir -p /etc/ssl/certs && \
+      cp "$SSL_KEY_PATH" /etc/ssl/private/ssl.key && \
+      cp "$SSL_CERT_PATH" /etc/ssl/certs/ssl.crt && \
+      chmod 600 /etc/ssl/private/ssl.key && \
+      chmod 644 /etc/ssl/certs/ssl.crt; \
+    fi
+
+# Configure SSH
+RUN if [ -n "$SSH_PORT" ]; then \
+      mkdir /var/run/sshd && \
+      echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+      echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
+      echo "AuthorizedKeysFile %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config
+    fi
 
 # Build stage
 FROM base AS build
@@ -80,13 +116,26 @@ COPY --from=build /rails /rails
 
 # Set up non-root user
 RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
-USER 1000:1000
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
 
-# Expose HTTPS port
-EXPOSE 80
+RUN if [ -n "$SSH_PORT" ]; then \
+      mkdir -p /home/rails/.ssh && \
+      chmod 700 /home/rails/.ssh && \
+      chown -R rails:rails /home/rails/.ssh && \
+      cp /run/secrets/ssh_key /home/rails/.ssh/id_rsa && \
+      chmod 600 /home/rails/.ssh/id_rsa && \
+      chown rails:rails /home/rails/.ssh/id_rsa; \
+    fi
 
-# Entrypoint and default command
-ENTRYPOINT ["/rails/bin/docker-entrypoint"]
-CMD ["./bin/rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+# Set default Server ports
+ARG INTERNAL_PORT=80
+ENV INTERNAL_PORT=${INTERNAL_PORT}
+ARG EXTERNAL_PORT=80
+ENV EXTERNAL_PORT=${EXTERNAL_PORT}
+
+# Expose HTTPS and SSH ports
+EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
+
+# Start Rails server (and optionall SSH Server)
+CMD ["/bin/bash", "-c", \
+    "[ -n \"$SSH_PORT\" ] && service ssh start; ./bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]

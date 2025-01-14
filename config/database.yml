@@ -16,11 +16,11 @@
 #
 default: &default
   adapter: postgresql
-  host: localhost
+  host: <%= ENV.fetch("DB_HOST", "localhost") %>
   encoding: unicode
   database: paul-carrick
   username: paul
-  password:  <%= ENV.fetch("DB_PASSWORD") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
 
 development:
@@ -95,3 +95,11 @@ production:
     <<: *primary_production
     database: paul-carrick-cache-cable
     migrations_paths: db/cable_migrate
+
+docker:
+  <<: *default
+  database: <%= ENV.fetch("DB_NAME", "bootstrap-website") %>
+  username: <%= ENV.fetch("DB_USERNAME", "bootstrap-user") %>
+  host: <%= ENV.fetch('DB_HOST', 'db') %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS", 5) %>
+  password: <%= ENV.fetch("DB_PASSWORD") %> # No default for security
