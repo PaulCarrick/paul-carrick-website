@@ -51,7 +51,7 @@ if ENV["DOCKERIZED"] # Running is a docker container
   else
     bind 'tcp://0.0.0.0:80'
   end
-elsif Rails.env.production?
+elsif ENV["RAILS_ENV"] == "production"
   # NGINX is used to forward 443 to 8443 and provide certification and SSL.
   bind 'tcp://0.0.0.0:8443'
 else
