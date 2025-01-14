@@ -11,6 +11,7 @@
       --container-text-color: <%= @site_information.container_text_color %>;
       --page-background-image: <%= @site_information.page_background_image %>;
   }
+
   <% end %>
 </style>
 
@@ -39,12 +40,12 @@
           <% section_classes = content == @focused_section ? 'highlight-section' : '' %>
           <div class="<%= section_classes %>">
             <%= react_component("DisplayContent", {
-              content: content.description,
-              image: content.image,
-              link: content.link,
-              format: content.formatting,
-              sectionId: content.section_name,
-              textAttributes: content.text_attributes,
+              content:         content.description,
+              image:           content.image,
+              link:            content.link,
+              format:          content.formatting,
+              sectionId:       content.section_name,
+              textAttributes:  content.text_attributes,
               imageAttributes: content.image_attributes,
             }) %>
           </div>
@@ -61,6 +62,13 @@
       <input type="hidden" id="content-rendered-signal" value="true"/>
     </div>
   </section>
+
+  <% if @application_user.admin? && @page.present? %>
+    <%= link_to "Edit Page",
+                edit_admin_page_path(@page),
+                class:  "mt-5 mb-5 ms-5 btn btn-danger",
+                target: "_blank" %>
+  <% end %>
 <% end %>
 
 <%= render layout: "layouts/footer" do %>
