@@ -5,7 +5,7 @@
 
 # Base Ruby image
 ARG RUBY_VERSION=3.2.6
-FROM ruby:$RUBY_VERSION-slim AS base
+FROM ruby:${RUBY_VERSION}-slim AS base
 
 # Set working directory
 WORKDIR /rails
@@ -22,6 +22,12 @@ ENV SSL_CERT_PATH=${SSL_CERT_PATH}
 ARG SSH_PORT=""
 ENV SSH_PORT=${SSH_PORT}
 
+# Allow conditional SUDO setup
+ARG SUDO_AVAILABLE="false"
+ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
+
+RUN echo "Current Configuration:" && env
+
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
@@ -30,14 +36,24 @@ RUN apt-get update -qq && \
     libvips \
     postgresql-client \
     openssl \
-    build-essential && \
+    build-essential \
+    libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 RUN if [ -n "$SSH_PORT" ]; then \
-      apt-get install --no-install-recommends -y \
-      openssh-server && \
-      rm -rf /var/lib/apt/lists /var/cache/apt/archives
+      apt-get install --no-install-recommends -y openssh-server && \
+      rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
     fi
+
+# Optionally install sudo and net tools
+RUN if [ "${SUDO_AVAILABLE}" == "true" ]; then \
+      apt-get update -qq && \
+      apt-get install --no-install-recommends -y sudo iproute2 telnet curl && \
+      rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
+    fi
+
+# Install the correct Bundler version
+RUN gem install bundler -v '~> 2.5'
 
 # Set production environment variables
 ENV RAILS_ENV="production" \
@@ -60,7 +76,7 @@ RUN if [ -n "$SSH_PORT" ]; then \
       mkdir /var/run/sshd && \
       echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
       echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
-      echo "AuthorizedKeysFile %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config
+      echo "AuthorizedKeysFile %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config; \
     fi
 
 # Build stage
@@ -104,7 +120,7 @@ ENV DB_PASSWORD=$DB_PASSWORD
 
 COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+RUN SECRET_KEY_BASE=DUMMY bundle exec rails assets:precompile
 RUN rm -rf node_modules
 
 # Final stage
@@ -117,6 +133,15 @@ COPY --from=build /rails /rails
 # Set up non-root user
 RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+
+# Optionally setup sudo user
+RUN if [ "${SUDO_AVAILABLE}" == "true" ]; then \
+      groupadd --system --gid 1001 sudoer && \
+      useradd sudoer --uid 1001 --gid 1001 --create-home --shell /bin/bash && \
+      echo "sudoer:${DB_PASSWORD}" | chpasswd && \
+      echo "sudoer ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/sudoer && \
+      chmod 0440 /etc/sudoers.d/sudoer; \
+    fi
 
 RUN if [ -n "$SSH_PORT" ]; then \
       mkdir -p /home/rails/.ssh && \
@@ -136,6 +161,6 @@ ENV EXTERNAL_PORT=${EXTERNAL_PORT}
 # Expose HTTPS and SSH ports
 EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
 
-# Start Rails server (and optionall SSH Server)
+# Start Rails server (and optionally SSH Server)
 CMD ["/bin/bash", "-c", \
     "[ -n \"$SSH_PORT\" ] && service ssh start; ./bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]

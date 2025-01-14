@@ -47,3 +47,4 @@ config/ssl/chain.pem
 config/ssl/fullchain.pem
 config/ssl/privkey.pem
 config/ssl/README
+/certs/
