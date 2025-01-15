@@ -45,8 +45,8 @@ pidfile ENV["PIDFILE"] if ENV["PIDFILE"]
 if ENV["DOCKERIZED"] # Running is a docker container
   if (ENV['SERVER_MODE'] == 'HTTPS') # HTTPS
     ssl_bind '0.0.0.0', ENV.fetch('INTERNAL_PORT', '443'), {
-      key:  ENV.fetch('SSL_KEY_PATH', '/etc/ssl/private/ssl.key'),
-      cert: ENV.fetch('SSL_CERT_PATH', '/etc/ssl/certs/ssl.crt')
+      key:  ENV.fetch('SSL_KEY_PATH', 'secrets/ssl.key'),
+      cert: ENV.fetch('SSL_CERT_PATH', 'secrets/ssl.crt')
     }
   else
     bind 'tcp://0.0.0.0:80'

@@ -48,3 +48,4 @@ config/ssl/fullchain.pem
 config/ssl/privkey.pem
 config/ssl/README
 /certs/
+/secrets/

@@ -5,26 +5,38 @@
 
 # Base Ruby image
 ARG RUBY_VERSION=3.2.6
-FROM ruby:${RUBY_VERSION}-slim AS base
+FROM ruby:${RUBY_VERSION} AS base
 
 # Set working directory
 WORKDIR /rails
 
-# Accept SSL key and certificate paths as build arguments
-ARG SSL_KEY_PATH=""
-ARG SSL_CERT_PATH=""
-
-# Set environment variables to use these paths at runtime
-ENV SSL_KEY_PATH=${SSL_KEY_PATH}
-ENV SSL_CERT_PATH=${SSL_CERT_PATH}
+ARG NODE_VERSION=23.2.0
+ENV NODE_VERSION=${NODE_VERSION}
+ARG YARN_VERSION=1.22.22
+ENV YARN_VERSION=${YARN_VERSION}
 
 # Allow conditional SSH setup
 ARG SSH_PORT=""
 ENV SSH_PORT=${SSH_PORT}
+ARG SSH_PUBLIC_KEY=""
+ENV SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
 
 # Allow conditional SUDO setup
-ARG SUDO_AVAILABLE="false"
+ARG SUDO_AVAILABLE=""
 ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
+
+ARG SUDO_USER_PASSWORD
+ENV SUDO_USER_PASSWORD=${SUDO_USER_PASSWORD}
+
+# Setup Database
+ARG DB_PASSWORD
+ENV DB_PASSWORD=$DB_PASSWORD
+
+# Set default Server ports
+ARG INTERNAL_PORT=80
+ENV INTERNAL_PORT=${INTERNAL_PORT}
+ARG EXTERNAL_PORT=80
+ENV EXTERNAL_PORT=${EXTERNAL_PORT}
 
 RUN echo "Current Configuration:" && env
 
@@ -41,13 +53,15 @@ RUN apt-get update -qq && \
     libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
+# Optionally install ssh
 RUN if [ -n "$SSH_PORT" ]; then \
-      apt-get install --no-install-recommends -y openssh-server && \
+      apt-get update -qq && \
+      apt-get install --no-install-recommends -y sudo openssh-server && \
       rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
     fi
 
 # Optionally install sudo and net tools
-RUN if [ "${SUDO_AVAILABLE}" == "true" ]; then \
+RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
       apt-get update -qq && \
       apt-get install --no-install-recommends -y sudo iproute2 telnet curl && \
       rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
@@ -62,18 +76,9 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development test"
 
-# Copy SSL key and certificate files if provided
-RUN if [ -n "$SSL_KEY_PATH" ] && [ -n "$SSL_CERT_PATH" ]; then \
-      mkdir -p /etc/ssl/private && \
-      mkdir -p /etc/ssl/certs && \
-      cp "$SSL_KEY_PATH" /etc/ssl/private/ssl.key && \
-      cp "$SSL_CERT_PATH" /etc/ssl/certs/ssl.crt && \
-      chmod 600 /etc/ssl/private/ssl.key && \
-      chmod 644 /etc/ssl/certs/ssl.crt; \
-    fi
-
 # Configure SSH
 RUN if [ -n "$SSH_PORT" ]; then \
+      set -e; \
       mkdir /var/run/sshd && \
       echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
       echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
@@ -94,8 +99,6 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install Node.js and Yarn
-ARG NODE_VERSION=23.2.0
-ARG YARN_VERSION=1.22.22
 ENV PATH="/usr/local/node/bin:$PATH"
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
@@ -110,14 +113,6 @@ RUN bundle install && \
 
 COPY package.json yarn.lock ./
 RUN yarn install --frozen-lockfile
-
-# Copy application code and precompile assets
-
-# Define build arguments
-ARG DB_PASSWORD
-
-# Set environment variables from build arguments
-ENV DB_PASSWORD=$DB_PASSWORD
 
 COPY . .
 RUN bundle exec bootsnap precompile app/ lib/
@@ -136,32 +131,36 @@ RUN groupadd --system --gid 1000 rails && \
     useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
 
 # Optionally setup sudo user
-RUN if [ "${SUDO_AVAILABLE}" == "true" ]; then \
-      groupadd --system --gid 1001 sudoer && \
-      useradd sudoer --uid 1001 --gid 1001 --create-home --shell /bin/bash && \
-      echo "sudoer:${DB_PASSWORD}" | chpasswd && \
-      echo "sudoer ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/sudoer && \
+RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
+      set -e; \
+      echo "Adding group sudoer"; \
+      groupadd --system --gid 1001 sudoer; \
+      echo "Adding user sudoer"; \
+      useradd sudoer --uid 1001 --gid 1001 --create-home --shell /bin/bash; \
+      echo "Setting password for sudoer"; \
+      echo "sudoer:${DB_PASSWORD}" | chpasswd; \
+      echo "Configuring sudo access for sudoer"; \
+      echo "sudoer ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/sudoer; \
       chmod 0440 /etc/sudoers.d/sudoer; \
     fi
 
 RUN if [ -n "$SSH_PORT" ]; then \
+      set -e; \
       mkdir -p /home/rails/.ssh && \
       chmod 700 /home/rails/.ssh && \
-      chown -R rails:rails /home/rails/.ssh && \
-      cp /run/secrets/ssh_key /home/rails/.ssh/id_rsa && \
-      chmod 600 /home/rails/.ssh/id_rsa && \
-      chown rails:rails /home/rails/.ssh/id_rsa; \
+      chown -R rails:rails /home/rails/.ssh; \
     fi
 
-# Set default Server ports
-ARG INTERNAL_PORT=80
-ENV INTERNAL_PORT=${INTERNAL_PORT}
-ARG EXTERNAL_PORT=80
-ENV EXTERNAL_PORT=${EXTERNAL_PORT}
+RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
+      set -e; \
+      echo "$SSH_PUBLIC_KEY" > /home/rails/.ssh/authorized_keys && \
+      chmod 600 /home/rails/.ssh/authorized_keys && \
+      chown -R rails:rails /home/rails/.ssh; \
+    fi
 
 # Expose HTTPS and SSH ports
 EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
 
-# Start Rails server (and optionally SSH Server)
-ENTRYPOINT ["/rails/bin/entrypoint.sh"]
-CMD [ "./bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}" ]
+# Start Rails server (and optionall SSH Server)
+CMD ["/bin/bash", "-c", \
+    "service ssh start && /rails/bin/entrypoint.sh /rails/bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]
