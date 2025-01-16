@@ -1,22 +1,19 @@
 #!/bin/bash
 set -e
 
-# Run database migrations
-echo "Running bundle install"
-bundle install
-echo "Running database migrations..."
-bundle exec rails db:migrate
+if [ -n "$SSH_PORT" ]; then sudo service ssh start; fi
 
-if [ "RAILS_ENV" == "production" ]; then rails assets:precompile ; fi
+# Run database migrations
+# echo "Running bundle install"
+# bundle install
+# echo "Running database migrations..."
+# bundle exec rails db:migrate
+
+# if [ "RAILS_ENV" == "production" ]; then rails assets:precompile ; fi
 
 # Start the Rails server
-exec "$@"
+# exec "$@"
 
-# Check for errors and wait for debugging if necessary
-if [ $? -ne 0 ]; then
-  echo "An error occurred. The container will wait for debugging."
-
-  while true; do
-    sleep 300
-  done
-fi
+while true; do # Sleep for debugging and access without server running
+  sleep 300
+done

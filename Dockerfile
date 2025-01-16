@@ -1,4 +1,5 @@
 # DockerFile
+# hadolint ignore=DL3059
 
 # syntax=docker/dockerfile:1
 # check=error=true
@@ -7,40 +8,43 @@
 ARG RUBY_VERSION=3.2.6
 FROM ruby:${RUBY_VERSION} AS base
 
+ENV PATH="${PWD}/bin:${PATH}"
+
 # Set working directory
 WORKDIR /rails
 
+# Modify these defauls as needed
 ARG NODE_VERSION=23.2.0
-ENV NODE_VERSION=${NODE_VERSION}
-ARG YARN_VERSION=1.22.22
-ENV YARN_VERSION=${YARN_VERSION}
-
-# Allow conditional SSH setup
-ARG SSH_PORT=""
-ENV SSH_PORT=${SSH_PORT}
-ARG SSH_PUBLIC_KEY=""
-ENV SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
-
-# Allow conditional SUDO setup
-ARG SUDO_AVAILABLE=""
-ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
-
-ARG SUDO_USER_PASSWORD
-ENV SUDO_USER_PASSWORD=${SUDO_USER_PASSWORD}
-
-# Setup Database
-ARG DB_PASSWORD
-ENV DB_PASSWORD=$DB_PASSWORD
-
-# Set default Server ports
 ARG INTERNAL_PORT=80
-ENV INTERNAL_PORT=${INTERNAL_PORT}
 ARG EXTERNAL_PORT=80
-ENV EXTERNAL_PORT=${EXTERNAL_PORT}
+ARG SSH_PORT="22"
+ARG SSH_PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8S2GcPW3TLnkg1QDPh0trWl1kZdaXVL1lY9A+jSUwcXKCAcxW6btomtTk5zdrCjRv/5EZkXy8aVBZmgK3ktrRmMO+3ypjiw/D50Vxnu8pT4wevfas8p3GNPPtCF88H4pnCBzLmY8OnXR5mit896eupYBrz4YfwAjhaZIgwKLBmsDW9lF4/w0OnKfhMyHnbk/v3H/ylr8OUj6wq3yawzD+u2EyktSpEyZjtVTs5+JDHCOaq/A6/ZHAu8SmOAR/f5auKS2FighmXpTkPHNXXXmqxBFBGRnu/SFDYBeVrLe0fNEbkGAsWM4AvpqAWkhwkuBbB646wTINcGbEqrM8+aKZ"
+ARG SUDO_AVAILABLE="true"
+ARG USERNAME="paul"
+ARG CODE_ONE="53cc593cef49115b7c53a8bc0febcfc89e3d826aabbc2972756ee9110e6f1ce0"
+ARG CODE_TWO="212d49cf12922cc9205bbe417dbade5f"
+ARG RAILS_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
+ARG USER_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
+ARG DB_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
+ARG ROOT_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
 
-RUN echo "Current Configuration:" && env
+# Override the defaults with environmental variables
+ENV NODE_VERSION=${NODE_VERSION}
+ENV INTERNAL_PORT=${INTERNAL_PORT}
+ENV EXTERNAL_PORT=${EXTERNAL_PORT}
+ENV SSH_PORT=${SSH_PORT}
+ENV SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
+ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
+ENV USERNAME=${USERNAME}
+ENV CODE_ONE=${CODE_ONE}
+ENV CODE_TWO=${CODE_TWO}
+ENV RAILS_ENCRYPTED_PASSWORD=${RAILS_ENCRYPTED_PASSWORD}
+ENV USER_ENCRYPTED_PASSWORD=${USER_ENCRYPTED_PASSWORD}
+ENV DB_ENCRYPTED_PASSWORD=${DB_ENCRYPTED_PASSWORD}
+ENV ROOT_ENCRYPTED_PASSWORD=${ROOT_ENCRYPTED_PASSWORD}
 
 # Install base packages
+RUN echo "*** Installing Base Packages..."
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
@@ -50,25 +54,38 @@ RUN apt-get update -qq && \
     openssl \
     build-essential \
     procps \
+    passwd \
+    nano \
     libyaml-dev && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN echo "*** Base Packages Installed."
 
 # Optionally install ssh
 RUN if [ -n "$SSH_PORT" ]; then \
+      echo "*** Installing SSH Server..." ; \
       apt-get update -qq && \
       apt-get install --no-install-recommends -y sudo openssh-server && \
       rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
+      echo "*** SSH Server Installed" ; \
+    else \
+      echo "*** SSH Server Not Installed" ; \
     fi
 
 # Optionally install sudo and net tools
 RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
+      echo "*** Setting up SUDO..." ; \
       apt-get update -qq && \
       apt-get install --no-install-recommends -y sudo iproute2 telnet curl && \
       rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
+      echo "*** SUDO Setup..." ; \
+    else \
+      echo "*** SUDO NOT Setup..." ; \
     fi
 
 # Install the correct Bundler version
+RUN echo "*** Installing Bundler..."
 RUN gem install bundler -v '~> 2.5'
+RUN echo "*** Bundler Installed..."
 
 # Set production environment variables
 ENV RAILS_ENV="production" \
@@ -79,16 +96,21 @@ ENV RAILS_ENV="production" \
 # Configure SSH
 RUN if [ -n "$SSH_PORT" ]; then \
       set -e; \
+      echo "*** Configuring SSH...";  \
       mkdir /var/run/sshd && \
       echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
       echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
       echo "AuthorizedKeysFile %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config; \
+      echo "*** SSH Configured." ; \
+    else \
+      echo "*** SSH NOT Configured." ; \
     fi
 
 # Build stage
 FROM base AS build
 
 # Install packages for gem and JavaScript dependencies
+RUN echo "*** Installing packages for gem and JavaScript dependencies"
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     git \
@@ -97,70 +119,96 @@ RUN apt-get update -qq && \
     pkg-config \
     python-is-python3 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN echo "*** Packages for gem and JavaScript dependencies installed."
 
-# Install Node.js and Yarn
+# Install Node.js
+RUN echo "*** Installing Node.js"
 ENV PATH="/usr/local/node/bin:$PATH"
 RUN curl -sL https://github.com/nodenv/node-build/archive/master.tar.gz | tar xz -C /tmp/ && \
     /tmp/node-build-master/bin/node-build "${NODE_VERSION}" /usr/local/node && \
-    npm install -g yarn@$YARN_VERSION && \
     rm -rf /tmp/node-build-master
+RUN echo "*** Node.js Installed."
 
 # Copy and install dependencies
+RUN echo "*** Installing Gems"
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
+RUN echo "*** Gems Installed."
 
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json ./
 
+RUN echo "*** Copying Files to build..."
 COPY . .
+RUN echo "*** Files copied to build."
+
+RUN echo "*** Precompiling bootsnap ..."
 RUN bundle exec bootsnap precompile app/ lib/
-RUN SECRET_KEY_BASE=DUMMY bundle exec rails assets:precompile
-RUN rm -rf node_modules
+RUN echo "*** Bootsnap Precompiled."
 
 # Final stage
 FROM base
 
 # Copy build artifacts
+RUN echo "*** Copying Build Artifacts..."
 COPY --from=build "${BUNDLE_PATH}" "${BUNDLE_PATH}"
 COPY --from=build /rails /rails
+RUN echo "*** Build Artifacts copied."
 
-# Set up non-root user
-RUN groupadd --system --gid 1000 rails && \
-    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash
+# Set up rails user
+RUN echo "*** Setting up rails user..." && \
+    groupadd --system --gid 1000 rails && \
+    useradd rails --uid 1000 --gid 1000 --create-home --shell /bin/bash && \
+    bin/decode-password -u rails -p ${RAILS_ENCRYPTED_PASSWORD} | chpasswd && \
+    echo "*** Rails user setup..."
 
-# Optionally setup sudo user
+# Set root password
+RUN bin/decode-password -u root -p ${ROOT_ENCRYPTED_PASSWORD} | chpasswd
+
+# Set up non-rails user
+RUN echo "*** Setting up non-rails user..."
+RUN groupadd --system --gid 1001 ${USERNAME} && \
+    useradd ${USERNAME} --uid 1001 --gid 1001 --home-dir /home/${USERNAME} --shell /bin/bash && \
+    bin/decode-password -u ${USERNAME} -p ${USER_ENCRYPTED_PASSWORD} | chpasswd
+RUN echo "*** Non-rails user setup..."
+
+# Optionally setup sudo access
+RUN echo "*** Setting up SUDO access..."
 RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
       set -e; \
-      echo "Adding group sudoer"; \
-      groupadd --system --gid 1001 sudoer; \
-      echo "Adding user sudoer"; \
-      useradd sudoer --uid 1001 --gid 1001 --create-home --shell /bin/bash; \
-      echo "Setting password for sudoer"; \
-      echo "sudoer:${DB_PASSWORD}" | chpasswd; \
-      echo "Configuring sudo access for sudoer"; \
-      echo "sudoer ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/sudoer; \
-      chmod 0440 /etc/sudoers.d/sudoer; \
+      echo "Configuring sudo access for ${USERNAME}" ; \
+      echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME}; \
+      chmod 0440 /etc/sudoers.d/${USERNAME}; \
+    else \
+      echo "*** SUDO access not setup." ; \
     fi
 
 RUN if [ -n "$SSH_PORT" ]; then \
       set -e; \
+      echo "Setting permissions for SSH..." ; \
       mkdir -p /home/rails/.ssh && \
       chmod 700 /home/rails/.ssh && \
       chown -R rails:rails /home/rails/.ssh; \
+      echo "SSH permissions setup." ; \
+    else \
+      echo "SSH permissions NOT setup." ; \
     fi
 
 RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
       set -e; \
+      echo "Setting SSH public key..." ; \
       echo "$SSH_PUBLIC_KEY" > /home/rails/.ssh/authorized_keys && \
       chmod 600 /home/rails/.ssh/authorized_keys && \
       chown -R rails:rails /home/rails/.ssh; \
+      echo "SSH public key setup." ; \
+    else \
+      echo "SSH public key NOT setup." ; \
     fi
 
 # Expose HTTPS and SSH ports
-EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
+EXPOSE 3000 ${SSH_PORT}
 
 # Start Rails server (and optionall SSH Server)
 CMD ["/bin/bash", "-c", \
-    "service ssh start && /rails/bin/entrypoint.sh /rails/bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]
+    "/rails/bin/entrypoint.sh /rails/bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]

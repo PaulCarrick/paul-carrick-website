@@ -49,3 +49,6 @@ config/ssl/privkey.pem
 config/ssl/README
 /certs/
 /secrets/
+/Dockerfile-paul
+/docker-compose-paul.yml
+/export-env

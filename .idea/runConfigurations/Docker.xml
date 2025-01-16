@@ -1,0 +1,129 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Docker" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="attachToContainerNeeded" value="true" />
+        <option name="buildArgs">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_PASSWORD" />
+              <option name="value" value="Access4BootstrapServer!" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="INTERNAL_PORT" />
+              <option name="value" value="80" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="ExTERNAL_PORT" />
+              <option name="value" value="80" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SSH_PORT" />
+              <option name="value" value="22" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SSH_PUBLIC_KEY" />
+              <option name="value" value="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8S2GcPW3TLnkg1QDPh0trWl1kZdaXVL1lY9A+jSUwcXKCAcxW6btomtTk5zdrCjRv/5EZkXy8aVBZmgK3ktrRmMO+3ypjiw/D50Vxnu8pT4wevfas8p3GNPPtCF88H4pnCBzLmY8OnXR5mit896eupYBrz4YfwAjhaZIgwKLBmsDW9lF4/w0OnKfhMyHnbk/v3H/ylr8OUj6wq3yawzD+u2EyktSpEyZjtVTs5+JDHCOaq/A6/ZHAu8SmOAR/f5auKS2FighmXpTkPHNXXXmqxBFBGRnu/SFDYBeVrLe0fNEbkGAsWM4AvpqAWkhwkuBbB646wTINcGbEqrM8+aKZ" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SUDO_AVAILABLE" />
+              <option name="value" value="true" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SUDO_USER_PASSWORD" />
+              <option name="value" value="Hllywd38!" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="buildCliOptions" value="--no-cache" />
+        <option name="containerName" value="" />
+        <option name="envVars">
+          <list>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_DATABASE" />
+              <option name="value" value="bootstrap-server" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_HOST" />
+              <option name="value" value="db" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_PASSWORD" />
+              <option name="value" value="Access4BootstrapServer!" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_USERNAME" />
+              <option name="value" value="bootstrap-user" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="DOCKERIZED" />
+              <option name="value" value="true" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="EXTERNAL_PORT" />
+              <option name="value" value="80" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="INTERNAL_PORT" />
+              <option name="value" value="80" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RACK_ENV" />
+              <option name="value" value="development" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RAILS_ENV" />
+              <option name="value" value="development" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RAILS_MASTER_KEY" />
+              <option name="value" value="31c4d6937460cb67802017edd2016b94" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RAILS_SERVE_STATIC_FILES" />
+              <option name="value" value="enabled" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RECAPTCHA_ENABLED" />
+              <option name="value" value="true" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RECAPTCHA_SECRET_KEY" />
+              <option name="value" value="6LfMwnEqAAAAAP7M_ruuL8-pDpnfiarYS_YWfDog" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="RECAPTCHA_SITE_KEY" />
+              <option name="value" value="6LfMwnEqAAAAAP2KC-014xjgglMTBwiMWn2BM3Lw" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SERVER_MODE" />
+              <option name="value" value="HTTP" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SSH_PORT" />
+              <option name="value" value="22" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SSH_PUBLIC_KEY" />
+              <option name="value" value="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8S2GcPW3TLnkg1QDPh0trWl1kZdaXVL1lY9A+jSUwcXKCAcxW6btomtTk5zdrCjRv/5EZkXy8aVBZmgK3ktrRmMO+3ypjiw/D50Vxnu8pT4wevfas8p3GNPPtCF88H4pnCBzLmY8OnXR5mit896eupYBrz4YfwAjhaZIgwKLBmsDW9lF4/w0OnKfhMyHnbk/v3H/ylr8OUj6wq3yawzD+u2EyktSpEyZjtVTs5+JDHCOaq/A6/ZHAu8SmOAR/f5auKS2FighmXpTkPHNXXXmqxBFBGRnu/SFDYBeVrLe0fNEbkGAsWM4AvpqAWkhwkuBbB646wTINcGbEqrM8+aKZ" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SUDO_AVAILABLE" />
+              <option name="value" value="true" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="SUDO_USER_PASSWORD" />
+              <option name="value" value="Hllywd38!" />
+            </DockerEnvVarImpl>
+            <DockerEnvVarImpl>
+              <option name="name" value="DB_URL" />
+              <option name="value" value="postgres://bootstrap-user:Access4BootstrapServer!@db:5432/bootstrap-server" />
+            </DockerEnvVarImpl>
+          </list>
+        </option>
+        <option name="sourceFilePath" value="Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

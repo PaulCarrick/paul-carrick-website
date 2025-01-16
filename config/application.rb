@@ -44,15 +44,5 @@ module RailsWebsite
 
     config.assets.paths << Rails.root.join("app", "assets", "stylesheets")
     config.assets.paths << Rails.root.join("app", "assets", "javascripts")
-
-    if ENV['DOCKERIZED'] == 'true'
-      config.before_configuration do
-        db_config = Rails.application.config_for(:database)
-
-        if db_config['docker']
-          Rails.application.config.database_configuration[Rails.env] = db_config['docker']
-        end
-      end
-    end
   end
 end

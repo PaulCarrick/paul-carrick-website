@@ -6,39 +6,31 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        SSL_KEY_PATH: ${SSL_KEY_PATH:-}
-        SSL_CERT_PATH: ${SSL_CERT_PATH:-}
 
     environment:
-      SSL_KEY_PATH: ${SSL_KEY_PATH:-/etc/ssl/private/ssl.key}
-      SSL_CERT_PATH: ${SSL_CERT_PATH:-/etc/ssl/certs/ssl.crt}
-      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY:-default-master-key}
-      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY:-default-site-key}
-      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY:-default-secret-key}
-      RECAPTCHA_ENABLED: ${RECAPTCHA_ENABLED}
+      RAILS_MASTER_KEY: ${RAILS_MASTER_KEY}
+      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
+      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
       DB_PASSWORD: ${DB_PASSWORD}
       DB_USERNAME: ${DB_USERNAME}
       DB_DATABASE: ${DB_DATABASE}
       DB_HOST: ${DB_HOST}
-      DB_URL: ${DB_URL}
+      DB_URL: ${DB_URL:-DB_URL=postgres://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:5432/${DB_DATABASE}}
       RACK_ENV: ${RACK_ENV}
       RAILS_ENV: ${RAILS_ENV}
       DOCKERIZED: ${DOCKERIZED}
       SERVER_MODE: ${SERVER_MODE}
-      INTERNAL_PORT: ${INTERNAL_PORT}
-      EXTERNAL_PORT: ${EXTERNAL_PORT}
       RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
-      SUDO_AVAILABLE: ${SUDO_AVAILABLE}
 
     ports:
-    - "${EXTERNAL_PORT}:${INTERNAL_PORT}"
-    - "${SSH_PORT:+${SSH_PORT}:${SSH_PORT}}"
+      - 3000:3000
+      - "${SSH_PORT:+${SSH_PORT}:${SSH_PORT}}"
 
     volumes:
       - ./log:/rails/log
       - ./tmp:/rails/tmp
-      - ./storage:/rails/storage
+      - storage:/rails/storage
+      - user_home:/home/paul
     depends_on:
       - db
     networks:
@@ -46,17 +38,24 @@ services:
 
   db:
     image: postgres:15
+
     environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Newhall2Eastsound!}
+
+    ports:
+      - "5432:5432"
+      - "5433:5432"
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
     networks:
       - app-network
 
 volumes:
   postgres_data:
+  storage:
+  user_home:
 
 networks:
   app-network:
