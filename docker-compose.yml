@@ -23,7 +23,7 @@ services:
       RAILS_SERVE_STATIC_FILES: ${RAILS_SERVE_STATIC_FILES}
 
     ports:
-      - 3000:3000
+      - "${EXTERNAL_PORT}:${INTERNAL_PORT}"
       - "${SSH_PORT:+${SSH_PORT}:${SSH_PORT}}"
 
     volumes:

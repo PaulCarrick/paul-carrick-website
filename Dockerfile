@@ -207,7 +207,7 @@ RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
     fi
 
 # Expose HTTPS and SSH ports
-EXPOSE 3000 ${SSH_PORT}
+EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
 
 # Start Rails server (and optionall SSH Server)
 CMD ["/bin/bash", "-c", \
