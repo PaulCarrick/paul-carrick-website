@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Polishing things.">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/docker_compose_rails_yml__Compose_Deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DockerFile-DB" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/bin/startup.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose-db.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Docker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Dockerfile_Rails__Compose_Deployment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Docker_Compose.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/application.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/application.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/database.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/puma.rb" beforeDir="false" afterPath="$PROJECT_DIR$/config/puma.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-Rails" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-rails.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,7 +110,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/bin",
+    "last_opened_file_path": "/Users/paul/src/paul-carrick-website",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -131,9 +135,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/bin" />
       <recent name="$PROJECT_DIR$/secrets" />
-      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/app/views/shared" />
       <recent name="$PROJECT_DIR$/app/javascript/components" />
     </key>
@@ -145,7 +149,12 @@
       <recent name="$PROJECT_DIR$/app/assets/stylesheets" />
     </key>
   </component>
-  <component name="RunManager" selected="Docker.Docker">
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="Newhall2Eastsound!" />
+    </option>
+  </component>
+  <component name="RunManager" selected="Docker.Dockerfile-Rails: Compose Deployment">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -267,8 +276,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.Docker" />
-      <item itemvalue="Docker.Docker Compose" />
+      <item itemvalue="Docker.Dockerfile-Rails: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose-rails.yml: Compose Deployment" />
       <item itemvalue="JavaScript Debug.Debug Chrome JavaScript" />
       <item itemvalue="JavaScript Debug.Debug Edge" />
       <item itemvalue="JavaScript Debug.Debug Opera" />
@@ -402,7 +411,7 @@
       <workItem from="1736717757987" duration="7885000" />
       <workItem from="1736789406967" duration="723000" />
       <workItem from="1736802425574" duration="434000" />
-      <workItem from="1736866809318" duration="98524000" />
+      <workItem from="1736866809318" duration="117571000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />

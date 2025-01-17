@@ -1,4 +1,4 @@
-# docker-compose.yml
+# docker-compose-rails.yml
 
 version: "3.9"
 services:
@@ -40,7 +40,7 @@ services:
     image: postgres:15
 
     environment:
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Newhall2Eastsound!}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
     ports:
       - "5432:5432"

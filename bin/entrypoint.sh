@@ -1,18 +1,15 @@
-#!/bin/bash
-set -e
+# !/bin/bash
 
-if [ -n "$SSH_PORT" ]; then sudo service ssh start; fi
+if [ -n "$SSH_PORT" ]; then service ssh start; fi
 
-# Run database migrations
-# echo "Running bundle install"
-# bundle install
-# echo "Running database migrations..."
-# bundle exec rails db:migrate
+# TODO
+# I cannot find a way to setup the ownership of the files in Docker build.
+# You would think that chown rails:rails -R /rail would work but it doesn't.
+# I consulted ChatGPT and google and neither could provide an answer.
+# For now, do it at runtime where it works.
 
-# if [ "RAILS_ENV" == "production" ]; then rails assets:precompile ; fi
-
-# Start the Rails server
-# exec "$@"
+chown -R rails:rails /rails
+su rails -c "cd /rails && /rails/bin/startup.sh $@"
 
 while true; do # Sleep for debugging and access without server running
   sleep 300
