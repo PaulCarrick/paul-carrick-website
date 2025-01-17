@@ -53,3 +53,5 @@ config/ssl/README
 /docker-compose-paul.yml
 /export-env
 /build/secrets/
+/build/seed/database.dump
+/build/seed/storage.tar.gz
