@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Polishing things.">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/docker_compose_rails_yml__Compose_Deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DockerFile-DB" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bin/startup.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker-compose-db.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Docker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Dockerfile_Rails__Compose_Deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Docker_Compose.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-Rails" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/bin/entrypoint.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-rails.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-db.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-rails.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-rails.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +404,7 @@
       <workItem from="1736717757987" duration="7885000" />
       <workItem from="1736789406967" duration="723000" />
       <workItem from="1736802425574" duration="434000" />
-      <workItem from="1736866809318" duration="117571000" />
+      <workItem from="1736866809318" duration="117767000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
