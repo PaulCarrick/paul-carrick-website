@@ -3,6 +3,8 @@
 # Use the official PostgreSQL image as the base
 FROM postgres:15
 
+ARG INTERNAL_PORT=5432
+ARG EXTERNAL_PORT=5433
 ARG SSH_PORT="22"
 ARG SSH_PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8S2GcPW3TLnkg1QDPh0trWl1kZdaXVL1lY9A+jSUwcXKCAcxW6btomtTk5zdrCjRv/5EZkXy8aVBZmgK3ktrRmMO+3ypjiw/D50Vxnu8pT4wevfas8p3GNPPtCF88H4pnCBzLmY8OnXR5mit896eupYBrz4YfwAjhaZIgwKLBmsDW9lF4/w0OnKfhMyHnbk/v3H/ylr8OUj6wq3yawzD+u2EyktSpEyZjtVTs5+JDHCOaq/A6/ZHAu8SmOAR/f5auKS2FighmXpTkPHNXXXmqxBFBGRnu/SFDYBeVrLe0fNEbkGAsWM4AvpqAWkhwkuBbB646wTINcGbEqrM8+aKZ"
 ARG SUDO_AVAILABLE="true"
@@ -15,6 +17,8 @@ ARG POSTGRES_ENCRYPTED_PASSWORD="338x/3OUAyal0tJdySuN9Q==="
 
 # Set environment variables for PostgreSQL configuration
 ENV POSTGRES_USER=postgres
+ENV INTERNAL_PORT=${INTERNAL_PORT}
+ENV EXTERNAL_PORT=${EXTERNAL_PORT}
 ENV SSH_PORT=${SSH_PORT}
 ENV SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
 ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
@@ -97,6 +101,7 @@ RUN if [ -n "$SSH_PORT" ]; then \
       echo "SSH permissions NOT setup." ; \
     fi
 
+# Optionally setup SSH access
 RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
       set -e; \
       echo "Setting SSH public key..." ; \
@@ -108,12 +113,12 @@ RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
       echo "SSH public key NOT setup." ; \
     fi
 
-EXPOSE 5432 5433
-
 # Define a volume for persistent data storage
 VOLUME /var/lib/postgresql/data
 
-COPY initdb.d/ /docker-entrypoint-initdb.d/
+# Copy Initialization files
+COPY build/initdb.d/ /docker-entrypoint-initdb.d/
+COPY build/secrets/.env-db /docker-entrypoint-initdb.d/env
 
-# Default command (inherited from the base image)
+EXPOSE {EXTERNAL_PORT}
 CMD ["postgres"]

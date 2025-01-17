@@ -55,3 +55,4 @@ config/ssl/README
 /build/secrets/
 /build/seed/database.dump
 /build/seed/storage.tar.gz
+build/initrails.d/storage.tar.gz

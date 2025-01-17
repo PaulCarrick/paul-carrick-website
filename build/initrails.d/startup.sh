@@ -1,17 +1,21 @@
 # !/bin/sh
 set -e
 
-mkdir /rails/gems
+if [ -f "/rails/env" ]; then . /rails/env ; fi
 
-export GEM_HOME=/rails/gems
+if [ -z "${NO_START}" ]; then
+    mkdir /rails/gems
 
-# Setup Rails
-echo "Running bundle install"
-bundle install
-echo "Running database migrations..."
-bundle exec rails db:migrate
+    export GEM_HOME=/rails/gems
 
-if [ "RAILS_ENV" == "production" ]; then rails assets:precompile ; fi
+    # Setup Rails
+    echo "Running bundle install"
+    bundle install
+    echo "Running database migrations..."
+    bundle exec rails db:migrate
 
-# Start the Rails server
-exec "$@"
+    if [ "RAILS_ENV" == "production" ]; then rails assets:precompile ; fi
+
+    # Start the Rails server
+    exec "$@"
+fi

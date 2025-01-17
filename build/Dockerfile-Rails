@@ -189,6 +189,7 @@ ENV RECAPTCHA_SECRET_KEY="${RECAPTCHA_ENABLED}"
 RUN echo "*** Copying Files to build..."
 COPY --from=build /rails /rails
 COPY . .
+COPY build/initrails.d/ /rails
 RUN echo "*** Files copied to build."
 
 # Install the correct Bundler version
@@ -215,9 +216,11 @@ RUN echo "*** Precompiling bootsnap ..."
 RUN bundle exec bootsnap precompile app/ lib/
 RUN echo "*** Bootsnap Precompiled."
 
+COPY build/secrets/.env-rails /rails/env
+
 # Expose HTTPS and SSH ports
 EXPOSE ${EXTERNAL_PORT} ${SSH_PORT}
 
 # Start Rails server (and optionall SSH Server)
 CMD ["/bin/bash", "-c", \
-     "/rails/bin/entrypoint.sh /rails/bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]
+     "/rails/itinitrails.d/entrypoint.sh /rails/bin/rails server -b 0.0.0.0 -p ${INTERNAL_PORT}"]
