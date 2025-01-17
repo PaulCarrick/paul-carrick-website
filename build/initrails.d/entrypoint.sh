@@ -1,5 +1,12 @@
 # !/bin/bash
 
+# Optional setup access for non-rails user. This needs to be done in the runtime after the home direcoty is mounted.
+if [ -n "$SSH_PORT" -a -n "$SSH_PUBLIC_KEY" -a -n "$USERNAME" -a ! -e "/home/${USERNAME}/.ssh/authorized_keys" ]; then
+      echo "$SSH_PUBLIC_KEY" > /home/${USERNAME}/.ssh/authorized_keys && \
+      chmod 600 /home/${USERNAME}/.ssh/authorized_keys && \
+      chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh
+fi
+
 if [ -n "$SSH_PORT" ]; then service ssh start; fi
 
 # TODO

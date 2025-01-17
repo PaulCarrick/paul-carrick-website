@@ -52,3 +52,4 @@ config/ssl/README
 /Dockerfile-paul
 /docker-compose-paul.yml
 /export-env
+/build/secrets/

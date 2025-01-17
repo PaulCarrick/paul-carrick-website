@@ -21,8 +21,8 @@ ARG SUDO_AVAILABLE="true"
 ARG USERNAME="paul"
 ARG CODE_ONE="53cc593cef49115b7c53a8bc0febcfc89e3d826aabbc2972756ee9110e6f1ce0"
 ARG CODE_TWO="212d49cf12922cc9205bbe417dbade5f"
-ARG RAILS_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
-ARG USER_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
+ARG RAILS_ENCRYPTED_PASSWORD="338x/3OUAyal0tJdySuN9Q==="
+ARG USER_ENCRYPTED_PASSWORD="pVKFfO9bwvG6L1+ejXYj9g=="
 ARG ROOT_ENCRYPTED_PASSWORD="WBLowLVTaEihLTvuIWmABEXGhKdgbfm66pk3QB2cxtc="
 
 # Override the defaults with environmental variables
@@ -116,7 +116,7 @@ RUN echo "*** Setting up SUDO access..."
 RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
       set -e; \
       echo "Configuring sudo access for rails" ; \
-      echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/rails && \
+      echo "rails ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/rails && \
       chmod 0440 /etc/sudoers.d/rails; \
       echo "Configuring sudo access for ${USERNAME}" ; \
       echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} && \
@@ -135,7 +135,7 @@ RUN if [ -n "$SSH_PORT" ]; then \
       chown -R rails:rails /home/rails/.ssh && \
       mkdir -p /home/${USERNAME}/.ssh && \
       chmod 700 /home/${USERNAME}/.ssh && \
-      chown -R rails:rails /home/${USERNAME}/.ssh; \
+      chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh; \
       echo "SSH permissions setup." ; \
     else \
       echo "SSH permissions NOT setup." ; \

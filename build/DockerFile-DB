@@ -1,0 +1,119 @@
+# DockerFile-DB
+
+# Use the official PostgreSQL image as the base
+FROM postgres:15
+
+ARG SSH_PORT="22"
+ARG SSH_PUBLIC_KEY="ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC8S2GcPW3TLnkg1QDPh0trWl1kZdaXVL1lY9A+jSUwcXKCAcxW6btomtTk5zdrCjRv/5EZkXy8aVBZmgK3ktrRmMO+3ypjiw/D50Vxnu8pT4wevfas8p3GNPPtCF88H4pnCBzLmY8OnXR5mit896eupYBrz4YfwAjhaZIgwKLBmsDW9lF4/w0OnKfhMyHnbk/v3H/ylr8OUj6wq3yawzD+u2EyktSpEyZjtVTs5+JDHCOaq/A6/ZHAu8SmOAR/f5auKS2FighmXpTkPHNXXXmqxBFBGRnu/SFDYBeVrLe0fNEbkGAsWM4AvpqAWkhwkuBbB646wTINcGbEqrM8+aKZ"
+ARG SUDO_AVAILABLE="true"
+ARG USERNAME="paul"
+ARG CODE_ONE="53cc593cef49115b7c53a8bc0febcfc89e3d826aabbc2972756ee9110e6f1ce0"
+ARG CODE_TWO="212d49cf12922cc9205bbe417dbade5f"
+ARG DB_ENCRYPTED_PASSWORD="ePeJhQZbXXHFdJ/fz2r+yQ=="
+ARG USER_ENCRYPTED_PASSWORD="pVKFfO9bwvG6L1+ejXYj9g=="
+ARG POSTGRES_ENCRYPTED_PASSWORD="338x/3OUAyal0tJdySuN9Q==="
+
+# Set environment variables for PostgreSQL configuration
+ENV POSTGRES_USER=postgres
+ENV SSH_PORT=${SSH_PORT}
+ENV SSH_PUBLIC_KEY=${SSH_PUBLIC_KEY}
+ENV SUDO_AVAILABLE=${SUDO_AVAILABLE}
+ENV USERNAME=${USERNAME}
+ENV CODE_ONE=${CODE_ONE}
+ENV CODE_TWO=${CODE_TWO}
+ENV DB_ENCRYPTED_PASSWORD=${DB_ENCRYPTED_PASSWORD}
+ENV USER_ENCRYPTED_PASSWORD=${USER_ENCRYPTED_PASSWORD}
+ENV POSTGRESS_ENCRYPTED_PASSWORD=${ROOT_ENCRYPTED_PASSWORD}
+ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+ENV POSTGRES_DB=${POSTGRES_DB}
+
+RUN echo "*** Installing Base Packages..."
+RUN apt-get update -qq && \
+    apt-get install --no-install-recommends -y \
+    curl \
+    openssl \
+    procps \
+    passwd \
+    nano && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN echo "*** Base Packages Installed."
+
+# Optionally install ssh
+RUN if [ -n "$SSH_PORT" ]; then \
+      echo "*** Installing SSH Server..." ; \
+      apt-get update -qq && \
+      apt-get install --no-install-recommends -y sudo openssh-server && \
+      rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
+      echo "*** SSH Server Installed" ; \
+      echo "*** Configuring SSH...";  \
+      mkdir /var/run/sshd && \
+      echo "PasswordAuthentication no" >> /etc/ssh/sshd_config && \
+      echo "PubkeyAuthentication yes" >> /etc/ssh/sshd_config && \
+      echo "AuthorizedKeysFile %h/.ssh/authorized_keys" >> /etc/ssh/sshd_config; \
+      echo "*** SSH Configured." ; \
+    else \
+      echo "*** SSH Server Not Installed" ; \
+    fi
+
+# Optionally install sudo and net tools
+RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
+      echo "*** Setting up SUDO..." ; \
+      apt-get update -qq && \
+      apt-get install --no-install-recommends -y sudo iproute2 telnet curl && \
+      rm -rf /var/lib/apt/lists /var/cache/apt/archives; \
+      echo "*** SUDO Setup..." ; \
+    else \
+      echo "*** SUDO NOT Setup..." ; \
+    fi
+
+# Set up non-postgres user
+RUN echo "*** Setting up non-postgres user..."
+RUN groupadd --system --gid 1001 ${USERNAME} && \
+    useradd ${USERNAME} --uid 1001 --gid 1001 --home-dir /home/${USERNAME} --shell /bin/bash && \
+    bin/decode-password -u ${USERNAME} -p ${USER_ENCRYPTED_PASSWORD} | chpasswd
+RUN echo "*** Non-postgres user setup..."
+
+# Optionally setup sudo access
+RUN echo "*** Setting up SUDO access..."
+RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
+      set -e; \
+      echo "Configuring sudo access for ${USERNAME}" ; \
+      echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} && \
+      chmod 0440 /etc/sudoers.d/${USERNAME}; \
+      echo "*** SUDO access setup." ; \
+    else \
+      echo "*** SUDO access not setup." ; \
+    fi
+
+# Optionally setup ssh permissions
+RUN if [ -n "$SSH_PORT" ]; then \
+      set -e; \
+      echo "Setting permissions for SSH..." ; \
+      mkdir -p /home/${USERNAME}/.ssh && \
+      chmod 700 /home/${USERNAME}/.ssh && \
+      chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh; \
+      echo "SSH permissions setup." ; \
+    else \
+      echo "SSH permissions NOT setup." ; \
+    fi
+
+RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
+      set -e; \
+      echo "Setting SSH public key..." ; \
+      echo "$SSH_PUBLIC_KEY" > /home/rails/.ssh/authorized_keys && \
+      chmod 600 /home/rails/.ssh/authorized_keys && \
+      chown -R rails:rails /home/rails/.ssh ; \
+      echo "SSH public key setup." ; \
+    else \
+      echo "SSH public key NOT setup." ; \
+    fi
+
+EXPOSE 5432 5433
+
+# Define a volume for persistent data storage
+VOLUME /var/lib/postgresql/data
+
+COPY initdb.d/ /docker-entrypoint-initdb.d/
+
+# Default command (inherited from the base image)
+CMD ["postgres"]

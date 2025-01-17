@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Dockerfile-Rails: Compose Deployment" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+  <configuration default="false" name="build/Dockerfile-Rails: Compose Deployment" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
         <option name="attachToContainerNeeded" value="true" />
@@ -121,7 +121,7 @@
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="sourceFilePath" value="Dockerfile-Rails" />
+        <option name="sourceFilePath" value="build/Dockerfile-Rails" />
       </settings>
     </deployment>
     <method v="2" />

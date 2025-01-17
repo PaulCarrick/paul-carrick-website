@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Polishing things.">
+      <change afterPath="$PROJECT_DIR$/build/DockerFile-DB" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/initdb.d/create-users.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-db.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-rails.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-rails.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DockerFile-DB" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile-Rails" beforeDir="false" afterPath="$PROJECT_DIR$/build/Dockerfile-Rails" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build/initrails.d/entrypoint.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/start_server" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/startup" beforeDir="false" afterPath="$PROJECT_DIR$/build/initrails.d/startup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bin/startup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build/initrails.d/startup.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/docker-compose-db.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-rails.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/docker-compose-rails.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +113,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/Users/paul/src/paul-carrick-website",
+    "last_opened_file_path": "/Users/paul/src/paul-carrick-website/secrets",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -128,18 +138,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/secrets" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/bin" />
-      <recent name="$PROJECT_DIR$/secrets" />
       <recent name="$PROJECT_DIR$/app/views/shared" />
       <recent name="$PROJECT_DIR$/app/javascript/components" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/secrets" />
       <recent name="$PROJECT_DIR$/bin" />
-      <recent name="$PROJECT_DIR$/certs" />
-      <recent name="$PROJECT_DIR$/public/assets" />
-      <recent name="$PROJECT_DIR$/app/assets/stylesheets" />
+      <recent name="$PROJECT_DIR$/build/secrets" />
+      <recent name="$PROJECT_DIR$/build/initrails.d" />
+      <recent name="$PROJECT_DIR$/build" />
+      <recent name="$PROJECT_DIR$/secrets" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -147,7 +157,7 @@
       <command value="Newhall2Eastsound!" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.Dockerfile-Rails: Compose Deployment">
+  <component name="RunManager" selected="Docker.build/Dockerfile-Rails: Compose Deployment">
     <configuration name="Debug Chrome JavaScript" type="JavascriptDebugType" uri="http://localhost:3000/">
       <method v="2">
         <option name="ToolBeforeRunTask" enabled="true" actionId="Tool_External Tools_OpenServer" />
@@ -269,8 +279,8 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.Dockerfile-Rails: Compose Deployment" />
-      <item itemvalue="Docker.docker-compose-rails.yml: Compose Deployment" />
+      <item itemvalue="Docker.build/Dockerfile-Rails: Compose Deployment" />
+      <item itemvalue="Docker.build/docker-compose-rails.yml: Compose Deployment" />
       <item itemvalue="JavaScript Debug.Debug Chrome JavaScript" />
       <item itemvalue="JavaScript Debug.Debug Edge" />
       <item itemvalue="JavaScript Debug.Debug Opera" />
@@ -404,7 +414,7 @@
       <workItem from="1736717757987" duration="7885000" />
       <workItem from="1736789406967" duration="723000" />
       <workItem from="1736802425574" duration="434000" />
-      <workItem from="1736866809318" duration="117767000" />
+      <workItem from="1736866809318" duration="122788000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
