@@ -3,7 +3,10 @@
 # setup-database.sh
 set -e
 
-if [ -f "env" -a -f "export_env.py" ]; then eval "$(python3 export_env.py "env")" ; fi
+if [ -f "./setup-database.py" -a -f "./env" ]; then
+    python ./setup-database.py;
+    exit $?
+fi
 
 if [ -n "$SSH_PORT" ]; then sudo service ssh start; fi
 

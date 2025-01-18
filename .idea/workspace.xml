@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Polishing things.">
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" afterPath="$PROJECT_DIR$/.dockerignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bin/docker-build.sh" beforeDir="false" afterPath="$PROJECT_DIR$/bin/docker-build.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/DockerFile-DB" beforeDir="false" afterPath="$PROJECT_DIR$/build/DockerFile-DB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/build/docker-compose-db.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initdb.d/setup-database" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/build/initdb.d/setup-database.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build/initdb.d/setup-database.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build/initrails.d/entrypoint.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/startup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build/initrails.d/startup.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -411,7 +402,7 @@
       <workItem from="1736717757987" duration="7885000" />
       <workItem from="1736789406967" duration="723000" />
       <workItem from="1736802425574" duration="434000" />
-      <workItem from="1736866809318" duration="150243000" />
+      <workItem from="1736866809318" duration="150467000" />
     </task>
     <task id="LOCAL-00001" summary="IDE Changes and WIP">
       <option name="closed" value="true" />
