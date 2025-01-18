@@ -15,6 +15,7 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+!/tmp/rubymine-settings.zip
 
 # Ignore pidfiles, but keep the directory.
 /tmp/pids/*
@@ -23,7 +24,6 @@
 
 # Ignore storage (uploaded files in development and any SQLite databases).
 /storage/*
-!/storage/.keep
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
@@ -38,21 +38,13 @@
 
 /node_modules
 
-/.db_username.txt
-/.db_password.txt
-
 /config/credentials/environment.key
-config/ssl/cert.pem
-config/ssl/chain.pem
-config/ssl/fullchain.pem
-config/ssl/privkey.pem
-config/ssl/README
 /certs/
 /secrets/
-/Dockerfile-paul
-/docker-compose-paul.yml
-/export-env
-/build/secrets/
-/build/seed/database.dump
-/build/seed/storage.tar.gz
-build/initrails.d/storage.tar.gz
+
+/build
+!/build/Dockerfile-*
+!/build/docker-compose-*
+!/build/initdb.d/setup-database*
+!/build/initrails.d/entrypoint*
+!/build/initrails.d/startup*

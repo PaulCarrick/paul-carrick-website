@@ -1,9 +1,9 @@
 # !/bin/sh
 set -e
 
-if [ -f "/rails/env" ]; then . /rails/env ; fi
+if [ -f "/rails/initrails.d/env" ]; then . /rails/initrails.d/env ; fi
 
-if [ -z "${NO_START}" ]; then
+if [ "${STARTUP}" = "true" ]; then
     mkdir /rails/gems
 
     export GEM_HOME=/rails/gems

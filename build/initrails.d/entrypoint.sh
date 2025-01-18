@@ -1,10 +1,10 @@
 # !/bin/bash
 
-if [ -f "/rails/env" ]; then . /rails/env ; fi
+if [ -f "/rails/initrails.d/env" ]; then . /rails/initrails.d/env ; fi
 
 if [ -n "$SSH_PORT" ]; then service ssh start; fi
 
-if [ -z "${NO_START}" ]; then
+if [ "${STARTUP}" = "true" ]; then
     # Optional setup access for non-rails user. This needs to be done in the runtime after the home directory is mounted.
     if [ -n "$SSH_PORT" -a -n "$SSH_PUBLIC_KEY" -a -n "$USERNAME" -a ! -e "/home/${USERNAME}/.ssh/authorized_keys" ]; then
           echo "$SSH_PUBLIC_KEY" > /home/${USERNAME}/.ssh/authorized_keys && \

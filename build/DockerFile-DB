@@ -3,6 +3,8 @@
 # Use the official PostgreSQL image as the base
 FROM postgres:15
 
+WORKDIR /postgres
+
 ARG INTERNAL_PORT=5432
 ARG EXTERNAL_PORT=5433
 ARG SSH_PORT="22"
@@ -38,8 +40,11 @@ RUN apt-get update -qq && \
     openssl \
     procps \
     passwd \
+    python-is-python3 \
+    python3-pip \
     nano && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
+RUN pip install --no-cache-dir --break-system-packages  psycopg2-binary
 RUN echo "*** Base Packages Installed."
 
 # Optionally install ssh
@@ -80,7 +85,9 @@ RUN echo "*** Non-postgres user setup..."
 # Optionally setup sudo access
 RUN echo "*** Setting up SUDO access..."
 RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
-      set -e; \
+      echo "Configuring sudo access for postgres" ; \
+      echo "postgres ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/postgres && \
+      chmod 0440 /etc/sudoers.d/postgres; \
       echo "Configuring sudo access for ${USERNAME}" ; \
       echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/${USERNAME} && \
       chmod 0440 /etc/sudoers.d/${USERNAME}; \
@@ -105,9 +112,12 @@ RUN if [ -n "$SSH_PORT" ]; then \
 RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
       set -e; \
       echo "Setting SSH public key..." ; \
-      echo "$SSH_PUBLIC_KEY" > /home/rails/.ssh/authorized_keys && \
-      chmod 600 /home/rails/.ssh/authorized_keys && \
-      chown -R rails:rails /home/rails/.ssh ; \
+      echo "$SSH_PUBLIC_KEY" > /home/postgres/.ssh/authorized_keys && \
+      chmod 600 /home/postgres/.ssh/authorized_keys && \
+      chown -R rails:rails /home/postgres/.ssh ; \
+      echo "$SSH_PUBLIC_KEY" > /home/${USERNAME}/.ssh/authorized_keys && \
+      chmod 600 /home/${USERNAME}/.ssh/authorized_keys && \
+      chown -R rails:rails /home/${USERNAME}/.ssh ; \
       echo "SSH public key setup." ; \
     else \
       echo "SSH public key NOT setup." ; \
@@ -116,9 +126,10 @@ RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
 # Define a volume for persistent data storage
 VOLUME /var/lib/postgresql/data
 
-# Copy Initialization files
-COPY build/initdb.d/ /docker-entrypoint-initdb.d/
-COPY build/secrets/.env-db /docker-entrypoint-initdb.d/env
+# Copy files
+COPY . /postgres
+COPY initdb.d/env /postgres
+COPY initdb.d /docker-entrypoint-initdb.d/
 
-EXPOSE {EXTERNAL_PORT}
+EXPOSE ${EXTERNAL_PORT}
 CMD ["postgres"]

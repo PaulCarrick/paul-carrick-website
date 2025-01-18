@@ -7,6 +7,9 @@ services:
       context: .
       dockerfile: Dockerfile-DB
 
+    image: paul-carrick-db
+    container_name: paul-carrick-db
+
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
