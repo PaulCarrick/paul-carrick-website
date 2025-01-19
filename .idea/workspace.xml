@@ -9,33 +9,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3153a936-0f87-4ffa-80b3-2e1e98ebdc0b" name="Changes" comment="Polishing things.">
-      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/docker_compose_rails_yml__Compose_Deployment.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/database/.flake8" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/database/database-entrypoint.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/database/export_env.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script/database/setup-database.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rails-website.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rails-website.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/Debug_Rails_and_Javascript.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Debug_Rails_and_Javascript.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/build_Dockerfile_Rails__Compose_Deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/runConfigurations/Dockerfile_Rails__Compose_Deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/build_docker_compose_rails_yml__Compose_Deployment.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/DockerFile-DB" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-DB" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/Dockerfile-Rails" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile-Rails" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/docker-compose-db.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-db.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/docker-compose-rails.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-rails.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initdb.d/setup-database.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/entrypoint" beforeDir="false" afterPath="$PROJECT_DIR$/script/rails/entrypoint" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/rails/entrypoint.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/startup" beforeDir="false" afterPath="$PROJECT_DIR$/script/rails/startup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/initrails.d/startup.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/rails/startup.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/initdb.d/database.dump" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/initdb.d/env" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/initdb.d/export_env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/initdb.d/setup-database.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/initdb.d/setup-database.sh" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/database/database-entrypoint.sh" beforeDir="false" afterPath="$PROJECT_DIR$/script/database/database-entrypoint.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
