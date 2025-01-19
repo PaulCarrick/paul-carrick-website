@@ -48,3 +48,7 @@
 !/build/initdb.d/setup-database*
 !/build/initrails.d/entrypoint*
 !/build/initrails.d/startup*
+/script/database.dump
+/script/.env
+script/database/database.dump
+script/rails/storage.tar.gz

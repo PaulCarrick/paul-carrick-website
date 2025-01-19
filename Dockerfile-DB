@@ -75,6 +75,11 @@ RUN if [ "${SUDO_AVAILABLE}" = "true" ]; then \
       echo "*** SUDO NOT Setup..." ; \
     fi
 
+# Set up postgres user
+RUN echo "*** Setting up postgres user..." && \
+    bin/decode-password -u rails -p ${POSTGRES_ENCRYPTED_PASSWORD} | chpasswd && \
+    echo "*** Postgres user setup..."
+
 # Set up non-postgres user
 RUN echo "*** Setting up non-postgres user..."
 RUN groupadd --system --gid 1001 ${USERNAME} && \
@@ -112,12 +117,9 @@ RUN if [ -n "$SSH_PORT" ]; then \
 RUN if [ -n "$SSH_PUBLIC_KEY" ]; then \
       set -e; \
       echo "Setting SSH public key..." ; \
-      echo "$SSH_PUBLIC_KEY" > /home/postgres/.ssh/authorized_keys && \
-      chmod 600 /home/postgres/.ssh/authorized_keys && \
-      chown -R rails:rails /home/postgres/.ssh ; \
       echo "$SSH_PUBLIC_KEY" > /home/${USERNAME}/.ssh/authorized_keys && \
       chmod 600 /home/${USERNAME}/.ssh/authorized_keys && \
-      chown -R rails:rails /home/${USERNAME}/.ssh ; \
+      chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.ssh ; \
       echo "SSH public key setup." ; \
     else \
       echo "SSH public key NOT setup." ; \
@@ -128,8 +130,8 @@ VOLUME /var/lib/postgresql/data
 
 # Copy files
 COPY . /postgres
-COPY initdb.d/env /postgres
-COPY initdb.d /docker-entrypoint-initdb.d/
+COPY script/database /postgres/script
+COPY script/database/.env /postgres
 
 EXPOSE ${EXTERNAL_PORT}
-CMD ["postgres"]
+ENTRYPOINT ["/postgres/script/database-entrypoint.sh"]

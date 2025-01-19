@@ -3,6 +3,10 @@ import os
 import sys
 import psycopg2
 from psycopg2 import sql
+import trace
+
+"""tracer = trace.Trace(trace=True, count=False)"""
+"""sys.settrace(tracer.globaltrace)"""
 
 def load_env_file(env_file="env"):
     """Load environment variables from a file."""
@@ -38,30 +42,30 @@ def execute_sql(conn, query, params=None):
 
 def ensure_database_exists(conn, db_name):
     """Ensure the specified database exists."""
-    query = """
+    query = f"""
     DO $$
     BEGIN
-        IF NOT EXISTS (SELECT FROM pg_database WHERE datname = %s) THEN
-            PERFORM dblink_exec('dbname=postgres', 'CREATE DATABASE ' || %s);
+        IF NOT EXISTS (SELECT FROM pg_database WHERE datname = '{db_name}') THEN
+            PERFORM dblink_exec('dbname=postgres', 'CREATE DATABASE "{db_name}"');
         END IF;
     END
     $$;
     """
-    execute_sql(conn, query, (db_name, db_name))
+    execute_sql(conn, query)
 
 def ensure_roles_exist(conn, roles):
     """Ensure the specified roles exist."""
     for role_name, role_password in roles:
-        query = """
+        query = f"""
         DO $$
         BEGIN
-            IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = %s) THEN
-                CREATE ROLE {role_name} WITH LOGIN PASSWORD {role_password};
+            IF NOT EXISTS (SELECT FROM pg_roles WHERE rolname = '{role_name}') THEN
+                EXECUTE format('CREATE ROLE %I WITH LOGIN PASSWORD %L', '{role_name}', '{role_password}');
             END IF;
         END
         $$;
         """
-        execute_sql(conn, query, (role_name, role_password))
+        execute_sql(conn, query)
 
 def grant_privileges(conn, db_name, roles):
     """Grant privileges on the database to specified roles."""
